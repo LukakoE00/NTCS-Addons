@@ -1,58 +1,49 @@
-NTCyb = {} -- Neurotrauma Cybernetics
-NTCyb.Name = "Cybernetics"
-NTCyb.Version = "A1.5.2"
-NTCyb.VersionNum = 01050200
-NTCyb.MinNTVersion = "A1.9.0"
-NTCyb.MinNTVersionNum = 01090000
-NTCyb.Path = table.pack(...)[1]
-Timer.Wait(function()
-	if NTC ~= nil and NTC.RegisterExpansion ~= nil then NTC.RegisterExpansion(NTCyb) end
-end, 1)
+NTCS_Cybernetics = {}
+NTCS_Cybernetics.Name = "Cybernetics"
+NTCS_Cybernetics.Version = "A1.5.2"
+NTCS_Cybernetics.VersionNum = 01050200
+NTCS_Cybernetics.MinNTVersion = "A1.9.0"
+NTCS_Cybernetics.MinNTVersionNum = 01090000
+NTCS_Cybernetics.Path = table.pack(...)[1]
 
--- server-side code (also run in singleplayer)
+dofile(NTCS_Cybernetics.Path.."/Lua/Library/NeurotraumaLib.lua")
+Neurotrauma.NTInfo.RegisterAddon(NTCS_Cybernetics)
+
+local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
+local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
+
+-- Serverside + Singleplayer code
 if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	Timer.Wait(function()
-		if NT ~= nil and NT.VersionNum < 01090000 then
-			print("Error loading NT Cybernetics: old Neurotrauma detected, use the modern fork published by 'guns'")
-			Game.SendMessage(
-				"Error loading NT Cybernetics: old Neurotrauma detected, use the modern fork published by 'guns'"
-			)
-			return
-		end
-		if NTC == nil then
-			print("Error loading NT Cybernetics: It appears Neurotrauma isn't loaded!")
-			Game.SendMessage(
-				"Error loading NT Cybernetics: It appears Neurotrauma isn't loaded!",
-				ChatMessageType.Server
-			)
+
+		if NT ~= nil then
+			print(NTLuaEnabledMsg) 
+			Game.SendMessage(NTLuaEnabledMsg, ChatMessageType.Server)
 			return
 		end
 
-		dofile(NTCyb.Path .. "/Lua/Scripts/empexplosionpatch.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/humanupdate.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/items.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/items.shared.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/ondamaged.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/helperfunctions.lua")
+		if Neurotrauma.NTInfo == nil then
+			print(NTCSNotEnabledMsg)
+			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
+			return
+		end
 
-		dofile(NTCyb.Path .. "/Lua/Scripts/testing.lua")
-
-		NTC.AddPreHumanUpdateHook(NTCyb.UpdateHuman)
 	end, 1)
 else
 	Timer.Wait(function()
-		if NT ~= nil and NT.VersionNum < 01090000 then
-			local msg =
-				"Error loading NT Cybernetics: old Neurotrauma detected, use the modern fork published by 'guns'"
-			print(msg)
-			Game.ChatBox.AddMessage(ChatMessage.Create("", msg, ChatMessageType.Server, nil))
+
+		if NT ~= nil then
+			print(NTLuaEnabledMsg) 
+			Game.SendMessage(NTLuaEnabledMsg, ChatMessageType.Server)
 			return
 		end
-		dofile(NTCyb.Path .. "/Lua/Scripts/items.client.lua")
-		dofile(NTCyb.Path .. "/Lua/Scripts/items.shared.lua")
+
+		if Neurotrauma.NTInfo == nil then
+			print(NTCSNotEnabledMsg)
+			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
+			return
+		end
+
 	end, 1)
 end
 
-Timer.Wait(function()
-	dofile(NTCyb.Path .. "/Lua/Scripts/configdata.lua")
-end, 1)
