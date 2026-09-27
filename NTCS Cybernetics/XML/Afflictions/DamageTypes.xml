@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Overrides>
+  <Afflictions>
+      <!-- /// cyberlimb damage types /// -->
+      <!-- Loose screws
+    a cyber damage type, caused by trauma, movement
+    increases susceptibility to material loss -->
+      <Affliction name="" identifier="ntc_loosescrews" description="" healableinmedicalclinic="false" targets="human" isbuff="false" limbspecific="true" maxstrength="100" showiconthreshold="5" showinhealthscannerthreshold="500" iconcolors="191,171,57,255;191,57,57,255">
+        <!-- 191,171,57,255;191,57,57,255 -->
+        <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="1,0" sheetelementsize="128,128" origin="0,0" />
+      </Affliction>
+      <!-- Damaged electronics
+    a cyber damage type, caused by water and trauma
+    increases susceptibility to material loss -->
+      <Affliction name="" identifier="ntc_damagedelectronics" description="" healableinmedicalclinic="false" targets="human" isbuff="false" limbspecific="true" maxstrength="100" showiconthreshold="5" showinhealthscannerthreshold="500" iconcolors="191,171,57,255;191,57,57,255">
+        <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="2,0" sheetelementsize="128,128" origin="0,0" />
+      </Affliction>
+      <!-- Bent metal
+    a cyber damage type, caused by trauma
+    increases susceptibility to material loss, decreases movement speed -->
+      <Affliction name="" identifier="ntc_bentmetal" description="" healableinmedicalclinic="false" targets="human" isbuff="false" limbspecific="true" maxstrength="100" showiconthreshold="3" showinhealthscannerthreshold="500" iconcolors="191,171,57,255;191,57,57,255">
+        <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="3,0" sheetelementsize="128,128" origin="0,0" />
+      </Affliction>
+      <!-- Material loss
+    a cyber damage type, caused by trauma
+    if too high, the limb is lost -->
+      <Affliction name="" identifier="ntc_materialloss" description="" healableinmedicalclinic="false" targets="human" isbuff="false" limbspecific="true" maxstrength="100" showiconthreshold="5" showinhealthscannerthreshold="500" iconcolors="191,171,57,255;191,57,57,255">
+        <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" origin="0,0" />
+      </Affliction>
+  </Afflictions>
+</Overrides>
