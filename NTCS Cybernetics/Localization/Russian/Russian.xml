@@ -29,11 +29,11 @@
   <entitydescription.cyberlung>Полностью синтетические легкие. Продвинутая дыхательная система, повышающая кислородную ёмкость, ускоряют мышцы и имеют устойчивость к перепадам давления. Устанавливается после удаления оригинального органа.</entitydescription.cyberlung>
   <entityname.cyberbrain>Кибернетический позитронный имплант</entityname.cyberbrain>
   <entitydescription.cyberbrain>Позитронный имплантат кибермозга. Высокотехнологичный чипсет, повышает навыки и устраняющий необходимость в анестезии при операциях. Встраивается напрямую в мозг пациента.</entitydescription.cyberbrain>
-  <entityname.bloodpackabcplus>Пакет с кровью C+</entityname.bloodpackabcplus>
-  <entitydescription.bloodpackabcplus>Можно переливать: C+</entitydescription.bloodpackabcplus>
-  <entityname.abcpluscard>Карточка донора C+</entityname.abcpluscard>
-  <entitydescription.abcpluscard>Может получать кровь любого типа
-Может быть донором для: C+</entitydescription.abcpluscard>
+  <entityname.bloodpackabc_positive>Пакет с кровью C+</entityname.bloodpackabc_positive>
+  <entitydescription.bloodpackabc_positive>Можно переливать: C+</entitydescription.bloodpackabc_positive>
+  <entityname.abc_positivecard>Карточка донора C+</entityname.abc_positivecard>
+  <entitydescription.abc_positivecard>Может получать кровь любого типа
+Может быть донором для: C+</entitydescription.abc_positivecard>
   <entityname.immunosuppressantinhaler>Ингалятор с иммунодепрессантами</entityname.immunosuppressantinhaler>
   <entitydescription.immunosuppressantinhaler>Угнетает иммунную систему, чтобы уменьшить симптомы киберпсихоза, вызванного избытком кибернетических имплантатов.</entitydescription.immunosuppressantinhaler>
   <!-- AFFLICTIONS -->

@@ -29,11 +29,11 @@
   <entitydescription.cyberlung>A completely synthetic set of lungs. A top of the line respiratory system, improving muscle speed, oxygen capacity, modulates breathing to balance blood pH, and provides partial pressure resistance. Use after removal of the original lungs to install.</entitydescription.cyberlung>
   <entityname.cyberbrain>Cyberbrain Positronic Implant</entityname.cyberbrain>
   <entitydescription.cyberbrain>A positronic cyberbrain implant chipset. Top of the line, supercharges skills, neurotrauma + addiction recovery, and removes the need for analgesia in surgery. Install into the patient's existing brain.</entitydescription.cyberbrain>
-  <entityname.bloodpackabcplus>Blood Pack C+</entityname.bloodpackabcplus>
-  <entitydescription.bloodpackabcplus>Administerable to: C+</entitydescription.bloodpackabcplus>
-  <entityname.abcpluscard>Donor card C+</entityname.abcpluscard>
-  <entitydescription.abcpluscard>Can take blood from: all of them
-Can give blood to: C+</entitydescription.abcpluscard>
+  <entityname.bloodpackabc_positive>Blood Pack C+</entityname.bloodpackabc_positive>
+  <entitydescription.bloodpackabc_positive>Administerable to: C+</entitydescription.bloodpackabc_positive>
+  <entityname.abc_positivecard>Donor card C+</entityname.abc_positivecard>
+  <entitydescription.abc_positivecard>Can take blood from: all of them
+Can give blood to: C+</entitydescription.abc_positivecard>
   <entityname.immunosuppressantinhaler>Immunoblocker Inhaler</entityname.immunosuppressantinhaler>
   <entitydescription.immunosuppressantinhaler>Depresses the immune system to reduce Cyberpsychosis caused by excessive cybernetic implants.</entitydescription.immunosuppressantinhaler>
   <!-- AFFLICTIONS -->
