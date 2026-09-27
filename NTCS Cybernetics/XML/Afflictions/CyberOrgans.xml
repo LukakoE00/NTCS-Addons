@@ -65,14 +65,14 @@
         <StatusEffect target="Character" disabledeltatime="true" setvalue="true">
           <Affliction identifier="abc_positive" amount="100" />
           <!-- Cyberblood, fun for selfish compatibility, and prevents Cyberorgan rejection -->
-          <Affliction identifier="ominus" amount="0" />
-          <Affliction identifier="oplus" amount="0" />
-          <Affliction identifier="aminus" amount="0" />
-          <Affliction identifier="aplus" amount="0" />
-          <Affliction identifier="bminus" amount="0" />
-          <Affliction identifier="bplus" amount="0" />
-          <Affliction identifier="abminus" amount="0" />
-          <Affliction identifier="abplus" amount="0" />
+          <Affliction identifier="o_negative" amount="0" />
+          <Affliction identifier="o_positive" amount="0" />
+          <Affliction identifier="a_negative" amount="0" />
+          <Affliction identifier="a_positive" amount="0" />
+          <Affliction identifier="b_negative" amount="0" />
+          <Affliction identifier="b_positive" amount="0" />
+          <Affliction identifier="ab_negative" amount="0" />
+          <Affliction identifier="ab_positive" amount="0" />
         </StatusEffect>
       </Effect>
 
@@ -331,7 +331,7 @@
           <Conditional immunity="gte 90" />
           <Affliction identifier="ntc_cyberpsychosis" strength="40" probability="0.15" />
         </StatusEffect>
-        
+
         <StatusEffect target="Character" multiplybymaxvitality="true" comparison="and">
           <Conditional immunity="gte 90" />
           <Conditional ntc_cyberbrain="gte 90" />

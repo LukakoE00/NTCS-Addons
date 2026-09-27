@@ -1,3 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentpackage name="NTCS Cybernetics" corepackage="false" modversion="1.0.0" gameversion="1.13.4.0">
+<!-- Afflictions -->
+<Afflictions file="%ModDir%/XML/Afflictions/CyberLimbs.xml" />
+<Afflictions file="%ModDir%/XML/Afflictions/CyberOrgans.xml" />
+<Afflictions file="%ModDir%/XML/Afflictions/DamageTypes.xml" />
+<Afflictions file="%ModDir%/XML/Afflictions/ItemEffects.xml" />
+
+<!-- Items -->
+<Item file="%ModDir%/XML/Items/BodyParts.xml" />
+<Item file="%ModDir%/XML/Items/Effects.xml" />
+<Item file="%ModDir%/XML/Items/Miscellaneous.xml" />
+<Item file="%ModDir%/XML/Items/Overrides.xml" />
+
+<!-- Localization -->
+<Text file="%ModDir%/Localization/English/English.xml" />
+<Text file="%ModDir%/Localization/Russian/Russian.xml" />
+<Text file="%ModDir%/Localization/Polish/Polish.xml" />
+<Text file="%ModDir%/Localization/French/French.xml" />
+<Text file="%ModDir%/Localization/Portuguese/Portuguese.xml" />
+<Text file="%ModDir%/Localization/Korean/Korean.xml" />
+<Text file="%ModDir%/Localization/Turkish/Turkish.xml" />
+<Text file="%ModDir%/Localization/Spanish/Spanish.xml" />
+<Text file="%ModDir%/Localization/German/German.xml" />
 </contentpackage>
