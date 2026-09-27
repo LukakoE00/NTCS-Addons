@@ -128,7 +128,7 @@
       targets="human"
       limbspecific="true" 
       type="resistance" 
-      isbuff="true" 
+      isbuff="true"
       
       showinhealthscannerthreshold="999"
       showiconthreshold="0"
