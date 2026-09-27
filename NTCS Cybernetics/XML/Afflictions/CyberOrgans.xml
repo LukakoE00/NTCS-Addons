@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Overrides>
-  <Afflictions>
+<Afflictions>
+  <Override>
     <!-- Cyberliver Affliction. 50% for T1, 100% for T2. -->
     <Affliction 
       name="Cyberliver" 
@@ -358,5 +358,5 @@
       
       <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="256,896,128,128" color="10,193,114,255" origin="0,0" />
     </Affliction>
-  </Afflictions>
-</Overrides>
+  </Override>
+</Afflictions>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Overrides>
-  <Afflictions>
+<Afflictions>
+  <Override>
     <!-- Cyberarm: Converts the arm into a CyberArm. -->
     <Affliction 
       name="" 
@@ -141,5 +141,5 @@
 
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="2,4" sheetelementsize="128,128" origin="0,0" />
     </Affliction>
-  </Afflictions>
-</Overrides>
+  </Override>
+</Afflictions>
