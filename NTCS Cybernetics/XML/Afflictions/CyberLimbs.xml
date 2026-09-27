@@ -11,7 +11,8 @@
       targets="human"
       limbspecific="true" 
       type="resistance" 
-      isbuff="true" 
+      isbuff="true"
+      hideiconafterdelay="true"
 
       showinhealthscannerthreshold="999"
       showiconthreshold="0"
@@ -62,7 +63,8 @@
       limbspecific="true"
       targets="human"
       type="resistance" 
-      isbuff="true" 
+      isbuff="true"
+      hideiconafterdelay="true"
 
       showinhealthscannerthreshold="999" 
       showiconthreshold="0" 
@@ -129,6 +131,7 @@
       limbspecific="true" 
       type="resistance" 
       isbuff="true"
+      hideiconafterdelay="true"
       
       showinhealthscannerthreshold="999"
       showiconthreshold="0"

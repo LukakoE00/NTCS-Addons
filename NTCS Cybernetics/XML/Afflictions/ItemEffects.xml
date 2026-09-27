@@ -12,6 +12,7 @@
         targets="human" 
         type="resistance" 
         isbuff="true"
+        hideiconafterdelay="true"
         
         showinhealthscannerthreshold="999" 
         showiconthreshold="10" 
