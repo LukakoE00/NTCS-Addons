@@ -32,17 +32,17 @@ Timer.Wait(function()
 			if value.Strength > 1 then
 				identifier = value.Prefab.Identifier.Value
 
-				if HF.TableContains(convertedDamageTypes, identifier) then
+				if NTCS.HF.TableContains(convertedDamageTypes, identifier) then
 					causeDamageTypeConversion = true
 					if damageTypeSFXDict[identifier] ~= nil then sfxidentifier = damageTypeSFXDict[identifier] end
 				end
 			end
 		end
 
-		if causeDamageTypeConversion and NTCyb.HF.LimbIsCyber(targetChar, hitLimb.type) then
-			if sfxidentifier ~= nil then HF.GiveItem(targetChar, sfxidentifier) end
+		if causeDamageTypeConversion and NTCS_Cybernetics.HF.LimbIsCyber(targetChar, hitLimb.type) then
+			if sfxidentifier ~= nil then NTCS.HF.GiveItem(targetChar, sfxidentifier) end
 			Timer.Wait(function()
-				NTCyb.ConvertDamageTypes(targetChar, hitLimb.type)
+				NTCS_Cybernetics.ConvertDamageTypes(targetChar, hitLimb.type)
 			end, 1)
 		end
 	end)
@@ -50,21 +50,21 @@ Timer.Wait(function()
 	local oldDislocateLimb = NT.DislocateLimb
 	NT.DislocateLimb = function(character, limbtype, strength)
 		strength = strength or 1
-		if strength > 0 and NTCyb.HF.LimbIsCyber(character, limbtype) then return end
+		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
 		oldDislocateLimb(character, limbtype, strength)
 	end
 
 	local oldBreakLimb = NT.BreakLimb
 	NT.BreakLimb = function(character, limbtype, strength)
 		strength = strength or 5
-		if strength > 0 and NTCyb.HF.LimbIsCyber(character, limbtype) then return end
+		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
 		oldBreakLimb(character, limbtype, strength)
 	end
 
 	local oldArteryCutLimb = NT.ArteryCutLimb
 	NT.ArteryCutLimb = function(character, limbtype, strength)
 		strength = strength or 5
-		if strength > 0 and NTCyb.HF.LimbIsCyber(character, limbtype) then return end
+		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
 		oldArteryCutLimb(character, limbtype, strength)
 	end
 end, 1)
