@@ -1,28 +1,30 @@
-NTCyb.ConfigData = {
-	NTCyb_header1 = { name = NTCyb.Name, type = "category" },
-
-	NTCyb_waterDamage = {
+NTCS_Cybernetics.ConfigData = {
+	
+	NTCS_Cybernetics_waterDamage = {
 		name = "Cyberlimb Water Damage",
 		default = 1,
 		range = { 0, 5 },
 		type = "float",
 		difficultyCharacteristics = { multiplier = 0.5, max = 2 },
 	},
-	NTCyb_cyberpsychosisChance = {
+
+	NTCS_Cybernetics_cyberpsychosisChance = {
 		name = "Cyberpsychosis Chance",
 		default = 1,
 		range = { 0, 1 },
 		type = "float",
 		difficultyCharacteristics = { multiplier = 0.5, max = 2 },
 	},
-	NTCyb_cyberarmSpeed = {
+
+	NTCS_Cybernetics_cyberarmSpeed = {
 		name = "Cyberarm Speed Increase",
 		default = 1,
 		range = { 0, 2 },
 		type = "float",
 		difficultyCharacteristics = { multiplier = 0.5, max = 2 },
 	},
-	NTCyb_cyberlegSpeed = {
+	
+	NTCS_Cybernetics_cyberlegSpeed = {
 		name = "Cyberleg Speed Increase",
 		default = 1,
 		range = { 0, 2 },
@@ -30,4 +32,5 @@ NTCyb.ConfigData = {
 		difficultyCharacteristics = { multiplier = 0.5, max = 2 },
 	},
 }
-NTConfig.AddConfigOptions(NTCyb)
+
+NTCS.Config.AddConfigOptions(NTCS_Cybernetics)
