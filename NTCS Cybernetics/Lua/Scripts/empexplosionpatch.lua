@@ -17,8 +17,8 @@ Hook.Patch("Barotrauma.Explosion", "Explode", function(instance, ptable)
 						* explode_empstrength
 						* (1 - (math.sqrt(distance_sq) / explode_range))
 					for key, limbtype in pairs(emp_limbs) do
-						if NTCyb.HF.LimbIsCyber(character, limbtype) then
-							HF.AddAfflictionLimb(
+						if NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then
+							NTCS.HF.AddAfflictionLimb(
 								character,
 								"ntc_damagedelectronics",
 								limbtype,
@@ -28,11 +28,11 @@ Hook.Patch("Barotrauma.Explosion", "Explode", function(instance, ptable)
 						end
 					end
 
-					for _, organConfig in pairs(NTCyb.OrganConfigDatas) do
-						local isTier3Mul = HF.GetAfflictionStrength(character, organConfig.cyberAffliction, 0) / 100 -- tier 2 takes half the damage of tier 3
+					for _, organConfig in pairs(NTCS_Cybernetics.OrganConfigDatas) do
+						local isTier3Mul = NTCS.HF.GetAfflictionStrength(character, organConfig.cyberAffliction, 0) / 100 -- tier 2 takes half the damage of tier 3
 						local organDmgAff = organConfig.empAffliction or organConfig.damageAffliction
 						if isTier3Mul > 0.01 and organDmgAff then
-							HF.AddAffliction(
+							NTCS.HF.AddAffliction(
 								character,
 								organDmgAff,
 								affliction_strength / (organConfig.empAffliction ~= nil and 0.5 or 10) * isTier3Mul,
