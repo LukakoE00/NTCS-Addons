@@ -5,3 +5,4 @@ Neurotrauma.NTAfflictionPrefabBuilder = LuaUserData.CreateStatic("Neurotrauma.NT
 Neurotrauma.NTItemFunctionLoader = LuaUserData.CreateStatic("Neurotrauma.NTItems+NTItemFunctionLoader", true)
 Neurotrauma.NTInfo = LuaUserData.CreateStatic("Neurotrauma.NTInfo", false)
 Neurotrauma.NTAddon = LuaUserData.CreateStatic("Neurotrauma.NTAddon", true)
+Neurotrauma.HF = LuaUserData.CreateStatic("Neurotrauma.HF", true)
