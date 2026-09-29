@@ -8,7 +8,7 @@ NTCS_Cybernetics.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed
 dofile(NTCS_Cybernetics.Path.."/Lua/Library/NeurotraumaLib.lua")
-Neurotrauma.NTInfo.RegisterAddon(NTCS_Cybernetics)
+NTCS.Info.RegisterAddon(NTCS_Cybernetics)
 
 local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
 local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
@@ -24,21 +24,27 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 			return
 		end
 
-		-- If NTInfo cannot be found it's because the initialization line above did not trigger since NTCS isn't active.
-		if Neurotrauma.NTInfo == nil then
+		-- If Info cannot be found it's because the initialization line above did not trigger since NTCS isn't active.
+		if NTCS.Info == nil then
 			print(NTCSNotEnabledMsg)
 			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
 			return
 		end
 
 		-- Lua Content Scripts SP/MP:
+		
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/EMPExplosionPatch.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HumanUpdate.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/items.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/items.shared.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/ondamaged.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/helperfunctions.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/Items.lua")
+		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/SharedItems.lua")
+		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/OnDamaged.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HelperFunctions.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/CharacterPatches.lua")
 
+		Hook.Add("Neurotrauma.HumanUpdate.PreHook", "NTCS_Cybernetics.UpdateHuman", function(character, deltaTime)
+			if character == nil or character.Human == nil or character.Human.Removed then return end
+			NTCS_Cybernetics.UpdateHuman(character.Human, deltaTime)
+		end)
 	end, 1)
 else
 	Timer.Wait(function()
@@ -49,7 +55,7 @@ else
 			return
 		end
 
-		if Neurotrauma.NTInfo == nil then
+		if NTCS.Info == nil then
 			print(NTCSNotEnabledMsg)
 			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
 			return
@@ -58,3 +64,6 @@ else
 	end, 1)
 end
 
+Timer.Wait(function()
+	dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/ConfigData.lua")
+end, 1)
