@@ -510,12 +510,14 @@ local BoneDamage = AfflictionBuilder:New("bonedamage"):SetUpdateAction(
         local GainMultiplier = NTCS.NTC.GetMultiplier(C.Human, "bonedamagegain")
 
         local Strength = NTCS.HF.OrganDamageCalc(
-            C,
-            C:GetAfflictionStrength("bonedamage")
-                + GainMultiplier
-                    * (Sepsis / 500 + Hypoxemia / 1000 + math.max(Radiation - 25, 0) / 600)
-                    * DeltaT
-        )
+			C,
+			C:GetAfflictionStrength("bonedamage")
+				+ GainMultiplier
+					* (Sepsis / 500 + Hypoxemia / 1000 + math.max(Radiation - 25, 0) / 600)
+					* DeltaT,
+			DeltaT,
+			false
+		)
 
         local BoneGrowthCount = C:GetFloatStat("bonegrowthCount")
 
