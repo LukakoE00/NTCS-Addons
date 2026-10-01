@@ -37,7 +37,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HumanUpdate.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/Items.lua")
 		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/SharedItems.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/OnDamaged.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/OnDamaged.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HelperFunctions.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/CharacterPatches.lua")
 
