@@ -21,7 +21,7 @@ damageTypeSFXDict["internaldamage"] = "ntcsfx_cyberblunt"
 damageTypeSFXDict["foreignbody"] = "ntcsfx_cyberblunt"
 
 Timer.Wait(function()
-	NTC.AddOnDamagedHook(function(characterHealth, attackResult, hitLimb)
+	NTCS_Cybernetics.NTC.AddOnDamagedHook(function(characterHealth, attackResult, hitLimb)
 		-- automatically convert damage types
 		local targetChar = characterHealth.Character
 		local causeDamageTypeConversion = false
@@ -46,25 +46,36 @@ Timer.Wait(function()
 			end, 1)
 		end
 	end)
-
-	local oldDislocateLimb = NT.DislocateLimb
-	NT.DislocateLimb = function(character, limbtype, strength)
-		strength = strength or 1
-		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
-		oldDislocateLimb(character, limbtype, strength)
-	end
-
-	local oldBreakLimb = NT.BreakLimb
-	NT.BreakLimb = function(character, limbtype, strength)
-		strength = strength or 5
-		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
-		oldBreakLimb(character, limbtype, strength)
-	end
-
-	local oldArteryCutLimb = NT.ArteryCutLimb
-	NT.ArteryCutLimb = function(character, limbtype, strength)
-		strength = strength or 5
-		if strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
-		oldArteryCutLimb(character, limbtype, strength)
-	end
 end, 1)
+
+-- C# Method in the HF class;
+-- We want to add a check for Cybernetics before running the original Dislocate function.
+Hook.Patch("Neurotrauma.HF", "DislocateLimb", function(instance, ptable)
+    local Character = ptable["Character"]
+    local GivenLimbType  = ptable["GivenLimbType"]
+    local Strength  = ptable["Strength"]
+
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+        ptable.PreventExecution = true
+    end
+end, Hook.HookMethodType.Before)
+
+Hook.Patch("Neurotrauma.HF", "BreakLimb", function(instance, ptable)
+    local Character = ptable["Character"]
+    local GivenLimbType  = ptable["GivenLimbType"]
+    local Strength  = ptable["Strength"]
+
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+        ptable.PreventExecution = true
+    end
+end, Hook.HookMethodType.Before)
+
+Hook.Patch("Neurotrauma.HF", "ArteryCutLimb", function(instance, ptable)
+    local Character = ptable["Character"]
+    local GivenLimbType  = ptable["GivenLimbType"]
+    local Strength  = ptable["Strength"]
+
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+        ptable.PreventExecution = true
+    end
+end, Hook.HookMethodType.Before)

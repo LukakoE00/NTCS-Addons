@@ -12,7 +12,16 @@ local LimbTypes = {
 }
 
 function NTCS_Cybernetics.UpdateHuman(character, deltatime)
-	local velocity = NTCS.HF.GetVelocity(character)
+	local velocity = 0
+	if
+		character ~= nil
+		and character.AnimController ~= nil
+		and character.AnimController.MainLimb ~= nil
+		and character.AnimController.MainLimb.body ~= nil
+		and character.AnimController.MainLimb.body.LinearVelocity ~= nil
+	then
+		velocity = character.AnimController.MainLimb.body.LinearVelocity.Length()
+	end
 
 	local function UpdateLimb(character, limbtype)
 		if not NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then return end
