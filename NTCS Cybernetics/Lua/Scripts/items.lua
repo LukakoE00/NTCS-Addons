@@ -61,6 +61,7 @@ NTCS_Cybernetics.OrganConfigDatas = {
 		limb = LimbType.Head,
 		damageAffliction = nil,
 		removedAffliction = nil,
+		swapAffliction = "brainswap",
 		empAffliction = "incrementalstun",
 		cyberAffliction = "ntc_cyberbrain",
 		secondarySkillName = "electrical",
@@ -71,17 +72,18 @@ NTCS_Cybernetics.OrganConfigDatas = {
 	},
 }
 
+-- Change the strength of organ damage, either way.
 local function damageOrgan(targetCharacter, organName, damage, usingCharacter)
 	if organName == "brain" then
-		HF.AddAffliction(targetCharacter, "cerebralhypoxia", damage, usingCharacter)
+		NTCS.HF.AddAffliction(targetCharacter, "neurotrauma", damage, usingCharacter)
 	else
-		HF.AddAffliction(targetCharacter, organName .. "damage", damage, usingCharacter) -- eg. "liverdamage"
+		NTCS.HF.AddAffliction(targetCharacter, organName .. "damage", damage, usingCharacter) -- eg. "liverdamage"
 	end
 end
 
+-- Force sync afflictions, as normally they aren't synced for dead characters to allow for post-mortem surgery.
 local function forceSyncAfflictions(character)
 	if Game.IsSingleplayer then return end
-	-- force sync afflictions, as normally they aren't synced for dead characters
 	Networking.CreateEntityEvent(character, Character.CharacterStatusEventData.__new(true))
 end
 
@@ -450,6 +452,7 @@ local CyberArm = function (d)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
+		NTCS.HF.GiveItem(targetCharacter, "ntsfx_drill")
 	else
 		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
@@ -491,6 +494,7 @@ local CyberArmWaterproof = function (d)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
+		NTCS.HF.GiveItem(targetCharacter, "ntsfx_drill")
 	else
 		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
@@ -532,6 +536,7 @@ local CyberLeg = function (d)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
+		NTCS.HF.GiveItem(targetCharacter, "ntsfx_drill")
 	else
 		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
@@ -573,6 +578,7 @@ local CyberLegWaterproof = function (d)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
+		NTCS.HF.GiveItem(targetCharacter, "ntsfx_drill")
 	else
 		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
@@ -584,73 +590,90 @@ itemLoader:Register("waterproofcyberleg", CyberLegWaterproof)
 -- ==================== CyberOrgans ====================
 -- Helper functions for implantOrgan
 local function possiblyRejectOrgan(targetCharacter, usingCharacter, organName)
-	local rejectionchance = NTCS.HF.Clamp(
-		(NTCS.HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-			/ 150
-			* NTCS.NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-		0,
-		1
-	)
-	if
-		NTCS.HF.Chance(rejectionchance)
-		and NTCS.NTConfig.Get("NT_organRejection", false)
+	local rejectionchance = NTCS.HF.Clamp((NTCS.HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10) / 150 * NTCS.NTC.GetMultiplier(usingCharacter, "organrejectionchance"), 0,1)
+	
+	if NTCS.HF.Chance(rejectionchance)
+		and NTCS.Config.Get("NT_organRejection", false)
 		and not NTCS.HF.HasAfflictionLimb(targetCharacter, "ntc_cyberkidney", LimbType.Torso, 0.1)
 	then
 		damageOrgan(targetCharacter, organName, 100, usingCharacter)
 	end
 end
 
+-- Helper to spawn a normal organ
 local function giveOrganic(item, usingCharacter, targetCharacter, damage, organName)
-	-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-	local function postSpawnFunc(args)
-		local tags = {}
 
-		if args.acidosis > 0 then
-			table.insert(tags, "acid:" .. tostring(NTCS.HF.Round(args.acidosis)))
-		elseif args.alkalosis > 0 then
-			table.insert(tags, "alkal:" .. tostring(NTCS.HF.Round(args.alkalosis)))
-		end
-		if args.sepsis > 10 then table.insert(tags, "sepsis") end
+	-- Add Acidosis / Alkalosis / Sepsis into the tags of the organ item if the donor had them present sufficiently.
+    local function postSpawnFunc(args, spawnedItem)
+        local tags = {}
 
-		local tagstring = ""
-		for index, value in ipairs(tags) do
-			tagstring = tagstring .. value
-			if index < #tags then tagstring = tagstring .. "," end
-		end
+        if args.acidosis > 0 then
+            table.insert(tags, "acid:" .. tostring(NTCS.HF.Round(args.acidosis)))
+        elseif args.alkalosis > 0 then
+            table.insert(tags, "alkal:" .. tostring(NTCS.HF.Round(args.alkalosis)))
+        end
 
-		args.item.Tags = tagstring
-		args.item.Condition = args.condition
-	end
-	local params = {
-		acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-		alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-		sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-		condition = 100 - damage,
-	}
-	local parentInventory = item.ParentInventory
-	local inventorySpot = nil
-	if parentInventory ~= nil then inventorySpot = parentInventory.FindIndex(item) end
-	local transplantidentifier = organName .. "transplant_q1"
+        if args.sepsis > 10 then table.insert(tags, "sepsis") end
 
-	if NTCS.NTC.HasTag(usingCharacter, "organssellforfull") then transplantidentifier = organName .. "transplant" end
+		-- Adjust Tags and Condition of the item
+        spawnedItem.Tags = table.concat(tags, ",")
+        spawnedItem.Condition = args.condition
+    end
 
-	if string.find(item.Prefab.Identifier.Value, "kidney") then
-		local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
-		if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
-			container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
-		end
-		if container ~= nil and container.OwnInventory ~= nil and container.OwnInventory.IsFull() == false then
-			NTCS.HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, container.OwnInventory)
+	-- Post-spawning parameters to add to items.
+    local params = {
+        acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
+        alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
+        sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
+        condition = 100 - damage,
+    }
+
+	-- Determine spawn locations
+    local parentInventory = item.ParentInventory
+    local pos = usingCharacter.WorldPosition
+
+	-- By default, organs are spawned in a variant with a lower base price; namely the Q1 variant.
+    local transplantidentifier = organName .. "transplant_q1"
+
+	-- Compat.HasTag requires a NTHuman instance. Convert the current Character to NTHuman beforehand.
+    local NTHuman = NTCS.Human.getNTHumanFromCharacter(usingCharacter)
+	-- If the character has this tag present, adjust the spawned item to instead use its full priced variant.
+    if NTHuman ~= nil and NTHuman.Tags:HasTag("NTC", "organssellforfull") then
+        transplantidentifier = organName .. "transplant"
+    end
+
+	-- Normally, we truly swap an organ; that means we figure out where they were in an inventory and just spawn the new organ in that inventory slot again.
+	-- This doesn't exactly work for Cybernetic Kidneys; as they use 1 item to replace 2.
+    if string.find(item.Prefab.Identifier.Value, "kidney") then
+		-- Check if we're holding a container in the left and right hand to possibly spawn items into it.
+        local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
+
+        if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
+            container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
+        end
+
+		-- If a valid container is found, spawn it in there at the relevant inventoryslots. Otherwise, just spawn it on the player.
+        if container ~= nil and container.OwnInventory ~= nil and not container.OwnInventory.IsFull() then
+            NTCS.HF.SpawnItemPlusFunction(transplantidentifier, container.OwnInventory, InvSlotType.Any, pos, postSpawnFunc, params)
 		else
-			NTCS.HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-		end
-	else
-		NTCS.HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-	end
+            NTCS.HF.GiveItemPlusFunction(transplantidentifier, usingCharacter, postSpawnFunc, params)
+        end
+
+	-- Spawn non-kidneys the parent inventory if present.
+    elseif parentInventory ~= nil then
+        NTCS.HF.SpawnItemPlusFunction(transplantidentifier, parentInventory, InvSlotType.Any, pos, postSpawnFunc, params)
+	
+	-- Organ wasn't in any inventory, spawn the transplant in the user's inventory
+    else
+        NTCS.HF.GiveItemPlusFunction(transplantidentifier, usingCharacter, postSpawnFunc, params)
+    end
 end
 
+-- Helper to spawn a cybernetic organ
 local function giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
-	local function postSpawnFunc(args)
+
+	-- Add Acidosis / Alkalosis / Sepsis into the tags of the organ item if the donor had them present sufficiently.
+	local function postSpawnFunc(args, spawnedItem)
 		local tags = {}
 
 		if args.acidosis > 0 then
@@ -660,31 +683,37 @@ local function giveCyber(item, usingCharacter, targetCharacter, damage, organNam
 		end
 		if args.sepsis > 10 then table.insert(tags, "sepsis") end
 
-		local tagstring = ""
-		for index, value in ipairs(tags) do
-			tagstring = tagstring .. value
-			if index < #tags then tagstring = tagstring .. "," end
-		end
-
-		args.item.Tags = tagstring
-		args.item.Condition = args.condition
+		-- Adjust Tags and Condition of the item
+		spawnedItem.Tags = table.concat(tags, ",")
+		spawnedItem.Condition = args.condition
 	end
-	local params = {
-		acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-		alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-		sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-		condition = 100 - damage,
-	}
+
+	-- Post-spawning parameters to add to items.
+    local params = {
+        acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
+        alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
+        sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
+        condition = 100 - damage,
+    }
+
+	-- Determine spawn locations
 	local inventorySpot = nil
 	local parentInventory = item.ParentInventory
+	local pos = usingCharacter.WorldPosition
 	if parentInventory then inventorySpot = parentInventory.FindIndex(item) end
-	-- augmented
+
+	-- Assume Augmented by default, adjust to Cybernetic accordingly.
 	local transplantidentifier = NTCS_Cybernetics.OrganConfigDatas[organName].tier2Item
 	if cyberStrength > 50 then
-		-- cybernetic
 		transplantidentifier = NTCS_Cybernetics.OrganConfigDatas[organName].tier3Item
 	end
-	NTCS.HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
+
+	-- Spawn the item.
+	if parentInventory ~= nil then
+		NTCS.HF.SpawnItemPlusFunction(transplantidentifier, parentInventory, InvSlotType.Any, pos, postSpawnFunc, params)
+	else
+		NTCS.HF.GiveItemPlusFunction(transplantidentifier, usingCharacter, postSpawnFunc, params)
+	end
 end
 
 -- Let's allow this to swap between cyber and regular organs for once and for all... hopefully
@@ -695,6 +724,9 @@ local ImplantOrgan = function (d)
     local targetCharacter = d.target.Human
     local targetLimb = d.targetLimb
 
+	local limbtype = targetLimb.type
+
+	-- Figure out what organ we're working with based on table value
 	local organName
 	for organ, _ in pairs(NTCS_Cybernetics.OrganConfigDatas) do
 		if string.find(item.Prefab.Identifier.Value, organ) then
@@ -702,145 +734,192 @@ local ImplantOrgan = function (d)
 			break
 		end
 	end
+
 	if organName == nil then
 		print("NT Cybernetics: Unknown organ " .. tostring(item.Prefab.Identifier.Value))
 		return
 	end
-	local limbtype = targetLimb.type
-	local isArtificial = string.find(item.Prefab.Identifier.Value, "cyber")
-		or string.find(item.Prefab.Identifier.Value, "augmented")
-	local patientHasArtificial = NTCS.HF.HasAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, 1)
-	if not isArtificial and not patientHasArtificial then
-		-- If using a regular organ on a patient with regular organ, use base method
-		NTCS_Cybernetics.OrganConfigDatas[organName].baseImplantMethod(item, usingCharacter, targetCharacter, targetLimb)
+
+	-- Is the item we are trying to implant Cybernetic or Augmented?
+	local ImplantIsArtificial = string.find(item.Prefab.Identifier.Value, "cyber") or string.find(item.Prefab.Identifier.Value, "augmented")
+
+	-- Does the character we're implanting into already have a Cybernetic or Augmented organ?
+	local PatientHasArtificial = NTCS.HF.HasAffliction(targetCharacter, "ntc_cyber" .. organName, 1)
+	
+
+	-- If the implant isn't artificial nor the existing organ is artificial, tap out and use the original method.
+	if not ImplantIsArtificial and not PatientHasArtificial then
+		itemLoader:CallOld(item.Prefab.Identifier.Value, "Neurotrauma C#", d)
 		return
 	end
+
+	-- If the person operating does not have the secondary skill needed, decrease condition of the returned / implanted organ by 20.
 	local conditionmodifier = 0
 	if not NTCS.HF.GetSkillRequirementMet(usingCharacter, NTCS_Cybernetics.OrganConfigDatas[organName].secondarySkillName, 60) then
 		conditionmodifier = conditionmodifier - 20
 	end
 
+	-- Condition we will be using moving forward
 	local workcondition = NTCS.HF.Clamp(item.Condition + conditionmodifier, 0, 100)
+
+	-- If we're in the Swap/Removal stage and the Torso still has retracted skin, move on.
 	if
-		(
-			NTCS.HF.HasAffliction(targetCharacter, organName .. "removed", 1)
-			or NTCS.HF.HasAffliction(targetCharacter, organName .. "swap", 1)
-		)
+		(NTCS.HF.HasAffliction(targetCharacter, organName .. "removed", 1) or NTCS.HF.HasAffliction(targetCharacter, organName .. "swap", 1))
 		and limbtype == LimbType.Torso
 		and NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
 	then
-		-- possibly damage surroundings if not medically skilled
-		if NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, 70) then
+		-- Possibly damage surroundings if not medically skilled
+		if NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, 70) then 
 			NTCS.HF.GiveSurgerySkill(usingCharacter, 0.4)
 		else
 			NTCS.HF.AddAfflictionLimb(targetCharacter, "internalbleeding", limbtype, NTCS.HF.RandomRange(0, 10))
 			NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 		end
 
+		-- Determine strength of artificial organ.
 		local cyberStrength = NTCS.HF.GetAfflictionStrength(targetCharacter, "ntc_cyber" .. organName)
+		-- Determine damage to biological organ.
 		local damage = NTCS.HF.GetAfflictionStrength(targetCharacter, organName .. "damage", 0)
-		local newdamage = NTCS.HF.Clamp((100 - damage) - workcondition, -100, 100) -- define organdamage swap as the default newdamage
+ 		-- Define organdamage swap as the default newdamage
+		local newdamage = NTCS.HF.Clamp((100 - damage) - workcondition, -100, 100)
 
+		-- Remove the item we're implanting and move on to swapping
 		NTCS.HF.RemoveItem(item)
+
+		-- Kidneys are unique, as they return 2 items (2 kidneys) when inserting 1 cybernetic.
 		if organName == "kidney" then
-			if isArtificial then
-				if patientHasArtificial then
-					-- artificial to artificial kidney replacement, give and place artificial organs, no timer for swap/removed status removal
-					giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
-				elseif damage > 45 and damage < 95 then
-					-- organic to artificial kidney replacement, place artificial organ and give one organic kidney
-					giveOrganic(item, usingCharacter, targetCharacter, damage - 50, organName)
+
+			-- If we're implanting a cybernetic;
+			if ImplantIsArtificial then
+
+				-- And the patient already has a cybernetic, return the relevant cybernetic (Cyber --> Cyber).
+				if PatientHasArtificial then giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
+
+				-- And the patient has normal kidneys but with enough damage to kill one, return 1 kidney (Cyber --> Normal).
+				elseif damage > 45 and damage < 95 then giveOrganic(item, usingCharacter, targetCharacter, damage - 50, organName)
+
+				-- And the patient has two healthy kidneys, return both (Cyber --> Normal).
 				elseif damage < 45 then
-					-- give two organic kidneys
 					giveOrganic(item, usingCharacter, targetCharacter, damage * 2, organName)
 					giveOrganic(item, usingCharacter, targetCharacter, 0, organName)
 				end
+
+				-- And the patient has high kidney damage, heal it a bit so functionality doesnt suffer.
 				if damage > 95 then
 					newdamage = -workcondition
 					damageOrgan(targetCharacter, organName, -workcondition, usingCharacter)
 				else
 					NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition, targetCharacter)
 				end
-				NTCS.HF.SetAfflictionLimb(
-					targetCharacter,
-					"ntc_cyber" .. organName,
-					limbtype,
-					string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100
-				) -- add "ntc_cyberliver", at 50% strength if its Augmented (tier 2), 100% if Cyber (tier 3)
+
+				-- Apply the Cybernetic affliction with the strength based on whether its augmented or cybernetic.
+				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype,string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100)
+				
+				-- Remove the afflictions that get cured on swap.
 				for _, affliction in ipairs(NTCS_Cybernetics.OrganConfigDatas[organName].curedAfflictions) do
 					NTCS.HF.SetAffliction(targetCharacter, affliction, 0, usingCharacter)
 				end
+
+				-- Lastly, heal a bit of organ damage.
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
-			elseif patientHasArtificial then
-				-- artificial to organic kidney replacement, place one organic kidney and give artificial, add timer for swap/removed status removal
+
+			-- If we're implanting a normal organ into someone with cybernetics;
+			elseif PatientHasArtificial then
+
+				-- Heal a bit of organ damage (general and specific).
 				newdamage = NTCS.HF.Clamp(((100 - damage) - workcondition) / 2, -100, 100)
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
-				NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition / 2, targetCharacter)
+				NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition / 2, usingCharacter)
+
+				-- Return the implanted Cybernetic.
 				giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
-				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, -999)
-				Timer.Wait(function()
-					NTCS.HF.SetAffliction(targetCharacter, organName .. "removed", 0, usingCharacter)
-					NTCS.HF.SetAffliction(targetCharacter, organName .. "swap", 0, usingCharacter)
-				end, 3000)
+
+				-- Remove the Cybernetic Affliction
+				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, -0)
 				return
 			end
 
+			-- If the Swap/Removed afflictions remain, remove them.
 			NTCS.HF.SetAffliction(targetCharacter, organName .. "removed", 0, usingCharacter)
 			NTCS.HF.SetAffliction(targetCharacter, organName .. "swap", 0, usingCharacter)
+
 			return
 		end
+
+		-- If the non-kidney organ we're implanting into is dead;
 		if damage == 100 then
-			if isArtificial then
-				-- in place of destroyed one, insert artificial organ
+
+			-- And we're implanting a cybernetic
+			if ImplantIsArtificial then
+				-- Heal a bit of specific organ damage.
 				damageOrgan(targetCharacter, organName, -workcondition, usingCharacter)
-				NTCS.HF.SetAfflictionLimb(
-					targetCharacter,
-					"ntc_cyber" .. organName,
-					limbtype,
-					string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100
-				) -- add "ntc_cyberliver", at 50% strength if its Augmented (tier 2), 100% if Cyber (tier 3)
+
+				-- Add the Cybernetic Affliction
+				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100)
+
+				-- Remove the afflictions that get cured on swap.
 				for _, affliction in ipairs(NTCS_Cybernetics.OrganConfigDatas[organName].curedAfflictions) do
 					NTCS.HF.SetAffliction(targetCharacter, affliction, 0, usingCharacter)
 				end
+
+				-- Heal a bit of organ damage.
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
+
+			-- And the patient has a cybernetic
 			else
-				-- insert the organic
+				-- Insert the organic organ
 				NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition, targetCharacter)
+
+				-- Heal a bit of specific / general organ damage
 				damageOrgan(targetCharacter, organName, -workcondition, usingCharacter)
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
+
+				-- Remove the Cybernetic affliction
 				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, -999)
 			end
-		elseif isArtificial then
-			if patientHasArtificial then
-				-- artificial to artificial organ replacement, give and place artificial organs
+		
+		-- If the non-kidney organ we're implanting is cybernetic;
+		elseif ImplantIsArtificial then
+
+			-- And the patient already has a cybernetic, return the relevant cybernetic (Cyber --> Cyber).
+			if PatientHasArtificial then
+				-- Heal some specific / general organ damage.
 				NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition, targetCharacter)
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
+
+				-- Return the cybernetic.
 				giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
-				NTCS.HF.SetAfflictionLimb(
-					targetCharacter,
-					"ntc_cyber" .. organName,
-					limbtype,
-					string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100
-				) -- add "ntc_cyberliver", at 50% strength if its Augmented (tier 2), 100% if Cyber (tier 3)
+
+				-- Add the Cybernetic Affliction
+				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype,string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100)
+
+			-- And the patient does not have a cybernetic (Normal --> Cyber).
 			else
-				-- organic to artificial organ replacement, give organic and place artificial organ
+				-- Heal some specific / general organ damage.
 				NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition, targetCharacter)
 				NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
+
+				-- Return the existing organ.
 				giveOrganic(item, usingCharacter, targetCharacter, damage, organName)
-				NTCS.HF.SetAfflictionLimb(
-					targetCharacter,
-					"ntc_cyber" .. organName,
-					limbtype,
-					string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100
-				) -- add "ntc_cyberliver", at 50% strength if its Augmented (tier 2), 100% if Cyber (tier 3)
+
+				-- Add the Cybernetic Affliction
+				NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100)
 			end
+
+		-- If the non-kidney organ we're replacing is not cybernetic (Cybernetic --> Normal);
 		else
-			-- artificial to organic organ replacement, give artificial and place organic organ
+			-- Heal some specific / general organ damage.
 			NTCS.HF.SetAffliction(targetCharacter, organName .. "damage", 100 - workcondition, targetCharacter)
 			NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
+
+			-- Return the existing cybernetic.
 			giveCyber(item, usingCharacter, targetCharacter, damage, organName, cyberStrength)
+
+			-- Remove the Cybernetic Affliction
 			NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, -999)
 		end
+
+		-- Remove the Swap/Removed afflictions.
 		NTCS.HF.SetAffliction(targetCharacter, organName .. "removed", 0, usingCharacter)
 		NTCS.HF.SetAffliction(targetCharacter, organName .. "swap", 0, usingCharacter)
 	end
@@ -858,11 +937,18 @@ itemLoader:Register("cyberheart", ImplantOrgan)
 itemLoader:Register("augmentedlung", ImplantOrgan)
 itemLoader:Register("cyberlung", ImplantOrgan)
 
+itemLoader:Override("kidneytransplant", ImplantOrgan)
 itemLoader:Override("lungtransplant", ImplantOrgan)
 itemLoader:Override("livertransplant", ImplantOrgan)
-itemLoader:Override("kidneytransplant", ImplantOrgan)
 itemLoader:Override("hearttransplant", ImplantOrgan)
 
+itemLoader:Override("kidneytransplant_q1", ImplantOrgan)
+itemLoader:Override("lungtransplant_q1", ImplantOrgan)
+itemLoader:Override("livertransplant_q1", ImplantOrgan)
+itemLoader:Override("hearttransplant_q1", ImplantOrgan)
+
+
+-- Brain is unique, as it doesn't require the original brain to be removed.
 local ImplantBrain = function (d)
 
     local item = d.item
@@ -874,12 +960,14 @@ local ImplantBrain = function (d)
 
 	local limbtype = targetLimb.type
 	local conditionmodifier = 0
+
+	-- If the person operating does not have the secondary skill needed, decrease condition of the returned / implanted organ by 20.
 	if not NTCS.HF.GetSkillRequirementMet(usingCharacter, NTCS_Cybernetics.OrganConfigDatas[organName].secondarySkillName, 60) then
 		conditionmodifier = conditionmodifier - 20
 	end
 
 	local workcondition = NTCS.HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	-- brain implants are chips inserted during surgery into the meat, so the brain must still be there
+	-- Brain implants are chips inserted during surgery into the meat, so the brain must still be there
 	if
 		not NTCS.HF.HasAffliction(targetCharacter, organName .. "removed", 1)
 		and limbtype == LimbType.Head
@@ -892,14 +980,15 @@ local ImplantBrain = function (d)
 			NTCS.HF.AddAfflictionLimb(targetCharacter, "internalbleeding", limbtype, NTCS.HF.RandomRange(0, 15))
 			NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 		end
-		damageOrgan(targetCharacter, organName, -workcondition, usingCharacter) -- heal NTCS
-		NTCS.HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter) -- heal a bit of vanilla organ damage
-		NTCS.HF.SetAfflictionLimb(
-			targetCharacter,
-			"ntc_cyber" .. organName,
-			limbtype,
-			string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100
-		) -- add "ntc_cyberliver", at 50% strength if its Augmented (tier 2), 100% if Cyber (tier 3)
+
+		-- Heal some Neurotrauma + organ damage
+		damageOrgan(targetCharacter, organName, -workcondition, usingCharacter)
+		NTCS.HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
+		
+		-- Apply the Cybernetics Affliction
+		NTCS.HF.SetAfflictionLimb(targetCharacter, "ntc_cyber" .. organName, limbtype, string.find(item.Prefab.Identifier.Value, "augmented") and 50 or 100)
+		
+		-- Remove the implant
 		NTCS.HF.RemoveItem(item)
 
 		possiblyRejectOrgan(targetCharacter, usingCharacter, organName)
@@ -939,43 +1028,65 @@ NTCS.NTC.AddHematologyAffliction("immunosuppressantinhaler")
 -- RE-ADD POST-MORTEM SURGERY
 -- TO DO
 
-local function RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, organConfig)
+local function RemoveCyberOrgan(d, organConfig, baseId)
+    local item = d.item
+    local usingCharacter = d.user.Human
+    local targetCharacter = d.target.Human
+    local targetLimb = d.targetLimb
+
     if organConfig == nil then
         print("NT Cybernetics: Unknown organscalpel: " .. tostring(item.Prefab.Identifier.Value))
-        organConfig.baseMethod(item, usingCharacter, targetCharacter, targetLimb)
         return
     end
 
     local limbtype = targetLimb.type
-    if limbtype ~= organConfig.targetLimb or not HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
+
+    -- If we're not on the right limb or it's not ready for surgery, tap out
+    if limbtype ~= organConfig.limb or not NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
         return
     end
+
+    -- Is the organ swappable?
     local procureready = NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.removedAffliction, 0) <= 0
         and NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.swapAffliction, 0) >= 0.1
+
+    -- If not swappable, start surgery to make it so.
     if not procureready then
         if NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, organConfig.surgerySkillRemoval) then
+            -- If the organ in question is very damaged, start at removal.
             if NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.damageAffliction, 0) >= 100 then
                 NTCS.HF.SetAffliction(targetCharacter, organConfig.removedAffliction, 100, usingCharacter)
             else
+                -- Otherwise, enable swapping
                 NTCS.HF.SetAffliction(targetCharacter, organConfig.swapAffliction, 100, usingCharacter)
             end
         else
+            -- On skill check failure, do damage
             NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
             NTCS.HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
             NTCS.HF.AddAffliction(targetCharacter, organConfig.damageAffliction, 20, usingCharacter)
         end
-    elseif NTCS.HF.HasAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype) then
+        return
+    end
+
+    -- Cybernetics check
+    if NTCS.HF.HasAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype) then
+
+        -- Determine damage to organ
         local damage = NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.damageAffliction, 0)
         local removed = NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.removedAffliction, 0)
+
         if removed <= 0 then
             NTCS.HF.SetAffliction(targetCharacter, organConfig.removedAffliction, 100, usingCharacter)
             NTCS.HF.SetAffliction(targetCharacter, organConfig.swapAffliction, 0, usingCharacter)
         end
 
+        -- Set Removed/Damage afflictions if not present this scalpel use
         if NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, organConfig.surgerySkillRemoval) then
             if organConfig.removedAffliction ~= nil then
                 NTCS.HF.SetAffliction(targetCharacter, organConfig.removedAffliction, 100, usingCharacter)
             end
+
             if organConfig.damageAffliction ~= nil then
                 NTCS.HF.SetAffliction(targetCharacter, organConfig.damageAffliction, 100, usingCharacter)
             end
@@ -985,14 +1096,20 @@ local function RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLim
                     NTCS.HF.SetAffliction(targetCharacter, affliction, 0, usingCharacter)
                 end
             end
+
             local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
             if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
                 container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
             end
+
             local toContainer = container ~= nil
                 and container.OwnInventory ~= nil
                 and not container.OwnInventory.IsFull()
-            local function postSpawnFunc(args)
+
+            local pos = usingCharacter.WorldPosition
+
+            -- add acidosis, alkalosis and sepsis to the organ if the donor has them
+            local function postSpawnFunc(args, spawnedItem)
                 local tags = {}
 
                 if args.acidosis > 0 then
@@ -1002,51 +1119,33 @@ local function RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLim
                 end
                 if args.sepsis > 10 then table.insert(tags, "sepsis") end
 
-                local tagstring = ""
-                for index, value in ipairs(tags) do
-                    tagstring = tagstring .. value
-                    if index < #tags then tagstring = tagstring .. "," end
-                end
-
-                args.item.Tags = tagstring
-                args.item.Condition = args.condition
+                spawnedItem.Tags = table.concat(tags, ",")
+                spawnedItem.Condition = args.condition
             end
+
             local params = {
                 acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
                 alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
                 sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-                condition = 100 - damage,
+                condition = NTCS.HF.Clamp(100 - damage, 1, 100),
             }
-            if organConfig.cyberAffliction == "ntc_cyberbrain" then
-                -- tier 2 and 3 brains are both synthetic implants
-                if NTCS.HF.HasAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype, 99) then
-                    if toContainer then
-                        NTCS.HF.SpawnItemPlusFunction(organConfig.tier3Item, nil, nil, container.OwnInventory)
-                    else
-                        NTCS.HF.GiveItem(usingCharacter, organConfig.tier3Item, 100)
-                    end
-                else
-                    if toContainer then
-                        NTCS.HF.SpawnItemPlusFunction(organConfig.tier2Item, nil, nil, container.OwnInventory)
-                    else
-                        NTCS.HF.GiveItem(usingCharacter, organConfig.tier2Item, 100)
-                    end
-                end
-            elseif NTCS.HF.HasAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype, 99) then
+
+            if NTCS.HF.HasAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype, 99) then
                 -- cybernetic
                 if toContainer then
-                    NTCS.HF.SpawnItemPlusFunction(organConfig.tier3Item, postSpawnFunc, params, container.OwnInventory)
+                    NTCS.HF.SpawnItemPlusFunction(organConfig.tier3Item, container.OwnInventory, InvSlotType.Any, pos, postSpawnFunc, params)
                 else
-                    NTCS.HF.GiveItem(usingCharacter, organConfig.tier3Item, NTCS.HF.Clamp(100 - damage, 1, 100))
+                    NTCS.HF.GiveItemPlusFunction(organConfig.tier3Item, usingCharacter, postSpawnFunc, params)
                 end
             else
                 -- augmented
                 if toContainer then
-                    NTCS.HF.SpawnItemPlusFunction(organConfig.tier2Item, postSpawnFunc, params, container.OwnInventory)
+                    NTCS.HF.SpawnItemPlusFunction(organConfig.tier2Item, container.OwnInventory, InvSlotType.Any, pos, postSpawnFunc, params)
                 else
-                    NTCS.HF.GiveItemPlusFunction(organConfig.tier2Item, postSpawnFunc, params, usingCharacter)
+                    NTCS.HF.GiveItemPlusFunction(organConfig.tier2Item, usingCharacter, postSpawnFunc, params)
                 end
             end
+
             NTCS.HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, usingCharacter)
             NTCS.HF.SetAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype, 0, usingCharacter)
         else
@@ -1054,77 +1153,103 @@ local function RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLim
             NTCS.HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
             NTCS.HF.AddAffliction(targetCharacter, organConfig.damageAffliction, 20, usingCharacter)
         end
+
         if targetCharacter.IsDead then forceSyncAfflictions(targetCharacter) end
 
         NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
+
+    -- Non-cybernetic, run the original method
     elseif not targetCharacter.IsDead then
-        organConfig.baseMethod(item, usingCharacter, targetCharacter, targetLimb)
+        itemLoader:CallOld(baseId, "Neurotrauma C#", d)
     end
+end
+
+local function RemoveCyberBrain(item, usingCharacter, targetCharacter, targetLimb, organConfig)
+    local limbtype = targetLimb.type
+
+    if limbtype ~= organConfig.limb or not NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
+        return
+    end
+
+    if not NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, organConfig.surgerySkillRemoval) then
+        NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
+        NTCS.HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
+        return
+    end
+
+    local swapping = NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.swapAffliction, 0) >= 0.1
+    local cyberStrength = NTCS.HF.GetAfflictionStrength(targetCharacter, organConfig.cyberAffliction, 0)
+
+    if not swapping then
+        NTCS.HF.SetAffliction(targetCharacter, organConfig.swapAffliction, 100, usingCharacter)
+        NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
+        return
+    end
+
+    if cyberStrength > 0 then
+        local identifier = cyberStrength >= 99 and organConfig.tier3Item or organConfig.tier2Item
+        local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
+
+        if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
+            container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
+        end
+
+        local toContainer = container ~= nil and container.OwnInventory ~= nil and not container.OwnInventory.IsFull()
+        local pos = usingCharacter.WorldPosition
+
+        if toContainer then
+            NTCS.HF.SpawnItemPlusFunction(identifier, container.OwnInventory, InvSlotType.Any, pos, nil, {})
+        else
+            NTCS.HF.GiveItem(usingCharacter, identifier, 100)
+        end
+
+        NTCS.HF.SetAfflictionLimb(targetCharacter, organConfig.cyberAffliction, limbtype, 0, usingCharacter)
+        NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
+        return
+    end
+
+    NTCS.HF.SetAffliction(targetCharacter, organConfig.swapAffliction, 0, usingCharacter)
+
+    if targetCharacter.IsDead then forceSyncAfflictions(targetCharacter) end
+
+    NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 end
 
 -- Kidneys
 local RemoveKidney = function (d)
-    
-    local item = d.item
-    local usingCharacter = d.user.Human
-    local targetCharacter = d.target.Human
-    local targetLimb = d.targetLimb
-
-    RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, NTCS_Cybernetics.OrganConfigDatas["kidney"])
+    RemoveCyberOrgan(d, NTCS_Cybernetics.OrganConfigDatas["kidney"], "organscalpel_kidneys")
 end
-
 itemLoader:Override("organscalpel_kidneys", RemoveKidney)
 
 -- Liver
 local RemoveLiver = function (d)
-    
-    local item = d.item
-    local usingCharacter = d.user.Human
-    local targetCharacter = d.target.Human
-    local targetLimb = d.targetLimb
-
-    RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, NTCS_Cybernetics.OrganConfigDatas["liver"])
+    RemoveCyberOrgan(d, NTCS_Cybernetics.OrganConfigDatas["liver"], "organscalpel_liver")
 end
-
 itemLoader:Override("organscalpel_liver", RemoveLiver)
 
 -- Lungs
 local RemoveLungs = function (d)
-    
-    local item = d.item
-    local usingCharacter = d.user.Human
-    local targetCharacter = d.target.Human
-    local targetLimb = d.targetLimb
-
-    RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, NTCS_Cybernetics.OrganConfigDatas["lung"])
+    RemoveCyberOrgan(d, NTCS_Cybernetics.OrganConfigDatas["lung"], "organscalpel_lungs")
 end
-
 itemLoader:Override("organscalpel_lungs", RemoveLungs)
 
 -- Heart
 local RemoveHeart = function (d)
-    
-    local item = d.item
-    local usingCharacter = d.user.Human
-    local targetCharacter = d.target.Human
-    local targetLimb = d.targetLimb
-
-    RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, NTCS_Cybernetics.OrganConfigDatas["heart"])
+    RemoveCyberOrgan(d, NTCS_Cybernetics.OrganConfigDatas["heart"], "organscalpel_heart")
 end
-
 itemLoader:Override("organscalpel_heart", RemoveHeart)
 
 -- Brain
 local RemoveBrain = function (d)
-    
-    local item = d.item
-    local usingCharacter = d.user.Human
-    local targetCharacter = d.target.Human
-    local targetLimb = d.targetLimb
+    local ConfigDatas = NTCS_Cybernetics.OrganConfigDatas["brain"]
 
-    RemoveCyberOrgan(item, usingCharacter, targetCharacter, targetLimb, NTCS_Cybernetics.OrganConfigDatas["brain"])
+    if not NTCS.HF.HasAffliction(d.target.Human, ConfigDatas.cyberAffliction, 1) then
+        itemLoader:CallOld("organscalpel_brain", "Neurotrauma C#", d)
+        return
+    end
+
+    RemoveCyberBrain(d.item, d.user.Human, d.target.Human, d.targetLimb, ConfigDatas)
 end
-
 itemLoader:Override("organscalpel_brain", RemoveBrain)
 
 -- ==================== Miscellaneous ====================
