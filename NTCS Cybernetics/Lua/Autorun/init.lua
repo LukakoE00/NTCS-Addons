@@ -32,15 +32,15 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 		end
 
 		-- Lua Content Scripts SP/MP:
-		
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/EMPExplosionPatch.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HumanUpdate.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/Items.lua")
-		-- dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/SharedItems.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/SharedItems.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/OnDamaged.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/HelperFunctions.lua")
 		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/CharacterPatches.lua")
 
+		-- Hook a function to NTCS Pre-HumanUpdate
 		Hook.Add("Neurotrauma.HumanUpdate.PreHook", "NTCS_Cybernetics.UpdateHuman", function(character, deltaTime)
 			if character == nil or character.Human == nil or character.Human.Removed then return end
 			NTCS_Cybernetics.UpdateHuman(character.Human, deltaTime)
