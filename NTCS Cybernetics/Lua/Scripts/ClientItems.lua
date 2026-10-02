@@ -32,7 +32,7 @@ local function itemAllowsNecromancy(item)
 		return true
 	else
 		for key, _ in pairs(NTCS_Cybernetics.AllowedNecromancyItemsStartsWith) do
-			if HF.StartsWith(identifier, key) then return true end
+			if NTCS.HF.StartsWith(identifier, key) then return true end
 		end
 	end
 	return false

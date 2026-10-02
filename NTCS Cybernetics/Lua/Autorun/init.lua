@@ -61,6 +61,9 @@ else
 			return
 		end
 
+		dofile(NTCSCyb.Path .. "/Lua/Scripts/ClientItems.lua")
+		dofile(NTCS_Cybernetics.Path .. "/Lua/Scripts/SharedItems.lua")
+
 	end, 1)
 end
 
