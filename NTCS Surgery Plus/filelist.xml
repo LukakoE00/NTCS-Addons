@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="NTCS Surgery Plus" steamworkshopid="3478084070" corepackage="false" modversion="1.0.0" gameversion="1.11.5.0">
+  <!-- Afflictions-->
+  <Afflictions file="%ModDir%/Afflictions/Afflictions.xml" />
+  <Afflictions file="%ModDir%/Talents/Surgeon/AfflictionsSurgeon.xml" />
+
+  <!-- Items -->
+  <Item file="%ModDir%/Items/BodyParts/Organs.xml" />
+  <Item file="%ModDir%/Items/Jobgear/Surgeon/surgeon_gear.xml" />
+  <Item file="%ModDir%/Items/Jobgear/Surgeon/surgeon_talent_items.xml" />
+  <Item file="%ModDir%/Items/Jobgear/misc.xml" />
+  <Item file="%ModDir%/Items/Medical/Consumables.xml" />
+  <Item file="%ModDir%/Items/Tools/Implants.xml" />
+  <Item file="%ModDir%/Items/Tools/Instruments.xml" />
+  <Item file="%ModDir%/Items/Tools/Scalpels.xml" />
+
+  <!-- Jobs -->
+  <Jobs file="%ModDir%/Jobs/Jobs.xml" />
+  
+  <!-- Talents -->
+  <Talents file="%ModDir%/Talents/Surgeon/TalentsSurgeon.xml" />
+  <TalentTrees file="%ModDir%/Talents/TalentTrees.xml" />
+
+  <!-- Localization -->
+  <Text file="%ModDir%/Texts/Chinese/Chinese.xml" />
+  <Text file="%ModDir%/Texts/English/English.xml" />
+  <Text file="%ModDir%/Texts/French/French.xml" />
+  <Text file="%ModDir%/Texts/German/German.xml" />
+  <Text file="%ModDir%/Texts/Korean/Korean.xml" />
+  <Text file="%ModDir%/Texts/Polish/Polish.xml" />
+  <Text file="%ModDir%/Texts/Portuguese/Portuguese.xml" />
+  <Text file="%ModDir%/Texts/Russian/Russian.xml" />
+  <Text file="%ModDir%/Texts/Spanish/Spanish.xml" />
+  <Text file="%ModDir%/Texts/Turkish/Turkish.xml" />
+</contentpackage>
