@@ -45,7 +45,7 @@
 
     iconcolors="0,145,14,255;0,145,14,255">
 
-    <icon texture="%ModDir%/Items/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
+    <icon texture="%ModDir%/Images/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
   </Affliction>
 
   <!-- Yellow -->
@@ -67,7 +67,7 @@
     
     iconcolors="224,193,38,255;224,193,38,255" >
 
-    <icon texture="%ModDir%/Items/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
+    <icon texture="%ModDir%/Images/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
   </Affliction>
 
   <!-- Red -->
@@ -88,7 +88,7 @@
     maxstrength="2"
 
     iconcolors="188,26,26,255;188,26,26,255">
-    <icon texture="%ModDir%/Items/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
+    <icon texture="%ModDir%/Images/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
   </Affliction>
 
   <!-- Black -->
@@ -110,6 +110,6 @@
 
     iconcolors="64,64,64,255;64,64,64,255">
 
-    <icon texture="%ModDir%/Items/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
+    <icon texture="%ModDir%/Images/MainAtlas.png" sheetindex="5,1" sheetelementsize="128,128" origin="0,0" />
   </Affliction>
 </Afflictions>
