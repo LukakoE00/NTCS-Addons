@@ -62,7 +62,7 @@ function NTCS_Cybernetics.CyberifyLimb(character, limbtype, iswaterproof)
 
 	NTCS.HF.SetAfflictionLimb(character, "tourniqueted", limbtype, 0)
 	NTCS.HF.SetAfflictionLimb(character, "surgeryincision", limbtype, 0)
-	NTCS.HF.SetAfflictionLimb(character, "clampedarteries", limbtype, 0)
+	NTCS.HF.SetAfflictionLimb(character, "clampedbleeding", limbtype, 0)
 	NTCS.HF.SetAfflictionLimb(character, "drilledbones", limbtype, 0)
 	NTCS.HF.SetAfflictionLimb(character, "retractedskin", limbtype, 0)
 	NTCS.HF.SetAfflictionLimb(character, "suturedi", limbtype, 0)
@@ -182,15 +182,15 @@ function NTCS_Cybernetics.ConvertDamageTypes(character, limbtype, IncomingDamage
 		-- /// apply changes ///
 
 		-- remove only what is really on the limb (incoming damage was already zeroed in the hook)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "burn", 0, onLimb.burn, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bleeding", 0, onLimb.bleeding, 0, 100)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "lacerations", 0, onLimb.lacerations, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "gunshotwound", 0, onLimb.gunshotwound, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bitewounds", 0, onLimb.bitewounds, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "explosiondamage", 0, onLimb.explosiondamage, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "blunttrauma", 0, onLimb.blunttrauma, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "internaldamage", 0, onLimb.internaldamage, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "foreignbody", 0, onLimb.foreignbody, 0, 100)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "burn", 0, AfflictionsAlreadyOnLimb.burn, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bleeding", 0, AfflictionsAlreadyOnLimb.bleeding, 0, 100)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "lacerations", 0, AfflictionsAlreadyOnLimb.lacerations, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "gunshotwound", 0, AfflictionsAlreadyOnLimb.gunshotwound, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bitewounds", 0, AfflictionsAlreadyOnLimb.bitewounds, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "explosiondamage", 0, AfflictionsAlreadyOnLimb.explosiondamage, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "blunttrauma", 0, AfflictionsAlreadyOnLimb.blunttrauma, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "internaldamage", 0, AfflictionsAlreadyOnLimb.internaldamage, 0, 200)
+		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "foreignbody", 0, AfflictionsAlreadyOnLimb.foreignbody, 0, 100)
 
 		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "ntc_loosescrews", loosescrews, prevloosescrews, 0, 100)
 		NTCS.HF.ApplyAfflictionChangeLimb(
