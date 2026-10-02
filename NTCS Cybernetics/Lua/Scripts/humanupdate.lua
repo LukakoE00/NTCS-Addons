@@ -317,13 +317,13 @@ local CyberneticBrain = AfflictionBuilder:New("ntc_cyberbrain"):SetUpdateAction(
 
         local Healing = math.max(HealingByMannitol, HealingNatural)
 
-        local CurrentNeurotrauma = C:GetAfflictionStrength("NTCS")
+        local CurrentNeurotrauma = C:GetAfflictionStrength("neurotrauma")
         if CurrentNeurotrauma > 100 then
             -- Unconscious due to NTCS and recovering, so double it again
             Healing = Healing * 2
         end
 
-        C:SetAffliction("NTCS", math.max(0, CurrentNeurotrauma - Healing * CyberOrganQuality * DeltaT))
+        C:SetAffliction("neurotrauma", math.max(0, CurrentNeurotrauma - Healing * CyberOrganQuality * DeltaT))
 
         -- Coma: triple the natural healing rate once the causes are treated
         local Coma = C:GetAfflictionStrength("coma")
