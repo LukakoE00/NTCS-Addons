@@ -87,7 +87,7 @@ function NTCS_Cybernetics.UpdateHuman(character, deltatime)
 		-- losing the limb
 		if materialloss >= 99 then
 			NTCS_Cybernetics.UncyberifyLimb(character, limbtype)
-			NTCS.NT.TraumamputateLimbMinusItem(character, limbtype)
+			NTCS.HF.TraumamputateLimbMinusItem(character, limbtype)
 			NTCS.HF.GiveItem(character, "ntcsfx_cyberdeath")
 			NTCS.HF.AddAfflictionLimb(character, "internaldamage", limbtype, NTCS.HF.RandomRange(30, 60))
 			NTCS.HF.AddAfflictionLimb(character, "foreignbody", limbtype, NTCS.HF.RandomRange(10, 25))
@@ -146,129 +146,6 @@ function NTCS_Cybernetics.UpdateHuman(character, deltatime)
 		NTCS.HF.SetAffliction(character, "ntc_cyberpsychosis_resistance", 100 * (1 - CyberPsychosisChance))
 	else
 		NTCS.HF.SetAffliction(character, "ntc_cyberpsychosis_resistance", 0)
-	end
-end
-
-function NTCS_Cybernetics.ConvertDamageTypes(character, limbtype)
-	if NTCS_Cybernetics.HF.LimbIsCyber(character, limbtype) then
-		-- /// fetch stats ///
-
-		-- physical damage types
-		local bleeding = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "bleeding", 0)
-		local burn = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "burn", 0)
-		local lacerations = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "lacerations", 0)
-		local gunshotwound = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "gunshotwound", 0)
-		local bitewounds = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "bitewounds", 0)
-		local explosiondamage = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "explosiondamage", 0)
-		local blunttrauma = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "blunttrauma", 0)
-		local internaldamage = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "internaldamage", 0)
-		local foreignbody = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "foreignbody", 0)
-
-		-- cyber stats
-		local loosescrews = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "ntc_loosescrews", 0)
-		local prevloosescrews = loosescrews
-		local damagedelectronics = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "ntc_damagedelectronics", 0)
-		local prevdamagedelectronics = damagedelectronics
-		local bentmetal = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "ntc_bentmetal", 0)
-		local prevbentmetal = bentmetal
-		local materialloss = NTCS.HF.GetAfflictionStrengthLimb(character, limbtype, "ntc_materialloss", 0)
-		local prevmaterialloss = materialloss
-
-		-- calculate damage conversion
-
-		local function damageChance(val, chance)
-			if val > 0.01 and NTCS.HF.Chance(chance) then return val end
-			return 0
-		end
-
-		loosescrews = loosescrews
-			+ 1
-				* (0.25 * damageChance(lacerations, 0.75) + 1 * damageChance(explosiondamage, 0.8) + 0.5 * damageChance(
-					blunttrauma,
-					0.5
-				) + 1 * damageChance(internaldamage, 0.75) + 0.5 * damageChance(bitewounds, 0.5) + 0.75 * damageChance(
-					foreignbody,
-					0.75
-				))
-
-		damagedelectronics = damagedelectronics
-			+ 0.5
-				* (1 + prevmaterialloss / 50)
-				* (2 * damageChance(burn, 0.75) + 0.75 * damageChance(gunshotwound, 0.85) + 0.25 * damageChance(
-					bitewounds,
-					0.5
-				) + 0.5 * damageChance(explosiondamage, 0.5) + 1 * damageChance(blunttrauma, 0.5) + 1 * damageChance(
-					internaldamage,
-					0.75
-				) + 0.75 * damageChance(foreignbody, 0.75))
-
-		bentmetal = bentmetal
-			+ 1
-				* (0.25 * damageChance(burn, 0.85) + 0.25 * damageChance(lacerations, 0.5) + 0.5 * damageChance(
-					bitewounds,
-					0.5
-				) + 1 * damageChance(explosiondamage, 0.85) + 2 * damageChance(blunttrauma, 0.75))
-
-		materialloss = materialloss
-			+ (1 + prevloosescrews / 50)
-				* (0.5 * damageChance(lacerations, 0.75) + 0.8 * damageChance(gunshotwound, 0.8) + 0.6 * damageChance(
-					bitewounds,
-					0.7
-				) + 1 * explosiondamage + 0.5 * damageChance(foreignbody, 0.8))
-
-		-- /// apply changes ///
-
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "burn", 0, burn, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bleeding", 0, bleeding, 0, 100)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "lacerations", 0, lacerations, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "gunshotwound", 0, gunshotwound, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "bitewounds", 0, bitewounds, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "explosiondamage", 0, explosiondamage, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "blunttrauma", 0, blunttrauma, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "internaldamage", 0, internaldamage, 0, 200)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "foreignbody", 0, foreignbody, 0, 100)
-
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "ntc_loosescrews", loosescrews, prevloosescrews, 0, 100)
-		NTCS.HF.ApplyAfflictionChangeLimb(
-			character,
-			limbtype,
-			"ntc_damagedelectronics",
-			damagedelectronics,
-			prevdamagedelectronics,
-			0,
-			100
-		)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "ntc_bentmetal", bentmetal, prevbentmetal, 0, 100)
-		NTCS.HF.ApplyAfflictionChangeLimb(character, limbtype, "ntc_materialloss", materialloss, prevmaterialloss, 0, 100)
-
-		NTCS.HF.DislocateLimb(character, limbtype, -1000)
-		NTCS.HF.BreakLimb(character, limbtype, -1000)
-		NTCS.HF.ArteryCutLimb(character, limbtype, -1000)
-
-		NTCS.HF.SetAfflictionLimb(character, "tourniqueted", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "surgeryincision", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "clampedbleeding", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "drilledbones", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "retractedskin", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "suturedi", limbtype, 0)
-		NTCS.HF.SetAfflictionLimb(character, "suturedw", limbtype, 0)
-
-		if limbtype == LimbType.LeftLeg then
-			NTCS.HF.SetAffliction(character, "tll_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sll_amputation", 0)
-		end
-		if limbtype == LimbType.RightLeg then
-			NTCS.HF.SetAffliction(character, "trl_amputation", 0)
-			NTCS.HF.SetAffliction(character, "srl_amputation", 0)
-		end
-		if limbtype == LimbType.LeftArm then
-			NTCS.HF.SetAffliction(character, "tla_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sla_amputation", 0)
-		end
-		if limbtype == LimbType.RightArm then
-			NTCS.HF.SetAffliction(character, "tra_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sra_amputation", 0)
-		end
 	end
 end
 
@@ -355,8 +232,6 @@ AfflictionLoader:Register(CyberneticLung)
 local CyberneticHeart = AfflictionBuilder:New("ntc_cyberheart"):SetUpdateAction(
     function(C, Identifier, Limb, DeltaT)
 
-        SetGainMultipliers(C, "ntc_cyberheart", "heartdamagegain")
-
         -- If in Stasis / CardiacArrest / Cooked, end early
         if C:GetBoolStat("stasis")
             or C:GetAfflictionStrength("cardiacarrest") >= 0.1
@@ -409,8 +284,6 @@ local CyberbrainRecoveryRates = {
 
 local CyberneticBrain = AfflictionBuilder:New("ntc_cyberbrain"):SetUpdateAction(
     function(C, Identifier, Limb, DeltaT)
-
-        SetGainMultipliers(C, "ntc_cyberbrain", "neurotraumagain")
 
         -- If in stasis, end early
         if C:GetBoolStat("stasis") then return end
