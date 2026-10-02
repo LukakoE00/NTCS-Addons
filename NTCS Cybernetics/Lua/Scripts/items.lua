@@ -434,7 +434,7 @@ local CyberArm = function (d)
     if
 		not (
 			NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype)
-			or NTCS.HF.HasAfflictionLimb(targetCharacter, "bonecut", limbtype, 99)
+			or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99)
 		)
 	then
 		return
@@ -475,7 +475,7 @@ local CyberArmWaterproof = function (d)
     if
 		not (
 			NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype)
-			or NTCS.HF.HasAfflictionLimb(targetCharacter, "bonecut", limbtype, 99)
+			or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99)
 		)
 	then
 		return
@@ -516,7 +516,7 @@ local CyberLeg = function (d)
     if
 		not (
 			NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype)
-			or NTCS.HF.HasAfflictionLimb(targetCharacter, "bonecut", limbtype, 99)
+			or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99)
 		)
 	then
 		return
@@ -557,7 +557,7 @@ local CyberLegWaterproof = function (d)
     if
 		not (
 			NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype)
-			or NTCS.HF.HasAfflictionLimb(targetCharacter, "bonecut", limbtype, 99)
+			or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99)
 		)
 	then
 		return
