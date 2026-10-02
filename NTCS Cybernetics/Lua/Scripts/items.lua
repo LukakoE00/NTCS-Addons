@@ -451,7 +451,7 @@ local CyberArm = function (d)
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
 	else
-		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", LimbType.Torso, NTCS.HF.RandomRange(15, 50))
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 	end
 end
@@ -492,7 +492,7 @@ local CyberArmWaterproof = function (d)
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
 	else
-		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", LimbType.Torso, NTCS.HF.RandomRange(15, 50))
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 	end
 end
@@ -533,7 +533,7 @@ local CyberLeg = function (d)
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
 	else
-		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", LimbType.Torso, NTCS.HF.RandomRange(15, 50))
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 	end
 end
@@ -574,7 +574,7 @@ local CyberLegWaterproof = function (d)
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
 	else
-		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", LimbType.Torso, NTCS.HF.RandomRange(15, 50))
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, NTCS.HF.RandomRange(15, 50))
 		NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 	end
 end
