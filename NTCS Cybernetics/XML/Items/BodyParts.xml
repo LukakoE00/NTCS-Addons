@@ -185,7 +185,7 @@
                 <Item identifier="fpgacircuit" amount="1" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="5,479,79,52" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="5,479,79,52" depth="0.6" origin="0.5,0.5" />
             <Body width="39" height="18" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect">
@@ -245,7 +245,7 @@
                 <Item identifier="plastic" amount="3" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="5,479,79,52" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="5,479,79,52" depth="0.6" origin="0.5,0.5" />
             <Body width="39" height="18" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
@@ -276,7 +276,7 @@
             <Item identifier="fpgacircuit" amount="1" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="193,481,32,47" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="193,481,32,47" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="20" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect">
@@ -336,7 +336,7 @@
                 <Item identifier="plastic" amount="3" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="193,481,32,47" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="193,481,32,47" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="20" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
@@ -367,7 +367,7 @@
                 <Item identifier="fpgacircuit" amount="1" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="91,480,84,84" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="91,480,84,84" depth="0.6" origin="0.5,0.5" />
             <Body width="30" height="30" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect">
@@ -427,7 +427,7 @@
                 <Item identifier="plastic" amount="3" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="91,480,84,84" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="91,480,84,84" depth="0.6" origin="0.5,0.5" />
             <Body width="30" height="30" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
@@ -458,7 +458,7 @@
                 <Item identifier="fpgacircuit" amount="1" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="238,479,28,54" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="238,479,28,54" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="22" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect">
@@ -518,7 +518,7 @@
                 <Item identifier="plastic" amount="3" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="238,479,28,54" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="238,479,28,54" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="22" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
@@ -548,7 +548,7 @@
             <Item identifier="fpgacircuit" amount="3" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="272,480,78,60" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="272,480,78,60" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="22" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
@@ -578,7 +578,7 @@
                 <Item identifier="fpgacircuit" amount="4" />
             </Deconstruct>
 
-            <Sprite texture="%ModDir:3190189044%/Images/InGameItemIconAtlas.png" sourcerect="272,480,78,60" depth="0.6" origin="0.5,0.5" />
+            <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="272,480,78,60" depth="0.6" origin="0.5,0.5" />
             <Body width="14" height="22" density="10" />
 
             <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"/>
