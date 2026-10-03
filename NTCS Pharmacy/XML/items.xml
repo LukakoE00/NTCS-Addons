@@ -2,6 +2,7 @@
 <Override>
   <Items>
     <!-- Courtesy of Grass's Pill bottles mod -->
+    <!-- Base Custom Pill -->
     <Item name="" identifier="custompill" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical,pill" description="" useinhealthinterface="true" scale="0.1" impactsoundtag="impact_pill" maxstacksize="16">
       <!-- <PreferredContainer primary="medcab" spawnprobability="0" />
       <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="8" spawnprobability="0.9" />
@@ -9,40 +10,52 @@
       <Price baseprice="50" soldbydefault="false">
         <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="16" />
       </Price>
+
       <Fabricate suitablefabricators="vendingmachine" requiredtime="1" requiredmoney="50" fabricationlimitmin="5" fabricationlimitmax="10" />
+
       <Deconstruct time="5" />
+
       <InventoryIcon texture="%ModDir%/Images/InventoryItemIconAtlas.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
       <Sprite texture="%ModDir%/Images/droppedpills.png" sourcerect="103,0,113,31" depth="0.6" origin="0.5,0.5" />
       <Body width="50" height="30" density="8" />
+      
       <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
         <!-- Remove the item when fully used -->
         <StatusEffect type="OnBroken" target="This">
           <Remove />
         </StatusEffect>
+
         <!-- randomize effects if spawned outside of the chem master -->
         <StatusEffect type="OnSpawn" target="This" delay="0.5" stackable="false">
           <LuaHook name="NTP.OnPillSpawned" />
         </StatusEffect>
       </Holdable>
     </Item>
+
+    <!-- Horse Pill -->
     <Item name="" identifier="custompill_horsepill" variantof="custompill" scale="0.09" impactsoundtag="impact_horsepill" maxstacksize="8">
       <InventoryIcon texture="%ModDir%/Images/InventoryItemIconAtlas.png" sourcerect="64,0,64,64" origin="0.5,0.5" />
       <Sprite texture="%ModDir%/Images/droppedpills.png" sourcerect="0,0,103,42" depth="0.6" origin="0.5,0.5" />
     </Item>
+
+    <!-- Tablets -->
     <Item name="" identifier="custompill_tablets" variantof="custompill" scale="0.09" impactsoundtag="impact_tabletpill" maxstacksize="32">
       <InventoryIcon texture="%ModDir%/Images/InventoryItemIconAtlas.png" sourcerect="128,0,64,64" origin="0.5,0.5" />
       <Sprite texture="%ModDir%/Images/droppedpills.png" sourcerect="216,0,122,44" depth="0.6" origin="0.5,0.5" />
     </Item>
+
     <!-- ChemMaster 2000 -->
     <Item name="" identifier="chemmaster" tags="chemmaster" category="Machine" linkable="true" allowedlinks="deconstructor,medcabinet,locker" scale="0.3" description="" damagedbyexplosions="true" explosiondamagemultiplier="0.2" isshootable="true">
       <Price baseprice="1500" soldbydefault="false">
         <Price storeidentifier="merchantengineering" sold="true" minavailable="1" />
       </Price>
+
       <Deconstruct time="30">
         <Item identifier="plastic" />
         <Item identifier="steel" />
         <Item identifier="titaniumaluminiumalloy" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="50">
         <RequiredSkill identifier="medical" level="50" />
         <RequiredItem identifier="fpgacircuit" />
@@ -51,14 +64,17 @@
         <RequiredItem identifier="aluminium" />
         <RequiredItem identifier="titaniumaluminiumalloy" />
       </Fabricate>
+
       <Sprite texture="Content/Items/Fabricators/FabricatorsAndDeconstructors.png" depth="0.8" sourcerect="0,0,336,288" origin="0.5,0.5" />
       <InventoryIcon texture="Content/Items/Fabricators/FabricatorsAndDeconstructors.png" sourcerect="0,0,336,288" origin="0.5,0.5" />
       <BrokenSprite texture="Content/Items/Fabricators/FabricatorsAndDeconstructors.png" sourcerect="336,0,336,288" origin="0.5,0.5" depth="0.8" maxcondition="80" fadein="true" />
       <BrokenSprite texture="Content/Items/Fabricators/FabricatorsAndDeconstructors.png" sourcerect="672,0,336,288" origin="0.5,0.5" depth="0.8" maxcondition="0" />
       <Body radius="45" width="34" density="15" />
+
       <LightComponent range="10.0" lightcolor="255,255,255,0" powerconsumption="5" IsOn="true" castshadows="false" allowingameediting="false">
         <sprite texture="Content/Items/Command/navigatorLights.png" depth="0.025" sourcerect="688,339,336,288" alpha="1.0" />
       </LightComponent>
+
       <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
         <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
         <RequiredSkill identifier="electrical" level="55" />
@@ -71,6 +87,7 @@
         <RequiredItem items="screwdriver" type="Equipped" />
         <input name="power_in" displayname="connection.powerin" />
       </ConnectionPanel>
+
       <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairScrewdriver" hudpriority="10">
         <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,216" anchor="Center" relativeoffset="0.0,0.27" style="ItemUI" />
         <RequiredSkill identifier="mechanical" level="55" />
@@ -84,9 +101,11 @@
           <Affliction identifier="stun" strength="5" />
         </StatusEffect>
       </Repairable>
+
       <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="8.0" aimpos="40,-5" handle1="0,0" attachable="true" aimable="true">
         <RequiredItem items="wrench" type="Equipped" />
       </Holdable>
+
       <ItemContainer capacity="14" slotsperrow="7" canbeselected="true" hideitems="true" msg="ItemMsgInteractSelect">
         <GuiFrame relativesize="0.3,0.2" anchor="Center" style="ItemUI" />
         <Containable items="smallitem,mediumitem" />
@@ -99,6 +118,7 @@
         <SlotIcon slotindex="6" texture="%ModDir%/Images/InventoryItemIconAtlas.png" sourcerect="114,463,30,48" origin="0.5,0.45" />
         <SlotIcon slotindex="13" texture="%ModDir%/Images/InventoryItemIconAtlas.png" sourcerect="149,473,42,39" origin="0.5,0.45" />
       </ItemContainer>
+
       <CustomInterface canbeselected="true" allowuioverlap="true">
         <GuiFrame relativesize="0.2,0.2" anchor="CenterRight" pivot="CenterLeft" relativeoffset="0.36,0.001" style="ItemUI" linkuitocomponent="ItemContainer" />
         <Button text="label.cm_makeone">
@@ -106,38 +126,47 @@
             <LuaHook name="NTP.ChemMaster.makeone" />
           </StatusEffect>
         </Button>
+
         <Button text="label.cm_makeall">
           <StatusEffect target="This" type="OnUse">
             <LuaHook name="NTP.ChemMaster.makeall" />
           </StatusEffect>
         </Button>
+
         <TextBox text="label.cm_description" propertyname="OriginalOutpost" maxtextlength="64" />
       </CustomInterface>
     </Item>
+
     <!-- Chemalyzer -->
     <Item name="" identifier="chemalyzer" description="" category="Equipment" Tags="smallitem" Scale="0.5" cargocontaineridentifier="explosivecrate" impactsoundtag="impact_metal_light">
       <PreferredContainer primary="medcab" spawnprobability="0" />
       <PreferredContainer secondary="locker" />
+
       <Price baseprice="100" soldbydefault="false">
         <Price storeidentifier="merchantmedical" minavailable="1" sold="true" />
       </Price>
+
       <Deconstruct time="15">
         <Item identifier="plastic" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="electrical" level="50" />
         <RequiredItem identifier="fpgacircuit" />
         <RequiredItem identifier="plastic" />
         <RequiredItem identifier="fulgurium" />
       </Fabricate>
+
       <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="704,64,64,64" origin="0.5,0.5" />
       <Sprite texture="Content/Items/Weapons/weapons_new.png" depth="0.8" sourcerect="215,242,41,21" origin="0.5,0.5" />
       <Body width="40" height="22" density="20" />
       <Holdable selectkey="Action" pickkey="Use" slots="Any,RightHand,LeftHand" aimpos="35,-10" handle1="0,0" />
+
       <ItemContainer canbeselected="true" capacity="1" maxstacksize="1">
         <GuiFrame relativesize="0.2,0.25" anchor="Center" minsize="140,170" maxsize="280,280" style="ItemUI" />
         <Containable items="pill" />
       </ItemContainer>
+
       <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
         <GuiFrame relativesize="0.2,0.2" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.006,-0.05" style="ItemUI" />
         <Button text="label.ca_analyze">
@@ -145,39 +174,49 @@
             <LuaHook name="NTP.Chemalyzer.analyze" />
           </StatusEffect>
         </Button>
+
         <Button text="label.ca_rename">
           <StatusEffect target="This" type="OnUse">
             <LuaHook name="NTP.Chemalyzer.rename" />
           </StatusEffect>
         </Button>
+
         <Button text="missiontype.scanalienruins">
           <StatusEffect target="This" type="OnUse">
             <LuaHook name="NTP.Chemalyzer.automatic" />
           </StatusEffect>
         </Button>
+
         <TextBox text="label.cm_description" propertyname="OriginalOutpost" maxtextlength="64" />
       </CustomInterface>
     </Item>
-    <!-- /// new containers /// -->
+
+    <!-- Toolbox: Antidote -->
     <Item name="" identifier="antidotetoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.5" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="">
       <PreferredContainer secondary="wreckstoragecab" spawnprobability="0.05" />
       <PreferredContainer secondary="locker" />
+
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="87,87,84,67" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="1" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
           <Affliction identifier="stun" strength="0.6" />
+
           <StatusEffect type="OnUse" target="UseTarget">
             <Conditional entitytype="eq Character" />
             <Sound file="Content/Items/Weapons/Smack1.ogg" selectionmode="random" range="500" />
@@ -185,30 +224,40 @@
           </StatusEffect>
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="12" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem" excludeditems="toolbelt,toolbox" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Toolbox: Machine -->
     <Item name="" identifier="machinetoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.5" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="">
       <PreferredContainer secondary="wreckstoragecab" spawnprobability="0.05" />
       <PreferredContainer secondary="locker" />
+      
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="173,87,84,67" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="1" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
           <Affliction identifier="stun" strength="0.6" />
+
           <StatusEffect type="OnUse" target="UseTarget">
             <Conditional entitytype="eq Character" />
             <Sound file="Content/Items/Weapons/Smack1.ogg" selectionmode="random" range="500" />
@@ -216,26 +265,35 @@
           </StatusEffect>
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="12" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem" excludeditems="toolbelt,toolbox" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Toolbox: Bone -->
     <Item name="" identifier="bonetoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.5" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="">
       <PreferredContainer secondary="wreckstoragecab" spawnprobability="0.05" />
       <PreferredContainer secondary="locker" />
+
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+      
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="259,87,84,67" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="1" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
@@ -247,26 +305,35 @@
           </StatusEffect>
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="12" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem" excludeditems="toolbelt,toolbox" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Toolbox: Biohazard -->
     <Item name="" identifier="biohazardtoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.5" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="">
       <PreferredContainer secondary="wreckstoragecab" spawnprobability="0.05" />
       <PreferredContainer secondary="locker" />
+
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="345,87,84,67" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="1" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
@@ -278,26 +345,35 @@
           </StatusEffect>
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="12" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem" excludeditems="toolbelt,toolbox" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Toolbox: Buffs -->
     <Item name="" identifier="bufftoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.5" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="">
       <PreferredContainer secondary="wreckstoragecab" spawnprobability="0.05" />
       <PreferredContainer secondary="locker" />
+
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="431,87,84,67" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="1" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
@@ -309,173 +385,180 @@
           </StatusEffect>
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="12" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem" excludeditems="toolbelt,toolbox" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Crate: Surgery -->
     <Item name="" identifier="surgerycrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="1,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
+
+    <!-- Crate: Antidote -->
     <Item name="" identifier="antidotecrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="149,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
+
+    <!-- Crate: Machine -->
     <Item name="" identifier="machinecrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="297,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
+
+    <!-- Crate: Bone -->
     <Item name="" identifier="bonecrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="445,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
+
+    <!-- Crate: Biohazard -->
     <Item name="" identifier="biohazardcrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="593,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
+
+    <!-- Crate: Buffs -->
     <Item name="" identifier="buffcrate" tags="crate,allowcleanup" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy">
+      <Price baseprice="25" soldbydefault="false">
+        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
+      </Price>
+      
       <Deconstruct time="20">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25" soldbydefault="false">
-        <Price storeidentifier="merchantengineering" minavailable="4" sold="true" />
-      </Price>
+
       <Sprite texture="%ModDir%/Images/InGameItemIconAtlas.png" sourcerect="741,1,146,83" origin="0.5,0.5" depth="0.6" />
       <Body width="150" height="80" density="50" />
       <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
       <ItemContainer capacity="20" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
+
         <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,cargoscooter" />
       </ItemContainer>
     </Item>
-    <Item name="." identifier="ntpsfx_chemaccept" description="." hideinmenus="true">
-      <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="0,0,1,1" origin="0.5,0.5" />
-      <Sprite texture="Content/Items/Medical/Medicines.png" sourcerect="0,0,1,1" depth="0.6" origin="0.5,0.5" />
-      <ItemComponent capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
-        <StatusEffect type="OnSpawn" target="This" disabledeltatime="true" stackable="false">
-          <Sound file="%ModDir%/Sound/chemaccept.ogg" range="400" volume="0.5" />
-        </StatusEffect>
-        <StatusEffect type="always" target="This" disabledeltatime="true" delay="1" stackable="false">
-          <Remove />
-        </StatusEffect>
-      </ItemComponent>
-    </Item>
-    <Item name="." identifier="ntpsfx_chemerror" description="." hideinmenus="true">
-      <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="0,0,1,1" origin="0.5,0.5" />
-      <Sprite texture="Content/Items/Medical/Medicines.png" sourcerect="0,0,1,1" depth="0.6" origin="0.5,0.5" />
-      <ItemComponent capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
-        <StatusEffect type="OnSpawn" target="This" disabledeltatime="true" stackable="false">
-          <Sound file="%ModDir%/Sound/chemerror.ogg" range="400" volume="0.5" />
-        </StatusEffect>
-        <StatusEffect type="always" target="This" disabledeltatime="true" delay="1" stackable="false">
-          <Remove />
-        </StatusEffect>
-      </ItemComponent>
-    </Item>
-    <Item name="." identifier="ntpsfx_chemfinish" description="." hideinmenus="true">
-      <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="0,0,1,1" origin="0.5,0.5" />
-      <Sprite texture="Content/Items/Medical/Medicines.png" sourcerect="0,0,1,1" depth="0.6" origin="0.5,0.5" />
-      <ItemComponent capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
-        <StatusEffect type="OnSpawn" target="This" disabledeltatime="true" stackable="false">
-          <Sound file="%ModDir%/Sound/chemfinish1.ogg" range="400" volume="0.5" selectionmode="Random" />
-          <Sound file="%ModDir%/Sound/chemfinish2.ogg" />
-          <Sound file="%ModDir%/Sound/chemfinish3.ogg" />
-        </StatusEffect>
-        <StatusEffect type="always" target="This" disabledeltatime="true" delay="1" stackable="false">
-          <Remove />
-        </StatusEffect>
-      </ItemComponent>
-    </Item>
+
     <!-- Courtesy of Dornam's NT pill containers mod -->
+    <!-- Pill Container -->
     <Item name="Pill container" identifier="pilltoolbox" category="Equipment" tags="mediumitem,mobilecontainer,tool,toolbox,medical" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.70" fireproof="true" impactsoundtag="impact_metal_heavy" RequireAimToUse="True" description="Pill box with numerous small compartments for holding stacks of pills">
       <PreferredContainer primary="medcab" />
       <PreferredContainer secondary="locker" />
+
+      <Price baseprice="25">
+        <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="3" />
+      </Price>
+
       <Deconstruct time="10">
         <Item identifier="steel" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="20">
         <RequiredSkill identifier="mechanical" level="20" />
         <Item identifier="steel" amount="2" />
       </Fabricate>
-      <Price baseprice="25">
-        <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="3" />
-      </Price>
+
       <Sprite texture="%ModDir%/images/pillbox.png" sourcerect="0,0,59,47" origin="0.5,0.5" depth="0.6" />
       <Body width="90" height="60" density="20" />
+
       <MeleeWeapon slots="RightHand,LeftHand" controlpose="true" aimpos="45,10" handle1="0,18" holdangle="90" reload="1" range="50" combatpriority="6" msg="ItemMsgPickUpSelect">
         <Attack structuredamage="0" itemdamage="5" targetimpulse="2">
           <Affliction identifier="blunttrauma" strength="2" />
@@ -483,29 +566,38 @@
           <Sound file="Content/Items/Weapons/Smack2.ogg" range="800" />
         </Attack>
       </MeleeWeapon>
+
       <ItemContainer capacity="24" keepopenwhenequipped="true" movableframe="true">
         <Containable items="pill,chemalyzer" />
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
     <!-- Courtesy of Grass's Pill bottles mod -->
+    <!-- Regular Pill Bottle -->
     <Item name="" identifier="pillbottleregular" category="Equipment" maxstacksize="1" maxstacksizecharacterinventory="1" cargocontaineridentifier="medicalcrate" tags="smallitem,medical,tool" Scale="0.5" showcontentsintooltip="true" waterproof="true" impacttolerance="0.1" impactsoundtag="impact_pillbottle">
       <PreferredContainer secondary="wreckmedcab,abandonedmedcab" amount="1" spawnprobability="0.1" />
       <PreferredContainer secondary="outposttrashcan" amount="1" spawnprobability="0.08" />
       <PreferredContainer primary="medcab" secondary="medcontainer" />
+
       <Price baseprice="50">
         <Price storeidentifier="merchantmedical" amount="10" multiplier="1.0" />
       </Price>
+
       <Deconstruct time="2">
         <Item identifier="plastic" outcondition="0.5" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="4">
         <RequiredSkill identifier="medical" level="10" />
         <RequiredItem identifier="plastic" />
       </Fabricate>
+
       <InventoryIcon texture="%ModDir%/Images/bottles.png" sourcerect="26,59,59,59" origin="0.5,0.5" />
       <Sprite texture="%ModDir%/Images/bottles.png" sourcerect="0,59,24,42" depth="0.55" origin="0.5,0.5" />
       <Body width="20" height="34" density="10" />
+
       <Holdable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect" />
       <ItemContainer capacity="6" maxstacksize="16">
         <Containable items="custompill" />
@@ -515,6 +607,7 @@
         <SlotIcon slotindex="3" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
         <SlotIcon slotindex="4" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
         <SlotIcon slotindex="5" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+
         <StatusEffect type="OnImpact" target="This" AllowWhenBroken="True">
           <RequiredItem Items="custompill" type="Contained" />
           <Sound file="%ModDir%/Sound/pillbottledrop1.ogg" range="200" volume="5" selectionmode="random" />
@@ -522,26 +615,34 @@
           <Sound file="%ModDir%/Sound/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
         </StatusEffect>
       </ItemContainer>
+
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
+
+    <!-- Advanced Pill Bottle -->
     <Item name="" identifier="pillbottleadvanced" category="Equipment" maxstacksize="1" maxstacksizecharacterinventory="1" cargocontaineridentifier="medicalcrate" tags="smallitem,medical,tool,locker,container,securecontainer" HideConditionBar="true" Scale="0.6" waterproof="true" impacttolerance="0.1" impactsoundtag="impact_pillbottle">
       <PreferredContainer secondary="wreckmedcab,abandonedmedcab" amount="1" spawnprobability="0.1" />
       <PreferredContainer secondary="outposttrashcan" amount="1" spawnprobability="0.05" />
       <PreferredContainer primary="medcab" secondary="medcontainer" />
+
       <Price baseprice="55">
         <Price storeidentifier="merchantmedical" amount="10" multiplier="1.0" />
       </Price>
+
       <Deconstruct time="2">
         <Item identifier="plastic" outcondition="0.5" />
       </Deconstruct>
+
       <Fabricate suitablefabricators="fabricator" requiredtime="4">
         <RequiredSkill identifier="medical" level="50" />
         <RequiredItem identifier="plastic" />
       </Fabricate>
+
       <InventoryIcon texture="%ModDir%/Images/bottles.png" sourcerect="0,0,59,59" origin="0.5,0.52" />
       <Sprite texture="%ModDir%/Images/bottles.png" sourcerect="59,0,25,42" depth="0.55" origin="0.5,0.52" />
       <BrokenSprite texture="%ModDir%/Images/bottles.png" sourcerect="59,6,25,36" depth="0.55" origin="0.5,0.44" />
       <Body width="20" height="30" density="10" />
+
       <Holdable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect" />
       <ItemContainer capacity="9" slotsperrow="3" maxstacksize="16" hideitems="true" containedstateindicatorslot="0" AccessOnlyWhenBroken="true" ShowContainedStateIndicator="False" AllowSwappingContainedItems="false">
         <Containable items="custompill" />
@@ -554,6 +655,7 @@
         <SlotIcon slotindex="6" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
         <SlotIcon slotindex="7" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
         <SlotIcon slotindex="8" texture="%ModDir%/Images/pillui.png" sourcerect="0,0,64,64" origin="0.5,0.5" />
+
         <StatusEffect type="OnImpact" target="This" AllowWhenBroken="True">
           <RequiredItem items="custompill" type="Contained" />
           <Sound file="%ModDir%/Sound/pillbottledrop1.ogg" range="200" volume="5" loop="false" selectionmode="random" />
@@ -561,33 +663,40 @@
           <Sound file="%ModDir%/Sound/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
         </StatusEffect>
       </ItemContainer>
+
       <GreaterComponent canbeselected="false" canbepicked="false" allowingameediting="false" timeframe="0" drawhudwhenequipped="false" MaxOutputLength="1" />
       <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true" AllowWhenBroken="true">
         <GuiFrame relativesize="0.12,0.1" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.53,0.405" style="ItemUI" />
+        
         <Button text="Open/Close" AllowWhenBroken="true">
           <StatusEffect type="OnUse" target="This,Character" condition="100" setvalue="true" disabledeltatime="true" AllowWhenBroken="true" comparison="and">
             <Conditional timeframe="gt 0" />
             <Conditional SkillRequirement="true" Medical="gt 49" />
             <Sound file="%ModDir%/Sound/screwbottleclose.ogg" range="200" volume="5" />
           </StatusEffect>
+
           <StatusEffect type="OnUse" target="This,Character" condition="0" setvalue="true" disabledeltatime="true" AllowWhenBroken="true" comparison="and">
             <Conditional timeframe="lt 1" />
             <Conditional SkillRequirement="true" Medical="gt 49" />
             <Sound file="%ModDir%/Sound/screwbottleopen.ogg" range="200" volume="5" />
           </StatusEffect>
+
           <StatusEffect type="OnUse" target="This,Character" timeframe="1" disabledeltatime="true" AllowWhenBroken="true">
             <Conditional SkillRequirement="true" Medical="gt 49" />
           </StatusEffect>
+
           <StatusEffect type="OnUse" target="This,Character" timeframe="0" setvalue="true" disabledeltatime="true" AllowWhenBroken="true" comparison="and">
             <Conditional SkillRequirement="true" Medical="gt 49" />
             <Conditional timeframe="gt 1" />
           </StatusEffect>
+
           <StatusEffect type="OnUse" target="This,Limb" targetlimbs="LeftHand,RightHand" disabledeltatime="true" AllowWhenBroken="true">
             <Conditional SkillRequirement="true" Medical="lt 50" />
             <Sound file="%ModDir%/Sound/openfail.ogg" range="200" volume="5" />
           </StatusEffect>
         </Button>
       </CustomInterface>
+
       <SkillRequirementHint identifier="medical" level="50" />
       <aitarget sightrange="1000" soundrange="1000" fadeouttime="2" />
     </Item>
