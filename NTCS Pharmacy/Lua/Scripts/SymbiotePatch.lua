@@ -1,4 +1,4 @@
-NTP.PillData.items.calyxanide = {
+NTCS_Pharmacy.PillData.items.calyxanide = {
 	types = { "active" },
 	skillrequirement = 38,
 	effects = {
@@ -11,7 +11,7 @@ NTP.PillData.items.calyxanide = {
 	},
 }
 
-NTP.PillData.combos.antihusk = {
+NTCS_Pharmacy.PillData.combos.antihusk = {
 	requireditems = { { id = "antibiotics" }, { id = "calyxanide" } },
 	forbiddenitems = {},
 	coloroverride = { 22, 204, 143 },
