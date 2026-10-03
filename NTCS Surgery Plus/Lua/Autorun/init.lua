@@ -1,34 +1,55 @@
-NTSP = {} -- Neurotrauma Surgery Plus
-NTSP.Name = "NT Surgery Plus"
-NTSP.Version = "A1.2.6"
-NTSP.VersionNum = 01020600
-NTSP.MinNTVersion = "A1.7.12"
-NTSP.MinNTVersionNum = 01080700
-NTSP.Path = table.pack(...)[1]
-Timer.Wait(function()
-	if NTC ~= nil and NTC.RegisterExpansion ~= nil then
-		NTC.RegisterExpansion(NTSP)
-	end
-end, 1)
+NTCS_SurgeryPlus = {}
+NTCS_SurgeryPlus.Name = "NT Surgery Plus"
+NTCS_SurgeryPlus.Version = "A1.2.6"
+NTCS_SurgeryPlus.VersionNum = 01020600
+NTCS_SurgeryPlus.MinNTVersion = "A1.7.12"
+NTCS_SurgeryPlus.MinNTVersionNum = 01080700
+NTCS_SurgeryPlus.Path = table.pack(...)[1]
 
--- server-side code (also run in singleplayer)
+-- Initialise C# Classes needed
+dofile(NTCS_SurgeryPlus.Path.."/Lua/Library/NeurotraumaLib.lua")
+NTCS.Info.RegisterAddon(NTCS_SurgeryPlus)
+
+local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
+local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
+
+-- Serverside + Singleplayer code
 if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	Timer.Wait(function()
-		if NTC == nil then
-			print("Error loading NT Surgery Plus: It appears Neurotrauma isn't loaded!")
+
+		-- NT is the table initialised in Lua Neurotrauma and not present in NTCS. If this returns true, NT Lua is active.
+		if NT ~= nil then
+			print(NTLuaEnabledMsg) 
+			Game.SendMessage(NTLuaEnabledMsg, ChatMessageType.Server)
 			return
 		end
 
-		dofile(NTSP.Path .. "/Lua/Scripts/humanupdate.lua")
-		dofile(NTSP.Path .. "/Lua/Scripts/items.lua")
-		dofile(NTSP.Path .. "/Lua/Scripts/addidtags.lua")
-		dofile(NTSP.Path .. "/Lua/Scripts/doctorskill.lua")
+		-- If Info cannot be found it's because the initialization line above did not trigger since NTCS isn't active.
+		if NTCS.Info == nil then
+			print(NTCSNotEnabledMsg)
+			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
+			return
+		end
 
-		NTC.AddPreHumanUpdateHook(NTSP.PreUpdateHuman)
-		NTC.AddHumanUpdateHook(NTSP.PostUpdateHuman)
+		dofile(NTCS_SurgeryPlus.Path .. "/Lua/Scripts/HumanUpdate.lua")
+		dofile(NTCS_SurgeryPlus.Path .. "/Lua/Scripts/Items.lua")
+		dofile(NTCS_SurgeryPlus.Path .. "/Lua/Scripts/AddIDTags.lua")
+		dofile(NTCS_SurgeryPlus.Path .. "/Lua/Scripts/DoctorSkill.lua")
+
+		-- Hook a function to NTCS Pre-HumanUpdate
+		Hook.Add("Neurotrauma.HumanUpdate.PreHook", "NTCS_Cybernetics.UpdateHuman", function(character, deltaTime)
+			if character == nil or character.Human == nil or character.Human.Removed then return end
+			NTCS_SurgeryPlus.PreUpdateHuman(character.Human, deltaTime)
+		end)
+
+		-- Hook a function to NTCS Post-HumanUpdate
+		Hook.Add("Neurotrauma.HumanUpdate.PostHook", "NTCS_Cybernetics.UpdateHuman", function(character, deltaTime)
+			if character == nil or character.Human == nil or character.Human.Removed then return end
+			NTCS_SurgeryPlus.PostUpdateHuman(character.Human, deltaTime)
+		end)
 	end, 1)
 end
 
 Timer.Wait(function()
-	dofile(NTSP.Path .. "/Lua/Scripts/configdata.lua")
+	dofile(NTCS_SurgeryPlus.Path .. "/Lua/Scripts/ConfigData.lua")
 end, 1)
