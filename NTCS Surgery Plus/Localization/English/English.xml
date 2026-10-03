@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <infotexts language="English" nowhitespace="false" translatedname="English">
+  <!-- CONFIG ENTRIES -->
+  <ntconfigname.enableSurgicalInfection>Enable Surgical Infection</ntconfigname.enableSurgicalInfection>
+  <ntconfigdescription.enableSurgicalInfection>Should characters get infections / sepsis from unsanitary surgery?</ntconfigdescription.enableSurgicalInfection>
+
+  <ntconfigname.enableSurgerySkill>Enable Surgical Skill Usage</ntconfigname.enableSurgerySkill>
+  <ntconfigdescription.enableSurgerySkill>Should surgical actions require Surgery Skill instead of Medical Skill?</ntconfigdescription.enableSurgerySkill>
+
   <!-- ITEMS -->
   <entityname.mannitolplus>Mannitol plus</entityname.mannitolplus>
   <entitydescription.mannitolplus>An improved version of mannitol. It is used to quickly treat neurotrauma.</entitydescription.mannitolplus>
@@ -21,6 +28,7 @@
   <entitydescription.manualtriagetag>A manual triage tag. Apply to the legs for green, arms for yellow, torso for red and head for black.</entitydescription.manualtriagetag>
   <entityname.experimentaltreatment>Experimental treatment</entityname.experimentaltreatment>
   <entitydescription.experimentaltreatment>A highly experimental drug that can cause either a little (or a lot) of good (or bad).</entitydescription.experimentaltreatment>
+  
   <!-- AFFLICTIONS -->
   <afflictionname.preventativepermit>Preventative Permit</afflictionname.preventativepermit>
   <afflictiondescription.preventativepermit>Serious injury is less likely.</afflictiondescription.preventativepermit>
@@ -34,10 +42,12 @@
   <afflictiondescription.triagetag_red>The patient has been gived the "immediate" triage tag. They require immediate treatment.</afflictiondescription.triagetag_red>
   <afflictionname.triagetag_black>Tagged: Deceased</afflictionname.triagetag_black>
   <afflictiondescription.triagetag_black>The patient has been gived the "deceased" triage tag. Medical attention is better spent elsewhere. They are as good as gone.</afflictiondescription.triagetag_black>
+  
   <!-- JOBS -->
   <jobname.surgeon>Surgeon</jobname.surgeon>
   <jobdescription.surgeon>While the medical doctor is better suited for first aid and quick response, the surgeon specializes in the optimization of surgical procedures. Lower risk of infection, faster execution, if it's related to surgery, the surgeon has it.</jobdescription.surgeon>
   <skillname.surgery>Surgery</skillname.surgery>
+  
   <!-- TALENTS -->
   <talenttree.ethicalmedicine>Ethical Medicine</talenttree.ethicalmedicine>
   <talenttree.dabblingpharmacist>Dabbling Pharmacist</talenttree.dabblingpharmacist>
