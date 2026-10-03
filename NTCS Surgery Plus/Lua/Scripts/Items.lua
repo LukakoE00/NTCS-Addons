@@ -1,3 +1,5 @@
+local itemLoader = NTCS.ItemFunctionLoader("NTCS_SurgeryPlus")
+
 local experimentalEffects = {
 	-- resistances and buffs
 	vigor = {
@@ -65,7 +67,7 @@ local experimentalEffects = {
 			{ identifier = "bitewounds", minstrength = -20, maxstrength = -100, limbspecific = true },
 			{ identifier = "lacerations", minstrength = -20, maxstrength = -100, limbspecific = true },
 			{ identifier = "organdamage", minstrength = -20, maxstrength = -100, limbspecific = false },
-			{ identifier = "cerebralhypoxia", minstrength = -20, maxstrength = -100, limbspecific = false },
+			{ identifier = "neurotrauma", minstrength = -20, maxstrength = -100, limbspecific = false },
 			{ identifier = "bloodloss", minstrength = -20, maxstrength = -100, limbspecific = false },
 			{ identifier = "blunttrauma", minstrength = -20, maxstrength = -100, limbspecific = true },
 			{ identifier = "sepsis", minstrength = -200, maxstrength = -200, limbspecific = false },
@@ -121,179 +123,213 @@ local experimentalEffects = {
 	},
 }
 
-Timer.Wait(function()
-	NT.ItemMethods.artificialbrain = function(item, usingCharacter, targetCharacter, limb)
-		local limbtype = limb.type
-		if HF.HasAffliction(targetCharacter, "brainremoved", 1) and limbtype == LimbType.Head then
-			HF.SetAffliction(targetCharacter, "cerebralhypoxia", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "brainremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "artificialbrain", 100, usingCharacter)
+-- Artificial Brain
+local ArtificialBrain = function(d)
+	local item = d.item
+    local usingCharacter = d.user.Human
+    local targetCharacter = d.target.Human
+    local targetLimb = d.targetLimb
 
-			HF.RemoveItem(item)
-		end
+	local limbtype = targetLimb.type
+
+	if NTCS.HF.HasAffliction(targetCharacter, "brainremoved", 1) and limbtype == LimbType.Head then
+		NTCS.HF.SetAffliction(targetCharacter, "neurotrauma", 0, usingCharacter)
+		NTCS.HF.SetAffliction(targetCharacter, "brainremoved", 0, usingCharacter)
+		NTCS.HF.SetAffliction(targetCharacter, "artificialbrain", 100, usingCharacter)
+
+		NTCS.HF.RemoveItem(item)
+	end
+end
+
+itemLoader:Register("artificialbrain", ArtificialBrain)
+
+-- Experimental Treatment
+local ExperimentalTreatment = function(d)
+	local item = d.item
+    local usingCharacter = d.user.Human
+    local targetCharacter = d.target.Human
+    local targetLimb = d.targetLimb
+
+	local limbtype = targetLimb.type
+
+	-- endocrine booster
+	if NTCS.HF.Chance(1 / 25) then
+		NTCS.HF.ApplyEndocrineBoost(targetCharacter)
 	end
 
-	NT.ItemMethods.experimentaltreatment = function(item, usingCharacter, targetCharacter, limb)
-		local limbtype = limb.type
+	local weightsum = 0
+	for key, val in pairs(experimentalEffects) do
+		weightsum = weightsum + val.weight
+	end
 
-		-- endocrine booster
-		if HF.Chance(1 / 25) then
-			HF.ApplyEndocrineBoost(targetCharacter)
-		end
+	local triggerNewEffect = true
+	while triggerNewEffect do
+		triggerNewEffect = NTCS.HF.Chance(0.5)
 
-		local weightsum = 0
+		local weightpick = math.random() * weightsum
+		local currentweightsum = 0
+
 		for key, val in pairs(experimentalEffects) do
-			weightsum = weightsum + val.weight
-		end
+			currentweightsum = currentweightsum + val.weight
+			if currentweightsum > weightpick then
+				-- picked effect: val
 
-		local triggerNewEffect = true
-		while triggerNewEffect do
-			triggerNewEffect = HF.Chance(0.5)
-
-			local weightpick = math.random() * weightsum
-			local currentweightsum = 0
-
-			for key, val in pairs(experimentalEffects) do
-				currentweightsum = currentweightsum + val.weight
-				if currentweightsum > weightpick then
-					-- picked effect: val
-
-					for aff in val.afflictions do
-						if aff.limbspecific then
-							HF.AddAfflictionLimb(
-								targetCharacter,
-								aff.identifier,
-								limbtype,
-								HF.Lerp(aff.minstrength, aff.maxstrength, math.random()),
-								usingCharacter
-							)
-						else
-							HF.AddAffliction(
-								targetCharacter,
-								aff.identifier,
-								HF.Lerp(aff.minstrength, aff.maxstrength, math.random()),
-								usingCharacter
-							)
-						end
+				for aff in val.afflictions do
+					if aff.limbspecific then
+						NTCS.HF.AddAfflictionLimb(
+							targetCharacter,
+							aff.identifier,
+							limbtype,
+							NTCS.HF.Lerp(aff.minstrength, aff.maxstrength, math.random()),
+							usingCharacter
+						)
+					else
+						NTCS.HF.AddAffliction(
+							targetCharacter,
+							aff.identifier,
+							NTCS.HF.Lerp(aff.minstrength, aff.maxstrength, math.random()),
+							usingCharacter
+						)
 					end
-
-					break
 				end
+
+				break
 			end
 		end
-
-		HF.RemoveItem(item)
-		HF.GiveItem(targetCharacter, "ntsfx_syringe")
 	end
 
-	-- Triage tags
-	local function IsTriageTagged(character)
-		return HF.HasAffliction(character, "triagetag_green")
-			or HF.HasAffliction(character, "triagetag_yellow")
-			or HF.HasAffliction(character, "triagetag_red")
-			or HF.HasAffliction(character, "triagetag_black")
+	NTCS.HF.RemoveItem(item)
+	NTCS.HF.GiveItem(targetCharacter, "ntsfx_syringe")
+end
+
+itemLoader:Register("experimentaltreatment", ExperimentalTreatment)
+
+-- ========================================== TRIAGE TAGS (MANUAL, AUTOMATIC) ==========================================
+local function IsTriageTagged(character)
+	return NTCS.HF.HasAffliction(character, "triagetag_green")
+		or NTCS.HF.HasAffliction(character, "triagetag_yellow")
+		or NTCS.HF.HasAffliction(character, "triagetag_red")
+		or NTCS.HF.HasAffliction(character, "triagetag_black")
+end
+
+local function RemoveTriageTag(character)
+	NTCS.HF.SetAffliction(character, "triagetag_green", 0)
+	NTCS.HF.SetAffliction(character, "triagetag_yellow", 0)
+	NTCS.HF.SetAffliction(character, "triagetag_red", 0)
+	NTCS.HF.SetAffliction(character, "triagetag_black", 0)
+end
+
+-- CuttableAfflictions is a List. Register it so Lua can fuck with it.
+LuaUserData.RegisterType("System.Collections.Generic.List`1[System.String]")
+
+NTCS.Items.CuttableAfflictions:Add("triagetag_green")
+NTCS.Items.CuttableAfflictions:Add("triagetag_yellow")
+NTCS.Items.CuttableAfflictions:Add("triagetag_red")
+NTCS.Items.CuttableAfflictions:Add("triagetag_black")
+
+-- Triage Tag (Manual)
+local TriageTagManual = function(d)
+	local item = d.item
+    local usingCharacter = d.user.Human
+    local targetCharacter = d.target.Human
+    local targetLimb = d.targetLimb
+
+	local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
+
+	local alreadyTagged = IsTriageTagged(targetCharacter)
+
+	RemoveTriageTag(targetCharacter)
+
+	if limbtype == LimbType.LeftLeg or limbtype == LimbType.RightLeg then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_green", 100)
+
+	elseif limbtype == LimbType.LeftArm or limbtype == LimbType.RightArm then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_yellow", 100)
+
+	elseif limbtype == LimbType.Torso then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_red", 100)
+
+	else
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_black", 100)
 	end
-	local function RemoveTriageTag(character)
-		HF.SetAffliction(character, "triagetag_green", 0)
-		HF.SetAffliction(character, "triagetag_yellow", 0)
-		HF.SetAffliction(character, "triagetag_red", 0)
-		HF.SetAffliction(character, "triagetag_black", 0)
+
+	if not alreadyTagged then
+		NTCS.HF.RemoveItem(item)
 	end
-	table.insert(NT.CuttableAfflictions, "triagetag_green")
-	table.insert(NT.CuttableAfflictions, "triagetag_yellow")
-	table.insert(NT.CuttableAfflictions, "triagetag_red")
-	table.insert(NT.CuttableAfflictions, "triagetag_black")
-	NT.ItemMethods.manualtriagetag = function(item, usingCharacter, targetCharacter, limb)
-		local limbtype = HF.NormalizeLimbType(limb.type)
+end
 
-		local alreadyTagged = IsTriageTagged(targetCharacter)
+itemLoader:Register("manualtriagetag", TriageTagManual)
 
-		RemoveTriageTag(targetCharacter)
+-- Triage Tag (Automatic)
+local TriageTagAutomatic = function(d)
+	local item = d.item
+    local usingCharacter = d.user.Human
+    local targetCharacter = d.target.Human
+    local targetLimb = d.targetLimb
 
-		if limbtype == LimbType.LeftLeg or limbtype == LimbType.RightLeg then
-			HF.SetAffliction(targetCharacter, "triagetag_green", 100)
-		elseif limbtype == LimbType.LeftArm or limbtype == LimbType.RightArm then
-			HF.SetAffliction(targetCharacter, "triagetag_yellow", 100)
-		elseif limbtype == LimbType.Torso then
-			HF.SetAffliction(targetCharacter, "triagetag_red", 100)
+	local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
+
+	local alreadyTagged = IsTriageTagged(targetCharacter)
+
+	RemoveTriageTag(targetCharacter)
+
+	local fuckedness = 0
+
+	local charHealth = targetCharacter.CharacterHealth
+
+	-- vitality
+	local healthFraction = charHealth.Vitality / charHealth.MaxVitality
+	fuckedness = math.max(fuckedness, (-healthFraction + 1) * 100)
+
+	-- fractures
+	if
+		NTCS.HF.HasAffliction(targetCharacter, "fracturedextremity")
+		or NTCS.HF.HasAffliction(targetCharacter, "fracturedskull")
+		or NTCS.HF.HasAffliction(targetCharacter, "fracturedneck")
+		or NTCS.HF.HasAffliction(targetCharacter, "fracturedribs")
+	then
+		fuckedness = math.max(fuckedness + 5, 20)
+	end
+
+	-- arterial cuts
+	if
+		NTCS.HF.HasAffliction(targetCharacter, "arterialcut")
+		or NTCS.HF.HasAffliction(targetCharacter, "carotidarterialcut")
+		-- or NTCS.HF.HasAffliction(targetCharacter, "n_arterialcut")
+		or NTCS.HF.HasAffliction(targetCharacter, "aorticrupture")
+	then
+		if not NTCS.HF.HasAffliction(targetCharacter, "tourniqueted") then
+			fuckedness = math.max(fuckedness + 10, 100)
 		else
-			HF.SetAffliction(targetCharacter, "triagetag_black", 100)
-		end
-
-		if not alreadyTagged then
-			HF.RemoveItem(item)
+			fuckedness = math.max(fuckedness + 5, 50)
 		end
 	end
-	-- automatic triage tag
-	NT.ItemMethods.triagetag = function(item, usingCharacter, targetCharacter, limb)
-		local limbtype = HF.NormalizeLimbType(limb.type)
 
-		local alreadyTagged = IsTriageTagged(targetCharacter)
+	-- rads
+	local rads = NTCS.HF.GetAfflictionStrength(targetCharacter, "radiationsickness", 0)
+	fuckedness = math.max(fuckedness + math.max(0, rads - 25) * 0.2, math.min(rads, 25, 0) * 1.5)
 
-		RemoveTriageTag(targetCharacter)
+	-- hypoxemia
+	local hypoxemia = NTCS.HF.GetAfflictionStrength(targetCharacter, "hypoxemia", 0)
+	fuckedness = math.max(fuckedness + hypoxemia * 0.2, NTCS.HF.Clamp(hypoxemia * 2, 0, 100))
 
-		local fuckedness = 0
+	-- bloodloss
+	local bloodloss = NTCS.HF.GetAfflictionStrength(targetCharacter, "bloodloss", 0)
+	fuckedness = math.max(fuckedness + bloodloss * 0.1, NTCS.HF.Clamp(bloodloss, 0, 100))
 
-		local charHealth = targetCharacter.CharacterHealth
-
-		-- vitality
-		local healthFraction = charHealth.Vitality / charHealth.MaxVitality
-		fuckedness = math.max(fuckedness, (-healthFraction + 1) * 100)
-
-		-- fractures
-		if
-			HF.HasAffliction(targetCharacter, "ll_fracture")
-			or HF.HasAffliction(targetCharacter, "rl_fracture")
-			or HF.HasAffliction(targetCharacter, "la_fracture")
-			or HF.HasAffliction(targetCharacter, "ra_fracture")
-			or HF.HasAffliction(targetCharacter, "h_fracture")
-			or HF.HasAffliction(targetCharacter, "n_fracture")
-			or HF.HasAffliction(targetCharacter, "t_fracture")
-		then
-			fuckedness = math.max(fuckedness + 5, 20)
-		end
-
-		-- arterial cuts
-		if
-			HF.HasAffliction(targetCharacter, "ll_arterialcut")
-			or HF.HasAffliction(targetCharacter, "rl_arterialcut")
-			or HF.HasAffliction(targetCharacter, "la_arterialcut")
-			or HF.HasAffliction(targetCharacter, "ra_arterialcut")
-			or HF.HasAffliction(targetCharacter, "h_arterialcut")
-			or HF.HasAffliction(targetCharacter, "n_arterialcut")
-			or HF.HasAffliction(targetCharacter, "t_arterialcut")
-		then
-			if not HF.HasAffliction(targetCharacter, "arteriesclamp") then
-				fuckedness = math.max(fuckedness + 10, 100)
-			else
-				fuckedness = math.max(fuckedness + 5, 50)
-			end
-		end
-
-		-- rads
-		local rads = HF.GetAfflictionStrength(targetCharacter, "radiationsickness", 0)
-		fuckedness = math.max(fuckedness + math.max(0, rads - 25) * 0.2, HF.Minimum(rads, 25, 0) * 1.5)
-
-		-- hypoxemia
-		local hypoxemia = HF.GetAfflictionStrength(targetCharacter, "hypoxemia", 0)
-		fuckedness = math.max(fuckedness + hypoxemia * 0.2, HF.Clamp(hypoxemia * 2, 0, 100))
-
-		-- bloodloss
-		local bloodloss = HF.GetAfflictionStrength(targetCharacter, "bloodloss", 0)
-		fuckedness = math.max(fuckedness + bloodloss * 0.1, HF.Clamp(bloodloss, 0, 100))
-
-		if fuckedness < 5 then
-			HF.SetAffliction(targetCharacter, "triagetag_green", 100)
-		elseif fuckedness < 60 then
-			HF.SetAffliction(targetCharacter, "triagetag_yellow", 100)
-		elseif fuckedness < 200 then
-			HF.SetAffliction(targetCharacter, "triagetag_red", 100)
-		else
-			HF.SetAffliction(targetCharacter, "triagetag_black", 100)
-		end
-
-		if not alreadyTagged then
-			HF.RemoveItem(item)
-		end
+	if fuckedness < 5 then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_green", 100)
+	elseif fuckedness < 60 then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_yellow", 100)
+	elseif fuckedness < 200 then
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_red", 100)
+	else
+		NTCS.HF.SetAffliction(targetCharacter, "triagetag_black", 100)
 	end
-end, 1)
+
+	if not alreadyTagged then
+		NTCS.HF.RemoveItem(item)
+	end
+end
+
+itemLoader:Register("triagetag", TriageTagAutomatic)
