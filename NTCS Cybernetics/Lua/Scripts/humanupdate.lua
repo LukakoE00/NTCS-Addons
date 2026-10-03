@@ -106,7 +106,7 @@ function NTCS_Cybernetics.UpdateHuman(character, deltatime)
 			limbIdentifierLookup[LimbType.LeftLeg] = "lockleftleg"
 			limbIdentifierLookup[LimbType.RightLeg] = "lockrightleg"
 			if limbIdentifierLookup[limbtype] == nil then return end
-			NTCS.NTC.SetSymptomTrue(character, limbIdentifierLookup[limbtype])
+			NTCS.Human.SetSymptomTrue(character, limbIdentifierLookup[limbtype])
 		end
 
 		if locklimb then lockLimb() end
