@@ -2,7 +2,7 @@
 <Override>
     <Items>
         <!-- C Positive BloodPack -->
-         <Item name="" identifier="bloodpackabc_positive" nameidentifier="bloodpack_abcpositive" variantof="antibloodloss2">
+         <Item name="" identifier="bloodpackabc_positive" nameidentifier="bloodpackabc_positive" variantof="antibloodloss2">
             <PreferredContainer primary="medcab" minamount="0" maxamount="0" notcampaign="true" />
             <PreferredContainer secondary="outpostmedcompartment,outpostmedcab" minamount="0" maxamount="0" spawnprobability="0" />
             <PreferredContainer secondary="medcontainer" />
