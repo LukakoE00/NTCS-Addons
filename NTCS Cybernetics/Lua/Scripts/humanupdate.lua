@@ -87,7 +87,7 @@ function NTCS_Cybernetics.UpdateHuman(character, deltatime)
 		-- losing the limb
 		if materialloss >= 99 then
 			NTCS_Cybernetics.UncyberifyLimb(character, limbtype)
-			NTCS.HF.TraumamputateLimbMinusItem(character, limbtype)
+			NTCS.HF.TraumamputateLimb(character, limbtype)
 			NTCS.HF.GiveItem(character, "ntcsfx_cyberdeath")
 			NTCS.HF.AddAfflictionLimb(character, "internaldamage", limbtype, NTCS.HF.RandomRange(30, 60))
 			NTCS.HF.AddAfflictionLimb(character, "foreignbody", limbtype, NTCS.HF.RandomRange(10, 25))
@@ -106,7 +106,7 @@ function NTCS_Cybernetics.UpdateHuman(character, deltatime)
 			limbIdentifierLookup[LimbType.LeftLeg] = "lockleftleg"
 			limbIdentifierLookup[LimbType.RightLeg] = "lockrightleg"
 			if limbIdentifierLookup[limbtype] == nil then return end
-			NTCS.NTC.SetSymptomTrue(character, limbIdentifierLookup[limbtype])
+			NTCS.Human.SetSymptomTrue(character, limbIdentifierLookup[limbtype])
 		end
 
 		if locklimb then lockLimb() end

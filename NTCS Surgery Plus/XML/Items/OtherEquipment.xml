@@ -106,55 +106,26 @@
       <Throwable characterusable="true" slots="Any,RightHand,LeftHand" throwforce="4.0" aimpos="35,-10" msg="ItemMsgPickUpSelect"></Throwable>
     </Item>
 
-    <Item name="" identifier="aed" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical" description="" useinhealthinterface="True" scale="0.3">
-      <PreferredContainer primary="medcab" />
-      <Fabricate suitablefabricators="fabricator" requiredtime="60" requiresrecipe="true">
-        <RequiredSkill identifier="electrical" level="80" />
-        <RequiredSkill identifier="medical" level="70" />
-        <RequiredItem identifier="plastic" />
-        <RequiredItem identifier="fpgacircuit" />
-        <RequiredItem identifier="batterycell" />
-        <RequiredItem identifier="oxygeniteshard" />
-      </Fabricate>
-      <Deconstruct time="10">
-        <Item identifier="plastic" />
-        <Item identifier="fpgacircuit" />
-      </Deconstruct>
-      <Price baseprice="400" soldbydefault="false" />
-      <InventoryIcon texture="%ModDir:3744761298%/Images/InventoryItemIconAtlas.png" sourcerect="64,0,64,64" origin="0.5,0.5" />
-      <Sprite texture="%ModDir:3744761298%/Images/InGameItemIconAtlas.png" sourcerect="128,0,128,128" depth="0.55" origin="0.5,0.5" />
-      <Body width="90" height="80" density="20" />
-      <SuitableTreatment identifier="tachycardia" suitability="60" />
-      <SuitableTreatment identifier="fibrillation" suitability="60" />
-      <SuitableTreatment identifier="cardiacarrest" suitability="15" />
-      <MeleeWeapon slots="Any,RightHand,LeftHand" aimpos="5,0" handle1="-5,0" holdangle="10" reload="9.0">
-        <RequiredItems identifier="mobilebattery" type="Contained" msg="ItemMsgBatteryCellRequired" />
-        <StatusEffect type="OnUse" target="This" Condition="-100" />
-        <StatusEffect type="OnBroken" target="This" Condition="100" disabledeltatime="true" delay="5" stackable="false" />
-        <StatusEffect type="OnSpawn">
-          <SpawnItem spawnposition="ThisInventory" identifier="batterycell" />
-        </StatusEffect>
-      </MeleeWeapon>
-      <Pickable msg="ItemMsgPickUpSelect" />
-      <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
-        <Containable items="mobilebattery" />
-      </ItemContainer>
-    </Item>
-
+    <!-- Surgery Skill Book-->
     <Item name="" identifier="skillbooksurgery" category="Equipment" Tags="smallitem,skillbook" maxstacksize="8" scale="0.5" impactsoundtag="impact_soft">
       <PreferredContainer primary="storagecab,crewcab" />
       <PreferredContainer secondary="locker" />
+
       <Price baseprice="350" buyingpricemodifier="2.5">
         <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" maxavailable="1" />
       </Price>
+
       <Deconstruct time="20">
         <Item identifier="carbon" />
       </Deconstruct>
+
       <InventoryIcon texture="%ModDir%/Images/MainAtlas.png" sourcerect="420,128,35,52" origin="0.5,0.5" />
       <Sprite texture="%ModDir%/Images/MainAtlas.png" sourcerect="386,128,31,38" depth="0.6" origin="0.5,0.5" />
       <Body width="28" height="36" density="20" />
+      
       <MeleeWeapon slots="Any,RightHand+LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" holdangle="260" swingamount="0,3" swingspeed="0.5" swingwhenaiming="true" msg="ItemMsgPickUpSelect">
         <StatusEffect type="OnSecondaryUse" target="This" Condition="-10" />
+        
         <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true">
           <Conditional Condition="lte 0" />
           <GiveSkill skillidentifier="surgery" amount="8" triggertalents="false" />
