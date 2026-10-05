@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="NT Infections" corepackage="false" modversion="1.5.7" gameversion="1.13.4.0">
+  <Afflictions file="%ModDir%/Xml/Afflictions.xml" />
+  <Item file="%ModDir%/Xml/items.xml" />
+  <Text file="%ModDir%/Localization/English/English.xml" />
+  <Text file="%ModDir%/Localization/Russian/Russian.xml" />
+  <Other file="%ModDir%/Lua/Autorun/init.lua" />
+  <Other file="%ModDir%/Lua/Scripts/items.lua" />
+  <Other file="%ModDir%/Lua/Scripts/humanupdate.lua" />
+  <Other file="%ModDir%/Lua/Scripts/helperfunctions.lua" />
+  <Other file="%ModDir%/Lua/Scripts/configdata.lua" />
+</contentpackage>
