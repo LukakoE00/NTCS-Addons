@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NTCS Surgery Plus" steamworkshopid="3478084070" corepackage="false" modversion="1.0.0" gameversion="1.11.5.0">
+<contentpackage name="NTCS Surgery Plus" corepackage="false" modversion="1.0.0" gameversion="1.11.5.0">
   <!-- Afflictions-->
   <Afflictions file="%ModDir%/XML/Afflictions/Afflictions.xml" />
 
