@@ -14,12 +14,12 @@
 
 <!-- Localization -->
 <Text file="%ModDir%/Localization/English/English.xml" />
-<Text file="%ModDir%/Localization/Russian/Russian.xml" />
-<Text file="%ModDir%/Localization/Polish/Polish.xml" />
-<Text file="%ModDir%/Localization/French/French.xml" />
-<Text file="%ModDir%/Localization/Portuguese/Portuguese.xml" />
-<Text file="%ModDir%/Localization/Korean/Korean.xml" />
-<Text file="%ModDir%/Localization/Turkish/Turkish.xml" />
-<Text file="%ModDir%/Localization/Spanish/Spanish.xml" />
-<Text file="%ModDir%/Localization/German/German.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Russian/Russian.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Polish/Polish.xml" />
+<Text file="%ModDir%/Localization (Outdated)/French/French.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Portuguese/Portuguese.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Korean/Korean.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Turkish/Turkish.xml" />
+<Text file="%ModDir%/Localization (Outdated)/Spanish/Spanish.xml" />
+<Text file="%ModDir%/Localization (Outdated)/German/German.xml" />
 </contentpackage>
