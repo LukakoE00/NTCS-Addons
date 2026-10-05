@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NT Symbiote" corepackage="false" modversion="1.0.1">
-  <Other file="%ModDir%/Images/AfflictionIcons.png" />
-  <Afflictions file="%ModDir%/Xml/Afflictions.xml" />
-  <Item file="%ModDir%/Xml/items.xml" />
+<contentpackage name="NTCS Symbiote" corepackage="false" modversion="1.0.1">
+  <!-- Items -->
+  <Item file="%ModDir%/XML/Overrides.xml" />
+  <Item file="%ModDir%/XML/SFX.xml" />
+
+  <!-- Afflictions -->
+  <Afflictions file="%ModDir%/XML/Afflictions.xml" />
+
+  <!-- Localization -->
   <Text file="%ModDir%/Localization/English/English.xml" />
   <Text file="%ModDir%/Localization/SimplifiedChinese/SimplifiedChinese.xml" />
   <Text file="%ModDir%/Localization/Russian/Russian.xml" />
-  <Other file="%ModDir%/Lua/Autorun/init.lua" />
   <Text file="%ModDir%/Localization/German/German.xml" />
-  <Other file="%ModDir%/Lua/Scripts/humanupdate.lua" />
-  <Other file="%ModDir%/Lua/Scripts/helperfunctions.lua" />
-  <Other file="%ModDir%/Lua/Scripts/items.lua" />
 </contentpackage>
