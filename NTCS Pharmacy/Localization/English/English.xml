@@ -3,6 +3,9 @@
   <!-- ChemMaster 2k -->
   <entityname.chemmaster>ChemMaster 2000</entityname.chemmaster>
   <entitydescription.chemmaster>A machine that makes pills out of chemicals loaded inside.</entitydescription.chemmaster>
+  <ItemMsgDetachCrowbar>Detach (Crowbar)</ItemMsgDetachCrowbar>
+
+  <!-- Errors -->
   <lua.chemerror.header>ChemMaster 2000 - ERROR!:</lua.chemerror.header>
   <lua.chemerror.invaliditem>{id} is not a valid ingredient.</lua.chemerror.invaliditem>
   <lua.chemerror.invalidcategory.base>{id} is not a valid pill base.</lua.chemerror.invalidcategory.base>
@@ -16,30 +19,42 @@
   <lua.chemerror.missingactive>Missing active ingredients.</lua.chemerror.missingactive>
   <lua.chemerror.capacity>This configuration can only support up to {cap} active ingredients.</lua.chemerror.capacity>
   <lua.chemerror.yield>This configuration would not yield any pills.</lua.chemerror.yield>
+
+  <!-- Buttons -->
   <label.cm_makeone>Make one</label.cm_makeone>
   <label.cm_makeall>Make all</label.cm_makeall>
   <label.cm_description>Pill description</label.cm_description>
-  <ItemMsgDetachCrowbar>Detach (Crowbar)</ItemMsgDetachCrowbar>
-  <!-- Pill analyzer -->
+
+  <!-- Pill Analyzer -->
   <entityname.chemalyzer>Pill analyzer</entityname.chemalyzer>
   <entitydescription.chemalyzer>Displays the composition of pills that are placed inside.</entitydescription.chemalyzer>
-  <label.ca_analyze>Analyze</label.ca_analyze>
   <lua.chemalyzer.header>Ingredients:</lua.chemalyzer.header>
+
+  <!-- Buttons -->
+  <label.ca_analyze>Analyze</label.ca_analyze>
+  <label.ca_automatic>Generate description</label.ca_automatic>
   <label.ca_rename>Set description</label.ca_rename>
-  <!-- pill combos -->
+  
+  <!-- Pill Combos -->
   <pillcombo.antihusk>Antihusk</pillcombo.antihusk>
-  <!-- other items -->
+
+  <!-- Other Items -->
   <entityname.custompill>Custom pill</entityname.custompill>
-  <entityname.custompill_horsepill>Horse pill</entityname.custompill_horsepill>
-  <entityname.custompill_tablets>Tablets</entityname.custompill_tablets>
   <entitydescription.custompill>Who knows what effects this pill could have?</entitydescription.custompill>
+
+  <entityname.custompill_horsepill>Horse pill</entityname.custompill_horsepill>
   <entitydescription.custompill_horsepill>Quite big for you to haphazardly shove into your mouth.</entitydescription.custompill_horsepill>
+
+  <entityname.custompill_tablets>Tablets</entityname.custompill_tablets>
   <entitydescription.custompill_tablets>It can't be that bad, right?</entitydescription.custompill_tablets>
+  
   <entityname.pillbottleregular>Prescription Bottle</entityname.pillbottleregular>
   <entitydescription.pillbottleregular>A plastic prescription bottle for storing pills.</entitydescription.pillbottleregular>
+  
   <entityname.pillbottleadvanced>Advanced Pill Bottle</entityname.pillbottleadvanced>
   <entitydescription.pillbottleadvanced>A large plastic bottle used to store various pills. It's fitted with a child proof lid that is impossible to open without medical education. Perfect for keeping grabby hands out of harm's way.</entitydescription.pillbottleadvanced>
-  <!-- containers -->
+  
+  <!-- Containers -->
   <entityname.antidotetoolbox>Antidote container</entityname.antidotetoolbox>
   <entityname.machinetoolbox>Machine container</entityname.machinetoolbox>
   <entityname.bonetoolbox>Bone container</entityname.bonetoolbox>

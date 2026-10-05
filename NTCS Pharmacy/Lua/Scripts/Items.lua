@@ -1,19 +1,29 @@
-
+local itemLoader = NTCS.ItemFunctionLoader("NTCS_Pharmacy")
 NTCS_Pharmacy.ActiveChemCraftalls = {}
 
 Timer.Wait(function() 
 
-NT.ItemStartsWithMethods.custompill = function(item, usingCharacter, targetCharacter, limb)
+    -- Custom Pill
+    local CustomPill = function(d)
 
-    local config = NTCS_Pharmacy.TagsToPillconfig(HF.SplitString(item.Tags,","))
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
 
-    for identifier,strength in pairs(config.fx) do
-        HF.AddAffliction(targetCharacter,identifier,strength,usingCharacter)
+        local config = NTCS_Pharmacy.TagsToPillconfig(NTCS.HF.SplitString(item.Tags,","))
+
+        for identifier,strength in pairs(config.fx) do
+            NTCS.HF.AddAffliction(targetCharacter,identifier,strength,usingCharacter)
+        end
+
+        NTCS.HF.RemoveItem(item)
+        NTCS.HF.GiveItem(targetCharacter,"ntsfx_pills")
     end
 
-    HF.RemoveItem(item)
-    HF.GiveItem(targetCharacter,"ntsfx_pills")
-end
+    itemLoader:Register("custompill", CustomPill)
+    itemLoader:Register("custompill_horsepill", CustomPill)
+    itemLoader:Register("custompill_tablets", CustomPill)
 
 end,1)
 
@@ -34,6 +44,7 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
     ingredients.filler = {inv.GetItemAt(2),inv.GetItemAt(3)}
     ingredients.dye = {inv.GetItemAt(4),inv.GetItemAt(5),inv.GetItemAt(6)}
     ingredients.active = {}
+
     for i = 7, 12, 1 do table.insert(ingredients.active,inv.GetItemAt(i)) end
 
     -- vaildate ingredients
@@ -41,9 +52,9 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
         for item in category do
             local itemdata = NTCS_Pharmacy.PillData.items[item.Prefab.identifier.Value]
             if itemdata == nil then
-                errors[#errors+1]=HF.ReplaceString(TextManager.Get("lua.chemerror.invaliditem").Value,"{id}",item.Name)
+                errors[#errors+1]=NTCS.HF.ReplaceString(TextManager.Get("lua.chemerror.invaliditem").Value,"{id}",item.Name)
             elseif itemdata.types[1] ~= categorykey then
-                errors[#errors+1]=HF.ReplaceString(TextManager.Get("lua.chemerror.invalidcategory."..categorykey).Value,"{id}",item.Name)
+                errors[#errors+1]=NTCS.HF.ReplaceString(TextManager.Get("lua.chemerror.invalidcategory."..categorykey).Value,"{id}",item.Name)
             else
             end
         end
@@ -65,7 +76,7 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
     if chemmaster.OriginalOutpost ~= "" then
         descriptionOverride=chemmaster.OriginalOutpost
     end
-    local config = NTCS_Pharmacy.PillConfigFromItems(ingredientArray,HF.GetSkillLevel(user,"medical"),descriptionOverride,user)
+    local config = NTCS_Pharmacy.PillConfigFromItems(ingredientArray,NTCS.HF.GetSkillLevel(user,"medical"),descriptionOverride,user)
     local productidentifier = "custompill"
     if config.sprite~=nil then productidentifier="custompill_"..config.sprite end
 
@@ -77,11 +88,13 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
         else
             local items = inv.AllItems
             local pillsInOutput = 0
+
             for item in items do
                 if inv.FindIndex(item) == 13 then
                     pillsInOutput=pillsInOutput+1
                 end
             end
+
             local capacity = outputItem.Prefab.MaxStackSize
             if pillsInOutput + config.yield > capacity then
                 -- exceeding capacity, prevent craft
@@ -92,7 +105,7 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
 
     -- determine if the active ingredient capacity isnt exceeded
     if #ingredients.base>0 and #ingredients.active > config.capacity then
-        errors[#errors+1] = HF.ReplaceString(
+        errors[#errors+1] = NTCS.HF.ReplaceString(
             TextManager.Get("lua.chemerror.capacity").Value,"{cap}",tostring(config.capacity))
     end
 
@@ -104,30 +117,36 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
     -- we had errors, report them and abort
     if #errors > 0 then
         if not dontreporterrors then
-            HF.GiveItem(user,"NTCS_Pharmacysfx_chemerror")
-            local client = HF.CharacterToClient(user)
+            NTCS.HF.GiveItem(user,"NTCS_Pharmacysfx_chemerror")
+
+            local client = NTCS.HF.CharacterToClient(user)
+
             if CLIENT or client ~= nil then
                 local errorstring=TextManager.Get("lua.chemerror.header").Value.."\n"
                 for error in errors do
                     errorstring=errorstring.."\n"..error
                 end
-                HF.SendTextBox(TextManager.Get("entityname.chemmaster").Value,errorstring,client)
+
+                NTCS.HF.SendTextBox(TextManager.Get("entityname.chemmaster").Value,errorstring,client)
             end
         end
+
         return false
     end
 
-    -- spawn output
-    for i = 1, config.yield, 1 do
-        HF.SpawnItemPlusFunction(productidentifier,function(params)
-            NTCS_Pharmacy.SetPillFromConfig(params.item,params.config)
-        end,{config=config},inv,13)
+    for i = 1, config.yield do
+        NTCS.HF.SpawnItemPlusFunction(productidentifier, nil, InvSlotType.None, inv.Owner.WorldPosition,
+            function(item)
+                NTCS_Pharmacy.SetPillFromConfig(item, config)
+                inv.TryPutItem(item, 13, true, false, nil)
+            end
+        )
     end
 
     -- consume items
     for categorykey,category in pairs(ingredients) do
         if categorykey~="dye" then
-            for item in category do HF.RemoveItem(item) end
+            for item in category do NTCS.HF.RemoveItem(item) end
         else
             for item in category do
                 item.Condition = item.Condition-25
@@ -135,13 +154,15 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
         end
     end
 
-    if not dontreporterrors then HF.GiveItem(user,"NTCS_Pharmacysfx_chemaccept") end
+    if not dontreporterrors then NTCS.HF.GiveItem(user,"ntpsfx_chemaccept") end
+
     return true
 end
 
-
 Hook.Add("NTCS_Pharmacy.ChemMaster.makeone", "NTCS_Pharmacy.ChemMaster.makeone", function (effect, deltaTime, item, targets, worldPosition)
     
+    NTCS.HF.Print("MAKEONE")
+
     -- check if in craftall queue, if so, abort
     for craftall in NTCS_Pharmacy.ActiveChemCraftalls do
         if craftall==item then return end
@@ -156,7 +177,7 @@ Hook.Add("NTCS_Pharmacy.ChemMaster.makeone", "NTCS_Pharmacy.ChemMaster.makeone",
         for key,client in pairs(Client.ClientList) do
             local char = client.Character
             if char ~= nil and char.IsHuman then
-                local dist = HF.Distance(char.WorldPosition,itemPos)
+                local dist = NTCS.HF.Distance(char.WorldPosition,itemPos)
                 if dist < minDist then
                     minDist = dist
                     user=char
@@ -189,7 +210,7 @@ Hook.Add("NTCS_Pharmacy.ChemMaster.makeall", "NTCS_Pharmacy.ChemMaster.makeall",
         for key,client in pairs(Client.ClientList) do
             local char = client.Character
             if char ~= nil and char.IsHuman then
-                local dist = HF.Distance(char.WorldPosition,itemPos)
+                local dist = NTCS.HF.Distance(char.WorldPosition,itemPos)
                 if dist < minDist then
                     minDist = dist
                     user=char
@@ -209,7 +230,7 @@ Hook.Add("NTCS_Pharmacy.ChemMaster.makeall", "NTCS_Pharmacy.ChemMaster.makeall",
             if NTCS_Pharmacy.TryCraftPills(item,user,dontReportErrors) then
                 recursiveUse(true)
             else
-                HF.GiveItem(user,"NTCS_Pharmacysfx_chemfinish")
+                NTCS.HF.GiveItem(user,"NTCS_Pharmacysfx_chemfinish")
                 -- craftall finished, remove from craftalls
                 for index, value in ipairs(NTCS_Pharmacy.ActiveChemCraftalls) do
                     if value == item then
@@ -265,7 +286,7 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.analyze", "NTCS_Pharmacy.Chemalyzer.analyze",
         for key,client in pairs(Client.ClientList) do
             local char = client.Character
             if char ~= nil and char.IsHuman then
-                local dist = HF.Distance(char.WorldPosition,itemPos)
+                local dist = NTCS.HF.Distance(char.WorldPosition,itemPos)
                 if dist < minDist then
                     minDist = dist
                     user=char
@@ -291,7 +312,7 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.analyze", "NTCS_Pharmacy.Chemalyzer.analyze",
         end
     end
 
-    HF.SendTextBox(TextManager.Get("entityname.chemalyzer").Value,resstring,userclient)
+    NTCS.HF.SendTextBox(TextManager.Get("entityname.chemalyzer").Value,resstring,userclient)
 end)
 
 Hook.Add("NTCS_Pharmacy.Chemalyzer.rename", "NTCS_Pharmacy.Chemalyzer.rename", function (effect, deltaTime, item, targets, worldPosition)
@@ -306,11 +327,15 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.rename", "NTCS_Pharmacy.Chemalyzer.rename", f
 
     Timer.Wait(function()
         local newdescription = nil
+
         if item.OriginalOutpost ~= "" then
             newdescription=item.OriginalOutpost
         end
+
         local config = NTCS_Pharmacy.PillConfigFromPill(containedItem)
-        config.description = HF.ReplaceString(newdescription,",","")
+
+        config.description = NTCS.HF.ReplaceString(newdescription,",","")
+        
         NTCS_Pharmacy.SetPillFromConfig(containedItem,config)
         NTCS_Pharmacy.RefreshPillDescription(containedItem)
         containedItem.Condition = 100
@@ -338,7 +363,7 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.automatic", "NTCS_Pharmacy.Chemalyzer.automat
         for key,client in pairs(Client.ClientList) do
             local char = client.Character
             if char ~= nil and char.IsHuman then
-                local dist = HF.Distance(char.WorldPosition,itemPos)
+                local dist = NTCS.HF.Distance(char.WorldPosition,itemPos)
                 if dist < minDist then
                     minDist = dist
                     user=char
@@ -371,10 +396,13 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.automatic", "NTCS_Pharmacy.Chemalyzer.automat
             end
         end
     end
+    
     Timer.Wait(function()
         config.description = resstring
+
         NTCS_Pharmacy.SetPillFromConfig(containedItem,config)
         NTCS_Pharmacy.RefreshPillDescription(containedItem)
+
         containedItem.Condition = 100
     end,250)
 end)

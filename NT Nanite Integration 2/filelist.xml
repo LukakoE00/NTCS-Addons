@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="NT Nanite Integration 2" corepackage="false" modversion="2.0.0" gameversion="1.11.5.0">
+  <Item file="%ModDir%/XML/items.xml" />
+  <Afflictions file="%ModDir%/XML/afflictions.xml" />
+  <Other file="%ModDir%/Images/buffAtlas.png" />
+  <Other file="%ModDir%/Images/itemAtlas.png" />
+  <Text file="%ModDir%/Localization/English.xml" />
+  <Text file="%ModDir%/Localization/French.xml" />
+  <Text file="%ModDir%/Localization/Russian.xml" />
+</contentpackage>

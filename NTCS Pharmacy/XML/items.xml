@@ -27,7 +27,7 @@
 
         <!-- randomize effects if spawned outside of the chem master -->
         <StatusEffect type="OnSpawn" target="This" delay="0.5" stackable="false">
-          <LuaHook name="NTP.OnPillSpawned" />
+          <LuaHook name="NTCS_Pharmacy.OnPillSpawned" />
         </StatusEffect>
       </Holdable>
     </Item>
@@ -123,13 +123,13 @@
         <GuiFrame relativesize="0.2,0.2" anchor="CenterRight" pivot="CenterLeft" relativeoffset="0.36,0.001" style="ItemUI" linkuitocomponent="ItemContainer" />
         <Button text="label.cm_makeone">
           <StatusEffect target="This" type="OnUse">
-            <LuaHook name="NTP.ChemMaster.makeone" />
+            <LuaHook name="NTCS_Pharmacy.ChemMaster.makeone" />
           </StatusEffect>
         </Button>
 
         <Button text="label.cm_makeall">
           <StatusEffect target="This" type="OnUse">
-            <LuaHook name="NTP.ChemMaster.makeall" />
+            <LuaHook name="NTCS_Pharmacy.ChemMaster.makeall" />
           </StatusEffect>
         </Button>
 
@@ -171,19 +171,19 @@
         <GuiFrame relativesize="0.2,0.2" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.006,-0.05" style="ItemUI" />
         <Button text="label.ca_analyze">
           <StatusEffect target="This" type="OnUse">
-            <LuaHook name="NTP.Chemalyzer.analyze" />
+            <LuaHook name="NTCS_Pharmacy.Chemalyzer.analyze" />
           </StatusEffect>
         </Button>
 
         <Button text="label.ca_rename">
           <StatusEffect target="This" type="OnUse">
-            <LuaHook name="NTP.Chemalyzer.rename" />
+            <LuaHook name="NTCS_Pharmacy.Chemalyzer.rename" />
           </StatusEffect>
         </Button>
 
-        <Button text="missiontype.scanalienruins">
+        <Button text="label.ca_automatic">
           <StatusEffect target="This" type="OnUse">
-            <LuaHook name="NTP.Chemalyzer.automatic" />
+            <LuaHook name="NTCS_Pharmacy.Chemalyzer.automatic" />
           </StatusEffect>
         </Button>
 
