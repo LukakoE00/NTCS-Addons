@@ -1,5 +1,5 @@
 NTCS_SurgeryPlus = {}
-NTCS_SurgeryPlus.Name = "NT Surgery Plus"
+NTCS_SurgeryPlus.Name = "Surgery Plus"
 NTCS_SurgeryPlus.Version = "A1.2.6"
 NTCS_SurgeryPlus.VersionNum = 01020600
 NTCS_SurgeryPlus.MinNTVersion = "A1.7.12"

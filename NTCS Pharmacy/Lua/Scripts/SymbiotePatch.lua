@@ -1,10 +1,12 @@
 NTCS_Pharmacy.PillData.items.calyxanide = {
 	types = { "active" },
 	skillrequirement = 38,
+
 	effects = {
 		--{ type = "addeffect", identifier = "huskinfection", amount = -50 },
 		{ type = "addeffect", identifier = "af_calyxanide", amount = 50 },
 	},
+
 	faileffects = {
 		--{ type = "addeffect", identifier = "huskinfection", amount = -30 },
 		{ type = "addeffect", identifier = "af_calyxanide", amount = 50 },
@@ -23,6 +25,7 @@ NTCS_Pharmacy.PillData.combos.antihusk = {
 			{ type = "addeffect", identifier = "af_calyxanide", amount = 100 },
 			{ type = "addeffect", identifier = "huskinfectionresistance", amount = 500 },
 		},
+		
 		faileffects = {
 			--{type="addeffect",identifier="huskinfection",amount=-40},
 			{ type = "addeffect", identifier = "af_calyxanide", amount = 100 },

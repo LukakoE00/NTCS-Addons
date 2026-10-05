@@ -8,8 +8,8 @@ NTCS_Pharmacy.MinNTVersionNum = 01150000
 NTCS_Pharmacy.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed
-dofile(NTCS_Cybernetics.Path.."/Lua/Library/NeurotraumaLib.lua")
-NTCS.Info.RegisterAddon(NTCS_Cybernetics)
+dofile(NTCS_Pharmacy.Path.."/Lua/Library/NeurotraumaLib.lua")
+NTCS.Info.RegisterAddon(NTCS_Pharmacy)
 
 local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
 local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
@@ -37,7 +37,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
     Timer.Wait(function()
         -- Symbiote patch for pill effects with calyxanide ingredient / husk cure combo
         if NTS ~= nil then 
-            dofile(NTCS_Pharmacy.Path.."/Lua/Scripts/symbiotepatch.lua")
+            dofile(NTCS_Pharmacy.Path.."/Lua/Scripts/SymbiotePatch.lua")
         end
     end,1)
 end
