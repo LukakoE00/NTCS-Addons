@@ -1,194 +1,216 @@
--- Timer.Wait(function()
---     --additional hematology tags
---     NTI.MoreHematologyDetectable = {
---         "afampicillin",
---         "afaugmentin",
---         "afvancomycin",
---         "afgentamicin",
---         "afcotrim",
---         "afimipenem",
---         "afdextromethorphan",
---         "afremdesivir",
---         "afzincsupplement",
---         "afceftazidime",
---         "afcorticosteroids",
---         "bloodinfectionlevel",
---         "afascorbicacid",
---     }
+local itemLoader = NTCS.ItemFunctionLoader("NTCS_Cybernetics")
 
---     --add the new hematology tags into the nt hematology list
---     for i = 1, #NTI.MoreHematologyDetectable do
---         NTC.AddHematologyAffliction(NTI.MoreHematologyDetectable[i])
---     end
+Timer.Wait(function()
+    -- Additional Hematology Identifiers
+    NTCS_Infections.MoreHematologyDetectable = {
+        "afampicillin",
+        "afaugmentin",
+        "afvancomycin",
+        "afgentamicin",
+        "afcotrim",
+        "afimipenem",
+        "afdextromethorphan",
+        "afremdesivir",
+        "afzincsupplement",
+        "afceftazidime",
+        "afcorticosteroids",
+        "bloodinfectionlevel",
+        "afascorbicacid",
+    }
 
---     --the sampler tool item
---     NT.ItemMethods.cultureanalyzer = function(item, usingCharacter, targetCharacter, limb)
---         local containedItem = item.OwnInventory.GetItemAt(0)
+    -- Add the new hematology identifiers into the HematologyDetectable list
+    for i = 1, #NTCS_Infections.MoreHematologyDetectable do
+        NTCS.NTC.AddHematologyAffliction(NTCS_Infections.MoreHematologyDetectable[i])
+    end
 
---         if containedItem ~= nil then
---             local function postSpawnFunc(args)
---                 args.item.Condition = args.condition
---             end
+    -- Sampler Tool Item
+    NTCS_Infections.CultureAnalyzer = function (d)
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
+        
+        local containedItem = item.OwnInventory.GetItemAt(0)
 
---             if containedItem.HasTag("viraltest") then
---                 local params = {condition=100}
---                 local name = NTI.GetCurrentVirus(targetCharacter)
+        if containedItem ~= nil then
+            local function postSpawnFunc(args)
+                args.item.Condition = args.condition
+            end
 
---                 if name ~= nil then
---                     local info = NTI.Viruses[name]
---                     HF.GiveItemPlusFunction(info.samplename,postSpawnFunc,params,usingCharacter)
---                 else
---                     HF.GiveItemPlusFunction("emptyviralunk",postSpawnFunc,params,usingCharacter)
---                 end
+            if containedItem.HasTag("viraltest") then
+                local params = {condition=100}
+                local name = NTCS_Infections.GetCurrentVirus(targetCharacter)
 
---                 HF.DMClient(HF.CharacterToClient(usingCharacter),"Sampler tool\n\nSwab sample found.",Color(127,255,127,255))
---             else
---                 local params = {condition=100}
---                 local name = nil
---                 local pus = HF.GetAfflictionStrengthLimb(targetCharacter, limb.type, "pusyellow", 0) + HF.GetAfflictionStrengthLimb(targetCharacter, limb.type, "pusgreen", 0)
+                if name ~= nil then
+                    local info = NTCS_Infections.Viruses[name]
+                    
+                else
+                    NTCS.HF.GiveItemPlusFunction("emptyviralunk", usingCharacter, postSpawnFunc, params)
+                end
 
---                 if pus > 0 then
---                     name = NTI.GetCurrentBacteria(targetCharacter, limb.type)
---                     HF.DMClient(HF.CharacterToClient(usingCharacter),"Sampler tool\n\nPus sample found.",Color(127,255,127,255))
---                 elseif HF.HasAfflictionLimb(targetCharacter, "abscess", limb.type, 0) then
---                     name = NTI.GetCurrentBacteria(targetCharacter, limb.type)
---                     HF.AddAfflictionLimb(targetCharacter,"lacerations",limb.type,4,usingCharacter)
---                     HF.DMClient(HF.CharacterToClient(usingCharacter),"Sampler tool\n\nPus sample found.",Color(127,255,127,255))
---                 elseif HF.HasAfflictionLimb(targetCharacter, "retractedskin", limb.type, 0) then
---                     name = NTI.GetCurrentBacteria(targetCharacter, limb.type)
---                     HF.AddAfflictionLimb(targetCharacter,"lacerations",limb.type,8,usingCharacter)
---                     HF.DMClient(HF.CharacterToClient(usingCharacter),"Sampler tool\n\nTissue sample found.",Color(127,255,127,255))
---                 else
---                     name = NTI.GetCurrentBacteriaBloodRandom(targetCharacter)
---                     HF.DMClient(HF.CharacterToClient(usingCharacter),"Sampler tool\n\nBlood sample found.",Color(127,255,127,255))
---                 end
+                NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),"Sampler tool\n\nSwab sample found.", Color(127,255,127,255))
+            else
+                local params = {condition=100}
+                local name = nil
+                local pus = NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, targetLimb.type, "pusyellow", 0) + NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, targetLimb.type, "pusgreen", 0)
 
---                 if name ~= nil then
---                     local info = NTI.Bacterias[name]
---                     HF.GiveItemPlusFunction(info.samplename,postSpawnFunc,params,usingCharacter)
---                 else
---                     HF.GiveItemPlusFunction("emptytubeunk",postSpawnFunc,params,usingCharacter)
---                 end
---             end
+                if pus > 0 then
+                    name = NTCS_Infections.GetCurrentBacteria(targetCharacter, targetLimb.type)
+                    NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),"Sampler tool\n\nPus sample found.",Color(127,255,127,255))
+                elseif NTCS.HF.HasAfflictionLimb(targetCharacter, "abscess", targetLimb.type, 0) then
+                    name = NTCS_Infections.GetCurrentBacteria(targetCharacter, targetLimb.type)
+                    NTCS.HF.AddAfflictionLimb(targetCharacter,"lacerations",targetLimb.type,4,usingCharacter)
+                    NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),"Sampler tool\n\nPus sample found.",Color(127,255,127,255))
+                elseif NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", targetLimb.type, 0) then
+                    name = NTCS_Infections.GetCurrentBacteria(targetCharacter, targetLimb.type)
+                    NTCS.HF.AddAfflictionLimb(targetCharacter,"lacerations",targetLimb.type,8,usingCharacter)
+                    NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),"Sampler tool\n\nTissue sample found.",Color(127,255,127,255))
+                else
+                    name = NTCS_Infections.GetCurrentBacteriaBloodRandom(targetCharacter)
+                    NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),"Sampler tool\n\nBlood sample found.",Color(127,255,127,255))
+                end
 
---             HF.RemoveItem(containedItem)
---         else
---             local string = "Sampler tool\nBloodwork readout:\n"
---             local total = 0
---             local infections = {}
+                if name ~= nil then
+                    local info = NTCS_Infections.Bacterias[name]
+                    NTCS.HF.GiveItemPlusFunction(info.samplename, usingCharacter, postSpawnFunc, params)
+                else
+                    NTCS.HF.GiveItemPlusFunction("emptytubeunk", usingCharacter, postSpawnFunc, params)
+                end
+            end
 
---             for key, info in pairs(NTI.Bacterias) do
---                 local strength = HF.GetAfflictionStrength(targetCharacter, info.bloodname, 0)
+            NTCS.HF.RemoveItem(containedItem)
+        else
+            local string = "Sampler tool\nBloodwork readout:\n"
+            local total = 0
+            local infections = {}
 
---                 if strength > 0 then
---                     infections[key] = strength
---                     total = total + strength
---                 end
---             end
+            for key, info in pairs(NTCS_Infections.Bacterias) do
+                local strength = NTCS.HF.GetAfflictionStrength(targetCharacter, info.bloodname, 0)
 
---             if total <= 0 then
---                 string = string .. "\nNo bacterial presence in blood."
---             else
---                 local bacteremia = targetCharacter.CharacterHealth.GetAffliction("bloodinfectionlevel")
---                 local bil = HF.GetAfflictionStrength(targetCharacter, "bloodinfectionlevel", 0)
---                 if bacteremia ~= nil then string = string .. bacteremia.Prefab.Name.Value .. ": " .. HF.Round(bil) .. "%" .. "\n" end
---                 for key, value in pairs(infections) do
---                     local affliction = targetCharacter.CharacterHealth.GetAffliction(NTI.Bacterias[key].bloodname)
---                     string = string .. "\n" .. affliction.Prefab.Name.Value .. ": " .. HF.Round((value / total) * 100) .. "%"
---                 end
---             end
+                if strength > 0 then
+                    infections[key] = strength
+                    total = total + strength
+                end
+            end
 
---             --this is a stopgap solution to diagnosing pneumonia. will probably change in the future
---             if HF.GetAfflictionStrength(targetCharacter, "pneumonia", 0) > 0 then
---                 string = string .. "\n\nLung Biopsy Positive For:"
+            if total <= 0 then
+                string = string .. "\nNo bacterial presence in blood."
+            else
+                local bacteremia = targetCharacter.CharacterHealth.GetAffliction("bloodinfectionlevel")
+                local bil = NTCS.HF.GetAfflictionStrength(targetCharacter, "bloodinfectionlevel", 0)
+                if bacteremia ~= nil then string = string .. bacteremia.Prefab.Name.Value .. ": " .. NTCS.HF.Round(bil) .. "%" .. "\n" end
+                for key, value in pairs(infections) do
+                    local affliction = targetCharacter.CharacterHealth.GetAffliction(NTCS_Infections.Bacterias[key].bloodname)
+                    string = string .. "\n" .. affliction.Prefab.Name.Value .. ": " .. NTCS.HF.Round((value / total) * 100) .. "%"
+                end
+            end
 
---                 local index = HF.Round(HF.GetAfflictionStrength(targetCharacter, "pneumoniabacteria", 0))
---                 if index > 0 then
---                     info = NTI.BacteriasIndex[index]
---                     local affliction = targetCharacter.CharacterHealth.GetAffliction(info.bloodname)
---                     string = string .. " " .. affliction.Prefab.Name.Value
---                 end
+            --this is a stopgap solution to diagnosing pneumonia. will probably change in the future
+            if NTCS.HF.GetAfflictionStrength(targetCharacter, "pneumonia", 0) > 0 then
+                string = string .. "\n\nLung Biopsy Positive For:"
 
---                 index = HF.Round(HF.GetAfflictionStrength(targetCharacter, "pneumoniavirus", 0))
---                 if index > 0 then
---                     info = NTI.VirusesIndex[index]
---                     local affliction = targetCharacter.CharacterHealth.GetAffliction(info.name)
---                     string = string .. " " .. affliction.Prefab.Name.Value
---                 end
---             end
+                local index = NTCS.HF.Round(NTCS.HF.GetAfflictionStrength(targetCharacter, "pneumoniabacteria", 0))
+                if index > 0 then
+                    info = NTCS_Infections.BacteriasIndex[index]
+                    local affliction = targetCharacter.CharacterHealth.GetAffliction(info.bloodname)
+                    string = string .. " " .. affliction.Prefab.Name.Value
+                end
 
---             HF.DMClient(HF.CharacterToClient(usingCharacter),string,Color(127,255,127,255))
---         end
---     end
+                index = NTCS.HF.Round(NTCS.HF.GetAfflictionStrength(targetCharacter, "pneumoniavirus", 0))
+                if index > 0 then
+                    info = NTCS_Infections.VirusesIndex[index]
+                    local affliction = targetCharacter.CharacterHealth.GetAffliction(info.name)
+                    string = string .. " " .. affliction.Prefab.Name.Value
+                end
+            end
 
---     --override suture function and add it so that a necrotized limb is not dropped during amputation
---     local tempSutureFunction = NT.ItemMethods.suture
---     NT.ItemMethods.suture = function(item, usingCharacter, targetCharacter, limb)
---         if(HF.GetSkillRequirementMet(usingCharacter,"medical",30)) then
---             local limbtype = HF.NormalizeLimbType(limb.type)
+            NTCS.HF.DMClient(NTCS.HF.CharacterToClient(usingCharacter),string,Color(127,255,127,255))
+        end
+    end
+        
+    itemLoader:Register("cultureanalyzer", NTCS_Infections.CultureAnalyzer)
 
---             if HF.HasAfflictionLimb(targetCharacter,"bonecut",limbtype,1) then
---                 local previtem = HF.GetHeadWear(targetCharacter)
---                 if previtem ~= nil and limbtype == LimbType.Head then
---                     previtem.Drop(usingCharacter, true)
---                 end
---                 local droplimb =
---                     not NT.LimbIsAmputated(targetCharacter,limbtype)
---                     and not HF.HasAfflictionLimb(targetCharacter,"gangrene",limbtype,15)
---                     and not HF.HasAfflictionLimb(targetCharacter,"infectionlevel",limbtype,20)
---                     and not HF.HasAfflictionLimb(targetCharacter,"necfasc",limbtype,1)
---                 NT.SurgicallyAmputateLimb(targetCharacter,limbtype)
---                 if (droplimb) then
---                     local limbtoitem = {}
---                     limbtoitem[LimbType.RightLeg] = "rleg"
---                     limbtoitem[LimbType.LeftLeg] = "lleg"
---                     limbtoitem[LimbType.RightArm] = "rarm"
---                     limbtoitem[LimbType.LeftArm] = "larm"
---                     limbtoitem[LimbType.Head] = "headsa"
---                     if limbtoitem[limbtype] ~= nil then
---                         HF.GiveItem(usingCharacter, limbtoitem[limbtype])
---                         HF.GiveSurgerySkill(usingCharacter, 0.5)
---                     end
---                 end
---             end
---         end
+    -- Override suture function and add it so that a necrotized targetLimb is not dropped during amputation
+    NTCS_Infections.SutureOverride = function(d)
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
+        
+        if(NTCS.HF.GetSkillRequirementMet(usingCharacter,"medical",30)) then
+            local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
 
---         tempSutureFunction(item, usingCharacter, targetCharacter, limb)
---     end
+            if NTCS.HF.HasAfflictionLimb(targetCharacter,"bonecut",limbtype,1) then
+                local previtem = NTCS.HF.GetHeadWear(targetCharacter)
+                if previtem ~= nil and limbtype == LimbType.Head then
+                    previtem.Drop(usingCharacter, true)
+                end
+                local droplimb =
+                    not NTCS.HF.LimbIsAmputated(targetCharacter,limbtype)
+                    and not NTCS.HF.HasAfflictionLimb(targetCharacter,"gangrene",limbtype,15)
+                    and not NTCS.HF.HasAfflictionLimb(targetCharacter,"infectionlevel",limbtype,20)
+                    and not NTCS.HF.HasAfflictionLimb(targetCharacter,"necfasc",limbtype,1)
+                NTCS.HF.SurgicallyAmputateLimb(targetCharacter,limbtype)
+                if (droplimb) then
+                    local limbtoitem = {}
+                    limbtoitem[LimbType.RightLeg] = "rleg"
+                    limbtoitem[LimbType.LeftLeg] = "lleg"
+                    limbtoitem[LimbType.RightArm] = "rarm"
+                    limbtoitem[LimbType.LeftArm] = "larm"
+                    limbtoitem[LimbType.Head] = "headsa"
+                    if limbtoitem[limbtype] ~= nil then
+                        NTCS.HF.GiveItem(usingCharacter, limbtoitem[limbtype])
+                        NTCS.HF.GiveSurgerySkill(usingCharacter, 0.5)
+                    end
+                end
+            end
+        end
 
---     --override scalpel function and add it so that it can debride necrotic tissue
---     local tempScalpelFunction = NT.ItemMethods.advscalpel
---     NT.ItemMethods.advscalpel = function(item, usingCharacter, targetCharacter, limb) 
---         tempScalpelFunction(item,usingCharacter,targetCharacter,limb)
---         local limbtype = HF.NormalizeLimbType(limb.type)
+        itemLoader:CallOld("suture", "Neurotrauma C#", d)
+    end
 
---         if(HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
+    itemLoader:Override("suture", NTCS_Infections.SutureOverride)
 
---         if not HF.HasAfflictionLimb(targetCharacter, "necfasc", limbtype, 0) or not HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,0.1) then
---             return
---         else
---             local function healAfflictionGiveSkill(identifier,healamount,skillgain) 
---                 local affAmount = HF.GetAfflictionStrengthLimb(targetCharacter,limbtype,identifier)
---                 local healedamount = math.min(affAmount,healamount)
---                 HF.AddAfflictionLimb(targetCharacter,identifier,limbtype,-healamount,usingCharacter)
+    --override scalpel function and add it so that it can debride necrotic tissue
+    NTCS_Infections.ScalpelOverride = function(d)
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
+
+        itemLoader:CallOld("advscalpel", "Neurotrauma C#", d)
+
+        local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
+
+        if(NTCS.HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
+
+        if not NTCS.HF.HasAfflictionLimb(targetCharacter, "necfasc", limbtype, 0) or not NTCS.HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,0.1) then
+            return
+        else
+            local function healAfflictionGiveSkill(identifier,healamount,skillgain) 
+                local affAmount = NTCS.HF.GetAfflictionStrengthLimb(targetCharacter,limbtype,identifier)
+                local healedamount = math.min(affAmount,healamount)
+                NTCS.HF.AddAfflictionLimb(targetCharacter,identifier,limbtype,-healamount,usingCharacter)
                 
---                 if NTSP ~= nil and NTConfig.Get("NTSP_enableSurgerySkill",true) then 
---                     HF.GiveSkillScaled(usingCharacter,"surgery",healedamount*skillgain)
---                 else 
---                     HF.GiveSkillScaled(usingCharacter,"medical",healedamount*skillgain/2)
---                 end
---             end
+                if NTCS_SurgeryPlus ~= nil and NTCS.Config.Get("NTSP_enableSurgerySkill",true) then 
+                    NTCS.HF.GiveSkillScaled(usingCharacter,"surgery",healedamount*skillgain)
+                else 
+                    NTCS.HF.GiveSkillScaled(usingCharacter,"medical",healedamount*skillgain/2)
+                end
+            end
 
---             if HF.GetSkillRequirementMet(usingCharacter,"medical",50) then
---                 healAfflictionGiveSkill("necfasc", 5, 20)
---                 HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,8,usingCharacter)
---             else
---                 healAfflictionGiveSkill("necfasc", 5, 20)
---                 HF.AddAfflictionLimb(targetCharacter,"bleeding",limbtype,5,usingCharacter)
---                 HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,10,usingCharacter)
---             end
+            if NTCS.HF.GetSkillRequirementMet(usingCharacter,"medical",50) then
+                healAfflictionGiveSkill("necfasc", 5, 20)
+                NTCS.HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,8,usingCharacter)
+            else
+                healAfflictionGiveSkill("necfasc", 5, 20)
+                NTCS.HF.AddAfflictionLimb(targetCharacter,"bleeding",limbtype,5,usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,10,usingCharacter)
+            end
             
---             HF.GiveItem(targetCharacter,"ntsfx_slash")
---         end
---     end
--- end,1)
+            NTCS.HF.GiveItem(targetCharacter,"ntsfx_slash")
+        end
+    end
+
+    itemLoader:Override("advscalpel", NTCS_Infections.ScalpelOverride)
+end,1)

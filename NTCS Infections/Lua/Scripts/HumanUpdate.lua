@@ -10,14 +10,17 @@ local limbtypes = {
     LimbType.RightLeg,
 }
 
---affliction overrides
--- override infected cavity to use amended infections
-AfflictionLoader:Extend("infectedcavity", function(C, Identifier, Limb, DeltaT)
+-- Affliction overrides
+-- InfectedCavity
+local InfectedCavityOverride = AfflictionBuilder:New("infectedcavity"):SetUpdateAction(function(C, Identifier, Limb, DeltaT)
 
-    -- If in stasis, end early
-    if C:GetBoolStat("stasis") then return true end
-
-    if Limb ~= LimbType.Torso then return true end
+    AfflictionLoader:CallOldUpdate("Neurotrauma C#", "infectedcavity", C, Identifier, Limb, DeltaT)
+    
+    -- Stasis check
+    if C:GetBoolStat("stasis") then 
+        C:SetAffliction(Identifier, 0)
+        return 
+    end
 
     local CurrentInfectedCavity =  C:GetAfflictionStrength(Identifier)
 
@@ -25,10 +28,9 @@ AfflictionLoader:Extend("infectedcavity", function(C, Identifier, Limb, DeltaT)
         -- NTCS_Infections.InfectCharacterBloodRandom(C.character)
     end
 
-    print("infectedcavity override triggered")
+end):Build()
 
-    return true
-end)
+AfflictionLoader:Override(InfectedCavityOverride)
 
 -- --override the bloodpressure affliction to allow sepsis to lower bloodpressure
 --     NT.Afflictions.bloodpressure={min=5,max=200,default=100,update=function(c,i)
