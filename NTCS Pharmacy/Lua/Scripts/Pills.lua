@@ -176,7 +176,7 @@ NTCS_Pharmacy.PillData.items = {
         effects={
             {type="addeffect",identifier="haste",amount=210},
             {type="addeffect",identifier="organdamage",amount=7},
-            {type="addeffect",identifier="cerebralhypoxia",amount=7},
+            {type="addeffect",identifier="neurotrauma",amount=7},
             {type="addeffect",identifier="psychosis",amount=15},
             {type="addeffect",identifier="chemaddiction",amount=7},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -184,7 +184,7 @@ NTCS_Pharmacy.PillData.items = {
         faileffects={
             {type="addeffect",identifier="haste",amount=150},
             {type="addeffect",identifier="organdamage",amount=15},
-            {type="addeffect",identifier="cerebralhypoxia",amount=15},
+            {type="addeffect",identifier="neurotrauma",amount=15},
             {type="addeffect",identifier="psychosis",amount=22},
             {type="addeffect",identifier="chemaddiction",amount=15},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -195,7 +195,7 @@ NTCS_Pharmacy.PillData.items = {
         effects={
             {type="addeffect",identifier="strengthen",amount=210},
             {type="addeffect",identifier="organdamage",amount=7},
-            {type="addeffect",identifier="cerebralhypoxia",amount=7},
+            {type="addeffect",identifier="neurotrauma",amount=7},
             {type="addeffect",identifier="psychosis",amount=15},
             {type="addeffect",identifier="chemaddiction",amount=7},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -203,7 +203,7 @@ NTCS_Pharmacy.PillData.items = {
         faileffects={
             {type="addeffect",identifier="strengthen",amount=150},
             {type="addeffect",identifier="organdamage",amount=15},
-            {type="addeffect",identifier="cerebralhypoxia",amount=15},
+            {type="addeffect",identifier="neurotrauma",amount=15},
             {type="addeffect",identifier="psychosis",amount=22},
             {type="addeffect",identifier="chemaddiction",amount=15},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -215,7 +215,7 @@ NTCS_Pharmacy.PillData.items = {
             {type="addeffect",identifier="haste",amount=200},
             {type="addeffect",identifier="strengthen",amount=200},
             {type="addeffect",identifier="organdamage",amount=5},
-            {type="addeffect",identifier="cerebralhypoxia",amount=5},
+            {type="addeffect",identifier="neurotrauma",amount=5},
             {type="addeffect",identifier="psychosis",amount=15},
             {type="addeffect",identifier="chemaddiction",amount=10},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -224,7 +224,7 @@ NTCS_Pharmacy.PillData.items = {
             {type="addeffect",identifier="haste",amount=200},
             {type="addeffect",identifier="strengthen",amount=200},
             {type="addeffect",identifier="organdamage",amount=10},
-            {type="addeffect",identifier="cerebralhypoxia",amount=10},
+            {type="addeffect",identifier="neurotrauma",amount=10},
             {type="addeffect",identifier="psychosis",amount=30},
             {type="addeffect",identifier="chemaddiction",amount=10},
             {type="addeffect",identifier="chemwithdrawal",amount=-45},
@@ -359,7 +359,7 @@ NTCS_Pharmacy.PillData.items = {
         effects={{type="addeffect",identifier="nausea",amount=20}}},
 
     lead={types={"active"},skillrequirement=0,
-        effects={{type="addeffect",identifier="cerebralhypoxia",amount=20}}},
+        effects={{type="addeffect",identifier="neurotrauma",amount=20}}},
 
     uranium={types={"active"},skillrequirement=0,
         effects={{type="addeffect",identifier="radiationsickness",amount=20}}},
@@ -409,11 +409,11 @@ NTCS_Pharmacy.PillData.items = {
     mannitolplus={types={"active"},skillrequirement=60,
         effects={
             {type="addeffect",identifier="afmannitol",amount=30},
-            {type="addeffect",identifier="cerebralhypoxia",amount=-10}
+            {type="addeffect",identifier="neurotrauma",amount=-10}
         },
         faileffects={
             {type="addeffect",identifier="afmannitol",amount=15},
-            {type="addeffect",identifier="cerebralhypoxia",amount=-5}
+            {type="addeffect",identifier="neurotrauma",amount=-5}
         }
     },
 

@@ -202,7 +202,7 @@ affLoader:Register(
 --Halesium
 -- NTNan.RegisterHealingAffliction("oxybloodnanite",{
 --     {{"bloodloss", 0.2},{"oxygenlow",0.4},{"radiationsickness",0.2},{"hypoxemia",0.3}},
---     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"cerebralhypoxia",0.15}}}, function(character)
+--     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"neurotrauma",0.15}}}, function(character)
 --         HF.AddAffliction(character, "cardiacarrest", 10)
 --         HF.AddAffliction(character, "oxygenlow", 100)
 --     end)
@@ -459,7 +459,7 @@ affLoader:Register(
     --Halesium
 -- NTNan.AfflictionsRes[NTNan.Afflictions.OxyBlood] = {name=NTNan.Afflictions.OxyBlood, levels = {
 --     {{"bloodloss", 0.2},{"oxygenlow",0.4},{"radiationsickness",0.2},{"hypoxemia",0.3}},
---     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"cerebralhypoxia",0.15}}}
+--     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"neurotrauma",0.15}}}
 -- }
     --Mithridates
 -- NTNan.AfflictionsRes[NTNan.Afflictions.AntiTox] = {name=NTNan.Afflictions.AntiTox, levels = {
