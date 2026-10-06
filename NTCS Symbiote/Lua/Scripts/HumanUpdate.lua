@@ -288,8 +288,8 @@ Timer.Wait(function()
             NTCS.HF.AddAffliction(character, "oxygenlow", -100 * deltaTime)
 
             local NTHuman = NTCS.Human.getNTHumanFromCharacter(character)
-            -- NTHuman.SetSymptomFalse("hyperventilation", 2)
-            -- NTHuman.SetSymptomFalse("hypoventilation", 2)
+            NTHuman.SetSymptomFalse("hyperventilation")
+            NTHuman.SetSymptomFalse("hypoventilation")
             
             -- Limb Specifics
             for limbType in limbTypes do
