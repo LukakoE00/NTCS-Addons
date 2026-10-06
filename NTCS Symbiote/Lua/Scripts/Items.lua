@@ -1,208 +1,267 @@
+local itemLoader = NTCS.ItemFunctionLoader("NTCS_Symbiote")
 
 Timer.Wait(function()
 
+    -- Remove these afflictions on suturing
+    NTCS.NTC.AddSuturableAffliction("bonecuttorso", 0, "surgeryincision")
+    NTCS.NTC.AddSuturableAffliction("surgery_huskhealth", 0, "surgeryincision")
 
-    -- make it so ending surgery gets rid of stuff
-    NT.SutureAfflictions.surgery_huskhealth = {}
-    NT.SutureAfflictions.bonecuttorso = {}
+    -- Add Stabbing Parasites to the Scalpel's functionality
+    NTCS_Symbiote.StabParasites = function(d, OriginalItemFunction)
+        itemLoader:CallOld(OriginalItemFunction, "Neurotrauma C#", d)
 
-    -- add stabbing parasites to the scalpels functionality
-    local tempScalpelFunction = NT.ItemMethods.advscalpel
-    NT.ItemMethods.advscalpel = function(item, usingCharacter, targetCharacter, limb) 
-        tempScalpelFunction(item,usingCharacter,targetCharacter,limb)
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
 
-        local limbtype = HF.NormalizeLimbType(limb.type)
+        local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
 
-        -- only the torso is interesting for the husk stuff
+        -- If not on the torso, tap out
         if limbtype ~= LimbType.Torso then return end
     
-        -- don't work on stasis
-        if(HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
+        -- Doesn't work in stasis
+        if (NTCS.HF.HasAffliction(targetCharacter,"stasis", 0.1)) then 
+            return 
+        end
 
-        local huskHealth = HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
-        local calyx = HF.GetAfflictionStrength(targetCharacter,"af_calyxanide")
+        local HuskHealth = NTCS.HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+        
+        -- If not in stabbing phase, tap out
+        if HuskHealth < 0.1 then return end
 
-        -- don't work if we're not in the "stabbing the shit out of the parasite" phase of treatment
-        if huskHealth < 0.1 then return end
+        local CalyxanideStrength = NTCS.HF.GetAfflictionStrength(targetCharacter,"af_calyxanide")
     
-        if(HF.CanPerformSurgeryOn(targetCharacter)) then
-            -- skill check is 30 with and 100 without calyxanide
-            if(HF.GetSurgerySkillRequirementMet(usingCharacter,30 + 70 * HF.BoolToNum(calyx < 0.1))) then
-                -- "treat" some husk health
-                local newHuskHealth = HF.Clamp(huskHealth-10,5,100)
-                HF.SetAffliction(targetCharacter,"surgery_huskhealth",newHuskHealth)
-                HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
+        if (NTCS.HF.CanPerformSurgeryOn(targetCharacter)) then
+            
+            -- Skillcheck is 30 with and 100 without calyxanide
+            if (NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, 30 + 70 * NTCS.HF.BoolToNum(CalyxanideStrength < 0.1))) then
+                -- Remove some husk health
+                local NewHuskHealth = NTCS.HF.Clamp(HuskHealth-10,5,100)
+                NTCS.HF.SetAffliction(targetCharacter, "surgery_huskhealth", NewHuskHealth)
+                NTCS.HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
             else
-                if calyx < 0.1 and huskHealth > 20 then
-                    -- no calyx and husk active, uh oh.
-
-                    -- determine what limb is being retaliated against
+                if CalyxanideStrength < 0.1 and HuskHealth > 20 then
+                    -- No calyxanide and the Husk is active
+                    -- Determine what limb is being retaliated against
                     local hitLimb = LimbType.RightArm
                     if
-                        NT.LimbIsDislocated(usingCharacter,hitLimb) or
-                        NT.LimbIsBroken(usingCharacter,hitLimb) or
-                        NT.LimbIsAmputated(usingCharacter,hitLimb)
-                    then hitLimb = LimbType.LeftArm end
-
-                    HF.AddAfflictionLimb(usingCharacter,"bleeding",hitLimb,5)
-                    HF.AddAfflictionLimb(usingCharacter,"bitewounds",hitLimb,10)
-                    HF.AddAffliction(usingCharacter,"stun",0.2)
-                    -- 20% chance of getting the unfortunate soul holding the scalpel infected
-                    if HF.Chance(0.2) then
-                        HF.AddAffliction(usingCharacter,"huskinfection",1)
+                        NTCS.HF.LimbIsDislocated(usingCharacter,hitLimb) or
+                        NTCS.HF.LimbIsBroken(usingCharacter,hitLimb) or
+                        NTCS.HF.LimbIsAmputated(usingCharacter,hitLimb)
+                    then 
+                        hitLimb = LimbType.LeftArm 
                     end
-                    HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
+
+                    NTCS.HF.AddAfflictionLimb(usingCharacter, "bleeding", hitLimb, 5)
+                    NTCS.HF.AddAfflictionLimb(usingCharacter, "bitewounds", hitLimb, 10)
+                    NTCS.HF.AddAffliction(usingCharacter, "stun", 0.2)
+
+                    -- 20% chance of getting the unfortunate soul holding the scalpel infected
+                    if NTCS.HF.Chance(0.2) then
+                        NTCS.HF.AddAffliction(usingCharacter, "huskinfection", 1)
+                    end
+                    NTCS.HF.GiveItem(targetCharacter, "ntsfx_huskhurt")
                 else
                     -- stop stabbing the patient, stupid
-                    HF.AddAfflictionLimb(targetCharacter,"bleeding",limbtype,10,usingCharacter)
-                    HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,10,usingCharacter)
+                    NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype,10,usingCharacter)
+                    NTCS.HF.AddAfflictionLimb(targetCharacter, "lacerations", limbtype,10,usingCharacter)
                 end
             end
         end
     end
 
-    -- add ripping parasites out of the patients chest cavity to the hemostats functionality
-    local tempHemostatFunction = NT.ItemMethods.advhemostat
-    NT.ItemMethods.advhemostat = function(item, usingCharacter, targetCharacter, limb) 
-        tempHemostatFunction(item,usingCharacter,targetCharacter,limb)
+    local StabParasites = function (d)
+        NTCS_Symbiote.StabParasites(d, "advscalpel")
+    end
 
-        local limbtype = HF.NormalizeLimbType(limb.type)
+    itemLoader:Override("advscalpel", StabParasites)
 
-        -- only the torso is interesting for the husk stuff
+    -- Add ripping parasites out of the patients chest cavity to the hemostats functionality
+    NTCS_Symbiote.RemoveParasites = function(d, OriginalItemFunction) 
+        itemLoader:CallOld(OriginalItemFunction, "Neurotrauma C#", d)
+
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
+
+        local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
+
+        -- If not on the torso, tap out
         if limbtype ~= LimbType.Torso then return end
     
-        -- don't work on stasis
-        if(HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
+        -- Doesn't work in stasis
+        if (NTCS.HF.HasAffliction(targetCharacter,"stasis", 0.1)) then 
+            return 
+        end
 
-        local huskHealth = HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
-
+        local HuskHealth = NTCS.HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+        
         -- don't work if we're not in the "grabbing the parasite by the balls" phase of treatment
-        if (huskHealth > 20) or (huskHealth < 0.1) then return end
+        if (HuskHealth > 20) or (HuskHealth < 0.1) then return end
     
-        if(HF.CanPerformSurgeryOn(targetCharacter)) then
-            if(HF.GetSurgerySkillRequirementMet(usingCharacter,30)) then
+        if(NTCS.HF.CanPerformSurgeryOn(targetCharacter)) then
+            if(NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, 30)) then
                 -- rip that sucker out for good
                 -- ...but first, give the patient lung damage equivalent to the remaining husk health
-                HF.AddAffliction(targetCharacter,"lungdamage",huskHealth*2 + HF.Clamp(50-HF.GetSurgerySkill(usingCharacter),0,30))
-                HF.SetAffliction(targetCharacter,"surgery_huskhealth",0)
-                HF.SetAffliction(targetCharacter,"huskinfection",0)
-                --HF.SetAffliction(targetCharacter,"husksymbiosis",0)
-                HF.GiveItem(targetCharacter,"ntsfx_huskdeath")
-                HF.GiveSkill(usingCharacter,"medical",3)
+                NTCS.HF.AddAffliction(targetCharacter, "lungdamage", HuskHealth * 2 + NTCS.HF.Clamp(50 - NTCS.HF.GetSurgerySkill(usingCharacter),0,30))
+                NTCS.HF.SetAffliction(targetCharacter, "surgery_huskhealth", 0)
+                NTCS.HF.SetAffliction(targetCharacter, "huskinfection", 0)
+                NTCS.HF.GiveItem(targetCharacter, "ntsfx_huskdeath")
+                NTCS.HF.GiveSkill(usingCharacter, "medical", 3)
             else
                 -- stop stabbing the patient, stupid
-                HF.AddAfflictionLimb(targetCharacter,"bleeding",limbtype,10,usingCharacter)
-                HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,10,usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 10, usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, "lacerations", limbtype, 10, usingCharacter)
             end
         end
     end
 
-    -- add sawing torso bones to the bonesaw
-    local tempSawFunction = NT.ItemMethods.surgerysaw
-    NT.ItemMethods.surgerysaw = function(item, usingCharacter, targetCharacter, limb) 
-        tempSawFunction(item,usingCharacter,targetCharacter,limb)
-        
-        local limbtype = HF.NormalizeLimbType(limb.type)
-    
-        -- only the torso is interesting for the husk stuff
+    local RemoveParasites = function (d)
+        NTCS_Symbiote.RemoveParasites(d, "advhemostat")
+    end
+
+    itemLoader:Override("advhemostat", RemoveParasites)
+
+    -- Add sawing torso bones to the bonesaw
+    NTCS_Symbiote.SawRibs = function(d, OriginalItemFunction) 
+        itemLoader:CallOld(OriginalItemFunction, "Neurotrauma C#", d)
+
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
+
+        local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
+
+        -- If not on the torso, tap out
         if limbtype ~= LimbType.Torso then return end
     
-        -- don't work on stasis
-        if(HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
-
-        local huskHealth = HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+        -- Doesn't work in stasis
+        if (NTCS.HF.HasAffliction(targetCharacter,"stasis", 0.1)) then 
+            return 
+        end
 
         -- don't work if we've already cut the torso open
-        if HF.HasAffliction(targetCharacter,"bonecuttorso",1) then return end
+        if NTCS.HF.HasAffliction(targetCharacter,"bonecuttorso",1) then 
+            return 
+        end
     
-        if(HF.CanPerformSurgeryOn(targetCharacter) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)
-        ) then
-            if(HF.GetSurgerySkillRequirementMet(usingCharacter,50)) then
-                HF.AddAffliction(targetCharacter,"bonecuttorso",1+HF.GetSurgerySkill(usingCharacter)/2,usingCharacter)
+        if(NTCS.HF.CanPerformSurgeryOn(targetCharacter) and NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)) then
+            if (NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter,50)) then
+                NTCS.HF.AddAffliction(targetCharacter, "bonecuttorso", 1 + NTCS.HF.GetSurgerySkill(usingCharacter) / 2, usingCharacter)
             else
-                HF.AddAfflictionLimb(targetCharacter,"bleeding",limbtype,15,usingCharacter)
-                HF.AddAfflictionLimb(targetCharacter,"internaldamage",limbtype,6,usingCharacter)
-                HF.AddAfflictionLimb(targetCharacter,"lacerations",limbtype,4,usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, "internaldamage", limbtype, 6, usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, "lacerations", limbtype, 4, usingCharacter)
             end
         end
     end
 
-    -- make it so trying to defib someones parasite will do funny things
-    local tempDefibFunction = NT.ItemMethods.defibrillator
-    NT.ItemMethods.defibrillator = function(item, usingCharacter, targetCharacter, limb) 
+    local SawRibs = function (d)
+        NTCS_Symbiote.SawRibs(d, "surgerysaw")
+    end
 
-        -- new functionality conditionals
+    itemLoader:Override("surgerysaw", SawRibs)
 
-        local huskHealth = HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+    -- Make it so trying to defib someones parasite will do funny things
+    NTCS_Symbiote.DefibParasite = function(d, OriginalItemFunction) 
+        local item = d.item
+        local usingCharacter = d.user.Human
+        local targetCharacter = d.target.Human
+        local targetLimb = d.targetLimb
 
-        if huskHealth > 0.1 and HF.HasAffliction(targetCharacter,"bonecuttorso",99) then
-            -- don't work on stasis
-            if(HF.HasAffliction(targetCharacter,"stasis",0.1)) then return end
+        local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
 
-            local calyx = HF.GetAfflictionStrength(targetCharacter,"af_calyxanide")
-            if calyx<0.1 and huskHealth > 20 then
+        -- If not on the torso, tap out
+        if limbtype ~= LimbType.Torso then return end
+    
+        local HuskHealth = NTCS.HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+
+        if HuskHealth > 0.1 and NTCS.HF.HasAffliction(targetCharacter,"bonecuttorso",99) then
+
+            -- Doesn't work in stasis
+            if (NTCS.HF.HasAffliction(targetCharacter,"stasis", 0.1)) then 
+                return 
+            end
+
+            local CalyxanideStrength = NTCS.HF.GetAfflictionStrength(targetCharacter,"af_calyxanide")
+
+            if CalyxanideStrength < 0.1 and HuskHealth > 20 then
                 -- trying to defib a very aggressive parasite
 
-                if HF.Chance(0.3) then
+                if NTCS.HF.Chance(0.3) then
                     -- we're doing the funny double traumatic amputation now
-                    if not NT.LimbIsAmputated(usingCharacter,LimbType.RightArm) then
-                        NT.TraumamputateLimb(usingCharacter,LimbType.RightArm) end
-                    if not NT.LimbIsAmputated(usingCharacter,LimbType.LeftArm) then
-                        NT.TraumamputateLimb(usingCharacter,LimbType.LeftArm) end
+                    if not NTCS.HF.LimbIsAmputated(usingCharacter, LimbType.RightArm) then
+                        NTCS.HF.TraumamputateLimb(usingCharacter, LimbType.RightArm) 
+                    end
+
+                    if not NTCS.HF.LimbIsAmputated(usingCharacter, LimbType.LeftArm) then
+                        NTCS.HF.TraumamputateLimb(usingCharacter, LimbType.LeftArm) 
+                    end
                     
-                    HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
-                        
+                    NTCS.HF.GiveItem(targetCharacter,"ntsfx_huskhurt") 
                 else
                     -- determine what limb is being retaliated against
                     local hitLimb = LimbType.RightArm
-                    if HF.Chance(0.5)
-                    then hitLimb = LimbType.LeftArm end
+                    if NTCS.HF.Chance(0.5) then 
+                        hitLimb = LimbType.LeftArm 
+                    end
 
-                    if NT.LimbIsAmputated(usingCharacter,LimbType.RightArm) then hitLimb = LimbType.LeftArm end
-                    if NT.LimbIsAmputated(usingCharacter,LimbType.LeftArm) then hitLimb = LimbType.RightArm end
+                    if NTCS.HF.LimbIsAmputated(usingCharacter, LimbType.RightArm) then 
+                        hitLimb = LimbType.LeftArm 
+                    end
 
-                    HF.AddAfflictionLimb(usingCharacter,"bleeding",hitLimb,5)
-                    HF.AddAfflictionLimb(usingCharacter,"bitewounds",hitLimb,10)
-                    HF.AddAffliction(usingCharacter,"stun",0.2)
+                    if NTCS.HF.LimbIsAmputated(usingCharacter, LimbType.LeftArm) then 
+                        hitLimb = LimbType.RightArm 
+                    end
+
+                    NTCS.HF.AddAfflictionLimb(usingCharacter,"bleeding",hitLimb,5)
+                    NTCS.HF.AddAfflictionLimb(usingCharacter,"bitewounds",hitLimb,10)
+                    NTCS.HF.AddAffliction(usingCharacter,"stun",0.2)
+
                     -- 20% chance of getting the unfortunate soul holding the defib infected
-                    if HF.Chance(0.2) then
-                        HF.AddAffliction(usingCharacter,"huskinfection",1)
+                    if NTCS.HF.Chance(0.2) then
+                        NTCS.HF.AddAffliction(usingCharacter, "huskinfection", 1)
                     end
                 end
 
-                HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
+                NTCS.HF.GiveItem(targetCharacter,"ntsfx_huskhurt")
                 
             else
                 -- defibbing a stunned parasite
-
                 local containedItem = item.OwnInventory.GetItemAt(0)
                 if containedItem==nil then return end
                 local hasVoltage = containedItem.Condition > 0
 
                 if hasVoltage then 
-                    HF.GiveItem(targetCharacter,"ntsfx_manualdefib")
-                    containedItem.Condition = containedItem.Condition-10
-                    if containedItem.Prefab.Identifier.Value ~= "fulguriumbatterycell" then containedItem.Condition = containedItem.Condition-10 end
+                    NTCS.HF.GiveItem(targetCharacter,"ntsfx_manualdefib")
+                    containedItem.Condition = containedItem.Condition - 10
 
-                    local successChance = (HF.GetSkillLevel(usingCharacter,"medical")/100)^2
+                    if containedItem.Prefab.Identifier.Value ~= "fulguriumbatterycell" then 
+                        containedItem.Condition = containedItem.Condition - 10 
+                    end
+
+                    local successChance = (NTCS.HF.GetSkillLevel(usingCharacter,"medical")/100)^2
 
                     Timer.Wait(function()
-                        HF.AddAffliction(targetCharacter,"stun",0.5,usingCharacter)
+                        NTCS.HF.AddAffliction(targetCharacter,"stun",0.5,usingCharacter)
 
-                        huskHealth = HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
+                        HuskHealth = NTCS.HF.GetAfflictionStrength(targetCharacter,"surgery_huskhealth")
 
                         -- make sure surgery wasnt terminated in the 2 seconds it takes for the defib to do its job
-                        if huskHealth<0.1 then return end
+                        if HuskHealth < 0.1 then return end
 
-                        if HF.Chance(successChance) then
-                            huskHealth = huskHealth-30
+                        if NTCS.HF.Chance(successChance) then
+                            HuskHealth = HuskHealth - 30
                         else
-                            huskHealth = huskHealth-10
+                            HuskHealth = HuskHealth - 10
                         end
 
-                        huskHealth = HF.Clamp(huskHealth,5,100)
-                        HF.SetAffliction(targetCharacter,"surgery_huskhealth",huskHealth)
-                        HF.GiveItem(targetCharacter,"ntsfx_huskdeath")
+                        HuskHealth = NTCS.HF.Clamp(HuskHealth,5,100)
+                        NTCS.HF.SetAffliction(targetCharacter, "surgery_huskhealth", HuskHealth)
+                        NTCS.HF.GiveItem(targetCharacter, "ntsfx_huskdeath")
                         
                     end, 2000)
                 end
@@ -210,10 +269,13 @@ Timer.Wait(function()
             end
 
         else
-            tempDefibFunction(item,usingCharacter,targetCharacter,limb)
+            itemLoader:CallOld(OriginalItemFunction, "Neurotrauma C#", d)
         end
-    
-
     end
 
+    local DefibParasite = function (d)
+        NTCS_Symbiote.SawRibs(d, "defibrillator")
+    end
+
+    itemLoader:Override("defibrillator", DefibParasite)
 end,2000)

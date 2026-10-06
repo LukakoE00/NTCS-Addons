@@ -1,27 +1,45 @@
+NTCS_Symbiote = {}
+NTCS_Symbiote.Name="Symbiote"
+NTCS_Symbiote.Version = "A1.0.1"
+NTCS_Symbiote.VersionNum = 01000100
+NTCS_Symbiote.MinNTVersion = "A1.12.1"
+NTCS_Symbiote.MinNTVersionNum = 01120100
+NTCS_Symbiote.Path = table.pack(...)[1]
 
-NTS = {} -- Neurotrauma Symbiote
-NTS.Name="Symbiote"
-NTS.Version = "A1.0.1"
-NTS.VersionNum = 01000100
-NTS.MinNTVersion = "A1.12.1"
-NTS.MinNTVersionNum = 01120100
-NTS.Path = table.pack(...)[1]
-Timer.Wait(function() if NTC ~= nil and NTC.RegisterExpansion ~= nil then NTC.RegisterExpansion(NTS) end end,1)
+-- Initialise C# Classes needed
+dofile(NTCS_Symbiote.Path.."/Lua/Library/NeurotraumaLib.lua")
+NTCS.Info.RegisterAddon(NTCS_Symbiote)
 
--- server-side code (also run in singleplayer)
+local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
+local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
+
+-- Serverside + Singleplayer code
 if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
+	Timer.Wait(function()
 
-    Timer.Wait(function()
-        if NTC == nil then
-            print("Error loading NT Symbiote: It appears Neurotrauma isn't loaded!")
-            return
-        end
+		-- NT is the table initialised in Lua Neurotrauma and not present in NTCS. If this returns true, NT Lua is active.
+		if NT ~= nil then
+			print(NTLuaEnabledMsg) 
+			Game.SendMessage(NTLuaEnabledMsg, ChatMessageType.Server)
+			return
+		end
 
-        dofile(NTS.Path.."/Lua/Scripts/helperfunctions.lua")
+		-- If Info cannot be found it's because the initialization line above did not trigger since NTCS isn't active.
+		if NTCS.Info == nil then
+			print(NTCSNotEnabledMsg)
+			Game.SendMessage(NTCSNotEnabledMsg, ChatMessageType.Server)
+			return
+		end
 
-        dofile(NTS.Path.."/Lua/Scripts/humanupdate.lua")
-        dofile(NTS.Path.."/Lua/Scripts/items.lua")
+		-- Lua Content Scripts SP/MP:
+        dofile(NTCS_Symbiote.Path.."/Lua/Scripts/HelperFunctions.lua")
+        dofile(NTCS_Symbiote.Path.."/Lua/Scripts/HumanUpdate.lua")
+        dofile(NTCS_Symbiote.Path.."/Lua/Scripts/Items.lua")
 
-    end,1)
-
+        -- Hook a function to NTCS Post-HumanUpdate
+		Hook.Add("Neurotrauma.HumanUpdate.PostHook", "NTCS_Symbiote.CheckForZealotRobes", function(character, deltaTime)
+			if character == nil or character.Human == nil or character.Human.Removed then return end
+			NTCS_Symbiote.CheckForZealotRobes(character.Human, deltaTime)
+		end)
+	end, 1)
 end
