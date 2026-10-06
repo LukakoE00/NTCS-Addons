@@ -117,16 +117,16 @@
       <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
 
       <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afzincsupplement" amount="7" />
       </StatusEffect>
 
       <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afzincsupplement" amount="5" />
       </StatusEffect>
 
@@ -165,16 +165,16 @@
       <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
 
       <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afcorticosteroids" amount="6" />
       </StatusEffect>
 
       <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afcorticosteroids" amount="4" />
       </StatusEffect>
 
@@ -213,16 +213,16 @@
       <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
       
       <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afascorbicacid" amount="6" />
       </StatusEffect>
 
       <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="10">
-        <Sound file="%ModDir:3744761298%/Sounds/pills1.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills2.ogg" range="500" />
-        <Sound file="%ModDir:3744761298%/Sounds/pills3.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills1.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills2.ogg" range="500" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Consumables/pills3.ogg" range="500" />
         <Affliction identifier="afascorbicacid" amount="4" />
       </StatusEffect>
 

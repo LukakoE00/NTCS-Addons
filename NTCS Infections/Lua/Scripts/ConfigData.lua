@@ -1,6 +1,4 @@
-NTI.ConfigData = {
-    NTI_header1 = {name=NTI.Name,type="category"},
-
+NTCS_Infections.ConfigData = {
 	NTI_infectionDifficulty = {
 		name = "Global Infection Difficulty",
 		default = 1,
@@ -100,4 +98,5 @@ NTI.ConfigData = {
         description = "The denominator for the chance a non-team member bot spawns with a cold, calculated as 1 / denominator. The bigger the number, the less likely it is.",
 	},
 }
-NTConfig.AddConfigOptions(NTI)
+
+NTCS.Config.AddConfigOptions(NTCS_Infections)

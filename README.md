@@ -5,10 +5,10 @@ A list of addons adjusted to work with NTCS by Neurodevs. If your addon is in he
 - Cybernetics
 - Surgery Plus
 - Pharmacy
+- Symbiote
 
 ## WIP Adjusting:
 - Nanite Integration
-- Symbiote
 - Infection (Permission from author)
 
 ## To Adjust:

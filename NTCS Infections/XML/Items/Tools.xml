@@ -115,7 +115,7 @@
     
     <ItemComponent>
       <StatusEffect type="OnUse" target="This, Character">
-        <Sound file="%ModDir:3744761298%/Sounds/hypospray.ogg" />
+        <Sound file="%ModDir:3744761298%/Sounds/ItemApplication/Tools/hypospray.ogg" />
       </StatusEffect>
     </ItemComponent>
 
