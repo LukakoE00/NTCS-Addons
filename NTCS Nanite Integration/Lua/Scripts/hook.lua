@@ -9,10 +9,10 @@ Hook.Add("NTNanApplyNanite", function(effect, deltaTime, item, targets, worldPos
         return
     end
 
-    local str = element.GetAttributeString("amount", 2)
+    local str = tonumber(element.GetAttributeString("amount", 2))
 
     for _,character in pairs(targets) do
-        HF.AddAffliction(character, id, str)
+        NTCS.HF.AddAffliction(character, id, str)
     end
 
 end)

@@ -34,6 +34,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 		-- Lua Content Scripts SP/MP:
 		dofile(NTNan.Path .. "/Lua/Scripts/helperfunctions.lua")
 		dofile(NTNan.Path .. "/Lua/Scripts/hook.lua")
+        dofile(NTNan.Path .. "/Lua/Scripts/afflictions.lua")
 	end, 1)
 else
 	Timer.Wait(function()
