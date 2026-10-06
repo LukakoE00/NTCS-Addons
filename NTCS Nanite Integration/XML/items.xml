@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<Override>
 <Items>
   <NaniteBase identifier="nanitebase" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical" useinhealthinterface="false" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="4">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -380,3 +381,4 @@
         </MeleeWeapon>
     </Lanius>-->
 </Items>
+</Override>
