@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+    <!-- Vaccines -->
+  <!-- Streptococcal -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afstrepvac" 
+    
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" isbuff="true"
+
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100" 
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Staphylococcal -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afstaphvac" 
+    
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100"
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Pseudomonas -->
+  <Affliction 
+    name=""
+    description=""
+    identifier="afpseudovac" 
+
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100" 
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Provobacter -->
+  <Affliction 
+    name="" 
+    description="" 
+    identifier="afprovovac" 
+    
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100"
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Aerogonella -->
+  <Affliction 
+    name="" 
+    description="" 
+    identifier="afaerovac" 
+    
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100"
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Influenza -->
+  <Affliction 
+    name=""
+    description="" 
+    identifier="affluvac"
+    
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100"
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+    
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+
+  <!-- Europan Cough -->
+  <Affliction 
+    name=""
+    description="" 
+    identifier="afeuropanvac"
+
+    hideiconafterdelay="true" 
+    healableinmedicalclinic="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    type="resistance" 
+    isbuff="true" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="0" 
+    maxstrength="100"
+    
+    iconcolors="10,193,114,255;10,193,114,255">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,4" sheetelementsize="128,128" origin="0,0" />
+    
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.005" />
+  </Affliction>
+</Override>
+</Afflictions>

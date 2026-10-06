@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Override>
+ <Items>
+  <!-- Empty Tube -->
+  <Item name="" identifier="emptytubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal"></Deconstruct>
+  </Item>
+
+  <!-- Streptococcal Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="streptubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="streptube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="streptube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="streptube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponstrep" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- Staphylcoccal Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="staphtubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="staphtube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="staphtube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="staphtube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponstaph" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- Pseudomonas Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="pseudotubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="pseudotube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="pseudotube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="pseudotube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponpseudo" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- Provobacter Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="provotubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="provotube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="provotube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="provotube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponprovo" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- Aeroganella Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="aerotubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="aerotube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="aerotube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="aerotube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponaero" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- MRSA Tubes -->
+  <!-- Unknown -->
+  <Item name="" identifier="mrsatubeunk" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4">
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+
+    <Deconstruct time="5" requireddeconstructor="cultureanalyzingterminal">
+      <Item identifier="mrsatube" />
+    </Deconstruct>
+  </Item>
+
+  <!-- Analyzed -->
+  <Item name="" identifier="mrsatube" category="Medical" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" scale="0.4" maxstacksize="16" maxstacksizecharacterinventory="4">
+    <Price baseprice="60">
+      <Price storeidentifier="merchantmedical" sold="false" multiplier="2" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="3" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="mrsatube" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="medical" level="50" />
+      <RequiredItem identifier="weaponmrsa" />
+      <RequiredItem identifier="culturetube" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+ </Items>
+</Override>

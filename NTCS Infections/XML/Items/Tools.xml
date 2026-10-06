@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Override>
+ <Items>
+  <!-- Culture Tube -->
+  <Item name="" identifier="culturetube" category="Equipment" description="" Tags="smallitem,medical" cargocontaineridentifier="mediccrate" useinhealthinterface="true" scale="0.4" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" minamount="2" maxamount="3" spawnprobability="1" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+
+    <Price baseprice="20">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="2" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="medical" level="20" />
+      <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="elastin" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="64,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" depth="0.8" sourcerect="98,493,52,19" />
+    <Body width="50" height="20" density="20" />
+    <Holdable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <!-- Sample Analyzer -->
+  <Item name="" identifier="cultureanalyzingterminal" tags="cultureanalyzingterminal" texturescale="1.0,1.0" isshootable="true" scale="0.5" category="Machine">
+    <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="false">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="steel" />
+    </Fabricate>
+
+    <Deconstruct time="20">
+      <Item identifier="zinc" />
+      <Item identifier="steel" />
+    </Deconstruct>
+    
+    <sprite texture="Content/Map/Outposts/Art/MedBayAssets.png" sourcerect="0,0,98,126" depth="0.79" premultiplyalpha="false" origin="0.5,0.5" />
+    <LightComponent range="0.0" powerconsumption="5" lightcolor="255,255,255,111" IsOn="true" castshadows="false" allowingameediting="false">
+      <sprite texture="Content/Map/Outposts/Art/MedBayAssets.png" sourcerect="96,0,98,126" depth="0.1" origin="0.5,0.5" alpha="1.0" />
+    </LightComponent>
+    <Body width="98" height="126" density="40" />
+
+    <Holdable slots="LeftHand+RightHand" canbeselected="true" selectkey="Select" canbepicked="true" attachable="true" attachedbydefault="true" pickkey="Use" pickingtime="5" holdpos="0,0" holdangle="0" aimable="true" aimpos="0,0" aimangle="0" limitedattachable="false" origin="0.5,0.5" msg="ItemMsgDetachWrench">
+      <RequiredItem items="wrench" type="Equipped" />
+      <StatusEffect type="OnActive" target="This" interval="1">
+        <DropContainedItems />
+      </StatusEffect>
+    </Holdable>
+
+    <ItemContainer capacity="1" maxstacksize="1" canbeselected="true" hideitems="true" hudpos="0, 0" slotsperrow="1" uilabel="" allowuioverlap="true">
+      <Containable items="streptubeunk,staphtubeunk,pseudotubeunk,provotubeunk,aerotubeunk,mrsatubeunk,emptytubeunk,emptyviralunk,coldviralunk,fluviralunk,europanviralunk" />
+    </ItemContainer>
+    <ItemContainer capacity="1" maxstacksize="1" canbeselected="true" hideitems="true" hudpos="0, 0" slotsperrow="1" uilabel="" allowuioverlap="true">
+      <Containable items="streptube,staphtube,pseudotube,provotube,aerotube,mrsatube,culturetube,coldviralmedium,fluviralmedium,europanviralmedium" />
+    </ItemContainer>
+
+    <Deconstructor canbeselected="true" showoutput="false" powerconsumption="300.0" deconstructitemssimultaneously="true" msg="ItemMsgInteractSelect" activatebuttontext="cultureanalyzer.analyze" infotext="cultureanalyzer.info" infoareawidth="0.38">
+      <GuiFrame relativesize="0.25,0.3" style="ItemUI" anchor="Left" />
+      <sound file="Content/Items/Fabricators/Fabricator.ogg" type="OnActive" range="1000.0" loop="true" />
+      <poweronsound file="Content/Items/PowerOnLight3.ogg" range="600" loop="false" />
+      <StatusEffect type="InWater" target="This" condition="-0.5" />
+    </Deconstructor>
+
+    <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
+      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
+      <RequiredSkill identifier="electrical" level="40" />
+      <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
+        <Sound file="Content/Sounds/Damage/Electrocution1.ogg" range="1000" />
+        <Explosion range="100.0" force="1.0" flames="false" shockwave="false" sparks="true" underwaterbubble="false" />
+        <Affliction identifier="stun" strength="4" />
+        <Affliction identifier="burn" strength="5" />
+      </StatusEffect>
+      <RequiredItem items="screwdriver" type="Equipped" />
+      <input name="power_in" displayname="connection.powerin" />
+      <output name="condition_out" displayname="connection.conditionout" />
+    </ConnectionPanel>
+
+    <Repairable selectkey="Action" header="electricalrepairsheader" deteriorationspeed="0.0" canbeselected="true" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairScrewdriver" hudpriority="10">
+      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.0,0.27" style="ItemUI" />
+      <RequiredSkill identifier="electrical" level="50" />
+      <RequiredItem items="screwdriver" type="Equipped" />
+      <ParticleEmitter particle="spark" particleamount="5" emitinterval="2" particlespersecond="5" anglemax="360" distancemax="30" velocitymin="100" velocitymax="500" scalemin="0.5" scalemax="1" mincondition="0.0" maxcondition="15.0" />
+    </Repairable>
+  </Item>
+
+  <!-- Sampling Tool -->
+  <Item name="" description="" identifier="cultureanalyzer" category="Equipment" cargocontaineridentifier="mediccrate" tags="smallitem,medical" useinhealthinterface="true" impactsoundtag="impact_metal_light" scale="0.4">
+    <PreferredContainer primary="medcab" minamount="1" maxamount="1" spawnprobability="1" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="1" spawnprobability="0.25" />
+    
+    <Price baseprice="250">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="1" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20">
+      <RequiredSkill identifier="medical" level="40" />
+      <RequiredItem identifier="bloodanalyzer" />
+      <RequiredItem identifier="fpgacircuit" />
+    </Fabricate>
+    
+    <Deconstruct time="10">
+      <Item identifier="plastic" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="0,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="0,444,94,68" depth="0.6" origin="0.5,0.5" />
+    <Body width="90" height="60" density="40" />
+    
+    <ItemComponent>
+      <StatusEffect type="OnUse" target="This, Character">
+        <Sound file="%ModDir:3744761298%/Sounds/hypospray.ogg" />
+      </StatusEffect>
+    </ItemComponent>
+
+    <Pickable msg="ItemMsgPickUpSelect" />
+    
+    <ItemContainer capacity="1" maxstacksize="1" canbeselected="false" hideitems="true" drawinventory="true">
+      <Containable items="culturetube,viralmedium" />
+    </ItemContainer>
+  </Item>
+ </Items>
+</Override>

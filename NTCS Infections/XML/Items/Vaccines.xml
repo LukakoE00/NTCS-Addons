@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Override>
+ <Items>
+  <!-- Streptococcus Vaccine -->
+  <Item name="" identifier="strepvac" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" spawnprobability="0.01" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.01" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.001" />
+    
+    <Price baseprice="350" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="streptube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,128,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="78,140,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
+
+      <StatusEffect tags="medical" type="OnUse" target="UseTarget" duration="500">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="afstrepvac" amount="0.205" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+  </Item>
+
+  <!-- Staphylococcus Vaccine -->
+  <Item name="" identifier="staphvac" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" spawnprobability="0.01" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.01" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.001" />
+    
+    <Price baseprice="350" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="staphtube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="mrsatube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="0,128,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="0,140,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
+
+      <StatusEffect tags="medical" type="OnUse" target="UseTarget" duration="500">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="afstaphvac" amount="0.205" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+  </Item>
+
+  <!-- Pseudomonas Vaccine -->
+  <Item name="" identifier="pseudovac" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" spawnprobability="0.01" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.01" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.001" />
+    
+    <Price baseprice="350" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="pseudotube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="64,128,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="39,140,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
+      <StatusEffect tags="medical" type="OnUse" target="UseTarget" duration="500">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="afpseudovac" amount="0.205" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+  </Item>
+
+  <!-- Provobacter Vaccine -->
+  <Item name="" identifier="provovac" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" spawnprobability="0.01" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.01" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.001" />
+
+    <Price baseprice="350" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="provotube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="192,128,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="117,140,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
+
+      <StatusEffect tags="medical" type="OnUse" target="UseTarget" duration="500">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="afprovovac" amount="0.205" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+  </Item>
+
+  <!-- Aeroganella Vaccine -->
+  <Item name="" identifier="aerovac" category="Medical" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="medcab" spawnprobability="0.01" />
+    <PreferredContainer primary="wreckmedcab,abandonedmedcab" minamount="0" maxamount="2" spawnprobability="0.01" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.001" />
+    
+    <Price baseprice="350" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="2">
+      <RequiredSkill identifier="medical" level="60" />
+      <RequiredItem identifier="aerotube" amount="3" />
+      <RequiredItem identifier="antiparalysis" />
+      <RequiredItem identifier="antibloodloss1" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="256,128,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="156,140,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
+      <StatusEffect tags="medical" type="OnUse" target="UseTarget" duration="500">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="afaerovac" amount="0.205" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+  </Item>
+ </Items>
+</Override>

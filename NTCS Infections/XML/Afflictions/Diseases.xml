@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+    <!-- Diseases -->
+  <Affliction 
+    name=""
+    description=""
+    identifier="pneumonia" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+     
+    isbuff="false" 
+    limbspecific="False" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="0"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.5" />
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Pneumonia Bacterial -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="pneumoniabacteria"  
+    
+    healableinmedicalclinic="false"
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="6">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Pneumonia Viral -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="pneumoniavirus" 
+    
+    healableinmedicalclinic="false" 
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="3">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Necrotizing Fasciitis -->
+  <Affliction 
+    name="" 
+    description="" 
+    identifier="necfasc" 
+    
+    healableinmedicalclinic="false" 
+    limbspecific="true" 
+    isbuff="false"
+
+    showinhealthscannerthreshold="999"
+    showiconthreshold="0"
+    maxstrength="100"   
+    
+    iconcolors="200,50,0,255;200,50,0,255">
+
+    <Effect minstrength="0" maxstrength="100" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="1" />
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="2,0" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+</Override>
+</Afflictions>

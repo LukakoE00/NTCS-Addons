@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Override>
+<Items>
+  <!-- Weaponized Streptococcus -->
+  <Item name="" identifier="weaponstrep" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+    
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="streptube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="128,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="78,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodstrep" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodstrep" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+
+  <!-- Weaponized Staphylococcus -->
+  <Item name="" identifier="weaponstaph" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="staphtube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="0,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="0,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodstaph" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodstaph" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+
+  <!-- Weaponized Pseudomonas -->
+  <Item name="" identifier="weaponpseudo" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+    
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="pseudotube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="64,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="39,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodpseudo" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodpseudo" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+
+  <!-- Weaponized Provobacter -->
+  <Item name="" identifier="weaponprovo" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="provotube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="192,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="117,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodprovo" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodprovo" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+
+  <!-- Weaponized Aerogonella -->
+  <Item name="" identifier="weaponaero" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="aerotube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="256,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="156,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodaero" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodaero" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+
+  <!-- Weaponized MRSA -->
+  <Item name="" identifier="weaponmrsa" category="Medical" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="32" maxstacksizecharacterinventory="8">
+    <PreferredContainer primary="toxcontainer" spawnprobability="0.05" />
+    <PreferredContainer primary="wrecktoxcontainer" spawnprobability="0.1" />
+    <PreferredContainer primary="outposttrashcan" minamount="0" maxamount="1" spawnprobability="0.01" />
+    
+    <Price baseprice="100" soldbydefault="false">
+      <Price storeidentifier="merchantmedical" sold="true" multiplier="0.9" minavailable="0" />
+    </Price>
+
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="20" amount="1">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="mrsatube" amount="2" />
+      <RequiredItem identifier="stabilozine" />
+    </Fabricate>
+
+    <Deconstruct />
+
+    <InventoryIcon texture="%ModDir%/Images/InventoryIconAtlas.png" sourcerect="0,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/InGameIconAtlas.png" sourcerect="0,70,39,70" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="70" density="20" />
+    
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="20" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" />
+
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" />
+
+      <StatusEffect statuseffecttags="medical" type="OnSuccess" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodmrsa" amount="10" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect statuseffecttags="medical" type="OnFailure" target="UseTarget" disabledeltatime="true" allowwhenbroken="true">
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+        <Affliction identifier="bloodmrsa" amount="8" />
+        <Affliction identifier="bloodinfectionlevel" amount="1" />
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="20" />
+  </Item>
+</Items>
+</Override>

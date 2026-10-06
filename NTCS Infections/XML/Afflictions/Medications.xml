@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+<!-- Remdesivir -->
+<Affliction 
+    name=""
+    description=""
+    identifier="afremdesivir"  
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.2">
+    <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="liverdamage" strength="0.05" />
+    </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+</Affliction>
+
+<!-- Dextromethorphan -->
+<Affliction 
+    name="" 
+    description=""
+    identifier="afdextromethorphan" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.1" />
+    
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+</Affliction>
+
+<!-- Zinc Supplement -->
+<Affliction 
+    name=""
+    description=""
+    identifier="afzincsupplement"  
+    
+    healableinmedicalclinic="false" 
+    targets="human"
+    type="resistance" 
+    isbuff="true"
+    limbspecific="false"
+
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.1" />
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+</Affliction>
+
+<!-- Corticosteroids -->
+<Affliction 
+    name=""
+    description=""
+    identifier="afcorticosteroids" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+    
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.1" />
+    
+    <PeriodicEffect mininterval="1" maxinterval="1">
+    <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" immunity="gte 80" />
+        <ReduceAffliction identifier="immunity" amount="2" />
+    </StatusEffect>
+    </PeriodicEffect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+</Affliction>
+
+<!-- Ascorbic Acid -->
+<Affliction 
+    name=""
+    description=""
+    identifier="afascorbicacid" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.05" />
+    
+    <PeriodicEffect mininterval="1" maxinterval="1">
+    <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="immunity" strength="1" />
+    </StatusEffect>
+    </PeriodicEffect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+</Affliction>
+</Override>
+</Afflictions>

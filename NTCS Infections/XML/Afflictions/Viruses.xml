@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+  <!-- Europan Cough -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="europancough" 
+    
+    healableinmedicalclinic="false" 
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="0"
+    maxstrength="10">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Common Cold -->
+  <Affliction 
+    name=""
+    description=""
+    identifier="commoncold" 
+    
+    healableinmedicalclinic="false"
+    isbuff="false"
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="700" showiconthreshold="700" maxstrength="10">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Influenza -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="influenza" 
+    
+    healableinmedicalclinic="false"
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="10">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+</Override>
+</Afflictions>

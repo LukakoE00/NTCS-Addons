@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+<!-- Immunodeficiency -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="immunodeficiency"  
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    isbuff="false" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+    
+    <PeriodicEffect mininterval="1" maxinterval="1">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" immunity="gte 2.5" />
+        <ReduceAffliction identifier="immunity" amount="3" />
+      </StatusEffect>
+    </PeriodicEffect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+  
+  <!-- Immune Response -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="immuneresponse"  
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="false"
+    limbspecific="true" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Infection Level -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="infectionlevel"  
+    
+    healableinmedicalclinic="false" 
+    isbuff="false" 
+    targets="human" 
+    limbspecific="true" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Systemic Response -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="systemicresponse"
+
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance"
+    isbuff="false" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Viral Level -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="virallevel"  
+    
+    healableinmedicalclinic="false" 
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    indicatorlimb="Torso" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Viral Antibodies -->
+  <Affliction
+    name=""
+    description=""
+    identifier="viralantibodies" 
+    healableinmedicalclinic="false" 
+    
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Blood Infection Level -->
+  <Affliction 
+    name=""
+    description=""
+    identifier="bloodinfectionlevel" 
+    
+    healableinmedicalclinic="false"
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Methicillin Resistance Risk -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="mrrisk"  
+    
+    healableinmedicalclinic="false" 
+    isbuff="false" 
+    targets="human" 
+    limbspecific="false"
+    
+    showinhealthscannerthreshold="999"
+    showiconthreshold="999"  
+    maxstrength="100">
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+</Override>
+</Afflictions>

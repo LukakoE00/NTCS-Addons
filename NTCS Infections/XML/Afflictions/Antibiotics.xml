@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+     <!-- Antibiotics -->
+  <!-- Ampicillin -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afampicillin" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.05" />
+        <Affliction identifier="liverdamage" strength="0.04" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Augmentin -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afaugmentin" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.06" />
+        <Affliction identifier="liverdamage" strength="0.04" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Vancomycin -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afvancomycin" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.08" />
+        <Affliction identifier="liverdamage" strength="0.02" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Gentamicin -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afgentamicin" 
+     
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.10" />
+        <Affliction identifier="liverdamage" strength="0.02" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Co-trimoxazole -->
+  <Affliction 
+    name=""
+    description=""
+    identifier="afcotrim" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.07" />
+        <Affliction identifier="liverdamage" strength="0.04" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Primaxin -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afimipenem" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.07" />
+        <Affliction identifier="liverdamage" strength="0.05" />
+      </StatusEffect>
+    </Effect>
+
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+
+  <!-- Ceftazidime -->
+  <Affliction 
+    name="" 
+    description=""
+    identifier="afceftazidime" 
+    
+    healableinmedicalclinic="false" 
+    targets="human" 
+    type="resistance" 
+    isbuff="true" 
+    limbspecific="false" 
+    
+    showinhealthscannerthreshold="999" 
+    showiconthreshold="999" 
+    maxstrength="100">
+
+    <Effect minstrength="0" maxstrength="100" strengthchange="-0.20">
+      <StatusEffect target="Character" comparison="and">
+        <Conditional ishuman="true" />
+        <Affliction identifier="kidneydamage" strength="0.06" />
+        <Affliction identifier="liverdamage" strength="0.03" />
+      </StatusEffect>
+    </Effect>
+    
+    <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="4,4" sheetelementsize="128,128" origin="0,0" />
+  </Affliction>
+</Override>
+</Afflictions>

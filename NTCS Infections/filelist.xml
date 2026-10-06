@@ -1,12 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NT Infections" corepackage="false" modversion="1.5.7" gameversion="1.13.4.0">
-  <Afflictions file="%ModDir%/Xml/Afflictions.xml" />
-  <Item file="%ModDir%/Xml/items.xml" />
+<contentpackage name="NTCS Infections" corepackage="false" modversion="1.5.7" gameversion="1.13.4.0">
+  <!-- Afflictions -->
+  <Afflictions file="%ModDir%/XML/Afflictions/Antibiotics.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Diseases.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Functionality.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Infections.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Medications.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Symptoms.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Vaccines.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Viruses.xml" />
+
+  <!-- Items -->
+  <Item file="%ModDir%/XML/Items/Antibiotics.xml" />
+  <Item file="%ModDir%/XML/Items/Medication.xml" />
+  <Item file="%ModDir%/XML/Items/TestTubes.xml" />
+  <Item file="%ModDir%/XML/Items/Tools.xml" />
+  <Item file="%ModDir%/XML/Items/Vaccines.xml" />
+  <Item file="%ModDir%/XML/Items/ViralItems.xml" />
+  <Item file="%ModDir%/XML/Items/WeaponizedPathogens.xml" />
+
+  <!-- Localization -->
   <Text file="%ModDir%/Localization/English/English.xml" />
   <Text file="%ModDir%/Localization/Russian/Russian.xml" />
-  <Other file="%ModDir%/Lua/Autorun/init.lua" />
-  <Other file="%ModDir%/Lua/Scripts/items.lua" />
-  <Other file="%ModDir%/Lua/Scripts/humanupdate.lua" />
-  <Other file="%ModDir%/Lua/Scripts/helperfunctions.lua" />
-  <Other file="%ModDir%/Lua/Scripts/configdata.lua" />
 </contentpackage>
