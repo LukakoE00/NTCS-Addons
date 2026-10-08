@@ -24,7 +24,7 @@ itemLoader:Register("orbitoclast", function (d)
 
         targetCharacter:AddAfflictionLimb("bleeding", targetLimb.type, math.random(1,20))
         
-        if NTCS.isAddonRegistered("Eyes") then targetCharacter:AddAfflictionLimb("eyedamage", targetLimb.type, math.random(1,20)) end
+        if NTCS.isAddonRegistered("Eyes") then NTCS_Lobotomy.DealEyeDamage(targetCharacter, math.random(1,20)) end
     end
     
     
@@ -67,7 +67,7 @@ itemLoader:Register("surgicalhammer", function (d)
         
         targetCharacter:AddAfflictionLimb("failedlobotomy", targetLimb.type, 2)
         
-        if NTCS.isAddonRegistered("Eyes") then targetCharacter:AddAfflictionLimb("eyedamage", targetLimb.type, math.random(10,20)) end
+        if NTCS.isAddonRegistered("Eyes") then NTCS_Lobotomy.DealEyeDamage(targetCharacter, math.random(10,20)) end
     end
 		
 

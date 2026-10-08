@@ -31,6 +31,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 		end
 
 		-- Lua Content Scripts SP/MP:
+        dofile(NTCS_Lobotomy.Path.."/Lua/Scripts/Server/hf.lua")
         dofile(NTCS_Lobotomy.Path.."/Lua/Scripts/Server/items.lua")
 		dofile(NTCS_Lobotomy.Path.."/Lua/Scripts/Server/afflictions.lua")
 	end, 1)
