@@ -1,10 +1,8 @@
 
 NTCS_Pharmacy = {}
 NTCS_Pharmacy.Name="Pharmacy"
-NTCS_Pharmacy.Version = "A1.0.8"
-NTCS_Pharmacy.VersionNum = 01000800
-NTCS_Pharmacy.MinNTVersion = "A1.15.0"
-NTCS_Pharmacy.MinNTVersionNum = 01150000
+NTCS_Pharmacy.Version = "A1.0.0"
+NTCS_Pharmacy.VersionNum = 01000000
 NTCS_Pharmacy.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed

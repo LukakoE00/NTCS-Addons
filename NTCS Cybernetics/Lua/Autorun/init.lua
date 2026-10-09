@@ -1,9 +1,7 @@
 NTCS_Cybernetics = {}
 NTCS_Cybernetics.Name = "Cybernetics"
-NTCS_Cybernetics.Version = "A1.5.2"
-NTCS_Cybernetics.VersionNum = 01050200
-NTCS_Cybernetics.MinNTVersion = "A1.9.0"
-NTCS_Cybernetics.MinNTVersionNum = 01090000
+NTCS_Cybernetics.Version = "A1.0.0"
+NTCS_Cybernetics.VersionNum = 01000000
 NTCS_Cybernetics.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed
