@@ -1,15 +1,15 @@
 # NTCS-Addons
 A list of addons adjusted to work with NTCS by Neurodevs. If your addon is in here and you wish to have it removed, let us know.
 
-## Adjusted; to be tested:
+## Adjusted:
 - Cybernetics
 - Surgery Plus
 - Pharmacy
 - Symbiote
-
+- Infection
+- 
 ## WIP Adjusting:
 - Nanite Integration
-- Infection (Permission from author)
 
 ## To Adjust:
 - Eyes (Spoken to author, may do it themselves)
