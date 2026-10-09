@@ -62,13 +62,12 @@
       
       iconcolors="84,211,211,255;84,211,211,255">
 
-      -- TODO: MOVE TO c#
-      <!-- <Effect minstrength="0" maxstrength="100" strengthchange="10">
+      <Effect minstrength="0" maxstrength="100" strengthchange="10">
         <StatusEffect target="Character" comparison="and">
           <Conditional safesurgery="eq 0" unconsciousness="lte 0.1" />
           <Affliction identifier="traumaticshock" amount="1.5" />
         </StatusEffect>
-      </Effect> -->
+      </Effect>
 
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="1,7" sheetelementsize="128,128" origin="0,0" />
     </Affliction>
@@ -179,8 +178,7 @@
         showiconthreshold="999"
         maxstrength="100">
 
-        -- TODO: MOVE TO C#
-        <!-- <Effect minstrength="0" maxstrength="100" strengthchange="-0.5">
+        <Effect minstrength="0" maxstrength="100" strengthchange="-0.5">
           <StatusEffect target="Character" comparison="and">
             <Conditional ishuman="true" />
             <Affliction identifier="organdamage" amount="0.2" />
@@ -189,7 +187,7 @@
             <Affliction identifier="heartdamage" amount="0.1" />
             <Affliction identifier="lungdamage" amount="0.1" />
           </StatusEffect>
-        </Effect> -->
+        </Effect>
 
         <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="3,3" sheetelementsize="128,128" origin="0,0" />
       </Affliction>
