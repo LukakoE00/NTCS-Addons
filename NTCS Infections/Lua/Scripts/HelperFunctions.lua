@@ -141,7 +141,7 @@ function NTCS_Infections.CheckSymptom(character, symptom, level, threshold, chan
     if (level < threshold) then return end
 
     local NTHuman = NTCS.Human.getNTHumanFromCharacter(character)
-    if (NTHuman.GetSymptom(symptom) or NTCS.HF.Chance(chance)) then
+    if (NTHuman.HasSymptom(symptom) or NTCS.HF.Chance(chance)) then
         NTHuman.SetSymptomTrue(symptom, 4)
     end
 end
@@ -171,8 +171,8 @@ function NTCS_Infections.HasWound(c, limbaff, type)
     limbaff.gunshotwound.strength +
     limbaff.bitewounds.strength +
     limbaff.explosiondamage.strength +
-    NTCS.HF.GetAfflictionStrengthLimb(c.character, type, "suturedw", 0) +
-    NTCS.HF.GetAfflictionStrengthLimb(c.character, type, "surgeryincision", 0)
+    NTCS.HF.GetAfflictionStrengthLimb(c.Human, type, "suturedw", 0) +
+    NTCS.HF.GetAfflictionStrengthLimb(c.Human, type, "surgeryincision", 0)
 
     return wound > 0
 end
@@ -190,7 +190,7 @@ function NTCS_Infections.BloodInfUpdate(c)
     local infections = {}
 
     for key, info in pairs(NTCS_Infections.Bacterias) do
-        local severity = NTCS.HF.GetAfflictionStrength(c.character, info.bloodname, 0)
+        local severity = NTCS.HF.GetAfflictionStrength(c.Human, info.bloodname, 0)
 
         if severity > 0 then
             local base = 0.5 + (severity * 0.05)
@@ -205,8 +205,8 @@ function NTCS_Infections.BloodInfUpdate(c)
     for key, value in pairs(infections) do
         local info = NTCS_Infections.Bacterias[key]
         local increase = (value / total) 
-                        * NTCS_Infections.GetAntibioticValue(c.character, info.antibiotics)
-                        * (1 - (NTCS.HF.GetAfflictionStrength(c.character, info.vaccine, 0) / 200) * (c.afflictions.immunity.strength / 100))
+                        * NTCS_Infections.GetAntibioticValue(c.Human, info.antibiotics)
+                        * (1 - (NTCS.HF.GetAfflictionStrength(c.Human, info.vaccine, 0) / 200) * (c:GetAfflictionStrength("immunity") / 100))
 
         result = result + increase
     end
@@ -492,7 +492,7 @@ function NTCS_Infections.WearingNeededHead(character, tagval)
     local result = 0
 
     for key, value in pairs(tagval) do
-        if NTCS.HF.ItemHasTag(NTCS.HF.GetHeadWear(character), key) then
+        if NTCS.HF.ItemHasTag(NTCS.HF.GetItemInHeadWear(character), key) then
             result = result + value
         end
     end
@@ -505,7 +505,7 @@ function NTCS_Infections.WearingNeededOuter(character, tagval)
     local result = 0
 
     for key, value in pairs(tagval) do
-        if NTCS.HF.ItemHasTag(NTCS.HF.GetOuterWear(character), key) then
+        if NTCS.HF.ItemHasTag(NTCS.HF.GetItemInOuterWear(character), key) then
             result = result + value
         end
     end
