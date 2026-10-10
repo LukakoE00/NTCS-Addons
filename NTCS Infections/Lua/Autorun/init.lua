@@ -1,15 +1,15 @@
 NTCS_Infections = {}
 NTCS_Infections.Name = "Infections"
-NTCS_Infections.Version = "1.0.0"
-NTCS_Infections.VersionNum = 01000000
+NTCS_Infections.Version = "1.0.1"
+NTCS_Infections.VersionNum = 01000001
 NTCS_Infections.Path=table.pack(...)[1]
 
 -- Initialise C# Classes needed
 dofile(NTCS_Infections.Path.."/Lua/Library/NeurotraumaLib.lua")
 NTCS.Info.RegisterAddon(NTCS_Infections)
 
-local NTLuaEnabledMsg = "Error loading NTCS Cybernetics: Lua Neurotrauma is enabled!"
-local NTCSNotEnabledMsg = "Error loading NTCS Cybernetics: It appears Neurotrauma CS isn't loaded!"
+local NTLuaEnabledMsg = "Error loading NTCS Infections: Lua Neurotrauma is enabled!"
+local NTCSNotEnabledMsg = "Error loading NTCS Infections: It appears Neurotrauma CS isn't loaded!"
 
 -- Serverside + Singleplayer code
 if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
