@@ -1,8 +1,8 @@
 
-NTNan = {} -- Neurotrauma Nanite Integration 2
-NTNan.Name="Nanite Integration 2"
-NTNan.Version = "2.0.0"
-NTNan.VersionNum = 02000000
+NTNan = {} -- Neurotrauma Nanite Integration
+NTNan.Name="Nanite Integration"
+NTNan.Version = "2.0.1"
+NTNan.VersionNum = 02000001
 NTNan.MinNTVersion = "2.0.0"
 NTNan.MinNTVersionNum = 02000000
 NTNan.Path = table.pack(...)[1]
@@ -10,8 +10,8 @@ NTNan.Path = table.pack(...)[1]
 dofile(NTNan.Path.."/Lua/Library/NeurotraumaLib.lua")
 NTCS.Info.RegisterAddon(NTNan)
 
-local NTLuaEnabledMsg = "Error loading NT Nanite Integration 2: Lua Neurotrauma is enabled!"
-local NTCSNotEnabledMsg = "Error loading NT Nanite Integration 2: It appears Neurotrauma CS isn't loaded!"
+local NTLuaEnabledMsg = "Error loading NT Nanite Integration: Lua Neurotrauma is enabled!"
+local NTCSNotEnabledMsg = "Error loading NT Nanite Integration: It appears Neurotrauma CS isn't loaded!"
 
 -- Serverside + Singleplayer code
 if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then

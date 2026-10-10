@@ -92,13 +92,13 @@ affLoader:Register(
         if str >= 3.5 then
             -- Tier 2
             NTNan.addAfflictionAllLimbs(C, "fracturedextremity", 3 * -1 * dT)
-            C:AddAffliction("t_fracture", 3 * -1 * dT)
+            C:AddAffliction("fracturedribs", 3 * -1 * dT)
 
             if str >= 5.5 then
                 -- Tier 3
-                C:AddAffliction("n_fracture", 3 * -1 * dT)
-                C:AddAffliction("h_fracture", 3 * -1 * dT)
-                C:AddAffliction("t_paralysis", 1 * -1 * dT)
+                C:AddAffliction("fracturedneck", 3 * -1 * dT)
+                C:AddAffliction("fracturedskull", 3 * -1 * dT)
+                C:AddAffliction("spinalcordinjury", 1 * -1 * dT)
             end
         end
 
