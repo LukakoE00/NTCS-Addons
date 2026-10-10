@@ -141,7 +141,7 @@ Timer.Wait(function()
             local limbtype = NTCS.HF.NormalizeLimbType(targetLimb.type)
 
             if NTCS.HF.HasAfflictionLimb(targetCharacter,"bonecut",limbtype,1) then
-                local previtem = NTCS.HF.GetHeadWear(targetCharacter)
+                local previtem = NTCS.HF.GetItemInHeadWear(targetCharacter)
                 if previtem ~= nil and limbtype == LimbType.Head then
                     previtem.Drop(usingCharacter, true)
                 end

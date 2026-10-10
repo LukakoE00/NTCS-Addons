@@ -1,7 +1,7 @@
 NTCS_Infections = {}
 NTCS_Infections.Name = "Infections"
-NTCS_Infections.Version = "1.5.7"
-NTCS_Infections.VersionNum = 10500007
+NTCS_Infections.Version = "1.0.0"
+NTCS_Infections.VersionNum = 01000000
 NTCS_Infections.Path=table.pack(...)[1]
 
 -- Initialise C# Classes needed

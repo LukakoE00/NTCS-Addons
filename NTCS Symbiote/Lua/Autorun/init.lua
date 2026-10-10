@@ -1,9 +1,7 @@
 NTCS_Symbiote = {}
 NTCS_Symbiote.Name="Symbiote"
-NTCS_Symbiote.Version = "A1.0.1"
-NTCS_Symbiote.VersionNum = 01000100
-NTCS_Symbiote.MinNTVersion = "A1.12.1"
-NTCS_Symbiote.MinNTVersionNum = 01120100
+NTCS_Symbiote.Version = "A1.0.0"
+NTCS_Symbiote.VersionNum = 01000000
 NTCS_Symbiote.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed

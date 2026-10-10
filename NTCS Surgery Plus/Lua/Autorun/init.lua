@@ -1,9 +1,7 @@
 NTCS_SurgeryPlus = {}
 NTCS_SurgeryPlus.Name = "Surgery Plus"
-NTCS_SurgeryPlus.Version = "A1.2.6"
-NTCS_SurgeryPlus.VersionNum = 01020600
-NTCS_SurgeryPlus.MinNTVersion = "A1.7.12"
-NTCS_SurgeryPlus.MinNTVersionNum = 01080700
+NTCS_SurgeryPlus.Version = "A1.0.0"
+NTCS_SurgeryPlus.VersionNum = 01000000
 NTCS_SurgeryPlus.Path = table.pack(...)[1]
 
 -- Initialise C# Classes needed

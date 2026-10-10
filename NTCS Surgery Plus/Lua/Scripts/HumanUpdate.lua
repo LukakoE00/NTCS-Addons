@@ -39,7 +39,7 @@ function NTCS_SurgeryPlus.PreUpdateHuman(character)
 	if NTCS.Config.Get("NTSP_enableSurgicalInfection", false) and NTCS.HF.HasAffliction(character, "surgeryincision") then
 		local sterility = 50
 
-		local wearsdrape = NTCS.HF.GetOuterWearIdentifier(character) == "surgicaldrapes"
+		local wearsdrape = NTCS.HF.GetItemInOuterWearIdentifier(character) == "surgicaldrapes"
 		if wearsdrape then
 			-- wearing surgical drapes? 100 base sterility
 			sterility = 100
@@ -69,10 +69,10 @@ function NTCS_SurgeryPlus.PreUpdateHuman(character)
 
 				-- inner wear sterile? +40
 				charSterility = charSterility
-					+ 40 * NTCS.HF.BoolToNum(HF.ItemHasTag(HF.GetInnerWear(targetcharacter), "sterile"))
+					+ 40 * NTCS.HF.BoolToNum(HF.ItemHasTag(HF.GetItemInInnerWear(targetcharacter), "sterile"))
 				-- headwear sterile? +40
 				charSterility = charSterility
-					+ 40 * NTCS.HF.BoolToNum(HF.ItemHasTag(HF.GetHeadWear(targetcharacter), "sterile"))
+					+ 40 * NTCS.HF.BoolToNum(HF.ItemHasTag(HF.GetItemInHeadWear(targetcharacter), "sterile"))
 				-- add sterility from Ultrasonic Cleaner perk
 				if NTCS.HF.HasTalent(character, "ntsp_ultrasoniccleaner") then
 					charSterility = charSterility + 30
