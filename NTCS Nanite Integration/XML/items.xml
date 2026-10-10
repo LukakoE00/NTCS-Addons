@@ -19,7 +19,7 @@
     <Body width="35" height="65" density="15" />
     <Holdable handle1="0,0" slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect"></Holdable>
   </NaniteBase>
-  <NanitePrecursor identifier="naniteprecursor" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical,syringue" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="4">
+  <!-- <NanitePrecursor identifier="naniteprecursor" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical,syringue" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="4">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="1">
       <RequiredSkill identifier="electrical" level="40" />
@@ -39,13 +39,13 @@
       <StatusEffect statuseffecttags="medical" type="OnUse" target="UseTarget" checkconditionalalways="true">
         <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
         <Hook name="NTNanApplyNanite" id="precursor" amount="2" />
-        <!-- <Affliction identifier="precursor" amount="1" /> -->
+         <Affliction identifier="precursor" amount="1" /> 
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </MeleeWeapon>
-  </NanitePrecursor>
+  </NanitePrecursor> -->
   <NaniteRemover identifier="naniteremover" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical,syringue" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="4">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Fabricate suitablefabricators="medicalfabricator" requiredtime="30" amount="1">
