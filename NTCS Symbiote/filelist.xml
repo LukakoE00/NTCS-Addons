@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NTCS Symbiote" corepackage="false" modversion="1.0.0">
+<contentpackage name="NTCS Symbiote" corepackage="false" modversion="1.0.0" steamworkshopid="3816468932">
   <!-- Items -->
   <Item file="%ModDir%/XML/Overrides.xml" />
   <Item file="%ModDir%/XML/SFX.xml" />
