@@ -160,12 +160,12 @@ Timer.Wait(function()
         C:SetAffliction("lungdamage", C:GetAfflictionStrength("lungdamage") - 0.05 * DeltaT)
         C:SetAffliction("oxygenlow", C:GetAfflictionStrength("oxygenlow") - 100 * DeltaT)
     
-        C:SetSymptomFalse("hyperventilation", 2)
-        C:SetSymptomFalse("hypoventilation", 2)
+        C:SetSymptomFalse("hyperventilation")
+        C:SetSymptomFalse("hypoventilation")
 
         C:SetAffliction("respiratoryarrest", 0)
 
-        C:SetSymptomFalse("shortnessofbreath", 2)
+        C:SetSymptomFalse("shortnessofbreath")
             
         -- Limb Specifics
         for limbType in limbTypes do
