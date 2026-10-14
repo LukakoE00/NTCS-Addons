@@ -1,7 +1,7 @@
 NTCS_Lobotomy = {} -- Neurotrauma Lobotomy
 NTCS_Lobotomy.Name="Lobotomy"
-NTCS_Lobotomy.Version = "1.0.0"
-NTCS_Lobotomy.VersionNum = 01000000
+NTCS_Lobotomy.Version = "1.0.1"
+NTCS_Lobotomy.VersionNum = 01000001
 NTCS_Lobotomy.MinNTVersion = "2.0.0"
 NTCS_Lobotomy.MinNTVersionNum = 02000000
 NTCS_Lobotomy.Path = table.pack(...)[1]
