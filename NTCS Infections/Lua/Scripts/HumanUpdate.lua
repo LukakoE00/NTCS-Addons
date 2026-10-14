@@ -230,7 +230,7 @@ local Dextromethorphan = AfflictionBuilder:New("afdextromethorphan"):SetUpdateAc
     local strength = C:GetAfflictionStrength(Identifier)
 
     if strength > 0 then C:SetSymptomFalse("cough") end
-    if strength > 80 then C:SetSymptomTrue("nausea", 2) end
+    if strength > 80 then C:SetSymptomTrue("nausea_nt", 2) end
     if strength > 90 then C:AddAffliction("psychosis", 1) end
 
 end):Build()
@@ -241,7 +241,7 @@ AfflictionLoader:Register(Dextromethorphan)
 local ZincSupplement = AfflictionBuilder:New("afzincsupplement"):SetUpdateAction(function(C, Identifier, Limb, DeltaT)
     local strength = C:GetAfflictionStrength(Identifier)
 
-    if strength > 80 then C:SetSymptomTrue("nausea", 2) end
+    if strength > 80 then C:SetSymptomTrue("nausea_nt", 2) end
     if strength > 90 then C:SetSymptomTrue("vomiting", 2) end
 
 end):Build()
@@ -267,7 +267,7 @@ AfflictionLoader:Register(ImmunoCompromised)
 local Remdesivir = AfflictionBuilder:New("afremdesivir"):SetUpdateAction(function(C, Identifier, Limb, DeltaT)
     local strength = C:GetAfflictionStrength(Identifier)
 
-    if strength > 70 then C:SetSymptomTrue("nausea", 2) end
+    if strength > 70 then C:SetSymptomTrue("nausea_nt", 2) end
     if strength > 75 then C:SetSymptomTrue("jaundice", 2) end
 
     if strength > 80 and C:GetAfflictionStrength("unconsciousness") <= 0 and not C:GetBoolStat("sedated") then 
@@ -294,7 +294,7 @@ local EuropanCough = AfflictionBuilder:New("europancough"):SetUpdateAction(funct
         NTCS_Infections.CheckSymptom(C.Human, "fever", level, 30, 0.1)
         NTCS_Infections.CheckSymptom(C.Human, "weakness", level, 50, 0.01)
         NTCS_Infections.CheckSymptom(C.Human, "shortnessofbreath", level, 60, 0.01)
-        NTCS_Infections.CheckSymptom(C.Human, "nausea", level, 70, 0.02)
+        NTCS_Infections.CheckSymptom(C.Human, "nausea_nt", level, 70, 0.02)
         NTCS_Infections.CheckSymptom(C.Human, "respiratoryarrest", strength, 90, 0.1)
 
         if C:GetAfflictionStrength("respiratoryarrest") <= 0 then
@@ -326,7 +326,7 @@ local Influenza = AfflictionBuilder:New("influenza"):SetUpdateAction(function(C,
 
         NTCS_Infections.CheckSymptom(C.Human, "cough", level, 15, 0.2)
         NTCS_Infections.CheckSymptom(C.Human, "fever", level, 30, 0.1)
-        NTCS_Infections.CheckSymptom(C.Human, "sym_nausea", level, 50, 0.02)
+        NTCS_Infections.CheckSymptom(C.Human, "nausea_nt", level, 50, 0.02)
 
         if C:GetAfflictionStrength("unconsciousness") <= 0 and not C:GetBoolStat("sedated") then
             NTCS_Infections.CheckSymptom(C.Human, "headache", level, 80, 0.02)

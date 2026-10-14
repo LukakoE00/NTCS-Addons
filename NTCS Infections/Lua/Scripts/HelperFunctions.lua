@@ -491,8 +491,14 @@ end
 function NTCS_Infections.WearingNeededHead(character, tagval)
     local result = 0
 
+    local headwear = NTCS.HF.GetItemInHeadWear(character)
+
+    if headwear == nil then return result end
+
     for key, value in pairs(tagval) do
-        if NTCS.HF.ItemHasTag(NTCS.HF.GetItemInHeadWear(character), key) then
+
+        
+        if NTCS.HF.ItemHasTag(headwear, key) then
             result = result + value
         end
     end

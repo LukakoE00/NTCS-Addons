@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NTCS Cybernetics" corepackage="false" modversion="1.0.0" gameversion="1.13.4.0">
+<contentpackage name="NTCS Cybernetics" corepackage="false" modversion="1.0.0" gameversion="1.13.4.0" steamworkshopid="3816467889">
 <!-- Afflictions -->
 <Afflictions file="%ModDir%/XML/Afflictions/CyberLimbs.xml" />
 <Afflictions file="%ModDir%/XML/Afflictions/CyberOrgans.xml" />

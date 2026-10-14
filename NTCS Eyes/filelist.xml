@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="NTCS Eyes" corepackage="false" modversion="1.0.0" gameversion="1.11.5.0">
+  <!-- Afflictions -->
+  <Afflictions file="%ModDir%/XML/Afflictions/EyeTypeDamage.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/EyeTypeIcons.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Functionality.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/LensHUDs.xml" />
+  <Afflictions file="%ModDir%/XML/Afflictions/Surgery.xml" />
+
+  <!-- Items -->
+  <Item file="%ModDir%/XML/Items/EyeLenses.xml" />
+  <Item file="%ModDir%/XML/Items/EyeTypes.xml" />
+  <Item file="%ModDir%/XML/Items/HUD.xml" />
+  <Item file="%ModDir%/XML/Items/Miscellaneous.xml" />
+  <Item file="%ModDir%/XML/Items/SFX.xml" />
+  <Item file="%ModDir%/XML/Items/SurgeryTools.xml" />
+
+  <!-- Localization -->
+  <Text file="%ModDir%/Localization/English.xml" />
+  <Text file="%ModDir%/Localization/Russian.xml" />
+</contentpackage>

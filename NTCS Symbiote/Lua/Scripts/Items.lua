@@ -61,6 +61,7 @@ Timer.Wait(function()
                     if NTCS.HF.Chance(0.2) then
                         NTCS.HF.AddAffliction(usingCharacter, "huskinfection", 1)
                     end
+                    
                     NTCS.HF.GiveItem(targetCharacter, "ntsfx_huskhurt")
                 else
                     -- stop stabbing the patient, stupid
@@ -274,7 +275,7 @@ Timer.Wait(function()
     end
 
     local DefibParasite = function (d)
-        NTCS_Symbiote.SawRibs(d, "defibrillator")
+        NTCS_Symbiote.DefibParasite(d, "defibrillator")
     end
 
     itemLoader:Override("defibrillator", DefibParasite)
