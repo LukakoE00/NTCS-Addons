@@ -60,11 +60,17 @@
   <afflictiondescription.nanitedecay>Not enough precursors to support all nanites, they are slowly disintegrating ! Try to find a precursor injection as soon as possible !</afflictiondescription.nanitedecay>
 
     <afflictionname.nanitebattery>Nanite Battery</afflictionname.nanitebattery>
-    <afflictiondescription.nanitebattery>Stores energy for all the nanites to use. Needs to be replaced with fulgurium battery cell.</afflictiondescription.nanitebattery>
+    <afflictiondescription.nanitebattery>Stores energy for all the nanites to use. Needs to be replaced with a fulgurium battery cell.</afflictiondescription.nanitebattery>
 
     <afflictionname.nanitelowbattery>Low Nanite Battery!</afflictionname.nanitelowbattery>
     <afflictiondescription.nanitelowbattery>The energy reserves for your nanites are low, you should replace the battery soon.</afflictiondescription.nanitelowbattery>
 
     <afflictionname.nanitenobattery>No Nanite Battery!</afflictionname.nanitenobattery>
     <afflictiondescription.nanitenobattery>Either no Nanite Battery was inserted or the battery is empty!</afflictiondescription.nanitenobattery>
+
+    <entityname.nanitebatteryimplant>Nanite Battery Implant</entityname.nanitebatteryimplant>
+    <entitydescription.nanitebatteryimplant>An implant inserted next to the heart to power up the nanites.</entitydescription.nanitebatteryimplant>
+
+    <entityname.emergencyenergyinjection>Emergency Energy Injection</entityname.emergencyenergyinjection>
+    <entitydescription.emergencyenergyinjection>An emergency Nanite Battery recharger in case your battery level gets too low. Comes with sever side effects!</entitydescription.emergencyenergyinjection>
 </infotexts>

@@ -5,7 +5,7 @@
     <icon texture="%ModDir%/Images/buffAtlas.png" sourcerect="0,128,128,128" color="178,120,182,255" origin="0,0" />
   </Affliction>
 
-  <Affliction identifier="nanitebattery" type="nanite" isbuff="true" limbspecific="false" indicatorlimb="Torso" maxstrength="100" hideiconafterdelay="true" activationthreshold="1" showiconthreshold="1" showicontoothersthreshold="1" iconcolors="186,205,232,255;116,205,232,255;116,170,232,255">
+  <Affliction identifier="nanitebattery" type="nanite" isbuff="true" limbspecific="false" indicatorlimb="Torso" maxstrength="200" hideiconafterdelay="true" activationthreshold="1" showiconthreshold="1" showicontoothersthreshold="1" iconcolors="186,205,232,255;116,205,232,255;116,170,232,255">
     <icon texture="%ModDir%/Images/buffAtlas.png" sourcerect="256,384,128,128" color="44,174,44,255" origin="0,0" />
   </Affliction>
 

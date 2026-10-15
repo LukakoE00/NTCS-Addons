@@ -31,6 +31,40 @@ end
 local affLoader = NTCS.AfflictionsLoader(NTCS_Nanite.Name)
 local builder = NTCS.AfflictionPrefabBuilder()
 
+affLoader.Register(
+    builder:New("vigorbuffnanite")
+    :SetStrengths(0,2,0)
+    :SetPriority(NTCS.AfflictionsPriority.LOW)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+        
+        if C:GetBoolStat("stasis", false) then return end
+
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+    end)
+    :Build())
+
+affLoader.Register(
+    builder:New("hyperbuffnanite")
+    :SetStrengths(0,2,0)
+    :SetPriority(NTCS.AfflictionsPriority.LOW)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+        
+        if C:GetBoolStat("stasis", false) then return end
+
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+    end)
+    :Build())
+
 -- Ichor
 affLoader:Register(
     builder:New("reconstructornanite")
@@ -373,6 +407,7 @@ affLoader:Register(
 affLoader:Register(
     builder:New("nanitebattery")
     :SetPriority(NTCS.AfflictionsPriority.LOW)
+    :SetStrengths(0,200,0)
     :SetUpdateAction(function(C, ID, Limb, dT)
     
         local str = C:GetAfflictionStrength(ID)
