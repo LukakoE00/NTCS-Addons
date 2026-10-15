@@ -20,7 +20,7 @@ itemLoader:Register("nanitebatteryimplant", function (d)
 
     if NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter.Human, 80) then
         
-        targetCharacter:SetAffliction("nanitebattery", 100)
+        targetCharacter:SetAffliction("nanitebattery", 200)
 
         Entity.Spawner.AddItemToRemoveQueue(item)
     else
