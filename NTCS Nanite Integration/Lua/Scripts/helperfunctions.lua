@@ -1,3 +1,13 @@
-function NTNan.addAfflictionAllLimbs(character, affliction, strength)
+function NTCS_Nanite.addAfflictionAllLimbs(character, affliction, strength)
     character.Human.CharacterHealth.ReduceAfflictionOnAllLimbs(affliction, -strength)
+end
+
+function NTCS_Nanite.downBattery(ntHuman, amount)
+
+    local currentStrength = ntHuman:GetAfflictionStrength("nanitebattery")
+
+    local multiplier = NTCS.Config.Get("Nanite_batteryDecayMultiplier", 0.5)
+
+    -- TODO: get config working
+    ntHuman:SetAffliction("nanitebattery", math.max(currentStrength - amount * multiplier, 1))
 end

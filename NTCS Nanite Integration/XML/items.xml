@@ -352,33 +352,32 @@
       </StatusEffect>
     </MeleeWeapon>
   </Vision>
-  <!-- <Lanius identifier="laniusxenonanite" category="Material" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe,alien" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="8">
+
+    <BatteryImplant identifier="nanitebatteryimplant" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical" canbepicked="true" useinhealthinterface="true" scale="0.25" impactsoundtag="impact_metal_light" maxstacksize="1">
         <Upgrade gameversion="0.10.0.0" scale="0.5" />
-        <PreferredContainer primary="wrecksecurearmcab,wreckshuttlecrate" minamount="0" maxamount="1" spawnprobability="0.005" />
-        <PreferredContainer primary="ruinstorage,ruinstoragesmall" minamount="0" maxamount="1" spawnprobability="0.015" />
-        <PreferredContainer primary="ruinstoragelarge" minamount="0" maxamount="1" spawnprobability="0.03" />
-        <Deconstruct time="25">
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="fulgurium" />
-        <RequiredItem identifier="oxygenite" />
+        <Fabricate suitablefabricators="medicalfabricator" requiredtime="75">
+            <RequiredSkill identifier="electrical" level="40" />
+            <RequiredSkill identifier="medical" level="60" />
+            <RequiredItem identifier="fulguriumbatterycell" />
+            <RequiredItem tag="heart"/>
+        </Fabricate>
+        <Deconstruct time="15">
+            <RequiredItem identifier="fulguriumbatterycell" />
+            
         </Deconstruct>
-        <InventoryIcon texture="%ModDir%/Images/itemAtlas.png" sourcerect="64,128,64,64" origin="0.5,0.5" />
-        <Sprite texture="%ModDir%/Images/itemAtlas.png" sourcerect="64,320,64,64" depth="0.6" origin="0.5,0.5" />
-        <Body width="35" height="65" density="15" />
-        <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="5,0" handle1="-5,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect">
-        <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
-        <StatusEffect tags="medical" type="OnUse" target="Character" checkconditionalalways="true" duration="1">
-            <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
-            <Affliction identifier="laniusxenonanite" amount="2" />
-            <Affliction identifier="psychosis" amount="45" />
-            <Affliction identifier="hallucinating" amount="80" />
-        </StatusEffect>
-        <StatusEffect type="OnBroken" target="This">
-            <Remove />
-        </StatusEffect>
-        </MeleeWeapon>
-    </Lanius>-->
+        
+        <InventoryIcon texture="%ModDir%/Images/naniteBatteryImplant.png" sourcerect="20,20,150,160" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/naniteBatteryImplant.png" sourcerect="20,20,150,160" depth="0.6" origin="0.5,0.5" />
+        <Body width="60" height="62" density="15" />
+
+        <Holdable canBeCombined="false" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+            <!-- Remove the item when fully used -->
+            <StatusEffect type="OnBroken" target="This">
+                <Remove />
+            </StatusEffect>
+        </Holdable>
+
+        <SkillRequirementHint identifier="medical" level="80" />
+    </BatteryImplant>
 </Items>
 </Override>

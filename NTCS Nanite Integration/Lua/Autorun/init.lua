@@ -1,14 +1,14 @@
 
-NTNan = {} -- Neurotrauma Nanite Integration
-NTNan.Name="Nanite Integration"
-NTNan.Version = "2.0.1"
-NTNan.VersionNum = 02000001
-NTNan.MinNTVersion = "2.0.0"
-NTNan.MinNTVersionNum = 02000000
-NTNan.Path = table.pack(...)[1]
+NTCS_Nanite = {} -- Neurotrauma Nanite Integration
+NTCS_Nanite.Name="Nanite Integration"
+NTCS_Nanite.Version = "2.0.1"
+NTCS_Nanite.VersionNum = 02000001
+NTCS_Nanite.MinNTVersion = "2.0.0"
+NTCS_Nanite.MinNTVersionNum = 02000000
+NTCS_Nanite.Path = table.pack(...)[1]
 
-dofile(NTNan.Path.."/Lua/Library/NeurotraumaLib.lua")
-NTCS.Info.RegisterAddon(NTNan)
+dofile(NTCS_Nanite.Path.."/Lua/Library/NeurotraumaLib.lua")
+NTCS.Info.RegisterAddon(NTCS_Nanite)
 
 local NTLuaEnabledMsg = "Error loading NT Nanite Integration: Lua Neurotrauma is enabled!"
 local NTCSNotEnabledMsg = "Error loading NT Nanite Integration: It appears Neurotrauma CS isn't loaded!"
@@ -32,9 +32,11 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 		end
 
 		-- Lua Content Scripts SP/MP:
-		dofile(NTNan.Path .. "/Lua/Scripts/helperfunctions.lua")
-		dofile(NTNan.Path .. "/Lua/Scripts/hook.lua")
-        dofile(NTNan.Path .. "/Lua/Scripts/afflictions.lua")
+		dofile(NTCS_Nanite.Path .. "/Lua/Scripts/helperfunctions.lua")
+		dofile(NTCS_Nanite.Path .. "/Lua/Scripts/hook.lua")
+        dofile(NTCS_Nanite.Path .. "/Lua/Scripts/stats.lua")
+        dofile(NTCS_Nanite.Path .. "/Lua/Scripts/afflictions.lua")
+        dofile(NTCS_Nanite.Path .. "/Lua/Scripts/items.lua")
 	end, 1)
 else
 	Timer.Wait(function()
@@ -55,5 +57,5 @@ else
 end
 
 -- Timer.Wait(function()
--- 	dofile(NTNan.Path .. "/Lua/Scripts/ConfigData.lua")
+-- 	dofile(NTCS_Nanite.Path .. "/Lua/Scripts/ConfigData.lua")
 -- end, 1)
