@@ -98,8 +98,9 @@ function NTCS_SurgeryPlus.PreUpdateHuman(character)
 	end
 
 	-- artificial brain
+	local NTHuman = NTCS.Human.getNTHumanFromCharacter(character)
 	if NTCS.HF.HasAffliction(character, "artificialbrain") then
-		NTC.SetSymptomTrue(character, "unconsciousness")
+		NTHuman.SetSymptomTrue(character, "unconsciousness", 2)
 	end
 end
 

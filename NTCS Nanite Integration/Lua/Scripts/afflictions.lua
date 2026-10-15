@@ -1,36 +1,37 @@
--- NTNan.Afflictions = {}
--- NTNan.AfflictionsRes = {}
+-- NTCS_Nanite.Afflictions = {}
+-- NTCS_Nanite.AfflictionsRes = {}
 
--- NTNan.Afflictions.Decay = "nanitedecay"
--- NTNan.Afflictions.Precursor = "precursor"
--- NTNan.Afflictions.Remover = "naniteremover"
--- NTNan.Afflictions.Reconstructor = "reconstructornanite"
--- NTNan.Afflictions.DeepFix = "deepfixnanite"
--- NTNan.Afflictions.BoneFix = "bonefixnanite"
--- NTNan.Afflictions.OxyBlood = "oxybloodnanite"
--- NTNan.Afflictions.Husk = "husknanite"
--- NTNan.Afflictions.Neural = "neuralnanite"
--- NTNan.Afflictions.AntiTox = "antitoxnanite"
--- NTNan.Afflictions.VigorBuff = "vigorbuffnanite"
--- NTNan.Afflictions.HyperBuff = "hyperbuffnanite"
--- NTNan.Afflictions.VisionBuff = "visionbuffnanite"
--- NTNan.Afflictions.LaniusXeno = "laniusxenonanite"
--- NTNan.Afflictions.Mechfix = "mechfixnanite"
+-- NTCS_Nanite.Afflictions.Decay = "nanitedecay"
+-- NTCS_Nanite.Afflictions.Precursor = "precursor"
+-- NTCS_Nanite.Afflictions.Remover = "naniteremover"
+-- NTCS_Nanite.Afflictions.Reconstructor = "reconstructornanite"
+-- NTCS_Nanite.Afflictions.DeepFix = "deepfixnanite"
+-- NTCS_Nanite.Afflictions.BoneFix = "bonefixnanite"
+-- NTCS_Nanite.Afflictions.OxyBlood = "oxybloodnanite"
+-- NTCS_Nanite.Afflictions.Husk = "husknanite"
+-- NTCS_Nanite.Afflictions.Neural = "neuralnanite"
+-- NTCS_Nanite.Afflictions.AntiTox = "antitoxnanite"
+-- NTCS_Nanite.Afflictions.VigorBuff = "vigorbuffnanite"
+-- NTCS_Nanite.Afflictions.HyperBuff = "hyperbuffnanite"
+-- NTCS_Nanite.Afflictions.VisionBuff = "visionbuffnanite"
+-- NTCS_Nanite.Afflictions.LaniusXeno = "laniusxenonanite"
+-- NTCS_Nanite.Afflictions.Mechfix = "mechfixnanite"
 
 -- Checking if NT Eyes is present
 
-NTNan.EYESENABLED = NTCS.Info.isAddonRegistered("NT Eyes")
+NTCS_Nanite.EYESENABLED = NTCS.Info.isAddonRegistered("NT Eyes")
 
-NTNan.IRENABLED = false
-NTNan.RSENABLE = false
+NTCS_Nanite.IRENABLED = false
+NTCS_Nanite.RSENABLE = false
 for mod in ContentPackageManager.EnabledPackages.All do
-    if mod.Name == "Immersive Repairs" then NTNan.IRENABLED = true end
-    if mod.Name == "Real Sonar" then NTNan.RSENABLE = true end
+    if mod.Name == "Immersive Repairs" then NTCS_Nanite.IRENABLED = true end
+    if mod.Name == "Real Sonar" then NTCS_Nanite.RSENABLE = true end
 end
 
-local affLoader = NTCS.AfflictionsLoader(NTNan.Name)
+local affLoader = NTCS.AfflictionsLoader(NTCS_Nanite.Name)
 local builder = NTCS.AfflictionPrefabBuilder()
 
+-- Ichor
 affLoader:Register(
     builder:New("reconstructornanite")
     :SetStrengths(0,6,0)
@@ -39,22 +40,29 @@ affLoader:Register(
         
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
         local str = C:GetAfflictionStrength(ID)
 
         -- Tier 1
-        NTNan.addAfflictionAllLimbs(C, "burn", 0.3 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "acidburn", 0.15 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "lacerations", 0.3 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "burn", 0.3 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "acidburn", 0.15 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "lacerations", 0.3 * -1 * dT)
 
         if str >= 3.5 then
             -- Tier 2
-            NTNan.addAfflictionAllLimbs(C, "bleeding", 0.5 * -1 * dT)
-            NTNan.addAfflictionAllLimbs(C, "bleedingnonstop", 0.5 * -1 * dT)
-            NTNan.addAfflictionAllLimbs(C, "bitewounds", 0.3 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "bleeding", 0.5 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "bleedingnonstop", 0.5 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "bitewounds", 0.3 * -1 * dT)
 
             if str >= 5.5 then
                 -- Tier 3
-                NTNan.addAfflictionAllLimbs(C, "gunshotwound", 0.4 * -1 * dT)
+                NTCS_Nanite.addAfflictionAllLimbs(C, "gunshotwound", 0.4 * -1 * dT)
             end
         end
 
@@ -62,17 +70,7 @@ affLoader:Register(
     :Build())
 
 
-
--- Ichor
--- NTNan.RegisterHealingAffliction("reconstructornanite", {
---     {{"burn", 0.3, true},{"acidburn",0.15, true},{"lacerations",0.3, true}},
---     {{"bleeding",0.5, true},{"bleedingnonstop",0.5, true},{"bitewounds",0.3, true}},
---     {{"gunshotwound",0.4, true}}}, function(character)
---         for _,limb in pairs(NTNan.Limbs) do
---             NTCS.HF.AddAfflictionLimb(character, "burn", limb, 10)
---         end
---     end)
-
+-- Osmium
 affLoader:Register(
     builder:New("bonefixnanite")
     :SetStrengths(0,6,0)
@@ -81,17 +79,24 @@ affLoader:Register(
         
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
         local str = C:GetAfflictionStrength(ID)
 
         -- Tier 1
-        NTNan.addAfflictionAllLimbs(C, "blunttrauma", 0.4 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "bonedamage", 0.5 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "dislocation", 5 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "blunttrauma", 0.4 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "bonedamage", 0.5 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "dislocation", 5 * -1 * dT)
 
 
         if str >= 3.5 then
             -- Tier 2
-            NTNan.addAfflictionAllLimbs(C, "fracturedextremity", 3 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "fracturedextremity", 3 * -1 * dT)
             C:AddAffliction("fracturedribs", 3 * -1 * dT)
 
             if str >= 5.5 then
@@ -106,16 +111,8 @@ affLoader:Register(
     :Build()
 )
 
--- Osmium
--- NTNan.RegisterHealingAffliction("bonefixnanite", {
---     {{"blunttrauma", 0.4, true},{"bonedamage",0.5, true},{"dislocation1", 5},{"dislocation2", 5},{"dislocation3", 5},{"dislocation4", 5}},
---     {{"rl_fracture", 3},{"ll_fracture", 3},{"t_fracture",3},{"ra_fracture", 3},{"la_fracture", 3}},
---     {{"n_fracture", 3},{"h_fracture",3},{"t_paralysis",1}}}, function (character)
---         for _,limb in pairs(NTNan.Limbs) do
---             NTCS.HF.AddAfflictionLimb(character, "bonedamage", limb, 80)
---         end
---     end)
 
+--Kaltsit
 affLoader:Register(
     builder:New("deepfixnanite")
     :SetStrengths(0,4,0)
@@ -124,16 +121,23 @@ affLoader:Register(
         
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
         local str = C:GetAfflictionStrength(ID)
 
         -- Tier 1
         C:AddAffliction("internalbleeding", 0.25 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "foreignbody", 0.2 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "foreignbody", 0.2 * -1 * dT)
 
-        if NTNan.RSENABLE then
-            NTNan.addAfflictionAllLimbs(C, "vibrationdamage", 0.5 * -1 * dT)
-            NTNan.addAfflictionAllLimbs(C, "nervedamage", 0.2 * -1 * dT)
-            NTNan.addAfflictionAllLimbs(C, "muscledamage", 0.2 * -1 * dT)
+        if NTCS_Nanite.RSENABLE then
+            NTCS_Nanite.addAfflictionAllLimbs(C, "vibrationdamage", 0.5 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "nervedamage", 0.2 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "muscledamage", 0.2 * -1 * dT)
         end
 
         if str >= 3.5 then
@@ -145,7 +149,7 @@ affLoader:Register(
             C:AddAffliction("kidneydamage", 0.05 * -1 * dT)
             C:AddAffliction("liverdamage", 0.05 * -1 * dT)
 
-            if NTNan.RSENABLE then
+            if NTCS_Nanite.RSENABLE then
                 C:AddAffliction("rupturedlung", 1 * -1 * dT)
             end
         end
@@ -154,24 +158,7 @@ affLoader:Register(
     :Build())
 
 
---Kaltsit
--- NTNan.RegisterHealingAffliction("deepfixnanite", {
---     {{"internalbleeding", 0.25},{"foreignbody", 0.2, true}},
---     {{"organdamage", 0.5},{"liverdamage",0.05},{"heartdamage",0.05},{"lungdamage",0.05},{"kidneydamage",0.05},{"liverdamage",0.05}}}, function(character)
---         NTCS.HF.AddAffliction(character, "organdamage", 60)
---     end)
-
--- NTNan.RegisterCustomAffliction("deepfixnanite", function (character)
---     if NTNan.RSENABLE == true then
---         if NTCS.HF.GetAfflictionStrength(character, "deepfixnanite") > 0 then
---             NTNan.applyHeals(character, {{"vibrationdamage", 0.5, true},{"nervedamage", 0.2, true},{"muscledamage", 0.2, true}})
---         end
---         if HF.GetAfflictionStrength(character, "deepfixnanite") > 1 then
---             NTNan.applyHeals(character, {{"rupturedlung", 1, true}})
---         end
---     end
--- end, function (_) end)
-
+--Halesium
 affLoader:Register(
     builder:New("oxybloodnanite")
     :SetStrengths(0,4,0)
@@ -179,6 +166,13 @@ affLoader:Register(
     :SetUpdateAction(function(C, ID, Limb, dT)
         
         if C:GetBoolStat("stasis", false) then return end
+
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
 
         local str = C:GetAfflictionStrength(ID)
 
@@ -199,14 +193,8 @@ affLoader:Register(
     end)
     :Build())
 
---Halesium
--- NTNan.RegisterHealingAffliction("oxybloodnanite",{
---     {{"bloodloss", 0.2},{"oxygenlow",0.4},{"radiationsickness",0.2},{"hypoxemia",0.3}},
---     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"neurotrauma",0.15}}}, function(character)
---         HF.AddAffliction(character, "cardiacarrest", 10)
---         HF.AddAffliction(character, "oxygenlow", 100)
---     end)
 
+--Mithridates
 affLoader:Register(
     builder:New("antitoxnanite")
     :SetStrengths(0,4,0)
@@ -214,6 +202,13 @@ affLoader:Register(
     :SetUpdateAction(function(C, ID, Limb, dT)
 
         if C:GetBoolStat("stasis", false) then return end
+
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
 
         local str = C:GetAfflictionStrength(ID)
 
@@ -236,15 +231,7 @@ affLoader:Register(
 )
 
 
---Mithridates
--- NTNan.RegisterHealingAffliction("antitoxnanite",{
---     {{"drunk",0.5},{"opiateoverdose",1},{"morbusinepoisoning",1.2},{"deliriuminepoisoning",1.2},{"sufforinpoisoning",2.1},{"cyanidepoisoning",1.1},{"paralysis",1.1}},
---     {{"sepsis",0.25}}}, function (character)
---         HF.AddAffliction(character, "drunk", 60)
---         HF.AddAffliction(character, "paralysis", 50)
---     end)
-
-
+--Cerebrate
 affLoader:Register(
     builder:New("neuralnanite")
     :SetStrengths(0,2,0)
@@ -253,6 +240,13 @@ affLoader:Register(
 
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
         -- Tier 1
         C:AddAffliction("psychosis", 0.2 * -1 * dT)
         C:AddAffliction("hallucinating", 0.2 * -1 * dT)
@@ -260,27 +254,15 @@ affLoader:Register(
         C:AddAffliction("opiateaddiction", 0.2 * -1 * dT)
         C:AddAffliction("chemaddiction", 0.2 * -1 * dT)
 
-        if NTNan.RSENABLE then
+        if NTCS_Nanite.RSENABLE then
             C:AddAfflictionLimb("brainhemorrhage", LimbType.head ,2 * -1 * dT)
         end
 
     end)
-    :Build()
-)
+    :Build())
 
---Cerebrate
--- NTNan.RegisterHealingAffliction("neuralnanite",{
---     {{"psychosis",0.2},{"hallucinating",0.2},{"stun", 1.1},{"opiateaddiction",0.2},{"chemaddiction",0.2}}}, function (character)
---         HF.AddAffliction(character, "stun", 100)
---         HF.AddAffliction(character, "opiateaddiction", 100)
---     end)
 
--- NTNan.RegisterCustomAffliction("neuralnanite", function (character)
---     if NTNan.RSENABLE then
---         NTNan.applyHeals(character, {{"brainhemorrhage", 2, true}})
---     end
--- end, function (_) end)
-
+--Makinis
 affLoader:Register(
     builder:New("mechfixnanite")
     :SetStrengths(0,4,0)
@@ -289,36 +271,30 @@ affLoader:Register(
 
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
+        local str = C:GetAfflictionStrength(ID)
+
         -- Tier 1
-        NTNan.addAfflictionAllLimbs(C, "ntc_loosescrews", 0.5 * -1 * dT)
-        NTNan.addAfflictionAllLimbs(C, "ntc_bentmetal", 0.5 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "ntc_loosescrews", 0.5 * -1 * dT)
+        NTCS_Nanite.addAfflictionAllLimbs(C, "ntc_bentmetal", 0.5 * -1 * dT)
 
         if str >= 3.5 then
             -- Tier 2
-            NTNan.addAfflictionAllLimbs(C, "ntc_materialloss", 0.3 * -1 * dT)
-            NTNan.addAfflictionAllLimbs(C, "ntc_damagedelectronics", 0.3 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "ntc_materialloss", 0.3 * -1 * dT)
+            NTCS_Nanite.addAfflictionAllLimbs(C, "ntc_damagedelectronics", 0.3 * -1 * dT)
         end
 
     end)
-    :Build()
-)
+    :Build())
 
---Makinis
--- NTNan.RegisterHealingAffliction("mechfixnanite", {
---     {{"ntc_loosescrews", 0.5, true},{"ntc_bentmetal", 0.5,true}},
---     {{"ntc_materialloss", 0.3,true},{"ntc_damagedelectronics", 0.3,true}}}, function (character)
---         HF.AddAffliction(character, "stun", 50)
---     end)
 
 --VisionBuff
--- if NTNan.EYESENABLED then
---     NTNan.RegisterHealingAffliction("visionbuffnanite",{
---         {},
---         {{"dm_human", 0.5},{"dm_cyber", 0.5},{"dm_enhanced", 0.5},{"dm_plastic", 0.5},{"dm_crawler", 0.5},{"dm_mudraptor", 0.5},{"dm_hammerhead", 0.5},{"dm_watcher", 0.5},{"dm_husk", 0.5},{"dm_charybdis", 0.5},{"dm_latcher", 0.5},{"dm_terror", 0.5}}}, function (character)
---             HF.AddAffliction(character, "psychosis", 100)
---         end)
--- end
-
 affLoader:Register(
     builder:New("visionbuffnanite")
     :SetStrengths(0,2,0)
@@ -327,10 +303,17 @@ affLoader:Register(
 
         if C:GetBoolStat("stasis", false) then return end
 
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
+
         local str = C:GetAfflictionStrength(ID)
 
         if str > 1 then
-            if NTNan.EYESENABLED then
+            if NTCS_Nanite.EYESENABLED then
                 C:AddAffliction("dm_human", 0.5 * -1 * dT)
                 C:AddAffliction("dm_cyber", 0.5 * -1 * dT)
                 C:AddAffliction("dm_enhanced", 0.5 * -1 * dT)
@@ -345,40 +328,16 @@ affLoader:Register(
                 C:AddAffliction("dm_terror", 0.5 * -1 * dT)
             end
 
-            if NTNan.IRENABLED then
+            if NTCS_Nanite.IRENABLED then
                 C:AddAffliction("welderseye", 5 * -1 * dT)
             end
         end
 
     end)
-    :Build()
-)
+    :Build())
 
---VisionBuff
--- NTNan.RegisterCustomAffliction("visionbuffnanite", function (character)
---     local heals = {}
-    
---     if HF.GetAfflictionStrength(character, "visionbuffnanite") > 1 then
---         if NTNan.EYESENABLED then
 
---             local l = {{"dm_human", 0.5},{"dm_cyber", 0.5},{"dm_enhanced", 0.5},{"dm_plastic", 0.5},{"dm_crawler", 0.5},{"dm_mudraptor", 0.5},{"dm_hammerhead", 0.5},{"dm_watcher", 0.5},{"dm_husk", 0.5},{"dm_charybdis", 0.5},{"dm_latcher", 0.5},{"dm_terror", 0.5}}
-
---             for e in l do
---                 table.insert(heals, e)
---             end
---         end
-
---         if NTNan.IRENABLED then
---             table.insert(heals, {"welderseye", 5})
---         end
---     end
-
---     NTNan.applyHeals(character, heals)
-    
--- end, function (character)
---     HF.AddAffliction(character, "psychosis", 100)
--- end)
-
+--Husk
 affLoader:Register(
     builder:New("husknanite")
     :SetStrengths(0,2,0)
@@ -386,6 +345,12 @@ affLoader:Register(
     :SetUpdateAction(function(C, ID, Limb, dT)
 
         if C:GetBoolStat("stasis", false) then return end
+        if not C:GetBoolStat("naniteEnoughBattery", false) then
+            C:SetAffliction("nanitenobattery", 2)
+            return
+        end
+
+        NTCS_Nanite.downBattery(C, 0.025 * dT)
 
         local str = C:GetAfflictionStrength(ID)
 
@@ -401,79 +366,28 @@ affLoader:Register(
         end
 
     end)
-    :Build()
-)
-
---Husk
--- NTNan.RegisterCustomAffliction("husknanite", function (character)
---     local tier = HF.GetAfflictionStrength(character, "husknanite")
-
---     if HF.HasAffliction(character, "huskinfection") then
---         if tier == 1 then
---             if HF.GetAfflictionStrength(character, "huskinfection") > 80 then
---                 HF.SetAffliction(character, "huskinfection", 79)
---                 --NTNan.applyHeals(character, {{"huskinfection", 1}})
---             end
---         else
---             NTNan.applyHeals(character, {{"huskinfection", 5}})
---         end
---     end
--- end, function (character)
---     HF.AddAffliction(character, "t_fracture", 50)
--- end)
+    :Build())
 
 
--- for _,v in pairs(NTC.RegisteredExpansions) do
---     if v.Name == "Eyes" then
---         print("NT Eyes detected !")
-
---     NTNan.AfflictionsRes[NTNan.Afflictions.VisionBuff] = {name = NTNan.Afflictions.VisionBuff, levels = {
---         {},
---         {{"dm_human", 0.5},{"dm_cyber", 0.5},{"dm_enhanced", 0.5},{"dm_plastic", 0.5},{"dm_crawler", 0.5},{"dm_mudraptor", 0.5},{"dm_hammerhead", 0.5},{"dm_watcher", 0.5},{"dm_husk", 0.5},{"dm_charybdis", 0.5},{"dm_latcher", 0.5},{"dm_terror", 0.5}}
---     }}
-
-
---     end
-
-
--- end
-
---HealingNanites
-    --Ichor
--- NTNan.AfflictionsRes[NTNan.Afflictions.Reconstructor] = { name = NTNan.Afflictions.Reconstructor, levels = {
---     {{"burn", 0.3, true},{"acidburn",0.15, true},{"lacerations",0.3, true}},
---     {{"bleeding",0.5, true},{"bleedingnonstop",0.5, true},{"bitewounds",0.3, true}},
---     {{"gunshotwounds",0.2, true}}}
--- }
-    --Osmium
--- NTNan.AfflictionsRes[NTNan.Afflictions.BoneFix] = { name = NTNan.Afflictions.BoneFix, levels = {
---     {{"blunttrauma", 0.4, true},{"bonedamage",0.5, true},{"dislocation1", 3},{"dislocation2", 3},{"dislocation3", 3},{"dislocation4", 3}},
---     {{"rl_fracture", 3},{"ll_fracture", 3},{"t_fracture",3},{"ra_fracture", 3},{"la_fracture", 3}},
---     {{"n_fracture", 3},{"h_fracture",3},{"t_paralysis",1}}}
--- }
-    --Kaltsit
--- NTNan.AfflictionsRes[NTNan.Afflictions.DeepFix] = { name = NTNan.Afflictions.DeepFix, levels = {
---     {{"internalbleeding", 0.25},{"foreignbody", 0.2, true}},
---     {{"organdamage", 0.5},{"liverdamage",0.05},{"heartdamage",0.05},{"lungdamage",0.05},{"kidneydamage",0.05},{"liverdamage",0.05}}}
--- }
-    --Halesium
--- NTNan.AfflictionsRes[NTNan.Afflictions.OxyBlood] = {name=NTNan.Afflictions.OxyBlood, levels = {
---     {{"bloodloss", 0.2},{"oxygenlow",0.4},{"radiationsickness",0.2},{"hypoxemia",0.3}},
---     {{"fibrillation",1},{"cardiacarrest",1},{"tamponade", 2},{"neurotrauma",0.15}}}
--- }
-    --Mithridates
--- NTNan.AfflictionsRes[NTNan.Afflictions.AntiTox] = {name=NTNan.Afflictions.AntiTox, levels = {
---     {{"drunk",0.5},{"opiateoverdose",1},{"morbusinepoisoning",1.2},{"deliriuminepoisoning",1.2},{"sufforinpoisoning",2.1},{"cyanidepoisoning",1.1},{"paralysis",1.1}},
---     {{"sepsis",0.25}}}
--- }
-    --Cerebrate
--- NTNan.AfflictionsRes[NTNan.Afflictions.Neural] = {name=NTNan.Afflictions.Neural, levels = {
---     {{"psychosis",0.2},{"hallucinating",0.2},{"stun", 1.1},{"opiateaddiction",0.2},{"chemaddiction",0.2}}}
--- }
-
-    --Makinis
--- NTNan.AfflictionsRes[NTNan.Afflictions.Mechfix] = {name = NTNan.Afflictions.Mechfix, levels = {
---     {{"ntc_loosescrews", 0.5, true},{"ntc_bentmetal", 0.5,true}},
---     {{"ntc_materialloss", 0.3,true},{"ntc_damagedelectronics", 0.3,true}}
--- }}
-
+--Nanite battery
+affLoader:Register(
+    builder:New("nanitebattery")
+    :SetPriority(NTCS.AfflictionsPriority.LOW)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+    
+        local str = C:GetAfflictionStrength(ID)
+        
+        if str <= 20 then
+            if str <= 2 then
+                C:SetAffliction("nanitenobattery", 2)
+            else
+                C:SetAffliction("nanitebatterylow", 2)
+            end
+        else
+            C:SetAffliction("nanitenobattery", 0)
+        
+            C:SetAffliction("nanitebatterylow", 0)
+        end
+    
+    end)
+    :Build())

@@ -130,6 +130,27 @@ itemLoader:Register("ethanol", function (d)
 
 end)
 
+itemLoader:Register("nervegenerators", function(d) 
+
+    
+    local item = d.item
+    local usingCharacter = d.user
+    local targetCharacter = d.target
+    local targetLimb = d.targetLimb
+
+    -- Not usable in stasis
+    if targetCharacter:GetBoolStat("stasis", false) then return end
+
+    -- Only usable on the head
+    if targetLimb.type ~= LimbType.Head then return end
+
+    if not targetCharacter:HasAffliction("drilledbones") then return end
+
+    targetCharacter:AddAfflictionLimb("nervegeneration", LimbType.Head, 1)
+    Entity.Spawner.AddItemToRemoveQueue(item)
+
+end)
+
 --lobotomy tables
 GoodLobotomyAfflictions = {
 	"lobo_genius", "lobo_veryfast", "lobo_notrauma", "lobo_nopsychosis", "lobo_nostun", "lobo_nopain", "lobo_noneurotrauma",
