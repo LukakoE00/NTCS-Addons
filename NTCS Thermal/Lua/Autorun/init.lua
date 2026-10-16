@@ -8,9 +8,6 @@ NTCS_Thermal.MinNTVersion = "A1.12.1"
 NTCS_Thermal.MinNTVersionNum = 01120100
 NTCS_Thermal.Path = table.pack(...)[1]
 -- I don't think this is required.
-NTCS_Thermal.UpdateAfflictions = {}
-NTCS_Thermal.UpdateLimbAfflictions = {}
-NTCS_Thermal.UpdateBloodAfflictions = {}
 NTCS_Thermal.OnDamagedMethods = {}
 NTCS_Thermal.UsingRoboTrauma = false
 NTCS_Thermal.UsingEnhancedReactors = false
@@ -48,15 +45,25 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	--local thermal_afflictions = { "sym_hot", "sym_cold", "sym_shivers", "sym_numb", "heat_cramp" } -- Add our NPC symptom announcements.
 	--table.insert(NT.SymsForNPC, thermal_afflictions)
 	
-	--NTCS.NTC.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", nil) -- Make pulmonary_edema go away with drainage.
+	--NTCS.NTC.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", function (itemPackage)
+		
+	--end) -- Make pulmonary_edema go away with drainage.
 	
-	--NTCS.NTC.AddSuturableAffliction("removed_skin",3,"removed_skin",function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		--NTCS.HF.AddAfflictionLimb(targetCharacter, "removed_skin", limb.type, -100, usingCharacter)
+	--NTCS.NTC.AddSuturableAffliction("removed_skin",3,"removed_skin",function (itemPackage) -- Cure removed skin with sutures.
+        --local item = itemPackage.item
+        --local usingCharacter = itemPackage.user.Human
+        --local targetCharacter = itemPackage.target.Human
+        --local targetLimb = itemPackage.targetLimb
+		--NTCS.HF.AddAfflictionLimb(targetCharacter, "removed_skin", targetLimb.type, -100, usingCharacter)
 	--end)
 
-	--NTCS.NTC.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		--NTCS.HF.AddAfflictionLimb(targetCharacter, "grafted_skin", limb.type, -100, usingCharacter)
-		--THERM.ReduceBurns(targetCharacter,limb,usingCharacter)
+	--NTCS.NTC.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (itemPackage) -- Cure removed skin with sutures.
+        --local item = itemPackage.item
+        --local usingCharacter = itemPackage.user.Human
+        --local targetCharacter = itemPackage.target.Human
+        --local targetLimb = itemPackage.targetLimb
+		--NTCS.HF.AddAfflictionLimb(targetCharacter, "grafted_skin", targetLimb.type, -100, usingCharacter)
+		--THERM.ReduceBurns(targetCharacter,targetLimb,usingCharacter)
 	--end)
 
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/humanupdate.lua") 		-- HumanUpdates.
@@ -86,7 +93,8 @@ else
 			return
 		end
 
-        dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Shared/configdata.lua") 	 --Config.
-
 	end, 1)
 end
+Timer.Wait(function()
+	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Shared/configdata.lua") 	    --Config.
+end, 1)

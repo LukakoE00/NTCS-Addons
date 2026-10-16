@@ -708,3 +708,10 @@ THERM.StringOnlyHas = function (String,Wanted)
         end
         return false
 end
+
+-- Old functionality of HF.Round
+-- Allows for rounding with negative numbers
+THERM.Round = function(num, numDecimalPlaces)
+	local mult = 10 ^ (numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
+end

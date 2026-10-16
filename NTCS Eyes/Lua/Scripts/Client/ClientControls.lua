@@ -53,8 +53,8 @@ function NTCS_Eyes.MedicalLensScanner()
 
 		-- Prevent scanning own head
 		if limbIndex == 0 and scannerUser == scannerTarget then
-			HF.DMClient(
-				HF.CharacterToClient(scannerUser),
+			NTCS.HF.DMClient(
+				NTCS.HF.CharacterToClient(scannerUser),
 				"‖color:255,100,100‖You can't see your own head.‖color:end‖"
 			)
 			NTCS_Eyes.ScannerActive = true
