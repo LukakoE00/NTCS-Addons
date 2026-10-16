@@ -94,7 +94,7 @@
       <icon texture="%ModDir%/Images/NT_AZ_Afflictions.png" sheetelementsize="128,128" origin="0,0" sourcerect="260,402,125,127" />
     </Affliction>
     <!--Givetemperature-->
-    <Affliction name="GiveTemperature" identifier="givetemp" description="Used to give temperature." limbspecific="false" indicatorlimb="Head" showiconthreshold="200" showinhealthscannerthreshold="200" maxstrength="3" targets="human" type="gaze" isbuff="false" healableinmedicalclinic="false" iconcolors="255,144,80,255;255,144,80,255">
+    <Affliction name="GiveTemperature" identifier="givetemp" description="Used to give temperature." limbspecific="false" indicatorlimb="Torso" showiconthreshold="200" showinhealthscannerthreshold="200" maxstrength="3" targets="human" type="gaze" isbuff="false" healableinmedicalclinic="false" iconcolors="255,144,80,255;255,144,80,255">
       <icon texture="%ModDir%/Images/NT_AZ_Afflictions.png" sheetelementsize="128,128" origin="0,0" sourcerect="521,538,125,127" />
       <Effect minstrength="2" maxstrength="3" strengthchange="1">
         <StatusEffect target="character" type="NotInWater" multiplyafflictionsbymaxvitality="true" interval="40" disabledeltatime="true">

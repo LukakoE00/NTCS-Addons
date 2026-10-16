@@ -100,7 +100,7 @@ Hook.Add("NTCS_Thermal.AddTemp", "AddTemp", function (effect, deltaTime, item, t
         for key, target in pairs(targets) do
                 local TempAmount = tonumber(element.GetAttributeString("temp", "default value"))
                 if target ~= nil and target.IsHuman and target.IsDead ~= true and not (NTCS.Config.Get("BotTempIgnoreMode", true) and target.IsBot) then
-                        if TempAmount < 0 then HF.AddAffliction(target, "ntt_temperature", TempAmount) return end
+                        if TempAmount < 0 then NTCS.HF.AddAffliction(target, "ntt_temperature", TempAmount) return end
                         local CharacterTable = THERM.GetCharacter(target.ID,target)
                         if CharacterTable ~= nil then
                                 THERM.ApplyTemperatureUpdate(target.ID)
@@ -111,23 +111,6 @@ Hook.Add("NTCS_Thermal.AddTemp", "AddTemp", function (effect, deltaTime, item, t
 end)
 
 -- Character ----------------------------------------------------------------------------------------------------------------------
-
--- Lukako my absolute value goat. Thank you so much.
-Hook.Add("characterCreated", "NTCS_Thermal.ForceUpdates", function(createdCharacter)
-        -- run once on spawn then cope
-    Timer.Wait(function()
-        if createdCharacter.IsHuman and
-                   createdCharacter.TeamID == 1 or 
-                   createdCharacter.TeamID == 2 and not 
-                   createdCharacter.IsDead then
-
-        local temperaturecheck = createdCharacter.CharacterHealth.GetAffliction("ntt_temperature")
-            if temperaturecheck == nil then
-                NTCS.HF.AddAffliction(createdCharacter, "luabotomy", 0.1)
-            end
-        end
-    end, 5000)
-end)
 
 -- Removes human in server from THERM
 Hook.Add("character.death", "Newcharacter", function (createdCharacter)
