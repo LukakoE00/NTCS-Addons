@@ -26,7 +26,7 @@ local WaterLimbValues2 =
 ---@param givenlimb LimbType
 ---@return string
 THERM.LimbToWaterLimbV = function (givenlimb)
-        local limb = HF.NormalizeLimbType(givenlimb)
+        local limb = NTCS.HF.NormalizeLimbType(givenlimb)
         return WaterLimbValues[limb]
 end
 
@@ -169,12 +169,12 @@ THERM.CalculateLimbWaterExposure = function (animcontrol, limb, WaterY)
         if LimbEndPoint.Y < LimbStartPoint.Y then
                 local LimbLengthY = math.abs(LimbStartPoint.Y + NewLimbData.Offset) - math.abs(LimbEndPoint.Y)
                 local WaterExposureLimb = math.abs(WaterY) - math.abs(LimbEndPoint.Y)
-                local WaterExposureLimbPercentage = HF.Clamp((WaterExposureLimb/LimbLengthY), 0, 1)
+                local WaterExposureLimbPercentage = NTCS.HF.Clamp((WaterExposureLimb/LimbLengthY), 0, 1)
                 return WaterExposureLimbPercentage     
         else
                 local LimbLengthY = math.abs(LimbEndPoint.Y) - math.abs(LimbStartPoint.Y)
                 local WaterExposureLimb = math.abs(WaterY) - math.abs(LimbStartPoint.Y)
-                local WaterExposureLimbPercentage = HF.Clamp((WaterExposureLimb/LimbLengthY), 0, 1)
+                local WaterExposureLimbPercentage = NTCS.HF.Clamp((WaterExposureLimb/LimbLengthY), 0, 1)
                 return WaterExposureLimbPercentage
         end
 end
@@ -188,7 +188,7 @@ THERM.FreezingWaterAmount = function (target, limb)
         local LimbHull = ActualLimb.hull
         local ScalingAmount = 1.25
         if LimbHull == nil then return 1 end
-        local Result = HF.Clamp((LimbHull.WaterVolume / LimbHull.Volume) * ScalingAmount, 0, 1)
+        local Result = NTCS.HF.Clamp((LimbHull.WaterVolume / LimbHull.Volume) * ScalingAmount, 0, 1)
         return Result
 end
 
@@ -208,7 +208,7 @@ THERM.BurnReductionFactor = function(item)
                                 local multiplierString = child.GetAttributeString("damagemultiplier")
                                 local multiplier = math.abs(multiplierString - 1) + 1
                                 if multiplier > 1 then
-                                        multiplier = HF.Clamp(multiplier * 1.2,1,100)
+                                        multiplier = NTCS.HF.Clamp(multiplier * 1.2,1,100)
                                 end
                                 return multiplier
                         end
@@ -233,7 +233,7 @@ THERM.CalculateTemperature = function (limbwet,target,limb)
         end
         if limb == LimbType.Torso then
                 local DivingSuit = THERM.GetSuitSlot(target)
-                CharacterTable.LastStoredHeadTemp = HF.GetAfflictionStrengthLimb(target, LimbType.Torso, "ntt_temperature", 0)
+                CharacterTable.LastStoredHeadTemp = NTCS.HF.GetAfflictionStrengthLimb(target, LimbType.Torso, "ntt_temperature", 0)
                 if DivingSuit ~= CharacterTable.LastStoredSuit and DivingSuit ~= nil then
                         CharacterTable.LastStoredSuit = DivingSuit
                         CharacterTable.DivingSuitBurnRes = THERM.BurnReductionFactor(DivingSuit)
@@ -251,31 +251,31 @@ THERM.CalculateTemperature = function (limbwet,target,limb)
                 end
         end
         THERM.SetCharacterTablePressure(target,CharacterTable)
-        HypothermiaLevel = NTConfig.Get("NewHypothermiaLevel", 36)
-        HyperthermiaLevel = NTConfig.Get("NewHyperthermiaLevel", 39)
+        HypothermiaLevel = NTCS.Config.Get("NewHypothermiaLevel", 36)
+        HyperthermiaLevel = NTCS.Config.Get("NewHyperthermiaLevel", 39)
         local LimbClothResistance = THERM.ClothResistance(limb,target)
         local LimbTempResistance = THERM.LimbTempResistance(limb)
         -- Parameters that affect temperature calculations.
         local WaterLimbKey = THERM.LimbToWaterLimbV(limb)
         local WaterMultipliers = CharacterTable.PressureStrength 
-                * HF.Clamp(limbwet/1.5, 1, 2) 
-                        * (HF.BoolToNum(THERM.IsLimbCyber(target,limb),1) + 2)
+                * NTCS.HF.Clamp(limbwet/1.5, 1, 2) 
+                        * (NTCS.HF.BoolToNum(THERM.IsLimbCyber(target,limb),1) + 2)
         local WaterResistance = 1
-        if NTConfig.Get("WaterColdHull",false) then
+        if NTCS.Config.Get("WaterColdHull",false) then
                 WaterResistance = THERM.FreezingWaterAmount(target, limb)
         end
         local Water = CharacterTable.LimbWaterValues[WaterLimbKey] * -1
         local RoomTemp = 0
         local OnFire = CharacterTable.OnFire[limb]
         local BloodLoss = function ()
-                if HF.GetAfflictionStrengthLimb(target, limb, "ntt_temperature", 0) > HypothermiaLevel then
-                        return HF.GetAfflictionStrength(target, "bloodloss", 0)/400
+                if NTCS.HF.GetAfflictionStrengthLimb(target, limb, "ntt_temperature", 0) > HypothermiaLevel then
+                        return NTCS.HF.GetAfflictionStrength(target, "bloodloss", 0)/400
                 end
                 return 0 
         end
         local Sepsis = function ()
-                if HF.GetAfflictionStrengthLimb(target, limb, "ntt_temperature", 0) < HyperthermiaLevel then
-                        return HF.GetAfflictionStrength(target, "sepsis", 0)/90
+                if NTCS.HF.GetAfflictionStrengthLimb(target, limb, "ntt_temperature", 0) < HyperthermiaLevel then
+                        return NTCS.HF.GetAfflictionStrength(target, "sepsis", 0)/90
                 end
                 return 0 
         end
@@ -287,21 +287,21 @@ THERM.CalculateTemperature = function (limbwet,target,limb)
                 THERM.MakeLimbWet(target,limb,Water,false)
         end
         -- Heat Calculation
-        local Heat = HF.Clamp(RoomTemp - 1,0,10) + .2
-                * (HF.BoolToNum(THERM.IsLimbCyber(target,limb),1) + 1)
+        local Heat = NTCS.HF.Clamp(RoomTemp - 1,0,10) + .2
+                * (NTCS.HF.BoolToNum(THERM.IsLimbCyber(target,limb),1) + 1)
                 * OnFire
                 /LimbClothResistance
                 /LimbTempResistance
-                * HF.Clamp((HF.GetAfflictionStrengthLimb(target, LimbType.Torso, "husksymbiosis", 0)/40),1,10)
+                * NTCS.HF.Clamp((NTCS.HF.GetAfflictionStrengthLimb(target, LimbType.Torso, "husksymbiosis", 0)/40),1,10)
                 / 10 -- Scaling feature
-                * NTConfig.Get("ETempScaling", 1.5)
+                * NTCS.Config.Get("ETempScaling", 1.5)
                 + Sepsis()
                 * NT.Deltatime
         local Cold = (((((Water * WaterResistance) - BloodLoss()) 
                 * WaterMultipliers)
                 /LimbClothResistance)
                 /LimbTempResistance) 
-                * NTConfig.Get("ETempScaling", 1.5) 
+                * NTCS.Config.Get("ETempScaling", 1.5) 
                 / 2 -- Scaling feature
                 * NT.Deltatime
         return (Heat/THERM.TotalBurnResistance(CharacterTable)/2) + Cold
@@ -337,14 +337,14 @@ THERM.MakeLimbWet = function (character, limb, watervalue, alreadychecked)
                 and not THERM.IsDivingSuit(THERM.GetSuitSlot(character))
                 and not THERM.ImmersiveDivingGearEquipped(THERM.GetSuitSlot(character),THERM.GetInnerSlot(character)) then
                 -- Clamp wet to the limbs water value.
-                if not ((watervalue * -2) < HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)) then
-                        HF.SetAfflictionLimb(character, "wet", limb,
-                        watervalue * -2, character, HF.GetAfflictionStrengthLimb(character, limb, "wet", 0))    
+                if not ((watervalue * -2) < NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)) then
+                        NTCS.HF.SetAfflictionLimb(character, "wet", limb,
+                        watervalue * -2, character, NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", 0))    
                 end
         elseif alreadychecked then
-                if not ((watervalue * -2) < HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)) then
-                        HF.SetAfflictionLimb(character, "wet", limb,
-                        watervalue * -2, character, HF.GetAfflictionStrengthLimb(character, limb, "wet", 0))
+                if not ((watervalue * -2) < NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)) then
+                        NTCS.HF.SetAfflictionLimb(character, "wet", limb,
+                        watervalue * -2, character, NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", 0))
                 end
         end
 end
@@ -367,7 +367,7 @@ end
 ---@param character Character
 THERM.RemoveWet = function (character)
         for index, limb in pairs(LimbsToCheck) do
-                HF.AddAfflictionLimb(character, "wet", limb, -.05, character) 
+                NTCS.HF.AddAfflictionLimb(character, "wet", limb, -.05, character) 
         end
 end
 
@@ -377,10 +377,10 @@ end
 ---@param character Character
 ---@return boolean
 THERM.IsLimbCyber = function (character,limb)
-        local newlimb = HF.NormalizeLimbType(limb)
-        if      HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberleg", 0) > .1
-                or HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberarm", 0) > .1
-                or HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberlimb", 0) > .1
+        local newlimb = NTCS.HF.NormalizeLimbType(limb)
+        if      NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberleg", 0) > .1
+                or NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberarm", 0) > .1
+                or NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberlimb", 0) > .1
                 then
                         return true
                 end 
@@ -392,7 +392,7 @@ end
 ---@param targetCharacter Character
 THERM.PlaySound = function (sound,targetCharacter)
         if not targetCharacter then return end
-        HF.GiveItem(targetCharacter, sound)
+        NTCS.HF.GiveItem(targetCharacter, sound)
 end
 
 ---Sets up the thermal stats.
@@ -549,7 +549,7 @@ end
 ---@return boolean
 THERM.TemperatureDanger = function (Character)
         if not Character then return false end
-        if HF.GetAfflictionStrength(target, "sym_numb", 0) > 0 or HF.GetAfflictionStrength(target, "sym_shivers", 0) > 0 then
+        if NTCS.HF.GetAfflictionStrength(target, "sym_numb", 0) > 0 or NTCS.HF.GetAfflictionStrength(target, "sym_shivers", 0) > 0 then
                 return true
         end
         return false
@@ -560,7 +560,7 @@ end
 ---@return boolean
 THERM.HasHuskSymbiosis = function (Character)
         if not Character then return false end
-        if HF.GetAfflictionStrength(Character, "husksymbiosis", 0) > 0 or HF.GetAfflictionStrength(Character, "symbiotichusk", 0) > 0 or HF.GetAfflictionStrength(Character, "boosterhusk", 0) > 0 or (NTConfig.Get("HuskGenesHypothermia", true) and HF.GetAfflictionStrength(Character, "husktransformimmunity", 0) > 0) then
+        if NTCS.HF.GetAfflictionStrength(Character, "husksymbiosis", 0) > 0 or NTCS.HF.GetAfflictionStrength(Character, "symbiotichusk", 0) > 0 or NTCS.HF.GetAfflictionStrength(Character, "boosterhusk", 0) > 0 or (NTCS.Config.Get("HuskGenesHypothermia", true) and NTCS.HF.GetAfflictionStrength(Character, "husktransformimmunity", 0) > 0) then
                 return true
         end
         return false
@@ -623,10 +623,10 @@ end
 THERM.GiveTemperatureClamp = function (Character,Amount,Limb)
         local MinTemp = 1
         local MaxTemp = 101
-        local CurrentTemp = HF.GetAfflictionStrengthLimb(Character, Limb, "ntt_temperature", NTConfig.Get("NormalBodyTemp", 38))
-        local NewTemp = HF.Clamp(CurrentTemp + Amount, MinTemp, MaxTemp)
+        local CurrentTemp = NTCS.HF.GetAfflictionStrengthLimb(Character, Limb, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38))
+        local NewTemp = NTCS.HF.Clamp(CurrentTemp + Amount, MinTemp, MaxTemp)
         local TempDiff = NewTemp - CurrentTemp
-        HF.AddAfflictionLimb(Character, "ntt_temperature", Limb, TempDiff, Character) 
+        NTCS.HF.AddAfflictionLimb(Character, "ntt_temperature", Limb, TempDiff, Character) 
 end
 
 ---Raises the entire temp of body.
@@ -634,7 +634,7 @@ end
 ---@param Amount number
 THERM.RaiseTemperature = function (Character, Amount)
         for limb in LimbsToCheck do
-                HF.AddAfflictionLimb(Character, "ntt_temperature", limb, Amount, Character) 
+                NTCS.HF.AddAfflictionLimb(Character, "ntt_temperature", limb, Amount, Character) 
         end
 end
 
@@ -643,13 +643,13 @@ end
 THERM.FetchConfigStats = function()
 	local ConfigStats = 
 		{
-		NormalBodyTemp = NTConfig.Get("NewNormalBodyTemp", 38),
-		HypothermiaLevel = NTConfig.Get("NewHypothermiaLevel", 36),
-		HyperthermiaLevel = NTConfig.Get("NewHyperthermiaLevel", 39),
-		WarmingAbility = NTConfig.Get("NewWarmingAbility", .2),
-		DryingSpeed = NTConfig.Get("NewDryingSpeed", -.1),
-		PerformanceMode = NTConfig.Get("PerformanceMode",true),
-		ShockMargin = NTConfig.Get("ShockMargin",100)/357.142
+		NormalBodyTemp = NTCS.Config.Get("NewNormalBodyTemp", 38),
+		HypothermiaLevel = NTCS.Config.Get("NewHypothermiaLevel", 36),
+		HyperthermiaLevel = NTCS.Config.Get("NewHyperthermiaLevel", 39),
+		WarmingAbility = NTCS.Config.Get("NewWarmingAbility", .2),
+		DryingSpeed = NTCS.Config.Get("NewDryingSpeed", -.1),
+		PerformanceMode = NTCS.Config.Get("PerformanceMode",true),
+		ShockMargin = NTCS.Config.Get("ShockMargin",100)/357.142
 		}
 	return ConfigStats
 end
@@ -675,7 +675,7 @@ end
 ---@param usingCharacter Character
 THERM.ReduceBurns = function (targetCharacter, limb, usingCharacter)
         for Identifier in {"burn_deg3","burn_deg2","burn_deg1","burn"} do
-                HF.AddAfflictionLimb(targetCharacter, Identifier, limb.type, -100, usingCharacter)
+                NTCS.HF.AddAfflictionLimb(targetCharacter, Identifier, limb.type, -100, usingCharacter)
         end
 end
 
@@ -685,9 +685,9 @@ end
 THERM.AverageBodyTemp = function (Character)
         AverageTemp = 0
         for index, limb in pairs(LimbsToCheck) do
-                AverageTemp = AverageTemp + HF.Round(HF.GetAfflictionStrengthLimb(Character, limb, "ntt_temperature", NTConfig.Get("NormalBodyTemp", 38)) - 1, 1)
+                AverageTemp = AverageTemp + NTCS.HF.Round(NTCS.HF.GetAfflictionStrengthLimb(Character, limb, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) - 1, 1)
         end
-        return HF.Round(AverageTemp/6,1)
+        return NTCS.HF.Round(AverageTemp/6,1)
 end
 
 ---Checks if an item is a battery.

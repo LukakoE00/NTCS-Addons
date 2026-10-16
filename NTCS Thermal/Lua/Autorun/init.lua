@@ -51,11 +51,11 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	NTCS.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", nil) -- Make pulmonary_edema go away with drainage.
 	
 	NTCS.AddSuturableAffliction("removed_skin",3,"removed_skin",function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		HF.AddAfflictionLimb(targetCharacter, "removed_skin", limb.type, -100, usingCharacter)
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "removed_skin", limb.type, -100, usingCharacter)
 	end)
 
 	NTCS.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		HF.AddAfflictionLimb(targetCharacter, "grafted_skin", limb.type, -100, usingCharacter)
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "grafted_skin", limb.type, -100, usingCharacter)
 		THERM.ReduceBurns(targetCharacter,limb,usingCharacter)
 	end)
 
