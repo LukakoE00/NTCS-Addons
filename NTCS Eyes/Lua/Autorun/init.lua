@@ -59,7 +59,6 @@ else
 		dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Client/ClientControls.lua") --client keyboard controls
 		dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Client/HealthScanner.lua") --health scanner code for medical eyes
 		dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Client/ClientSend.lua") --server-client communications
-
 	end, 1)
 end
 
@@ -67,4 +66,6 @@ end
 Timer.Wait(function()
 	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/ConfigData.lua")
 	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/InterfaceEnable.lua")
+	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/HelperFunctions.lua")
+	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Client/HUIButtons.lua") -- Add SurgeryButtons
 end, 1)

@@ -8,7 +8,7 @@ Hook.Add("roundStart", "NTEYE.loswarning", function()
 		for key, client in pairs(Client.ClientList) do
 			if Game.ServerSettings.LosMode == 0 then
 				local chatMessage = ChatMessage.Create(
-					"NT Eyes",
+					"NTCS Eyes",
 
 					"\n"
 						.. "‖color:255,100,100‖"
@@ -35,7 +35,7 @@ Hook.Add("roundStart", "NTEYE.loswarning", function()
 				Game.SendDirectChatMessage(chatMessage, client)
 			else
 				local chatMessage = ChatMessage.Create(
-					"NT Eyes",
+					"NTCS Eyes",
 
 					"\n"
 						.. "‖color:255,100,100‖"
@@ -76,7 +76,7 @@ Hook.Add("chatMessage", "NTEYE.setlos", function(message, client)
 			if Game.ServerSettings.LosMode == 2 then
 				Timer.Wait(function()
 					local chatMessage = ChatMessage.Create(
-						"NT Eyes",
+						"NTCS Eyes",
 
 						"‖color:0,255,0‖" .. "Line of Sight mode is already set to opaque." .. "‖color:end‖",
 						ChatMessageType.Default,
@@ -92,7 +92,7 @@ Hook.Add("chatMessage", "NTEYE.setlos", function(message, client)
 
 				Timer.Wait(function()
 					local chatMessage = ChatMessage.Create(
-						"NT Eyes",
+						"NTCS Eyes",
 
 						"‖color:0,255,0‖"
 							.. "Line of Sight mode has been set to opaque."
@@ -112,7 +112,7 @@ Hook.Add("chatMessage", "NTEYE.setlos", function(message, client)
 		else
 			Timer.Wait(function()
 				local chatMessage = ChatMessage.Create(
-					"NT Eyes",
+					"NTCS Eyes",
 
 					"‖color:255,0,0‖"
 						.. "You do not have permission (Manage Settings) to use this command."
