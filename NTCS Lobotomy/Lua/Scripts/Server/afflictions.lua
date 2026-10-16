@@ -29,7 +29,7 @@ affLoader:Register(
     :IsLimbSpecific(true)
     :SetUpdateAction(function(C, ID, Limb, dT) -- Chance based affliction stay on HIGH priority to not skew the chances
         if NTCS.HF.Chance(0.2) then
-            C:AddAffliction("nausea", 10 * dT)
+            C:SetSymptomTrue("nausea_nt", 4)
         end
     end)
     :Build()
