@@ -1,6 +1,27 @@
 local AfflictionLoader = NTCS.AfflictionsLoader("NTCS Eyes")
 local AfflictionBuilder = NTCS.AfflictionPrefabBuilder()
 
+-- Pressure Damage calculation
+local function PressureDamageCalculation(character, pressureDamageValue)
+	-- if the character is not enabled, return 0 (fixes load time pressure eye damage issues)
+	if not character.Enabled then
+		return 0
+	end
+
+	-- this may be redundant, not a big deal tho
+	local pressureDamage = pressureDamageValue
+
+	-- check if there is a pressureDamage value, if not set it 0
+	if pressureDamage == nil then
+		pressureDamage = 0
+	end
+
+	-- return the damage value
+	return (
+		(character.InWater and character.InPressure and not (character.IsProtectedFromPressure or character.IsImmuneToPressure))
+		and pressureDamage
+	) or 0
+end
 
 -- Remove eye upon death on passive check
 local function PassiveEyeRemoval(C, Identifier, Limb, biological)
@@ -97,7 +118,7 @@ local function CauseCataracts(C, Identifier, Limb)
 		--get cataractChance from config
 		local cataractChance = 0.03 * NTCS.Config.Get("NTEYE_cataractChanceMultiplier", 1) -- 0.03% chance to cause cataracts on default
 		if NTCS.HF.Chance(cataractChance) then
-			if NTCS_Eyes.HF.HasEyes(character) then
+			if NTCS_Eyes.HasEyes(character) then
 				NTCS.HF.AddAfflictionLimb(character, "mc_cataract", Limb, 1)
 			end
 		end
