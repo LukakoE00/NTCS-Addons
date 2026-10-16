@@ -1,31 +1,31 @@
 --key to activate lenses (make this configurable)
-NTEYE.LensActivationKey = Keys.F
+NTCS_Eyes.LensActivationKey = Keys.F
 
 --Medical Scanner key (make this configurable)
-NTEYE.MedicalScannerKey = Keys.F
+NTCS_Eyes.MedicalScannerKey = Keys.F
 
 --this enables recognition of selected limb in health UI
 LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.CharacterHealth"], "selectedLimbIndex")
 
 --I dont recall what this does, probably enable keyboard input
 Hook.HookMethod("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptable)
-	NTEYE.MedicalLensScanner()
-	NTEYE.HudToggle()
+	NTCS_Eyes.MedicalLensScanner()
+	NTCS_Eyes.HudToggle()
 end, Hook.HookMethodType.After)
 
 --function to enable/disable HUD
-function NTEYE.HudToggle()
-	for _, hud in pairs(NTEYE.HUDValues) do
-		if HF.HasAffliction(Character.Controlled, hud.affliction) and not CharacterHealth.OpenHealthWindow then
-			if PlayerInput.KeyHit(NTEYE.LensActivationKey) then
-				if NTEYE.HUDEnabled then
-					--print("NTEyes: Disabling Client HUD")
-					NTEYE.HUDEnabled = false
-					NTEYE.PlayBeepSound(Character.Controlled)
+function NTCS_Eyes.HudToggle()
+	for _, hud in pairs(NTCS_Eyes.HUDValues) do
+		if NTCS.HF.HasAffliction(Character.Controlled, hud.affliction) and not CharacterHealth.OpenHealthWindow then
+			if PlayerInput.KeyHit(NTCS_Eyes.LensActivationKey) then
+				if NTCS_Eyes.HUDEnabled then
+					--print("NTCS_Eyess: Disabling Client HUD")
+					NTCS_Eyes.HUDEnabled = false
+					NTCS_Eyes.PlayBeepSound(Character.Controlled)
 				else
-					--print("NTEyes: Enabling Client HUD")
-					NTEYE.HUDEnabled = true
-					NTEYE.PlayBeepSound(Character.Controlled)
+					--print("NTCS_Eyess: Enabling Client HUD")
+					NTCS_Eyes.HUDEnabled = true
+					NTCS_Eyes.PlayBeepSound(Character.Controlled)
 				end
 			end
 		end
@@ -37,16 +37,16 @@ end
 --or GUI.SettingsMenuOpen
 
 --health UI scanner function for medical lens
-function NTEYE.MedicalLensScanner()
+function NTCS_Eyes.MedicalLensScanner()
 	--check if the player has a medical lens
-	if not HF.HasAffliction(Character.Controlled, "lt_medical") then
+	if not NTCS.HF.HasAffliction(Character.Controlled, "lt_medical") then
 		return
 	end
-	if not CharacterHealth.OpenHealthWindow or NTEYE.ScannerActive then
+	if not CharacterHealth.OpenHealthWindow or NTCS_Eyes.ScannerActive then
 		return
 	end
 
-	if PlayerInput.KeyHit(NTEYE.MedicalScannerKey) then
+	if PlayerInput.KeyHit(NTCS_Eyes.MedicalScannerKey) then
 		local scannerUser = Character.Controlled
 		local scannerTarget = Character.Controlled.SelectedCharacter or scannerUser
 		local limbIndex = CharacterHealth.OpenHealthWindow.selectedLimbIndex
@@ -57,10 +57,10 @@ function NTEYE.MedicalLensScanner()
 				HF.CharacterToClient(scannerUser),
 				"‖color:255,100,100‖You can't see your own head.‖color:end‖"
 			)
-			NTEYE.ScannerActive = true
-			NTEYE.PlayScannerSound(scannerUser)
+			NTCS_Eyes.ScannerActive = true
+			NTCS_Eyes.PlayScannerSound(scannerUser)
 			Timer.Wait(function()
-				NTEYE.ScannerActive = false
+				NTCS_Eyes.ScannerActive = false
 			end, 500)
 			return
 		end
@@ -80,7 +80,7 @@ function NTEYE.MedicalLensScanner()
 		end
 
 		-- Perform scan
-		NTEYE.HealthScanner(scannerUser, scannerTarget, limb)
-		NTEYE.ScannerActive = true
+		NTCS_Eyes.HealthScanner(scannerUser, scannerTarget, limb)
+		NTCS_Eyes.ScannerActive = true
 	end
 end

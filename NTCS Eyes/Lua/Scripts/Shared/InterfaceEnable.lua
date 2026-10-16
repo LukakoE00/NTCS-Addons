@@ -1,6 +1,6 @@
 --enable item usage in health interface without XML overwriting
 --[thanks Nebual (NTCyb) for this]
-NTEYE.AllowInHealthInterface = {
+NTCS_Eyes.AllowInHealthInterface = {
 	-- general compatability if anything has a higher mod load order than us
 	"screwdriver",
 	"screwdriverhardened",
@@ -11,7 +11,7 @@ NTEYE.AllowInHealthInterface = {
 
 local function evaluateExtraUseInHealthInterface()
 	LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.ItemPrefab"], "set_UseInHealthInterface")
-	for _, tool in ipairs(NTEYE.AllowInHealthInterface) do
+	for _, tool in ipairs(NTCS_Eyes.AllowInHealthInterface) do
 		if ItemPrefab.Prefabs.ContainsKey(tool) then
 			ItemPrefab.Prefabs[tool].set_UseInHealthInterface(true)
 		end

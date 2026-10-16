@@ -1,23 +1,23 @@
-NTEYE.ScannerActive = false
+NTCS_Eyes.ScannerActive = false
 
 -- Helper to get color config or default
 local function getColorConfig(key, default)
-	return table.concat(NTConfig.Get(key, 1) or default, ",")
+	return table.concat(NTCS.Config.Get(key, 1) or default, ",")
 end
 
 -- Helper to check if identifier is in any category
 local function inCategory(categories, identifier)
 	for _, category in ipairs(categories) do
-		if HF.TableContains(category, identifier) then
+		if NTCS.HF.TableContains(category, identifier) then
 			return true
 		end
 	end
 	return false
 end
 
-function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
-	local limbtype = HF.NormalizeLimbType(limb)
-	NTEYE.PlayScannerSound(usingCharacter)
+function NTCS_Eyes.HealthScanner(usingCharacter, targetCharacter, limb)
+	local limbtype = NTCS.HF.NormalizeLimbType(limb)
+	NTCS_Eyes.PlayScannerSound(usingCharacter)
 
 	-- Color configs
 	local defaultColor = "127,255,255"
@@ -32,7 +32,7 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 		CustomColor = "NTSCAN_customcolor",
 	}
 	local colors = {}
-	if NTConfig.Get("NTSCAN_enablecoloredscanner", 1) then
+	if NTCS.Config.Get("NTSCAN_enablecoloredscanner", 1) then
 		for k, v in pairs(colorKeys) do
 			colors[k] = getColorConfig(v, { 127, 255, 255 })
 		end
@@ -42,14 +42,14 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 		end
 	end
 
-	local LowMedThreshold = NTConfig.Get("NTSCAN_lowmedThreshold", 1)
-	local MedHighThreshold = NTConfig.Get("NT_medhighThreshold", 1)
+	local LowMedThreshold = NTCS.Config.Get("NTSCAN_lowmedThreshold", 1)
+	local MedHighThreshold = NTCS.Config.Get("NT_medhighThreshold", 1)
 
-	local VitalCategory = NTConfig.Get("NTSCAN_VitalCategory", 1)
-	local RemovalCategory = NTConfig.Get("NTSCAN_RemovalCategory", 1)
-	local CustomCategory = NTConfig.Get("NTSCAN_CustomCategory", 1)
+	local VitalCategory = NTCS.Config.Get("NTSCAN_VitalCategory", 1)
+	local RemovalCategory = NTCS.Config.Get("NTSCAN_RemovalCategory", 1)
+	local CustomCategory = NTCS.Config.Get("NTSCAN_CustomCategory", 1)
 	local PressureCategory = { "bloodpressure" }
-	local IgnoredCategory = NTConfig.Get("NTSCAN_IgnoredCategory", 1)
+	local IgnoredCategory = NTCS.Config.Get("NTSCAN_IgnoredCategory", 1)
 
 	local startReadout = string.format(
 		"‖color:%s‖Affliction readout for ‖color:end‖‖color:%s‖%s‖color:end‖‖color:%s‖ on limb %s:\n‖color:end‖",
@@ -57,7 +57,7 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 		colors.NameColor,
 		targetCharacter.Name,
 		colors.BaseColor,
-		HF.LimbTypeToString(limbtype)
+		NTCS.HF.LimbToString(limbtype)
 	)
 
 	local readouts = {
@@ -75,21 +75,21 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 	local afflictionsdisplayed = 0
 
 	for value in afflictionlist do
-		local strength = HF.Round(value.Strength)
+		local strength = NTCS.HF.Round(value.Strength)
 		local prefab = value.Prefab
 		local limb = targetCharacter.CharacterHealth.GetAfflictionLimb(value)
 		local afflimbtype = prefab.LimbSpecific and (limb and limb.type or LimbType.Torso) or prefab.IndicatorLimb
-		afflimbtype = HF.NormalizeLimbType(afflimbtype)
+		afflimbtype = NTCS.HF.NormalizeLimbType(afflimbtype)
 
 		if strength >= prefab.ShowInHealthScannerThreshold and afflimbtype == limbtype then
 			local id = value.Identifier
 			local name = value.Prefab.Name.Value .. ": " .. strength .. "%"
 
-			local isVital = HF.TableContains(VitalCategory, id)
-			local isRemoval = HF.TableContains(RemovalCategory, id)
-			local isPressure = HF.TableContains(PressureCategory, id)
-			local isCustom = HF.TableContains(CustomCategory, id)
-			local isIgnored = HF.TableContains(IgnoredCategory, id)
+			local isVital = NTCS.HF.TableContains(VitalCategory, id)
+			local isRemoval = NTCS.HF.TableContains(RemovalCategory, id)
+			local isPressure = NTCS.HF.TableContains(PressureCategory, id)
+			local isCustom = NTCS.HF.TableContains(CustomCategory, id)
+			local isIgnored = NTCS.HF.TableContains(IgnoredCategory, id)
 
 			if not (isVital or isRemoval or isPressure or isCustom or isIgnored) then
 				if strength < LowMedThreshold then
@@ -127,8 +127,8 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 	end
 
 	Timer.Wait(function()
-		HF.DMClient(
-			HF.CharacterToClient(usingCharacter),
+		NTCS.HF.DMClient(
+			NTCS.HF.CharacterToClient(usingCharacter),
 			startReadout
 				.. "‖color:"
 				.. colors.LowColor
@@ -171,6 +171,6 @@ function NTEYE.HealthScanner(usingCharacter, targetCharacter, limb)
 				.. readouts.Custom
 				.. "‖color:end‖"
 		)
-		NTEYE.ScannerActive = false
+		NTCS_Eyes.ScannerActive = false
 	end, 1075)
 end
