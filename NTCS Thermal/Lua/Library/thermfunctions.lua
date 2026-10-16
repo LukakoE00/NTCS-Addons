@@ -225,7 +225,7 @@ THERM.BurnReductionFactor = function(item)
 ---@param target Character
 ---@param limb LimbType
 ---@return number
-THERM.CalculateTemperature = function (limbwet,target,limb)
+THERM.CalculateTemperature = function (limbwet,target,limb,dT)
         local CharacterTable = THERM.GetCharacter(target.ID)
         -- Slight error handling.
         if CharacterTable == nil then
@@ -296,14 +296,14 @@ THERM.CalculateTemperature = function (limbwet,target,limb)
                 / 10 -- Scaling feature
                 * NTCS.Config.Get("ETempScaling", 1.5)
                 + Sepsis()
-                * NT.Deltatime
+                * dT
         local Cold = (((((Water * WaterResistance) - BloodLoss()) 
                 * WaterMultipliers)
                 /LimbClothResistance)
                 /LimbTempResistance) 
                 * NTCS.Config.Get("ETempScaling", 1.5) 
                 / 2 -- Scaling feature
-                * NT.Deltatime
+                * dT
         return (Heat/THERM.TotalBurnResistance(CharacterTable)/2) + Cold
 end
 

@@ -70,7 +70,7 @@ local function TransferBodyHeat(character, TorsoTemp)
 			limbTemp = NTCS.HF.GetAfflictionStrengthLimb(character, limb, "ntt_temperature", NTCS.Config.Get("NewNormalBodyTemp", 38))
 			TempDifference = ApplyHeatDifference(character,limbTemp,limb,TorsoTemp,LimbType.Torso)
 			TotalTorsoTempDiff = TotalTorsoTempDiff + TempDifference.FromLimbDiff
-			HF.AddAfflictionLimb(character, "ntt_temperature", limb, TempDifference.ToLimbDiff, character)
+			NTCS.HF.AddAfflictionLimb(character, "ntt_temperature", limb, TempDifference.ToLimbDiff, character)
 		end
 		return TotalTorsoTempDiff
 	end 
@@ -99,10 +99,10 @@ local function LimbToSwelling(character,limb,duration)
 	if NTCS.HF.NormalizeLimbType(limb) == LimbType.LeftArm or NTCS.HF.NormalizeLimbType(limb) == LimbType.RightArm then
 		Symptom = "sym_armswelling"
 	elseif NTCS.HF.NormalizeLimbType(limb) == LimbType.LeftLeg or NTCS.HF.NormalizeLimbType(limb) == LimbType.RightLeg then
-		Symptom = "sym_legswelling"
+		Symptom = "legswelling"
 	end
 	if Symptom ~= nil then
-		NTCS.NTC.SetSymptomTrue(character, Symptom, duration)
+		NTHuman.getNTHumanFromCharacter(character):SetSymptomTrue(Symptom, duration)
 	end
 end
 
@@ -186,6 +186,7 @@ affLoader:Register(
     :SetStrengths(1,101,38)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
         local CharacterTable = THERM.GetCharacter(C.Human.ID)
 
@@ -226,7 +227,7 @@ affLoader:Register(
 						local CompromisedTempVal = 1
 
 						-- Calculate new temperature
-						C:SetAfflictionLimb(ID,Limb,affStr + THERM.CalculateTemperature(wetStr,C.Human,Limb))
+						C:SetAfflictionLimb(ID,Limb,affStr + THERM.CalculateTemperature(wetStr,C.Human,Limb,dT))
 						affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 						-- Calculate CompromisedTempVal: Being too low or high in temperature will make the body slower to reach normal body temp.
 						-- The division by three is a scaling feature, i'm too lazy to make it a variable.
@@ -263,9 +264,9 @@ affLoader:Register(
 								if affStr < 2 and not THERM.HasHuskSymbiosis(C.Human) then
 									C:AddAffliction("neurotrauma",.05 * dT)
 								elseif affStr < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 and not THERM.HasHuskSymbiosis(C.Human) then
-									NTCS.NTC.SetSymptomTrue(C.Human, "sym_lightheadedness", 5)
+									C:SetSymptomTrue("lightheadedness", 5)
 								elseif affStr > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
-									NTCS.NTC.SetSymptomTrue(C.Human, "sym_fever", 5)
+									C:SetSymptomTrue("fever", 5)
 								end
 							else
 								--FrostNip
@@ -293,7 +294,7 @@ affLoader:Register(
 							if affStr < HypothermiaLevel and not THERM.HasHuskSymbiosis(C.Human) then
 								NTCS.HF.SetAffliction(C.Human, "hypothermia", 100)
 								if affStr < HypothermiaLevel * NTCS_Thermal.ExtremeHypothermiaScaling then
-								NTCS.NTC.SetSymptomTrue(C.Human, "shortnessofbreath", 2)
+								C:SetSymptomTrue("shortnessofbreath", 2)
 								end
 							
 							-- Give hyperthermia
@@ -315,7 +316,7 @@ affLoader:Register(
 						-- Passive temperature reactions
 						-- Warm up if cold.
 						local RoomTempGain = GetRoomTempAddition(C.Human,Limb)
-						local AmputatedLimbValue = NTCS.HF.BoolToNum(NTCS.NT.LimbIsAmputated(C.Human, Limb),1) + 1
+						local AmputatedLimbValue = NTCS.HF.BoolToNum(NTCS.HF.LimbIsAmputated(C.Human, Limb),1) + 1
 						if affStr < NormalBodyTemp then
 							C:SetAfflictionLimb(ID,Limb,NTCS.HF.Clamp(affStr
 								+ RoomTempGain + (.05
@@ -356,6 +357,7 @@ affLoader:Register(
     :SetStrengths(0,100,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local WarmingAbility = FetchConfigStats().WarmingAbility
@@ -398,6 +400,7 @@ affLoader:Register(
     :SetStrengths(0,100,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local CoolingAbility = FetchConfigStats().WarmingAbility
@@ -429,6 +432,7 @@ affLoader:Register(
     :SetStrengths(0,100,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -467,6 +471,7 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -506,13 +511,14 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
 			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.90) -- 10% slow per limb
-			NTCS.NTC.SetSymptomTrue(C.Human, "sym_pins_needles", 5)
+			C:SetSymptomTrue("sym_pins_needles", 5)
 			C:SetAfflictionLimb("frostnip",Limb,0)
 			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
 			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
@@ -553,13 +559,14 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
 			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.80) -- 20% slow per limb
-			NTCS.NTC.SetSymptomTrue(C.Human, "sym_pins_needles", 5)
+			C:SetSymptomTrue("sym_pins_needles", 5)
 			C:SetAfflictionLimb("d1_frostbite",Limb,0)
 
 			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
@@ -570,7 +577,7 @@ affLoader:Register(
 
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			C:AddAfflictionLimb("bloodclot", Limb, (CalculateBloodClots(C.Human,Limb) * dT))
+			C:AddAfflictionLimb("bloodclot", Limb, (CalculateBloodClots(C.Human,Limb,1,dT) * dT))
 			if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
 				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5/LimbTemp)/2 * dT)
 			else
@@ -607,6 +614,7 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -623,7 +631,7 @@ affLoader:Register(
 			
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			C:AddAfflictionLimb("bloodclot",Limb,(CalculateBloodClots(C.Human,Limb,.1) * dT))
+			C:AddAfflictionLimb("bloodclot",Limb,(CalculateBloodClots(C.Human,Limb,.1,dT) * dT))
 
 			if LimbTemp < 2 then
 				C:AddAfflictionLimb(ID,Limb, .5 * dT)
@@ -672,6 +680,7 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -741,6 +750,7 @@ affLoader:Register(
     :SetStrengths(0,100,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -775,6 +785,7 @@ affLoader:Register(
     :SetStrengths(0,100,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -798,6 +809,7 @@ affLoader:Register(
     :SetStrengths(0,25,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -824,6 +836,7 @@ affLoader:Register(
     :SetStrengths(0,20,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -843,6 +856,7 @@ affLoader:Register(
     :SetStrengths(0,10,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.LOW)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 
@@ -856,6 +870,7 @@ affLoader:Register(
     :SetStrengths(0,10,0)
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.LOW)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
@@ -876,6 +891,7 @@ affLoader:Register(
     builder:New("pulmonary_embolism")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -895,14 +911,14 @@ affLoader:Register(
 			affStr = C:GetAfflictionStrength(ID)
 
 			if affStr > 10 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "dyspnea", 5)
+				C:SetSymptomTrue("dyspnea", 5)
 			elseif affStr > 25 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "dyspnea", 5)
-				NTCS.NTC.SetSymptomTrue(C.Human, "pain_chest", 5)
+				C:SetSymptomTrue("dyspnea", 5)
+				C:SetSymptomTrue("pain_chest", 5)
 			elseif affStr > 75 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "dyspnea", 5)
-				NTCS.NTC.SetSymptomTrue(C.Human, "pain_chest", 5)
-				NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_respiratoryarrest", 2)
+				C:SetSymptomTrue("dyspnea", 5)
+				C:SetSymptomTrue("pain_chest", 5)
+				C:SetAffliction("respiratoryarrest",100)
 			end
 			C:AddAffliction(ID,-(C:GetAfflictionStrength("thrombolytics")/3.5 - C:GetAfflictionStrength("afstreptokinase")/10 - .2 * dT))
 
@@ -917,6 +933,7 @@ affLoader:Register(
     builder:New("pulmonary_edema")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -936,13 +953,13 @@ affLoader:Register(
 			C:AddAffliction(ID,(C:GetAfflictionStrength("heartdamage")/80 + C:GetAfflictionStrength("bloodpressure")/50
 								+ C:GetAfflictionStrength("sepsis")/50 + THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50
 								- C:GetAfflictionStrength("diuretics")/10 * dT))
-			NTCS.NTC.SetSymptomTrue(C.Human, "dyspnea", 5)
+			C:SetSymptomTrue("dyspnea", 5)
 			affStr = C:GetAfflictionStrength(ID)
 			if affStr > 25 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_wheezing", 5)
+				C:SetSymptomTrue("wheezing", 5)
 				if affStr > 75 then
-					NTCS.NTC.SetSymptomTrue(C.Human, "sym_hematemesis", 5)
-					NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_respiratoryarrest", 2)
+					C:SetSymptomTrue("vomitingblood", 5)
+					C:SetAffliction("respiratoryarrest",100)
 				end
 			end
 		elseif C:GetAfflictionStrength("heartdamage") > 80 and C:GetAfflictionStrength("heartremoved") == 0 then
@@ -958,6 +975,7 @@ affLoader:Register(
     builder:New("hypothermia")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -968,25 +986,25 @@ affLoader:Register(
 
 			local LowHypo = function ()
 				C:AddAffliction("bloodpressure",(.5 * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "hypoventilation", 2)
+				C:SetSymptomTrue("hypoventilation", 2)
 			end
 
 			local MedHypo = function ()
 				C:AddAffliction("bloodpressure",(.1 * dT))
 				C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_paleskin", 5)
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_unconsciousness", 2)
+				C:SetSymptomTrue("paleskin", 5)
+				C:SetSymptomTrue("unconsciousness", 2)
 			end
 
 			local HighHypo = function ()
-				NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_respiratoryarrest", 2)
+				C:SetAffliction("respiratoryarrest",100)
 				C:AddAffliction("analgesia",(.5 * dT))
 				C:AddAffliction("immunity",-(5 * dT))
 			end
 
 			local CookedHypo = function ()
 				C:AddAffliction("frozen_vessels",(2 * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_coma", 2)
+				C:SetAffliction("coma",100)
 			end
 			
 			C:AddAffliction("bloodpressure",(.2 * dT))
@@ -1028,6 +1046,7 @@ affLoader:Register(
     builder:New("hyperthermia")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1044,7 +1063,7 @@ affLoader:Register(
 			end
 
 			if TorsoTemp > HyperthermiaLevel and TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_sweating", 2)
+				C:SetSymptomTrue("sweating", 2)
 			end
 
 			local MediumHyper = function ()
@@ -1065,14 +1084,14 @@ affLoader:Register(
 			end
 
 			if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_headache", 2)
+				C:SetSymptomTrue("sweating", 2)
 
 			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_headache", 2)
+				C:SetSymptomTrue("sweating", 2)
 				MediumHyper()
 
 			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.2 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_headache", 2)
+				C:SetSymptomTrue("sweating", 2)
 				MediumHyper()
 				ExtremeHyper()
 
@@ -1092,6 +1111,7 @@ affLoader:Register(
     builder:New("frozen_vessels")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1125,6 +1145,7 @@ affLoader:Register(
     builder:New("cell_death")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1143,18 +1164,18 @@ affLoader:Register(
 			end
 
 			if affStr <= 5 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_confusion", 5)
+				C:SetSymptomTrue("confusion", 5)
 				C:AddAffliction(ID,-(.01 * dT))
 			
 			elseif affStr > 5 and affStr <= 30 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_nausea", 5)
+				C:SetSymptomTrue("nausea", 5)
 				KillOrgans()
 			
 			elseif affStr > 30 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_nausea", 5)
+				C:SetSymptomTrue("nausea", 5)
 				KillOrgans()
 				C:AddAffliction("internalbleeding",InternalBleedingIncrease * 2 * dT)
-				NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_stroke", 5)
+				C:AddAffliction("stroke",100)
 			end
 
 		end
@@ -1170,6 +1191,7 @@ affLoader:Register(
     builder:New("give_temp")
     :SetStrengths(0,3,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1191,6 +1213,7 @@ affLoader:Register(
     builder:New("aafn_overdose")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1223,9 +1246,10 @@ affLoader:Register(
     builder:New("thermal_shock")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
-		local HeadTemp = HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", 0)
+		local HeadTemp = NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", 0)
 		local LastHeadTemp = 0
 		local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
 
@@ -1237,14 +1261,14 @@ affLoader:Register(
 			LastHeadTemp = HeadTemp
 		end
 
-		local ShockMargin = FetchConfigStats().ShockMargin * NT.Deltatime
+		local ShockMargin = FetchConfigStats().ShockMargin * dT
 		local ShockDecrease = 2.5
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
 
-			NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_seizure", 5)
-			NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_stroke", 5)
+			C:SetAffliction("stroke",100)
+			C:SetAffliction("seizure",100)
 			C:AddAffliction("neurotrauma",.05 * dT)
 			C:AddAffliction(ID,-(ShockDecrease * dT))
 
@@ -1269,18 +1293,19 @@ affLoader:Register(
     builder:New("heat_stroke")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
 		local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
 		local affStr = C:GetAfflictionStrength(ID)
 
-		NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_seizure", 2)
-		NTCS.NTC.SetSymptomTrue(C.Human, "sym_blurredvision", 2)
-		NTCS.NTC.SetSymptomTrue(C.Human, "sym_confusion", 2)
+		C:SetAffliction("seizure",100)
+		C:SetSymptomTrue("blurredvision", 2)
+		C:SetSymptomTrue("confusion", 2)
 
 		if affStr > 50 then
-			NTCS.NTC.SetSymptomTrue(C.Human, "triggersym_heartattack", 2)
+			C:SetAffliction("heartattack",100)
 		end
 		if affStr > 75 then
 			C:AddAffliction("neurotrauma",.1 * dT)
@@ -1298,6 +1323,7 @@ affLoader:Register(
     builder:New("panicking")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1313,11 +1339,12 @@ affLoader:Register(
 	:Build()
 )
 
--- panicking
+-- heated_diving_suit
 affLoader:Register(
-    builder:New("panicking")
+    builder:New("heated_diving_suit")
     :SetStrengths(0,100,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1483,11 +1510,12 @@ affLoader:Register(
     builder:New("sym_cold")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-					not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and (NTCS.NTC.GetSymptom(C.Human, ID)
+					not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
 					or NTCS.HF.GetAfflictionStrength(C.Human, "hypothermia", 0) > 0)
 					and not THERM.HasHuskSymbiosis(C.Human),
 				2
@@ -1502,12 +1530,13 @@ affLoader:Register(
     builder:New("sym_shivers")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and (NTCS.NTC.GetSymptom(C.Human, ID)
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
 					or (NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
 					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling))
 					and not THERM.HasHuskSymbiosis(C.Human),
@@ -1523,12 +1552,13 @@ affLoader:Register(
     builder:New("sym_numb")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and (NTCS.NTC.GetSymptom(C.Human, ID)
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
 					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling
 					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > 0)
 					and not THERM.HasHuskSymbiosis(C.Human),
@@ -1544,12 +1574,13 @@ affLoader:Register(
     builder:New("sym_runny_nose")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and (NTCS.NTC.GetSymptom(C.Human, ID)
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
 					or (NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) < HypothermiaLevel 
 					and NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5))
 					and not THERM.HasHuskSymbiosis(C.Human),
@@ -1565,12 +1596,13 @@ affLoader:Register(
     builder:New("sym_hot")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local HyperthermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and (NTCS.NTC.GetSymptom(C.Human, ID)
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
 					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling),
 				2
 			))
@@ -1584,11 +1616,12 @@ affLoader:Register(
     builder:New("sym_armswelling")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and NTCS.NTC.GetSymptom(C.Human, ID),
+				not not C:HasSymptom(ID)
+					and C:HasSymptom(ID),
 				2
 			))
 
@@ -1601,11 +1634,12 @@ affLoader:Register(
     builder:New("sym_pins_needles")
 	:IsSymptom(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not NTCS.NTC.GetSymptomFalse(C.Human, ID)
-					and NTCS.NTC.GetSymptom(C.Human, ID),
+				not not C:HasSymptom(ID)
+					and C:HasSymptom(ID),
 				2
 			))
 
@@ -1618,6 +1652,7 @@ affLoader:Register(
     builder:New("elevated_core_temperature")
     :SetStrengths(0,50,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
@@ -1649,13 +1684,13 @@ affLoader:Register(
 			-- Side effect of elevated_core_temperature.
 			if affStr > 30 then
 				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_lightheadedness", 5)
+				C:SetSymptomTrue("lightheadedness", 5)
 			
 			elseif affStr > 40 then
 				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_lightheadedness", 5)
+				C:SetSymptomTrue("lightheadedness", 5)
 
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_confusion", 3)
+				C:SetSymptomTrue("confusion", 3)
 				C:AddAffliction("seizure",(10 * dT))
 				C:AddAffliction("organdamage",(.5 * dT))
 			end
@@ -1670,6 +1705,7 @@ affLoader:Register(
 affLoader:Register(
     builder:New("thrombolytics")
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1687,6 +1723,7 @@ affLoader:Register(
 affLoader:Register(
     builder:New("diuretics")
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1694,10 +1731,10 @@ affLoader:Register(
 		if affStr > 0 then
 			local BloodPressureDecrease = .05
 			C:AddAffliction("bloodpressure",-(BloodPressureDecrease * dT))
-			NTCS.NTC.SetSymptomTrue(C.Human, "sym_headache", 3)
+			C:SetSymptomTrue("headache", 3)
 			affStr = C:GetAfflictionStrength(ID)
 			if affStr > 50 then
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_bloating", 5)
+				C:SetSymptomTrue("bloating", 5)
 			end
 		end
 
@@ -1709,16 +1746,17 @@ affLoader:Register(
 affLoader:Register(
     builder:New("aafn")
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
 			C:AddAffliction("heartdamage",(.1 * dT))
-			NTCS.NTC.SetSymptomTrue(C.Human, "sym_bloating", 5)
+			C:SetSymptomTrue("bloating", 5)
 			if affStr > 25 then
 				C:AddAffliction("internalbleeding",(.1 * dT))
-				NTCS.NTC.SetSymptomTrue(C.Human, "sym_hematemesis", 5)
+				C:SetSymptomTrue("vomitingblood", 5)
 				if affStr > 80 then
 					C:AddAffliction("aafn_overdose",(10 * dT))
 				end
@@ -1732,10 +1770,11 @@ affLoader:Register(
 	:Build()
 )
 
--- aafn
+-- cryo_stasis_starter
 affLoader:Register(
-    builder:New("aafn")
+    builder:New("cryo_stasis_starter")
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
     :SetUpdateAction(function(C, ID, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
