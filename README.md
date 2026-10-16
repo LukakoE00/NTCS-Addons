@@ -9,9 +9,9 @@ A list of addons adjusted to work with NTCS by Neurodevs. If your addon is in he
 - Infection
 - Nanite Integration
 - Lobotomy
+- Thermal
 
 ## WIP Adjusting:
-- Thermal
 - Eyes
 
 ## To Adjust?:
