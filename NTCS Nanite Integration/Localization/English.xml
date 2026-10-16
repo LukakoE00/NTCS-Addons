@@ -62,8 +62,8 @@
     <afflictionname.nanitebattery>Nanite Battery</afflictionname.nanitebattery>
     <afflictiondescription.nanitebattery>Stores energy for all the nanites to use. Needs to be replaced with a fulgurium battery cell.</afflictiondescription.nanitebattery>
 
-    <afflictionname.nanitelowbattery>Low Nanite Battery!</afflictionname.nanitelowbattery>
-    <afflictiondescription.nanitelowbattery>The energy reserves for your nanites are low, you should replace the battery soon.</afflictiondescription.nanitelowbattery>
+    <afflictionname.nanitebatterylow>Low Nanite Battery!</afflictionname.nanitebatterylow>
+    <afflictiondescription.nanitebatterylow>The energy reserves for your nanites are low, you should replace the battery soon.</afflictiondescription.nanitebatterylow>
 
     <afflictionname.nanitenobattery>No Nanite Battery!</afflictionname.nanitenobattery>
     <afflictiondescription.nanitenobattery>Either no Nanite Battery was inserted or the battery is empty!</afflictiondescription.nanitenobattery>

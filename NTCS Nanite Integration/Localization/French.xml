@@ -62,8 +62,8 @@
     <afflictionname.nanitebattery>Batterie Nanite</afflictionname.nanitebattery>
     <afflictiondescription.nanitebattery>Contient l'énergie utilisées par les Nanites. La batterie doit être régulièrement remplacée par des piles en fulgurium.</afflictiondescription.nanitebattery>
 
-    <afflictionname.nanitelowbattery>Batterie Nanite Basse !</afflictionname.nanitelowbattery>
-    <afflictiondescription.nanitelowbattery>Les résèrves d'énergie sont basses, il faudra remplacer la batterie sous peu.</afflictiondescription.nanitelowbattery>
+    <afflictionname.nanitebatterylow>Batterie Nanite Basse !</afflictionname.nanitebatterylow>
+    <afflictiondescription.nanitebatterylow>Les résèrves d'énergie sont basses, il faudra remplacer la batterie sous peu.</afflictiondescription.nanitebatterylow>
 
     <afflictionname.nanitenobattery>Aucune Batterie Nanite !</afflictionname.nanitenobattery>
     <afflictiondescription.nanitenobattery>Soit aucune Batterie Nanite est installée soit elle est complètement vide !</afflictiondescription.nanitenobattery>
