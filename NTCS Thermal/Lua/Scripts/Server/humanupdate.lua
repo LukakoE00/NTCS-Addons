@@ -190,7 +190,7 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
-		
+		--print(dT)
         local CharacterTable = THERM.GetCharacter(C.Human.ID)
 
         local function RoomIsHot()
@@ -497,9 +497,9 @@ affLoader:Register(
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 			if LimbTemp < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling then
-				C:AddAffliction(ID,((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb,((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* NTCS_Thermal.DeltaTime))
 			else
-				C:AddAffliction(ID,-((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb,-((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* NTCS_Thermal.DeltaTime))
 			end
 			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 			if affStr > 24.9  and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
@@ -1195,11 +1195,11 @@ affLoader:Register(
 				C:AddAffliction(ID,-(.01 * NTCS_Thermal.DeltaTime))
 			
 			elseif affStr > 5 and affStr <= 30 then
-				C:SetSymptomTrue("nausea", 5)
+				C:SetSymptomTrue("nausea_nt", 5)
 				KillOrgans()
 			
 			elseif affStr > 30 then
-				C:SetSymptomTrue("nausea", 5)
+				C:SetSymptomTrue("nausea_nt", 5)
 				KillOrgans()
 				C:AddAffliction("internalbleeding",InternalBleedingIncrease * 2 * NTCS_Thermal.DeltaTime)
 				C:AddAffliction("stroke",100)
@@ -1846,8 +1846,6 @@ affLoader:Register(
 	:Build()
 )
 
-print("blood")
 for i, n in pairs(FetchOtherStats().BloodAfflictions) do
-	print(n)
 	NTCS.NTC.AddHematologyAffliction(n)
 end
