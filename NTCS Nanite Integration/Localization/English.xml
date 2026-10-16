@@ -73,4 +73,10 @@
 
     <entityname.emergencyenergyinjection>Emergency Energy Injection</entityname.emergencyenergyinjection>
     <entitydescription.emergencyenergyinjection>An emergency Nanite Battery recharger in case your battery level gets too low. Comes with sever side effects!</entitydescription.emergencyenergyinjection>
+
+    <ntconfigname.emergencyEnergyAmount>Emergency Energy Injection Amount</ntconfigname.emergencyEnergyAmount>
+    <ntconfigdescription.emergencyEnergyAmount>Defines how much Nanite Battery is given when using the Emergency Energy Injection.</ntconfigdescription.emergencyEnergyAmount>
+
+    <ntconfigname.batteryDecayMultiplier>Nanite Battery Decay Multiplier</ntconfigname.batteryDecayMultiplier>
+    <ntconfigdescription.batteryDecayMultiplier>‖color:gui.green‖Disable the Nanite Battery Decay by setting this value to 0.‖end‖\nTweak the amount of battery removed by nanites. A multiplier of 0.5 means the nanites take only half of the default battery amount.</ntconfigdescription.batteryDecayMultiplier>
 </infotexts>

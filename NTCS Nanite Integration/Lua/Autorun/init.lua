@@ -1,8 +1,8 @@
 
 NTCS_Nanite = {} -- Neurotrauma Nanite Integration
 NTCS_Nanite.Name="Nanite Integration"
-NTCS_Nanite.Version = "2.1.2"
-NTCS_Nanite.VersionNum = 02001002
+NTCS_Nanite.Version = "2.1.3"
+NTCS_Nanite.VersionNum = 02001003
 NTCS_Nanite.MinNTVersion = "2.0.0"
 NTCS_Nanite.MinNTVersionNum = 02000000
 NTCS_Nanite.Path = table.pack(...)[1]
@@ -56,6 +56,6 @@ else
 	end, 1)
 end
 
--- Timer.Wait(function()
--- 	dofile(NTCS_Nanite.Path .. "/Lua/Scripts/ConfigData.lua")
--- end, 1)
+Timer.Wait(function()
+	dofile(NTCS_Nanite.Path .. "/Lua/Scripts/config.lua")
+end, 1)

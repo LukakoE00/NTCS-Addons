@@ -74,4 +74,10 @@
     <entityname.emergencyenergyinjection>Injection d'énergie d'urgence</entityname.emergencyenergyinjection>
     <entitydescription.emergencyenergyinjection>Une recharge rapide de la Batterie Nanite en cas d'urgence. Cause des effets secondaires sévères !</entitydescription.emergencyenergyinjection>
 
+    <ntconfigname.emergencyEnergyAmount>Montant de l'Injection d'énergie d'urgence</ntconfigname.emergencyEnergyAmount>
+    <ntconfigdescription.emergencyEnergyAmount>Determines la quantité d'énergie que redonne l'injection d'urgence.</ntconfigdescription.emergencyEnergyAmount>
+
+    <ntconfigname.batteryDecayMultiplier>Multiplicateur de réduction de la Batterie Nanite</ntconfigname.batteryDecayMultiplier>
+    <ntconfigdescription.batteryDecayMultiplier>‖color:gui.green‖Désactivez la réduction de la Batterie Nanite en fixant cette valeur à 0.‖end‖\nAjustez la quantité de batterie retirée par les nanites. Un multiplicateur de 0,5 signifie que les nanites ne prennent que la moitié de la quantité de batterie par défaut.</ntconfigdescription.batteryDecayMultiplier>
+
 </infotexts>
