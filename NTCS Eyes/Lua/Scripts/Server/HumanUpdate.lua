@@ -798,7 +798,7 @@ end
 
 -- Human Eye Indicator
 --add eye if no eye afflictions // works like the blood pressure from NT
-local ViHuman = AfflictionBuilder:New("vi_human"):SetUpdateAction(function(C, Identifier, Limb, DeltaT)
+local ViHuman = AfflictionBuilder:New("vi_human"):IsConst(true):SetUpdateAction(function(C, Identifier, Limb, DeltaT)
 	local character = C.Human
 	local afflictionTags = {
 		"vi_type",

@@ -185,9 +185,11 @@ function NTCS_Eyes.UpdateLights()
 			hullColors[#hullColors + 1] = effect.hullColor
 		end
 	end
+
 	if #levelColors == 0 and #hullColors == 0 then
 		return
 	end
+	
 	local LevelColor = BlendColors(levelColors)
 	local HullColor = BlendColors(hullColors)
 
