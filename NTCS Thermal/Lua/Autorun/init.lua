@@ -46,7 +46,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	--table.insert(NT.SymsForNPC, thermal_afflictions)
 	
 	--NTCS.NTC.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", function (itemPackage)
-		
+		--return true
 	--end) -- Make pulmonary_edema go away with drainage.
 	
 	--NTCS.NTC.AddSuturableAffliction("removed_skin",3,"removed_skin",function (itemPackage) -- Cure removed skin with sutures.
@@ -55,6 +55,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
         --local targetCharacter = itemPackage.target.Human
         --local targetLimb = itemPackage.targetLimb
 		--NTCS.HF.AddAfflictionLimb(targetCharacter, "removed_skin", targetLimb.type, -100, usingCharacter)
+		--return true
 	--end)
 
 	--NTCS.NTC.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (itemPackage) -- Cure removed skin with sutures.
@@ -64,6 +65,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
         --local targetLimb = itemPackage.targetLimb
 		--NTCS.HF.AddAfflictionLimb(targetCharacter, "grafted_skin", targetLimb.type, -100, usingCharacter)
 		--THERM.ReduceBurns(targetCharacter,targetLimb,usingCharacter)
+		--return true
 	--end)
 
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/humanupdate.lua") 		-- HumanUpdates.
