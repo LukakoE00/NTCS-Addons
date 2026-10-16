@@ -11,12 +11,15 @@ local function ConvertCharacter(usingCharacter,targetCharacter)
 end
 
 -- Warm I.V Bag Low key stole all of this from Neuro's ice pack code.
-NTCS_Thermal.warm_iv_bag = function(item, usingCharacter, targetCharacter, limb)
+NTCS_Thermal.warm_iv_bag = function(itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
         if item.Condition <= 25 then
 		return
 	end
-	local limbtype = limb.type
-	local success = HF.BoolToNum(HF.GetSkillRequirementMet(usingCharacter, "medical", 40), 1)
+	local success = NTCS.HF.BoolToNum(NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 40), 1)
         NTCS.HF.AddAffliction(targetCharacter, "elevated_core_temperature", 5 + success * 25, usingCharacter)
         THERM.PlaySound("thermalsfx_liquidiv",targetCharacter)
 	item.Condition = 0
@@ -25,12 +28,16 @@ end
 itemLoader:Register("warm_iv_bag", NTCS_Thermal.warm_iv_bag)
 
 -- Warm rag
-NTCS_Thermal.warm_rag = function (item, usingCharacter, targetCharacter, limb)
+NTCS_Thermal.warm_rag = function (itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
         if item.Condition <= 25 then
 		return
 	end
-	local limbtype = limb.type
-	local success = NTCS.HF.BoolToNum(HF.GetSkillRequirementMet(usingCharacter, "medical", 20), 1)
+	local limbtype = targetLimb
+	local success = NTCS.HF.BoolToNum(NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 20), 1)
 	NTCS.HF.AddAfflictionLimb(targetCharacter, "warmth", limbtype, 75 + success * 25, usingCharacter)
 
 	item.Condition = item.Condition - 25
@@ -39,9 +46,13 @@ end
 itemLoader:Register("warm_rag", NTCS_Thermal.warm_rag)
 
 -- A.A.F.N
-NTCS_Thermal.aafn = function (item, usingCharacter, targetCharacter, limb)
-        local success = HF.BoolToNum(HF.GetSkillRequirementMet(usingCharacter, "medical", 60), 1)
-        local limbtype = limb.type
+NTCS_Thermal.aafn = function (itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
+        local success = NTCS.HF.BoolToNum(NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 60), 1)
+        local limbtype = targetLimb
         if NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "clampedbleeders", 0) == 100 then
                 NTCS.HF.AddAffliction(targetCharacter, "aafn", 10 + success * 15, usingCharacter)
                 item.Condition = item.Condition - 25
@@ -56,9 +67,13 @@ end
 itemLoader:Register("aafn", NTCS_Thermal.aafn)
 
 -- Skin Grafter
-NTCS_Thermal.skin_grafter = function (item, usingCharacter, targetCharacter, limb)
+NTCS_Thermal.skin_grafter = function (itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
         local success = NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 50)
-        local limbtype = limb.type
+        local limbtype = targetLimb
         if NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "retractedskin", 0) ~= 100 then
                 NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
                 NTCS.HF.AddAfflictionLimb(targetCharacter, "lacerations", limbtype, 4, usingCharacter)
@@ -86,9 +101,13 @@ end
 itemLoader:Register("skin_grafter", NTCS_Thermal.skin_grafter)
 
 -- Skin Grafter
-NTCS_Thermal.ntt_skin = function (item, usingCharacter, targetCharacter, limb)
+NTCS_Thermal.ntt_skin = function (itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
         local success = NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 50)
-        local limbtype = limb.type
+        local limbtype = targetLimb
         
         if NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "retractedskin", 0) ~= 100 
                 and NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "grafted_skin", 0) == 0 then
@@ -109,7 +128,11 @@ itemLoader:Register("ntt_skin", NTCS_Thermal.ntt_skin)
 local LimbsToCheck2 = {LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.RightThigh,LimbType.LeftThigh}
 
 -- Thermometer
-NTCS_Thermal.handheld_thermometer = function(item, usingCharacter, targetCharacter, limb)
+NTCS_Thermal.handheld_thermometer = function (itemPackage)
+        local item = itemPackage.item
+        local usingCharacter = itemPackage.user.Human
+        local targetCharacter = itemPackage.target.Human
+        local targetLimb = itemPackage.targetLimb
 
         -- Get Contained item.
         local containedItem = item.OwnInventory.GetItemAt(0)
@@ -122,11 +145,11 @@ NTCS_Thermal.handheld_thermometer = function(item, usingCharacter, targetCharact
                 containedItem.Condition = containedItem.Condition - 2.5
                 -- Translations!
                 THERM.PlaySound("thermalsfx_thermometer",targetCharacter)
-                local actuallimb = limb.type
+                local actuallimb = targetLimb.type
                 local HypothermiaLevel = NTCS.Config.Get("NewHypothermiaLevel", 36) - 1
                 local HyperthermiaLevel = NTCS.Config.Get("NewHyperthermiaLevel", 39) - 1
                 local character = ConvertCharacter(usingCharacter,targetCharacter)
-                local LimbTemp = NTCS.HF.Round(HF.GetAfflictionStrengthLimb(character, actuallimb, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) - 1, 1)
+                local LimbTemp = THERM.Round(NTCS.HF.GetAfflictionStrengthLimb(character, actuallimb, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) - 1, 1)
                 local CharacterClient = NTCS.HF.CharacterToClient(usingCharacter)
                 local Language = function ()
                         if CharacterClient ~= nil then
@@ -216,7 +239,7 @@ NTCS_Thermal.handheld_thermometer = function(item, usingCharacter, targetCharact
                                         .. "‖" 
                                         .. tostring(LimbTemp)
                                         .. "°C/"
-                                        .. tostring(NTCS.HF.Round(((LimbTemp * 9/5)+32),1))
+                                        .. tostring(THERM.Round(((LimbTemp * 9/5)+32),1))
                                         .. "°F"
                                         .. "\n"
                                         .. CurrentTempThermia
@@ -236,7 +259,7 @@ NTCS_Thermal.handheld_thermometer = function(item, usingCharacter, targetCharact
                                         .. "‖" 
                                         .. tostring(BodyTemp)
                                         .. " °C/"
-                                        .. tostring(NTCS.HF.Round(((BodyTemp * 9/5)+32),1))
+                                        .. tostring(THERM.Round(((BodyTemp * 9/5)+32),1))
                                         .. "°F"
                                         .. "\n"
                                         .. BodyTempThermia

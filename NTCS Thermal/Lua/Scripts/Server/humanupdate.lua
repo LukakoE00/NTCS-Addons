@@ -175,7 +175,7 @@ end
 
 --#endregion
 
-local affLoader = NTCS.AfflictionsLoader(NTCS_Thermal.Name)
+local affLoader = NTCS.AfflictionsLoader("NTCS Thermal")
 local builder = NTCS.AfflictionPrefabBuilder()
 
 --#region Limb Afflictions
@@ -209,7 +209,7 @@ affLoader:Register(
 					CharacterTable.TemperatureUpdate = true
 				end
 
-				if (CharacterTable.TemperatureUpdate or NTCS.HF.Round(affStr, 2) ~= FetchConfigStats().NormalBodyTemp) 
+				if (CharacterTable.TemperatureUpdate or THERM.Round(affStr, 2) ~= FetchConfigStats().NormalBodyTemp) 
 					or not NTCS.Config.Get("PerformanceMode", true) then
 
 					local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
@@ -586,7 +586,7 @@ affLoader:Register(
 				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 				if affStr < .1 then
 					C:SetAfflictionLimb("d1_frostbite",Limb,24.9)
-					C:SetAfflictionLimb("chilblains",Limb,CalculateChilblains(type,C.Human))
+					C:SetAfflictionLimb("chilblains",Limb,CalculateChilblains(Limb,C.Human))
 					C:SetAfflictionLimb("inflammation",Limb,10)
 					C:SetAfflictionLimb("intensepain",Limb,10)
 				end
@@ -816,9 +816,9 @@ affLoader:Register(
 
 		if affStr > 0 then
 			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", type, 10)
+			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", Limb, 10)
 			C:AddAfflictionLimb(ID,Limb,-(.5 -- Go down 1 percent each tick.
-									- (c.afflictions.afsaline.strength/50)
+									- (C:GetAfflictionStrength("afsaline")/50)
 									* dT))
 			
 			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) < HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
@@ -1188,17 +1188,19 @@ affLoader:Register(
 -- Those aren't stored in here since they have a independent tick rate.
 -- give_temp
 affLoader:Register(
-    builder:New("give_temp")
+    builder:New("give_temp")  -- This should cause an error, this doesn't match any affliction
     :SetStrengths(0,3,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
-    :SetUpdateAction(function(C, ID, dT)
+    :SetUpdateAction(function(C, ID, Limb, dT)
 
+		print("Run?: " .. tostring(C.Human))
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
 			return
 		else
+			print("Give Temp: " .. tostring(C.Human))
 			THERM.IntiateCharacterTemp(C.Human)
 			THERM.ValidateThermalCharacterData()
 			C:SetAffliction(ID,3)
