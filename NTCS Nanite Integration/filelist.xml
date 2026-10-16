@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NTCS Nanite Integration" corepackage="false" modversion="2.0.1" gameversion="1.11.5.0" steamworkshopid="3816472416">
+<contentpackage name="NTCS Nanite Integration" corepackage="false" modversion="2.1.0" gameversion="1.11.5.0" steamworkshopid="3816472416">
   <Item file="%ModDir%/XML/items.xml" />
   <Afflictions file="%ModDir%/XML/afflictions.xml" />
   <Other file="%ModDir%/Images/buffAtlas.png" />
   <Other file="%ModDir%/Images/itemAtlas.png" />
+  <Other file="%ModDir%/Images/naniteBatteryImplant.png" />
+  <Other file="%ModDir%/Images/emergencyEnergyInjection.png" />
   <Text file="%ModDir%/Localization/English.xml" />
   <Text file="%ModDir%/Localization/French.xml" />
   <Text file="%ModDir%/Localization/Russian.xml" />

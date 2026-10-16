@@ -352,33 +352,92 @@
       </StatusEffect>
     </MeleeWeapon>
   </Vision>
-  <!-- <Lanius identifier="laniusxenonanite" category="Material" cargocontaineridentifier="chemicalcrate" Tags="smallitem,chem,medical,syringe,alien" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" maxstacksize="8">
+
+    <BatteryImplant identifier="nanitebatteryimplant" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical" canbepicked="true" useinhealthinterface="true" scale="0.25" impactsoundtag="impact_metal_light" maxstacksize="1">
         <Upgrade gameversion="0.10.0.0" scale="0.5" />
-        <PreferredContainer primary="wrecksecurearmcab,wreckshuttlecrate" minamount="0" maxamount="1" spawnprobability="0.005" />
-        <PreferredContainer primary="ruinstorage,ruinstoragesmall" minamount="0" maxamount="1" spawnprobability="0.015" />
-        <PreferredContainer primary="ruinstoragelarge" minamount="0" maxamount="1" spawnprobability="0.03" />
-        <Deconstruct time="25">
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="nanitebase" />
-        <RequiredItem identifier="fulgurium" />
-        <RequiredItem identifier="oxygenite" />
+        <Fabricate suitablefabricators="medicalfabricator" requiredtime="75">
+            <RequiredSkill identifier="electrical" level="40" />
+            <RequiredSkill identifier="medical" level="60" />
+            <RequiredItem identifier="fulguriumbatterycell" />
+            <RequiredItem tag="heart"/>
+        </Fabricate>
+        <Deconstruct time="15">
+            <RequiredItem identifier="fulguriumbatterycell" />
         </Deconstruct>
-        <InventoryIcon texture="%ModDir%/Images/itemAtlas.png" sourcerect="64,128,64,64" origin="0.5,0.5" />
-        <Sprite texture="%ModDir%/Images/itemAtlas.png" sourcerect="64,320,64,64" depth="0.6" origin="0.5,0.5" />
-        <Body width="35" height="65" density="15" />
-        <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="5,0" handle1="-5,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect">
-        <StatusEffect type="OnUse" target="This" Condition="-100.0" disabledeltatime="true" />
-        <StatusEffect tags="medical" type="OnUse" target="Character" checkconditionalalways="true" duration="1">
-            <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
-            <Affliction identifier="laniusxenonanite" amount="2" />
-            <Affliction identifier="psychosis" amount="45" />
-            <Affliction identifier="hallucinating" amount="80" />
-        </StatusEffect>
-        <StatusEffect type="OnBroken" target="This">
-            <Remove />
-        </StatusEffect>
-        </MeleeWeapon>
-    </Lanius>-->
+        
+        <InventoryIcon texture="%ModDir%/Images/naniteBatteryImplant.png" sourcerect="20,20,150,160" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/naniteBatteryImplant.png" sourcerect="20,20,150,160" depth="0.6" origin="0.5,0.5" />
+        <Body width="60" height="62" density="15" />
+
+        <Holdable canBeCombined="false" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+            <!-- Remove the item when fully used -->
+            <StatusEffect type="OnBroken" target="This">
+                <Remove />
+            </StatusEffect>
+        </Holdable>
+
+        <SkillRequirementHint identifier="medical" level="80" />
+    </BatteryImplant>
+
+    <EmergencyEnergy identifier="emergencyenergyinjection" category="Medical" cargocontaineridentifier="medicalcrate" Tags="smallitem,medical" canbepicked="true" useinhealthinterface="true" scale="0.25" impactsoundtag="impact_metal_light" maxstacksize="4">
+        <Upgrade gameversion="0.10.0.0" scale="0.5" />
+        <Fabricate suitablefabricators="medicalfabricator" requiredtime="75">
+            <RequiredSkill identifier="electrical" level="40" />
+            <RequiredSkill identifier="medical" level="60" />
+            <RequiredItem identifier="fulguriumbatterycell" />
+            <RequiredItem identifier="plastic"/>
+            <RequiredItem identifier="copper"/>
+        </Fabricate>
+        <Deconstruct time="15">
+            <RequiredItem identifier="fulguriumbatterycell" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/emergencyEnergyInjection.png" sourcerect="8,16,116,127" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/emergencyEnergyInjection.png" sourcerect="8,16,116,127" depth="0.6" origin="0.5,0.5" />
+        <Body width="60" height="62" density="15" />
+
+        <Holdable canBeCombined="false" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+            <!-- Remove the item when fully used -->
+            <StatusEffect type="OnBroken" target="This">
+                <Remove />
+            </StatusEffect>
+        </Holdable>
+
+        <SkillRequirementHint identifier="medical" level="40" />
+    </EmergencyEnergy>
+
+    <Item name="" identifier="fulguriumbatterycell" category="Equipment,Electrical" maxstacksize="8" tags="smallitem,loadable,mobilebattery,medical" health="200" scale="0.5" useinhealthinterface="true" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_light">
+    <Upgrade gameversion="0.10.0.0" scale="0.5"/>
+    <PreferredContainer primary="batterycellrecharger" maxcondition="80"/>
+    <PreferredContainer primary="stunbaton,underwaterscooter,handheldsonar,sonarbeacon,flashlight,portablepump,poweredcontainer" mincondition="25"/>
+    <PreferredContainer secondary="divingcab,engcab,reactorcab"/>
+    <PreferredContainer secondary="abandonedengcab,pirateengcab,wreckengcab" amount="1" spawnprobability="0.05"/>
+    <Price baseprice="250" minavailable="1" minleveldifficulty="15">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantcity" />
+      <Price storeidentifier="merchantresearch" minavailable="2" />
+      <Price storeidentifier="merchantmilitary" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantengineering" multiplier="0.9" minavailable="2" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="zinc" />
+      <Item identifier="fulgurium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="15">
+      <RequiredSkill identifier="electrical" level="40" />
+      <RequiredItem identifier="fulgurium" />
+      <RequiredItem identifier="zinc" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="514,832,62,64" origin="0.5,0.5" />
+    <Sprite texture="signalcomp.png" sourcerect="968,25,37,21" depth="0.55" />
+    <Body width="32" height="20" density="30" />
+    <Holdable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect" />
+    <Quality>
+      <QualityStat stattype="Condition" value="0.1"/>
+    </Quality>
+  </Item>
+
+
 </Items>
 </Override>

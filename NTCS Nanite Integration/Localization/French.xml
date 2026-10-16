@@ -58,4 +58,20 @@
   <afflictiondescription.mechfixnanite>Les Nanites réparent les membres artificiels. Intégration 1: Fixe les vis déserrées et le métal plié. Int2gration 2: Répare le métal manquant et l'électronique endommagé.</afflictiondescription.mechfixnanite>
   <afflictionname.nanitedecay>Nanites en décomposition</afflictionname.nanitedecay>
   <afflictiondescription.nanitedecay>Pas assez de précurseurs, les nanites se désintègrent ! Trouvez une injection de précurseur le plus vite possible !</afflictiondescription.nanitedecay>
+
+    <afflictionname.nanitebattery>Batterie Nanite</afflictionname.nanitebattery>
+    <afflictiondescription.nanitebattery>Contient l'énergie utilisées par les Nanites. La batterie doit être régulièrement remplacée par des piles en fulgurium.</afflictiondescription.nanitebattery>
+
+    <afflictionname.nanitelowbattery>Batterie Nanite Basse !</afflictionname.nanitelowbattery>
+    <afflictiondescription.nanitelowbattery>Les résèrves d'énergie sont basses, il faudra remplacer la batterie sous peu.</afflictiondescription.nanitelowbattery>
+
+    <afflictionname.nanitenobattery>Aucune Batterie Nanite !</afflictionname.nanitenobattery>
+    <afflictiondescription.nanitenobattery>Soit aucune Batterie Nanite est installée soit elle est complètement vide !</afflictiondescription.nanitenobattery>
+
+    <entityname.nanitebatteryimplant>Implant de Batterie Nanite</entityname.nanitebatteryimplant>
+    <entitydescription.nanitebatteryimplant>Un implant inséré à côté du coeur pour alimenter les nanites.</entitydescription.nanitebatteryimplant>
+
+    <entityname.emergencyenergyinjection>Injection d'énergie d'urgence</entityname.emergencyenergyinjection>
+    <entitydescription.emergencyenergyinjection>Une recharge rapide de la Batterie Nanite en cas d'urgence. Cause des effets secondaires sévères !</entitydescription.emergencyenergyinjection>
+
 </infotexts>
