@@ -1156,7 +1156,7 @@ affLoader:Register(
 			local Death = (1 * dT)
 
 			local KillOrgans = function ()
-				C:AddAffliction("cerebralhypoxia",Death)
+				C:AddAffliction("neurotrauma",Death)
 				C:AddAffliction("lungdamage",Death)
 				C:AddAffliction("liverdamage",Death)
 				C:AddAffliction("heartdamage",Death)
@@ -1228,7 +1228,7 @@ affLoader:Register(
 				C:AddAffliction(ID,Death * -1)
 			end
 
-			C:AddAffliction("cerebralhypoxia",Death)
+			C:AddAffliction("neurotrauma",Death)
 			C:AddAffliction("lungdamage",Death)
 			C:AddAffliction("liverdamage",Death)
 			C:AddAffliction("heartdamage",Death)
