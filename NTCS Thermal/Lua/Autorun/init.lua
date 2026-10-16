@@ -48,16 +48,16 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	--local thermal_afflictions = { "sym_hot", "sym_cold", "sym_shivers", "sym_numb", "heat_cramp" } -- Add our NPC symptom announcements.
 	--table.insert(NT.SymsForNPC, thermal_afflictions)
 	
-	NTCS.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", nil) -- Make pulmonary_edema go away with drainage.
+	--NTCS.NTC.AddDrainageAffliction("pulmonary_edema", 3, "retractedskin", nil) -- Make pulmonary_edema go away with drainage.
 	
-	NTCS.AddSuturableAffliction("removed_skin",3,"removed_skin",function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		HF.AddAfflictionLimb(targetCharacter, "removed_skin", limb.type, -100, usingCharacter)
-	end)
+	--NTCS.NTC.AddSuturableAffliction("removed_skin",3,"removed_skin",function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
+		--NTCS.HF.AddAfflictionLimb(targetCharacter, "removed_skin", limb.type, -100, usingCharacter)
+	--end)
 
-	NTCS.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
-		HF.AddAfflictionLimb(targetCharacter, "grafted_skin", limb.type, -100, usingCharacter)
-		THERM.ReduceBurns(targetCharacter,limb,usingCharacter)
-	end)
+	--NTCS.NTC.AddSuturableAffliction("grafted_skin", 3, "grafted_skin", function (item, usingCharacter, targetCharacter, limb) -- Cure removed skin with sutures.
+		--NTCS.HF.AddAfflictionLimb(targetCharacter, "grafted_skin", limb.type, -100, usingCharacter)
+		--THERM.ReduceBurns(targetCharacter,limb,usingCharacter)
+	--end)
 
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/humanupdate.lua") 		-- HumanUpdates.
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/heatedsuitlist.lua") 	-- The Heated Diving Suit
@@ -70,7 +70,7 @@ if (Game.IsMultiplayer and SERVER) or not Game.IsMultiplayer then
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/debug.lua") 			-- Patches.
 	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Server/ondamaged.lua") 		-- ondamaged.
 
-	end)
+	end, 1)
 else
 	Timer.Wait(function()
 

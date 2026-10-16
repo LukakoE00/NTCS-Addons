@@ -62,8 +62,8 @@
     <afflictionname.nanitebattery>Batterie Nanite</afflictionname.nanitebattery>
     <afflictiondescription.nanitebattery>Contient l'énergie utilisées par les Nanites. La batterie doit être régulièrement remplacée par des piles en fulgurium.</afflictiondescription.nanitebattery>
 
-    <afflictionname.nanitelowbattery>Batterie Nanite Basse !</afflictionname.nanitelowbattery>
-    <afflictiondescription.nanitelowbattery>Les résèrves d'énergie sont basses, il faudra remplacer la batterie sous peu.</afflictiondescription.nanitelowbattery>
+    <afflictionname.nanitebatterylow>Batterie Nanite Basse !</afflictionname.nanitebatterylow>
+    <afflictiondescription.nanitebatterylow>Les résèrves d'énergie sont basses, il faudra remplacer la batterie sous peu.</afflictiondescription.nanitebatterylow>
 
     <afflictionname.nanitenobattery>Aucune Batterie Nanite !</afflictionname.nanitenobattery>
     <afflictiondescription.nanitenobattery>Soit aucune Batterie Nanite est installée soit elle est complètement vide !</afflictiondescription.nanitenobattery>
@@ -73,5 +73,11 @@
 
     <entityname.emergencyenergyinjection>Injection d'énergie d'urgence</entityname.emergencyenergyinjection>
     <entitydescription.emergencyenergyinjection>Une recharge rapide de la Batterie Nanite en cas d'urgence. Cause des effets secondaires sévères !</entitydescription.emergencyenergyinjection>
+
+    <ntconfigname.emergencyEnergyAmount>Montant de l'Injection d'énergie d'urgence</ntconfigname.emergencyEnergyAmount>
+    <ntconfigdescription.emergencyEnergyAmount>Determines la quantité d'énergie que redonne l'injection d'urgence.</ntconfigdescription.emergencyEnergyAmount>
+
+    <ntconfigname.batteryDecayMultiplier>Multiplicateur de réduction de la Batterie Nanite</ntconfigname.batteryDecayMultiplier>
+    <ntconfigdescription.batteryDecayMultiplier>‖color:gui.green‖Désactivez la réduction de la Batterie Nanite en fixant cette valeur à 0.‖end‖\nAjustez la quantité de batterie retirée par les nanites. Un multiplicateur de 0,5 signifie que les nanites ne prennent que la moitié de la quantité de batterie par défaut.</ntconfigdescription.batteryDecayMultiplier>
 
 </infotexts>

@@ -20,7 +20,7 @@ end, Hook.HookMethodType.Before)
 
 -- Hooks Lua event "Barotrauma.Character" to apply vanilla burning (formerly NT onfire) affliction and set a human on fire
 Hook.HookMethod("Barotrauma.Character", "ApplyStatusEffects", function(instance, ptable)
-	if ptable.actionType == ActionType.OnFire and NTConfig.Get("FireCausePanic", true) and not (NTCS.Config.Get("BotTempIgnoreMode", true) and instance.IsBot)
+	if ptable.actionType == ActionType.OnFire and NTCS.Config.Get("FireCausePanic", true) and not (NTCS.Config.Get("BotTempIgnoreMode", true) and instance.IsBot)
 		and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(instance, "pressurestabilized", 0) > 0) then
         local function MakeOnFire(character)
             if NTCS.HF.GetAfflictionStrength(character, "ntt_temperature", 0) > THERM.FetchConfigStats().HyperthermiaLevel * NTCS_Thermal.LowHyperthermiaScaling then

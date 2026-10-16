@@ -6,7 +6,7 @@ function NTCS_Nanite.downBattery(ntHuman, amount)
 
     local currentStrength = ntHuman:GetAfflictionStrength("nanitebattery")
 
-    local multiplier = NTCS.Config.Get("Nanite_batteryDecayMultiplier", 1)
+    local multiplier = NTCS.Config.Get("NTCS_Nanite_batteryDecayMultiplier", 1)
 
     -- TODO: get config working
     ntHuman:SetAffliction("nanitebattery", math.max(currentStrength - amount * multiplier, 1))

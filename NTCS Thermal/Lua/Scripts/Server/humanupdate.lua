@@ -10,11 +10,13 @@ NTCS_Thermal.ExtremeHyperthermiaScaling = 1.1
 NTCS_Thermal.MediumHyperthermiaScaling = 1.05
 NTCS_Thermal.LowHyperthermiaScaling = 1
 
+--#region HU Helper Functions
+
 local Limbs = {LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}
 -- Function used to take two limbs and apply the heat difference to both.
 local function ApplyHeatDifference(character, ToLimbTemp, ToLimbType, FromLimbTemp, FromLimbType)
 	local ClampedArteriesResistance = 1
-	if HF.GetAfflictionStrengthLimb(character, FromLimbType, "arteriesclamp", 0) > 0 or HF.GetAfflictionStrengthLimb(character, ToLimbType, "arteriesclamp", 0) > 0 then
+	if NTCS.HF.GetAfflictionStrengthLimb(character, FromLimbType, "arteriesclamp", 0) > 0 or NTCS.HF.GetAfflictionStrengthLimb(character, ToLimbType, "arteriesclamp", 0) > 0 then
 		-- Drastically reduces the amount of heat transferred when having clamped arteries.
 		ClampedArteriesResistance = 3
 	end
@@ -30,13 +32,13 @@ end
 local function FetchConfigStats()
 	local ConfigStats = 
 		{
-		NormalBodyTemp = NTConfig.Get("NewNormalBodyTemp", 38),
-		HypothermiaLevel = NTConfig.Get("NewHypothermiaLevel", 36),
-		HyperthermiaLevel = NTConfig.Get("NewHyperthermiaLevel", 39),
-		WarmingAbility = NTConfig.Get("NewWarmingAbility", .2),
-		DryingSpeed = NTConfig.Get("NewDryingSpeed", -.1),
-		PerformanceMode = NTConfig.Get("PerformanceMode",true),
-		ShockMargin = NTConfig.Get("ShockMargin",100)/357.142
+		NormalBodyTemp = NTCS.Config.Get("NewNormalBodyTemp", 38),
+		HypothermiaLevel = NTCS.Config.Get("NewHypothermiaLevel", 36),
+		HyperthermiaLevel = NTCS.Config.Get("NewHyperthermiaLevel", 39),
+		WarmingAbility = NTCS.Config.Get("NewWarmingAbility", .2),
+		DryingSpeed = NTCS.Config.Get("NewDryingSpeed", -.1),
+		PerformanceMode = NTCS.Config.Get("PerformanceMode",true),
+		ShockMargin = NTCS.Config.Get("ShockMargin",100)/357.142
 		}
 	return ConfigStats
 end
@@ -65,10 +67,10 @@ local function TransferBodyHeat(character, TorsoTemp)
 	-- Check to make sure that the temp isn't too low, else the torso will yoink temperature from nowhere. It shouldn't due to code I implemented in the ApplyHeatDifference func but this is still here as a failsafe.
 	if not (TorsoTemp < 1.5) then
 		for index, limb in pairs(FetchOtherStats().LimbsToCheck) do
-			limbTemp = HF.GetAfflictionStrengthLimb(character, limb, "ntt_temperature", NTConfig.Get("NewNormalBodyTemp", 38))
+			limbTemp = NTCS.HF.GetAfflictionStrengthLimb(character, limb, "ntt_temperature", NTCS.Config.Get("NewNormalBodyTemp", 38))
 			TempDifference = ApplyHeatDifference(character,limbTemp,limb,TorsoTemp,LimbType.Torso)
 			TotalTorsoTempDiff = TotalTorsoTempDiff + TempDifference.FromLimbDiff
-			HF.AddAfflictionLimb(character, "ntt_temperature", limb, TempDifference.ToLimbDiff, character)
+			NTCS.HF.AddAfflictionLimb(character, "ntt_temperature", limb, TempDifference.ToLimbDiff, character)
 		end
 		return TotalTorsoTempDiff
 	end 
@@ -78,7 +80,7 @@ end
 -- Used for the passive temp increase from the environment.
 local function GetRoomTempAddition(character,limb)
 	local WetTemp = 0
-	local WetStrength = HF.GetAfflictionStrengthLimb(character, limb, "wet", FetchConfigStats().NormalBodyTemp)
+	local WetStrength = NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", FetchConfigStats().NormalBodyTemp)
 	local RoomTemp = 1
 	if THERMRoom.GetRoom(character.CurrentHull) ~= nil then
 		RoomTemp = THERMRoom.GetRoom(character.CurrentHull).Temp/THERMRoom.DefaultRoomTemp
@@ -94,37 +96,37 @@ end
 local function LimbToSwelling(character,limb,duration)
 	duration = duration or 2
 	local Symptom = nil
-	if HF.NormalizeLimbType(limb) == LimbType.LeftArm or HF.NormalizeLimbType(limb) == LimbType.RightArm then
+	if NTCS.HF.NormalizeLimbType(limb) == LimbType.LeftArm or NTCS.HF.NormalizeLimbType(limb) == LimbType.RightArm then
 		Symptom = "sym_armswelling"
-	elseif HF.NormalizeLimbType(limb) == LimbType.LeftLeg or HF.NormalizeLimbType(limb) == LimbType.RightLeg then
-		Symptom = "sym_legswelling"
+	elseif NTCS.HF.NormalizeLimbType(limb) == LimbType.LeftLeg or NTCS.HF.NormalizeLimbType(limb) == LimbType.RightLeg then
+		Symptom = "legswelling"
 	end
 	if Symptom ~= nil then
-		NTC.SetSymptomTrue(character, Symptom, duration)
+		NTHuman.getNTHumanFromCharacter(character):SetSymptomTrue(Symptom, duration)
 	end
 end
 
 
 -- Used for a more varied blood clotting simulator.
-local function CalculateBloodClots(character,limb,special)
+local function CalculateBloodClots(character,limb,special,deltaTime)
 	special = special or 0
 	local BloodClottedLimbs = function ()
 		local TotalClottedValue = 0
 		for index, limb in pairs(Limbs) do
-			if HF.GetAfflictionStrengthLimb(character, limb, "bloodclot", 0) > 0 then
+			if NTCS.HF.GetAfflictionStrengthLimb(character, limb, "bloodclot", 0) > 0 then
 				TotalClottedValue = TotalClottedValue + 1
 			end
 		end
 		return TotalClottedValue
 	end
 	local TotalClots = BloodClottedLimbs()
-	if HF.GetAfflictionStrengthLimb(character, limb, "bloodclot", 0) == 0 and math.random(TotalClots,4) > TotalClots + 1 then
+	if NTCS.HF.GetAfflictionStrengthLimb(character, limb, "bloodclot", 0) == 0 and math.random(TotalClots,4) > TotalClots + 1 then
 		return .5
-		* HF.GetAfflictionStrength(character, "bloodpressure", 100)
+		* NTCS.HF.GetAfflictionStrength(character, "bloodpressure", 100)
 		/100 
-		+ special * NT.Deltatime
+		+ special * deltaTime
 	end
-	return .25 * NT.Deltatime
+	return .25 * deltaTime
 
 end
 
@@ -152,8 +154,8 @@ end
 -- Used to determine if a limb will receive chilblains for a more varied experience.
 local function CalculateChilblains(limb,character)
 	local DefaultChance = 1
-	local Chance = (HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)/50)
-	+ (HF.GetAfflictionStrength(character, "bloodpressure", 100)/100)
+	local Chance = (NTCS.HF.GetAfflictionStrengthLimb(character, limb, "wet", 0)/50)
+	+ (NTCS.HF.GetAfflictionStrength(character, "bloodpressure", 100)/100)
 	+ DefaultChance
 	if math.random(Chance,5) > Chance then
 		return 25
@@ -164,1289 +166,1653 @@ end
 -- Used to determine if the limb will heat cramp
 local function CalculateHeatCramp(limb,character)
 	local DefaultChance = 5
-	local ElectrolyteGameplay = HF.GetAfflictionStrength(character, "afsaline", 100)/50
+	local ElectrolyteGameplay = NTCS.HF.GetAfflictionStrength(character, "afsaline", 100)/50
 	if math.random(0,10) > DefaultChance + ElectrolyteGameplay then
 		return 5
 	end
 	return 0
 end
 
-NTCS_Thermal.UpdateLimbAfflictions = {
+--#endregion
 
-	--temperature
-	ntt_temperature = {
-		min = 1,
-		max = 101,
-		ignorestasis = true,
-		update = function(c, limbaff, i, type)
-			local CharacterTable = THERM.GetCharacter(c.character.ID)
+local affLoader = NTCS.AfflictionsLoader(NTCS_Thermal.Name)
+local builder = NTCS.AfflictionPrefabBuilder()
 
-			local function RoomIsHot()
-				if THERMRoom and c.character.CurrentHull ~= nil and THERMRoom.Rooms ~= nil 
-					and THERMRoom.Intiated and THERMRoom.GetRoom(c.character.CurrentHull) ~= nil 
-					and THERMRoom.GetRoom(c.character.CurrentHull).Temp >= THERMRoom.DefaultRoomTemp then
+--#region Limb Afflictions
+
+-- ntt_temperature
+affLoader:Register(
+    builder:New("ntt_temperature")
+    :SetStrengths(1,101,38)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+        local CharacterTable = THERM.GetCharacter(C.Human.ID)
+
+        local function RoomIsHot()
+				if THERMRoom and C.Human.CurrentHull ~= nil and THERMRoom.Rooms ~= nil 
+					and THERMRoom.Intiated and THERMRoom.GetRoom(C.Human.CurrentHull) ~= nil 
+					and THERMRoom.GetRoom(C.Human.CurrentHull).Temp >= THERMRoom.DefaultRoomTemp then
                 	return true
         		end
 				return false
 			end
+        
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+		local wetStr = C:GetAfflictionStrengthLimb("wet",Limb,0)
 
-			if limbaff[i].strength > 0 then
+		if affStr > 0 then
+			if CharacterTable ~= nil then
+				if CharacterTable.InCustomWater or C.Human.InWater or RoomIsHot() 
+					or C:GetAfflictionStrength("bloodloss") > 0 or C:GetAfflictionStrength("sepsis") > 0 then -- We check to see if we need to update.
+					CharacterTable.TemperatureUpdate = true
+				end
 
-				if CharacterTable ~= nil then
-					if CharacterTable.InCustomWater or c.character.InWater or RoomIsHot() or c.afflictions.bloodloss.strength > 0 or c.afflictions.sepsis.strength > 0 then -- We check to see if we need to update.
-						CharacterTable.TemperatureUpdate = true
-					end
+				if (CharacterTable.TemperatureUpdate or NTCS.HF.Round(affStr, 2) ~= FetchConfigStats().NormalBodyTemp) 
+					or not NTCS.Config.Get("PerformanceMode", true) then
 
-					if (CharacterTable.TemperatureUpdate or HF.Round(limbaff[i].strength, 2) ~= FetchConfigStats().NormalBodyTemp) or not NTConfig.Get("PerformanceMode", true) then
-						local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
-						-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
-						if not (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-						and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-							
-							local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-							local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-							local TorsoTempStrength = HF.GetAfflictionStrengthLimb(c.character, LimbType.Torso, "ntt_temperature", 0)
-							-- CompromisedTemp is the value at which the body will struggle to generate it's own heat or cool down. (You're cooked essentially.)
-							local CompromisedColdTemp = HypothermiaLevel/1.5
-							local CompromisedHotTemp = HyperthermiaLevel*1.5
-							local CompromisedTempVal = 1
-							-- Calculate new temperature
-							limbaff[i].strength = limbaff[i].strength + THERM.CalculateTemperature(limbaff.wet.strength,c.character,type)
-							-- Calculate CompromisedTempVal: Being too low or high in temperature will make the body slower to reach normal body temp.
-							-- The division by three is a scaling feature, i'm too lazy to make it a variable.
-							if limbaff[i].strength < CompromisedColdTemp then
-								CompromisedTempVal = (CompromisedColdTemp/limbaff[i].strength)/3
-							-- The division by five is a scaling feature as well, same as last one.
-							elseif limbaff[i].strength > CompromisedHotTemp then
-								CompromisedTempVal = (limbaff[i].strength/CompromisedHotTemp)/5
+					local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
+					-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
+					if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+						and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+						
+						local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+						local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
+						local TorsoTempStrength = NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Torso, "ntt_temperature", 0)
+
+						-- CompromisedTemp is the value at which the body will struggle to generate it's own heat or cool down. (You're cooked essentially.)
+						local CompromisedColdTemp = HypothermiaLevel/1.5
+						local CompromisedHotTemp = HyperthermiaLevel*1.5
+						local CompromisedTempVal = 1
+
+						-- Calculate new temperature
+						C:SetAfflictionLimb(ID,Limb,affStr + THERM.CalculateTemperature(wetStr,C.Human,Limb,dT))
+						affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+						-- Calculate CompromisedTempVal: Being too low or high in temperature will make the body slower to reach normal body temp.
+						-- The division by three is a scaling feature, i'm too lazy to make it a variable.
+						if affStr < CompromisedColdTemp then
+							CompromisedTempVal = (CompromisedColdTemp/affStr)/3
+						-- The division by five is a scaling feature as well, same as last one.
+						elseif affStr > CompromisedHotTemp then
+							CompromisedTempVal = (affStr/CompromisedHotTemp)/5
+						end
+
+							-- Make torso colder or warmer based off limb temp being lower then certain point.
+						if Limb ~= LimbType.Torso then 
+
+							-- Slight optimization, if the temps are the same don't calculate.
+							if TorsoTempStrength ~= affStr then
+								local TempDiffs = ApplyHeatDifference(C.Human,TorsoTempStrength,LimbType.Torso,affStr,Limb)
+								NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", LimbType.Torso, TempDiffs.ToLimbDiff, C.Human)
+								C:SetAfflictionLimb(ID,Limb,affStr + TempDiffs.FromLimbDiff)
+								affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 							end
 
-								-- Make torso colder or warmer based off limb temp being lower then certain point.
-							if type ~= LimbType.Torso then 
-								-- Slight optimization, if the temps are the same don't calculate.
-								if TorsoTempStrength ~= limbaff[i].strength then
-									local TempDiffs = ApplyHeatDifference(c.character,TorsoTempStrength,LimbType.Torso,limbaff[i].strength,type)
-									HF.AddAfflictionLimb(c.character, "ntt_temperature", LimbType.Torso, TempDiffs.ToLimbDiff, c.character)
-									limbaff[i].strength = limbaff[i].strength + TempDiffs.FromLimbDiff
-								end
-								if type == LimbType.Head then
+							if Limb == LimbType.Head then
 
-									-- Overlays
-									if limbaff[i].strength < HypothermiaLevel and not THERM.HasHuskSymbiosis(c.character) then
-										HF.SetAffliction(c.character, "overlay_ice", HF.Clamp(5/limbaff[i].strength*150,0,60))
-									elseif limbaff[i].strength > HyperthermiaLevel then
-										HF.SetAffliction(c.character, "overlay_fire", HF.Clamp(limbaff[i].strength/NormalBodyTemp*50,0,100))
-									else
-										HF.SetAffliction(c.character, "overlay_ice", 0)
-										HF.SetAffliction(c.character, "overlay_fire", 0)
-									end
-
-									if limbaff[i].strength < 2 and not THERM.HasHuskSymbiosis(c.character) then
-										c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + (.05 * NT.Deltatime)
-									elseif limbaff[i].strength < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 and not THERM.HasHuskSymbiosis(c.character) then
-										NTC.SetSymptomTrue(c.character, "sym_lightheadedness", 5)
-									elseif limbaff[i].strength > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
-										NTC.SetSymptomTrue(c.character, "sym_fever", 5)
-									end
+								-- Overlays
+								if affStr < HypothermiaLevel and not THERM.HasHuskSymbiosis(C.Human) then
+									NTCS.HF.SetAffliction(C.Human, "overlay_ice", NTCS.HF.Clamp(5/affStr*150,0,60))
+								elseif affStr > HyperthermiaLevel then
+									NTCS.HF.SetAffliction(C.Human, "overlay_fire", NTCS.HF.Clamp(affStr/NormalBodyTemp*50,0,100))
 								else
-									--FrostNip
-									if limbaff[i].strength < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
-										and limbaff.frostnip.strength == 0 
-										and limbaff.d1_frostbite.strength == 0 
-										and limbaff.d2_frostbite.strength == 0 
-										and limbaff.d3_frostbite.strength == 0 
-										and not THERM.IsLimbCyber(c.character,type) 
-										and not THERM.HasHuskSymbiosis(c.character) then
-										limbaff.frostnip.strength = 1
-									elseif  limbaff[i].strength > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
-										limbaff.heat_cramp.strength = limbaff.heat_cramp.strength + CalculateHeatCramp(type,c.character)
-									end
-									if type == LimbType.RightLeg then -- We tell the temp to stop.
-										CharacterTable.TemperatureUpdate = false
-									end
+									NTCS.HF.SetAffliction(C.Human, "overlay_ice", 0)
+									NTCS.HF.SetAffliction(C.Human, "overlay_fire", 0)
+								end
 
+								if affStr < 2 and not THERM.HasHuskSymbiosis(C.Human) then
+									C:AddAffliction("neurotrauma",.05 * dT)
+								elseif affStr < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 and not THERM.HasHuskSymbiosis(C.Human) then
+									C:SetSymptomTrue("lightheadedness", 5)
+								elseif affStr > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
+									C:SetSymptomTrue("fever", 5)
 								end
 							else
-								-- Give hypothermia
-								if limbaff[i].strength < HypothermiaLevel and not THERM.HasHuskSymbiosis(c.character) then
-									c.afflictions.hypothermia.strength = 100
-									if limbaff[i].strength < HypothermiaLevel * NTCS_Thermal.ExtremeHypothermiaScaling then
-									NTC.SetSymptomTrue(c.character, "dyspnea", 2)
-									end
-								-- Give hyperthermia
-								elseif limbaff[i].strength > HyperthermiaLevel then
-									c.afflictions.hyperthermia.strength = 100
-									-- Get burnt nerd
-									if limbaff[i].strength > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-										limbaff.burn.strength = limbaff.burn.strength + (.5 * NT.Deltatime)
-									elseif  limbaff[i].strength > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.3 then
-										limbaff.burn.strength = limbaff.burn.strength + (2 * NT.Deltatime)
-									end
+								--FrostNip
+								if affStr < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
+									and C:GetAfflictionStrengthLimb("frostnip",Limb,0)
+									and C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
+									and C:GetAfflictionStrengthLimb("d2_frostbite",Limb,0)
+									and C:GetAfflictionStrengthLimb("d3_frostbite",Limb,0)
+									and not THERM.IsLimbCyber(C.Human,Limb) 
+									and not THERM.HasHuskSymbiosis(C.Human) then
+										C:SetAfflictionLimb("frostnip",Limb,1)
+								
+								elseif affStr > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
+									C:AddAffliction("heat_cramp",CalculateHeatCramp(Limb,C.Human))
 								end
-								-- Transfer heat from body to rest of character for accurate gameplay provided by thou Rat Jaccuzi
-								limbaff[i].strength = limbaff[i].strength + TransferBodyHeat(c.character,TorsoTempStrength)
-							end
 
-							-- Passive temperature reactions
-							-- Warm up if cold.
-							local RoomTempGain = GetRoomTempAddition(c.character,type)
-							local AmputatedLimbValue = HF.BoolToNum(NT.LimbIsAmputated(c.character, type),1) + 1
-							if limbaff[i].strength < NormalBodyTemp then
-								limbaff[i].strength = HF.Clamp(limbaff[i].strength
-									+ RoomTempGain + (.05
-										/CompromisedTempVal
-											*(c.afflictions.bloodpressure.strength
-												/100)/AmputatedLimbValue
-													* NT.Deltatime),1,NormalBodyTemp)
-							-- Cool down if warm
-							elseif limbaff[i].strength > NormalBodyTemp then
-								limbaff[i].strength = HF.Clamp(limbaff[i].strength 
-										- RoomTempGain - (.05
-											/CompromisedTempVal
-												*(c.afflictions.bloodpressure.strength
-													/100)/AmputatedLimbValue 
-													* NT.Deltatime),NormalBodyTemp,101)
+								if Limb == LimbType.RightLeg then -- We tell the temp to stop.
+									CharacterTable.TemperatureUpdate = false
+								end
+
 							end
 						else
-							-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
-							limbaff[i].strength = NormalBodyTemp
-							HF.SetAffliction(c.character, "overlay_ice", 0)
-							HF.SetAffliction(c.character, "overlay_fire", 0)
-						end
-					end
-				end
-				return
-			-- Set Temperature since the current is 0.
-			else
-				limbaff[i].strength = FetchConfigStats().NormalBodyTemp
-			end
-		end,
-	},
 
-	--warmth
-	warmth = {
-		ignorestasis = true,
-		update = function(c, limbaff, i, type)
-			local WarmingAbility = FetchConfigStats().WarmingAbility
-			local WarmthScaling = 4
-			local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
-			-- Warm up skin.
-			if limbaff[i].strength > 0 then
-				THERM.ApplyTemperatureUpdate(c.character.ID)
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
-				if not (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-				limbaff.ntt_temperature.strength = limbaff.ntt_temperature.strength 
-					+ (WarmingAbility
-					/(limbaff.ntt_temperature.strength/MaxWarmingTemp)
-					/WarmthScaling 
-					* NT.Deltatime)
-				end
-				c.stats.speedmultiplier = c.stats.speedmultiplier * 1.05 -- 5% speed increase per limb
-				if c.afflictions.bloodpressure.strength > 100 then
-					c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength - (.05 * NT.Deltatime)
-				end
-				limbaff[i].strength = limbaff[i].strength - 1.7 * NT.Deltatime
-				if type == LimbType.Torso and c.afflictions.internalbleeding.strength > 0 then
-					c.afflictions.internalbleeding.strength = c.afflictions.internalbleeding.strength
-						+ 0.2 * NT.Deltatime
-				end
-			end
-		end,
-	},
-
-	--iced to lower temperature
-	ntt_iced = {
-		ignorestasis = true,
-		update = function(c, limbaff, i, type)
-			local CoolingAbility = FetchConfigStats().WarmingAbility
-			local MaxCoolingTemp = FetchOtherStats().MaxCoolingTemp
-			local CoolScaling = -2.9
-			-- over time skin temperature goes up again
-			if limbaff.iced.strength > 0 then
-				THERM.ApplyTemperatureUpdate(c.character.ID)
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
-				if not (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-				limbaff.ntt_temperature.strength = limbaff.ntt_temperature.strength 
-					+ ((CoolingAbility
-					/(MaxCoolingTemp/limbaff.ntt_temperature.strength))
-					* CoolScaling  
-					* NT.Deltatime)
-				end
-			end
-		end,
-	},
-
-	--wet
-	wet = {
-		ignorestasis = true,
-		update = function(c, limbaff, i, type)
-			-- cool down skin.
-			if limbaff[i].strength > 1.1 then
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
-				if not (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					THERM.ApplyTemperatureUpdate(c.character.ID)
-					local WetStrength = limbaff[i].strength
-					local WetTempAddition = .1
-
-					if limbaff.bandaged.strength > 0 and NTConfig.Get("WaterDirtiesBandages",true) then
-						limbaff.dirtybandage.strength = limbaff.dirtybandage.strength + (WetStrength/4 * NT.Deltatime)
-						limbaff.bandaged.strength = limbaff.bandaged.strength - (WetStrength/4 * NT.Deltatime)
-					end
-
-					limbaff.ntt_temperature.strength = limbaff.ntt_temperature.strength 
-						+ (.05
-							* (WetStrength + WetTempAddition) 
-								* NT.Deltatime)
-				else
-					-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
-					limbaff[i].strength = 0
-					THERM.ApplyTemperatureUpdate(c.character.ID)
-				end
-			end
-		end,
-	},
-
-	--frostnip
-	frostnip = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 and limbaff.d1_frostbite.strength == 0 and not THERM.IsLimbCyber(c.character,type) and not THERM.HasHuskSymbiosis(c.character) then
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
-				if (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				or (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					limbaff[i].strength = 0
-				end
-				local LimbTemp = limbaff.ntt_temperature.strength
-				local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-				if LimbTemp < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling then
-					limbaff[i].strength = limbaff[i].strength + ((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* NT.Deltatime)
-				else
-					limbaff[i].strength = limbaff[i].strength - ((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* NT.Deltatime)
-				end
-				if limbaff[i].strength > 24.9  and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
-					limbaff.d1_frostbite.strength = 1
-				end
-				return
-			end
-			limbaff[i].strength = 0
-		end,
-	},
-
-	--1st degree frostbite
-	d1_frostbite = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 and not THERM.IsLimbCyber(c.character,type) and not THERM.HasHuskSymbiosis(c.character) then
-				c.stats.speedmultiplier = c.stats.speedmultiplier * 0.90 -- 10% slow per limb
-				NTC.SetSymptomTrue(c.character, "sym_pins_needles", 5)
-				limbaff.frostnip.strength = 0
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
-				if (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				or (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					limbaff[i].strength = 0
-				end
-				local LimbTemp = limbaff.ntt_temperature.strength
-				local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-				if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
-					limbaff[i].strength = limbaff[i].strength + ((HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/LimbTemp)/2 * NT.Deltatime)
-				else
-					limbaff[i].strength = limbaff[i].strength - ((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling)* NT.Deltatime)
-					if limbaff[i].strength < .1 then
-						limbaff.frostnip.strength = 24.9
-					end
-				end
-				if limbaff[i].strength > 24.9 and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
-					limbaff.d2_frostbite.strength = 1
-				end
-				limbaff.reperfusion_injury.strength = limbaff.reperfusion_injury.strength + CalculateReperfusionInjury("d1", limbaff[i].strength,HF.GetAfflictionStrengthLimb(c.character, type, "ntt_temperature", 0))
-				return
-			end
-			limbaff[i].strength = 0
-		end,
-	},
-
-	--2nd degree frostbite
-	d2_frostbite = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 and not THERM.IsLimbCyber(c.character,type) and not THERM.HasHuskSymbiosis(c.character) then
-				c.stats.speedmultiplier = c.stats.speedmultiplier * 0.80 -- 20% slow per limb
-				NTC.SetSymptomTrue(c.character, "sym_pins_needles", 5)
-				limbaff.d1_frostbite.strength = 0
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
-				if (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				or (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					limbaff[i].strength = 0
-				end
-				local LimbTemp = limbaff.ntt_temperature.strength
-				local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-				limbaff.bloodclot.strength = limbaff.bloodclot.strength + (CalculateBloodClots(c.character,type) * NT.Deltatime)
-				if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
-					limbaff[i].strength = limbaff[i].strength + ((HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5/LimbTemp)/2 * NT.Deltatime)
-				else
-					limbaff[i].strength = limbaff[i].strength - ((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.1) * NT.Deltatime)
-					if limbaff[i].strength < .1 then
-						limbaff.d1_frostbite.strength = 24.9
-						limbaff.chilblains.strength = limbaff.chilblains.strength + CalculateChilblains(type,c.character)
-						limbaff.inflammation.strength = 10
-						limbaff.pain_extremity.strength = 10
-					end
-				end
-				if limbaff[i].strength > 24.9 and LimbTemp < 2 and not NT.LimbIsAmputated(c.character, type) then
-					limbaff.d3_frostbite.strength = 1
-				end
-				limbaff.reperfusion_injury.strength = limbaff.reperfusion_injury.strength + CalculateReperfusionInjury("d2", limbaff[i].strength,HF.GetAfflictionStrengthLimb(c.character, type, "ntt_temperature", 0))
-				return
-			end
-			limbaff[i].strength = 0
-		end,
-	},
-
-	--3rd degree frostbite
-	d3_frostbite = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 and not THERM.IsLimbCyber(c.character,type) and not THERM.HasHuskSymbiosis(c.character) then
-				c.stats.speedmultiplier = c.stats.speedmultiplier * 0.70 -- 30% slow per limb
-				limbaff.d2_frostbite.strength = 0
-				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
-				if (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-				or (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					limbaff[i].strength = 0
-				end
-				limbaff.bloodclot.strength = limbaff.bloodclot.strength + (CalculateBloodClots(c.character,type,.1) * NT.Deltatime)
-				if limbaff.ntt_temperature.strength < 2 then
-					limbaff[i].strength = limbaff[i].strength + (.5 * NT.Deltatime)
-				end
-				if limbaff[i].strength > 10 then
-						if limbaff.gangrene.strength < 15 then
-							limbaff.gangrene.strength = 15
-						end
-						limbaff.gangrene.strength = limbaff.gangrene.strength + (.1 * NT.Deltatime)
-				else
-					limbaff[i].strength = limbaff[i].strength - (.2 * NT.Deltatime)
-					if limbaff[i].strength < .1 then
-						limbaff.d2_frostbite.strength = 24.9
-						limbaff.inflammation.strength = 10
-					end
-				end
-				if NT.LimbIsAmputated(c.character, type) then
-					limbaff.d3_frostbite.strength = 0
-					limbaff.d2_frostbite.strength = 24.9
-					limbaff.chilblains.strength = limbaff.chilblains.strength + CalculateChilblains(type,c.character)
-					limbaff.pain_extremity.strength = 10
-					limbaff.inflammation.strength = 10
-				end
-				limbaff.reperfusion_injury.strength = limbaff.reperfusion_injury.strength + CalculateReperfusionInjury("d3", limbaff[i].strength,HF.GetAfflictionStrengthLimb(c.character, type, "ntt_temperature", 0))
-				return
-			end
-			limbaff[i].strength = 0
-		end,
-	},
-	
-	--Blood Clots
-	bloodclot = {
-		min = 0,
-		max = 25,
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				local BloodClotDissolvingRate = 0
-				local BloodClotGrowthRate = 0
-				local BloodPressureIncrease = 0
-				local LimbClotScaling = 1
-
-				if c.stats.stasis then
-					return
-				end
-				if type == LimbType.LeftArm or type == LimbType.RightArm then
-					LimbClotScaling = .4
-				else
-					LimbClotScaling = .2
-				end
-				if limbaff[i].strength < 16 then
-					BloodClotDissolvingRate = .05
-					BloodClotGrowthRate = .02
-					BloodPressureIncrease = 1
-				elseif limbaff[i].strength < 21 then
-					LimbToSwelling(c.character,type,5)
-					BloodClotDissolvingRate = .03
-					BloodClotGrowthRate = .03
-					BloodPressureIncrease = 2
-					if math.random(0,5) > 4 and c.afflictions.lungremoved.strength == 0 then
-						c.afflictions.pulmonary_embolism.strength = c.afflictions.pulmonary_embolism.strength + (.5 * NT.Deltatime)
-					end
-				elseif limbaff[i].strength > 21 then
-					LimbToSwelling(c.character,type,5)
-					BloodPressureIncrease = 3
-					BloodClotGrowthRate = .04
-					if c.afflictions.lungremoved.strength == 0 then
-						c.afflictions.pulmonary_embolism.strength = c.afflictions.pulmonary_embolism.strength + (.5 * NT.Deltatime)
-					end
-				end
-				c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength + (BloodPressureIncrease * NT.Deltatime)
-				limbaff[i].strength = limbaff[i].strength 
-					- ((BloodClotDissolvingRate 
-						* (c.afflictions.thrombolytics.strength/10)
-							- c.afflictions.acidosis.strength/1000
-								+ c.afflictions.alkalosis.strength/1000
-									+ c.afflictions.bloodpressure.strength/1000
-										+ 1 * LimbClotScaling) 
-											+ BloodClotGrowthRate * NT.Deltatime)
-			end
-		end,
-	},
-
-	-- Blister type rab lat stuff. I just noticed I mis-typed that around 5 days later, we're balling with it tho.
-	chilblains = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				local PassiveDecay = .05
-				local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-				limbaff[i].strength = limbaff[i].strength - ((PassiveDecay
-					+ limbaff.bandaged.strength/500 
-						* HF.Clamp(limbaff.ointmented.strength/50,1,2))
-							* HF.Clamp(limbaff.warmth.strength/50,1,2)
-								* NT.Deltatime)
-				if limbaff.ntt_temperature.strength > HyperthermiaLevel then
-					limbaff.infectedwound.strength = limbaff.infectedwound.strength + (.05 * NT.Deltatime)
-				end
-				if limbaff.bandaged.strength < 1 then
-					limbaff.infectedwound.strength = limbaff.infectedwound.strength + ((limbaff.wet.strength/100) + math.random(.5,1) * NT.Deltatime)
-				end
-			end
-		end,
-	},
-
-	-- Reperfusion Injury.
-	reperfusion_injury = {
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				local InternalDamageRate = .05
-				local BoneDamage = .1
-				local PassiveHeal = .1
-				limbaff.internaldamage.strength = limbaff.internaldamage.strength + (InternalDamageRate * NT.Deltatime)
-				c.afflictions.bonedamage.strength = c.afflictions.bonedamage.strength + (BoneDamage * NT.Deltatime)
-				limbaff[i].strength = limbaff[i].strength - PassiveHeal
-			end
-		end,
-	},
-
-	-- Heat Cramp
-	heat_cramp = {
-		max = 25,
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-				HF.AddAfflictionLimb(c.character, "spasm", type, 10)
-				limbaff[i].strength = limbaff[i].strength 
-										- (.5 -- Go down 1 percent each tick.
-										- (c.afflictions.afsaline.strength/50)
-										* NT.Deltatime)
-				if limbaff.ntt_temperature.strength < HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
-					limbaff[i].strength = 0
-				end
-			end
-		end,
-	},
-
-	-- SURGERYYYYYY
-	
-	-- Remove
-	removed_skin = {
-		max = 20,
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				limbaff.infectedwound.strength = limbaff.infectedwound.strength + (.25 * NT.Deltatime)
-				limbaff.inflammation.strength = 10
-			end
-		end,
-	},
-
-	-- Graft
-	grafted_skin = {
-		max = 10,
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				
-			end
-		end,
-	},
-	-- Stretch
-	stretched_skin = {
-		max = 20,
-		update = function(c, limbaff, i, type)
-			if limbaff[i].strength > 0 then
-				c.stats.speedmultiplier = c.stats.speedmultiplier * 0.70 -- 30% slow per limb
-				limbaff[i].strength = limbaff[i].strength - (.05 * NT.Deltatime)
-			end
-		end,
-	},
-}
-
-NTCS_Thermal.UpdateAfflictions = {
-
-	-- Pulmonary Embolism
-	pulmonary_embolism = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				if c.afflictions.lungremoved.strength > 0 then
-						if c.afflictions.lungdamage.strength >= 50 then
-							c.afflictions.internalbleeding.strength = 50
-						end
-						c.afflictions[i].strength = 0
-					end
-
-				if c.stats.stasis then
-					return
-				end
-
-				if c.afflictions[i].strength > 10 then
-					NTC.SetSymptomTrue(c.character, "dyspnea", 5)
-				elseif c.afflictions[i].strength > 25 then
-					NTC.SetSymptomTrue(c.character, "dyspnea", 5)
-					NTC.SetSymptomTrue(c.character, "pain_chest", 5)
-				elseif c.afflictions[i].strength > 75 then
-					NTC.SetSymptomTrue(c.character, "dyspnea", 5)
-					NTC.SetSymptomTrue(c.character, "pain_chest", 5)
-					NTC.SetSymptomTrue(c.character, "triggersym_respiratoryarrest", 2)
-				end
-				c.afflictions[i].strength = c.afflictions[i].strength 
-					- (c.afflictions.thrombolytics.strength/3.5 
-					- c.afflictions.afstreptokinase.strength/10 
-					- .2 
-					* NT.Deltatime)
-			end
-		end,
-	},
-
-	-- Pulmonary Edema
-		pulmonary_edema = {
-			max = 100,
-			update = function(c, i)
-				if c.afflictions[i].strength > 0 then
-
-					if c.afflictions.lungremoved.strength > 0 then
-						if c.afflictions.lungdamage.strength >= 50 then
-							c.afflictions.internalbleeding.strength = 50
-						end
-						c.afflictions[i].strength = 0
-					end
-
-					if c.stats.stasis then
-						return
-					end
-					
-					c.afflictions[i].strength = c.afflictions[i].strength 
-						+ (c.afflictions.heartdamage.strength/80 -- Heart Damage aids Edema
-						+ c.afflictions.bloodpressure.strength/50 -- High blood pressure aids in edema
-						+ c.afflictions.sepsis.strength/50 -- Sepsis still isn't chill
-						+ THERM.GetCharacter(c.character.ID).LimbWaterValues.TorsoV/50 -- Swimming induced pulmonary edema.
-						- c.afflictions.diuretics.strength/10 -- Treatment
-						* NT.Deltatime) -- Delta gameplay
-						NTC.SetSymptomTrue(c.character, "dyspnea", 5)
-						if c.afflictions[i].strength > 25 then
-							NTC.SetSymptomTrue(c.character, "sym_wheezing", 5)
-							if c.afflictions[i].strength > 70 then
-								NTC.SetSymptomTrue(c.character, "sym_hematemesis", 5)
-								NTC.SetSymptomTrue(c.character, "triggersym_respiratoryarrest", 2)
+							-- Give hypothermia
+							if affStr < HypothermiaLevel and not THERM.HasHuskSymbiosis(C.Human) then
+								NTCS.HF.SetAffliction(C.Human, "hypothermia", 100)
+								if affStr < HypothermiaLevel * NTCS_Thermal.ExtremeHypothermiaScaling then
+								C:SetSymptomTrue("shortnessofbreath", 2)
+								end
+							
+							-- Give hyperthermia
+							elseif affStr > HyperthermiaLevel then
+								NTCS.HF.SetAffliction(C.Human, "hyperthermia", 100)
+								-- Get burnt nerd
+								if affStr > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
+									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, .5 * dT, C.Human)
+								elseif affStr > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.3 then
+									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, 2 * dT, C.Human)
+								end
 							end
+
+							-- Transfer heat from body to rest of character for accurate gameplay provided by thou Rat Jaccuzi
+							C:SetAfflictionLimb(ID,Limb,affStr + TransferBodyHeat(C.Human,TorsoTempStrength))
+							affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 						end
-				elseif c.afflictions.heartdamage.strength > 80 and c.afflictions.heartremoved.strength == 0 then
-					c.afflictions[i].strength = 1
-				end
-			end,
-		},
 
-	--Hypothermia 
-	hypothermia = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 and not THERM.HasHuskSymbiosis(c.character) then
-				local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-				local TorsoTemp = HF.GetAfflictionStrength(c.character, "ntt_temperature", 0)
-
-				local LowHypo = function ()
-					c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength + (.05 * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "hypoventilation", 2)
-				end
-
-				local MedHypo = function ()
-					c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength + (.1 * NT.Deltatime)
-					c.afflictions.pulmonary_edema.strength = c.afflictions.pulmonary_edema.strength 
-						+ (THERM.GetCharacter(c.character.ID).LimbWaterValues.TorsoV/50 
-						* c.afflictions.lungdamage.strength/50
-						* NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "sym_paleskin", 5)
-					NTC.SetSymptomTrue(c.character, "sym_unconsciousness", 2)
-				end
-
-				local HighHypo = function ()
-					NTC.SetSymptomTrue(c.character, "triggersym_respiratoryarrest", 2)
-					c.afflictions.analgesia.strength = c.afflictions.analgesia.strength + (.5 * NT.Deltatime)
-					c.afflictions.immunity.strength = c.afflictions.immunity.strength - (5 * NT.Deltatime)
-				end
-
-				local CookedHypo = function ()
-					c.afflictions.frozen_vessels.strength = c.afflictions.frozen_vessels.strength + (2 * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "triggersym_coma", 2)
-				end
-
-				c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength + (.2 * NT.Deltatime)
-				if TorsoTemp < 2 then -- Horrible Hypothermia
-					CookedHypo()
-					HighHypo()
-					MedHypo()
-					LowHypo()
-
-				elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/2 then -- Bad Hypothermia
-					HighHypo()
-					MedHypo()
-					LowHypo()
-
-				elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then -- Decent Hypothermia
-					MedHypo()
-					LowHypo()
-
-				elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then -- Low Hypothermia
-					LowHypo()
-				end
-
-				if  HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) > HypothermiaLevel then
-					c.afflictions.hypothermia.strength = 0
-				end
-
-			elseif c.afflictions[i].strength > 0 and THERM.HasHuskSymbiosis(c.character) then
-				c.stats.speedmultiplier = c.stats.speedmultiplier * ((HypothermiaLevel/2)/HF.GetAfflictionStrength(c.character, "ntt_temperature", 0))/2
-			else
-				c.afflictions.hypothermia.strength = 0
-			end
-		end,
-	},
-
-	--Hyperthermia
-	hyperthermia = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				local Death = (5 * NT.Deltatime)
-				local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-				local TorsoTemp = HF.GetAfflictionStrength(c.character, "ntt_temperature", 0)
-				c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength - (.2 * NT.Deltatime)
-
-				if TorsoTemp < HyperthermiaLevel then
-					c.afflictions.hyperthermia.strength = 0
-					return
-				end
-
-				if TorsoTemp > HyperthermiaLevel and TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-					NTC.SetSymptomTrue(c.character, "sym_sweating", 2)
-				end
-
-				local MediumHyper = function ()
-					c.afflictions.heat_stroke.strength = c.afflictions.heat_stroke.strength + (1 * NT.Deltatime)
-					HF.AddAffliction(c.character, "huskinfection", -10 * NT.Deltatime, c.character) -- EXTERMINATE THE BITCH ASS HUSK. JUSTICE FOR ARTIE DOOLITTLE. THOSE BASTARDS SLIMED HIM OUT. God speed artie, love you.
-					-- NT Symbiote compat:
-					if HF.HasAffliction(c.character, "surgery_huskhealth", 1) then
-						HF.AddAffliction(c.character, "surgery_huskhealth", -10 * NT.Deltatime, c.character)
-					end
-				end
-
-				local ExtremeHyper = function ()
-					c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + Death
-					c.afflictions.lungdamage.strength = c.afflictions.lungdamage.strength + Death
-					c.afflictions.liverdamage.strength = c.afflictions.liverdamage.strength + Death
-					c.afflictions.heartdamage.strength = c.afflictions.heartdamage.strength + Death
-					c.afflictions.kidneydamage.strength = c.afflictions.kidneydamage.strength + Death
-				end
-
-				if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling then
-					NTC.SetSymptomTrue(c.character, "sym_headache", 2)
-
-				elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-					NTC.SetSymptomTrue(c.character, "sym_headache", 2)
-					MediumHyper()
-
-				elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.2 then
-					NTC.SetSymptomTrue(c.character, "sym_headache", 2)
-					MediumHyper()
-					ExtremeHyper()
-
-				if THERM.HasHuskSymbiosis(c.character) then
-					c.stats.speedmultiplier = c.stats.speedmultiplier / (HF.GetAfflictionStrength(c.character, "ntt_temperature", 0)/(HyperthermiaLevel))/2
-				end
-
-				end
-			end
-		end,
-	},
-
-	-- FrozenVessels
-	frozen_vessels = {
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				local PassiveDecay = .2
-				local CellDeathGrowth = .2
-				local BodyTemp = HF.GetAfflictionStrength(c.character, "ntt_temperature", 0)
-				local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-				if c.afflictions[i].strength < 10 then
-					c.afflictions[i].strength = c.afflictions[i].strength - (PassiveDecay * NT.Deltatime)
-				end
-				if BodyTemp > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/4.5 then
-					local Formula = ((CellDeathGrowth + BodyTemp/10)  * NT.Deltatime)
-					c.afflictions.cell_death.strength = c.afflictions.cell_death.strength + Formula
-					c.afflictions[i].strength = c.afflictions[i].strength - Formula
-				end
-				-- aafn clutch.
-				c.afflictions[i].strength = c.afflictions[i].strength - (c.afflictions.aafn.strength/20 * NT.Deltatime)
-			end
-		end,
-	},
-
-	-- Cell Death (Clots and prayers)
-	cell_death = {
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				local InternalBleedingIncrease = .2
-				local LiverDamageIncrease = 1
-				local Death = (1 * NT.Deltatime)
-				c.afflictions.internalbleeding.strength = c.afflictions.internalbleeding.strength + (InternalBleedingIncrease * NT.Deltatime)
-
-				local KillOrgans = function ()
-					c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + Death
-					c.afflictions.lungdamage.strength = c.afflictions.lungdamage.strength + Death
-					c.afflictions.liverdamage.strength = c.afflictions.liverdamage.strength + Death
-					c.afflictions.heartdamage.strength = c.afflictions.heartdamage.strength + Death
-					c.afflictions.kidneydamage.strength = c.afflictions.kidneydamage.strength + Death
-				end
-
-				if c.afflictions[i].strength <= 5 then -- Recoverable Cell death
-					NTC.SetSymptomTrue(c.character, "sym_confusion", 5)
-					-- It does slowly go down.
-					c.afflictions[i].strength = c.afflictions[i].strength - (.01 * NT.Deltatime)
-					
-				elseif c.afflictions[i].strength > 5 and c.afflictions[i].strength <= 30 then -- Bad Cell death
-					NTC.SetSymptomTrue(c.character, "sym_nausea", 5)
-					KillOrgans()
-
-				elseif c.afflictions[i].strength > 30 then -- Death
-					NTC.SetSymptomTrue(c.character, "sym_nausea", 5)
-					KillOrgans()
-					c.afflictions.internalbleeding.strength = c.afflictions.internalbleeding.strength + (InternalBleedingIncrease * 2 * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "triggersym_stroke", 5)
-				end
-
-			end
-		end,
-	},
-
-	--Give temperature affliction, this is used to hook water and fire related stuff to the player for temperature.
-	-- Those aren't stored in here since they have a independent tick rate.
-	givetemp = {
-		max = 3,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				return
-			else
-				THERM.IntiateCharacterTemp(c.character)
-				THERM.ValidateThermalCharacterData()
-				c.afflictions[i].strength = 3
-			end
-		end,
-	},
-
-	-- Rip
-	aafn_overdose = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				local Death = (5 * NT.Deltatime)
-				if c.afflictions.aafn.strength > 0 then
-					c.afflictions[i].strength = c.afflictions[i].strength + Death
-				else
-					c.afflictions[i].strength = c.afflictions[i].strength + (Death * -1)
-				end
-				c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + Death
-				c.afflictions.lungdamage.strength = c.afflictions.lungdamage.strength + Death
-				c.afflictions.liverdamage.strength = c.afflictions.liverdamage.strength + Death
-				c.afflictions.heartdamage.strength = c.afflictions.heartdamage.strength + Death
-				c.afflictions.kidneydamage.strength = c.afflictions.kidneydamage.strength + Death
-				c.afflictions.seizure.strength = c.afflictions.seizure.strength + (10 * NT.Deltatime)
-			end
-		end,
-	},
-
-	-- Thermal Shock
-	thermal_shock = {
-		max = 100,
-		update = function(c, i)
-			local HeadTemp = HF.GetAfflictionStrengthLimb(c.character, LimbType.Head, "ntt_temperature", 0)
-			local LastHeadTemp = 0
-			local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
-			if THERM.GetCharacter(c.character.ID) ~= nil then
-				LastHeadTemp = THERM.GetCharacter(c.character.ID).LastStoredHeadTemp
-			end
-			if LastHeadTemp == 0 then
-				LastHeadTemp = HeadTemp
-			end
-			local ShockMargin = FetchConfigStats().ShockMargin * NT.Deltatime
-			local ShockDecrease = 2.5
-			if c.afflictions[i].strength > 0 then
-				NTC.SetSymptomTrue(c.character, "triggersym_seizure", 5)
-				NTC.SetSymptomTrue(c.character, "triggersym_stroke", 5)
-				c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + (.05 * NT.Deltatime)
-				c.afflictions[i].strength = c.afflictions[i].strength -  (ShockDecrease * NT.Deltatime)
-			elseif LastHeadTemp ~= HeadTemp then
-				if    HeadTemp/LastHeadTemp/2 > ShockMargin -- Too hot
-				   or LastHeadTemp/HeadTemp/2 > ShockMargin -- Too cold
-				then
-					if (HeadTemp < NormalBodyTemp and LastHeadTemp > NormalBodyTemp)
-						or (HeadTemp > NormalBodyTemp and LastHeadTemp < NormalBodyTemp)
-						then
-						c.afflictions[i].strength = 100
+						-- Passive temperature reactions
+						-- Warm up if cold.
+						local RoomTempGain = GetRoomTempAddition(C.Human,Limb)
+						local AmputatedLimbValue = NTCS.HF.BoolToNum(NTCS.HF.LimbIsAmputated(C.Human, Limb),1) + 1
+						if affStr < NormalBodyTemp then
+							C:SetAfflictionLimb(ID,Limb,NTCS.HF.Clamp(affStr
+								+ RoomTempGain + (.05
+									/CompromisedTempVal
+										*(C:GetAfflictionStrength("bloodpressure")
+											/100)/AmputatedLimbValue
+												* dT),1,NormalBodyTemp))
+						
+						-- Cool down if warm
+						elseif affStr > NormalBodyTemp then
+							C:SetAfflictionLimb(ID,Limb,NTCS.HF.Clamp(affStr
+									- RoomTempGain - (.05
+										/CompromisedTempVal
+											*(C:GetAfflictionStrength("bloodpressure")
+												/100)/AmputatedLimbValue 
+												* dT),NormalBodyTemp,101))
+						end
+					else
+						-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
+						C:SetAfflictionLimb(ID,Limb,NormalBodyTemp)
+						NTCS.HF.SetAffliction(C.Human, "overlay_ice", 0)
+						NTCS.HF.SetAffliction(C.Human, "overlay_fire", 0)
 					end
 				end
 			end
-		end,
-	},
+			return
+		-- Set Temperature since the current is 0.
+		else
+			C:SetAfflictionLimb(ID,Limb,FetchConfigStats().NormalBodyTemp)
+		end  
+    end)
+    :Build()
+)
 
-	-- Heat Stroke
-	heat_stroke = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				local TorsoTemp = HF.GetAfflictionStrength(c.character, "ntt_temperature", 0)
-				local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-				NTC.SetSymptomTrue(c.character, "triggersym_seizure", 2)
-				NTC.SetSymptomTrue(c.character, "sym_blurredvision", 2)
-				NTC.SetSymptomTrue(c.character, "sym_confusion", 2)
-				if c.afflictions[i].strength > 50 then
-					NTC.SetSymptomTrue(c.character, "triggersym_heartattack", 2)
-				end
-				if c.afflictions[i].strength > 75 then
-					c.afflictions.cerebralhypoxia.strength = c.afflictions.cerebralhypoxia.strength + (.1 * NT.Deltatime)
-				end
-				if TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-					c.afflictions[i].strength = 0
-				end
+-- warmth
+affLoader:Register(
+    builder:New("warmth")
+    :SetStrengths(0,100,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local WarmingAbility = FetchConfigStats().WarmingAbility
+		local WarmthScaling = 4
+		local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		-- Warm up skin.
+		if affStr > 0 then
+			THERM.ApplyTemperatureUpdate(C.Human.ID)
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
+			if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+			
+			NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, (WarmingAbility
+									/(C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)/MaxWarmingTemp)
+									/WarmthScaling 
+									* dT), C.Human)
 			end
-		end,
-	},
+			
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 1.05) -- 5% speed increase per limb
+			if C:GetAfflictionStrength("bloodpressure") > 100 then
+				C:AddAffliction("bloodpressure",-.05 * dT)
+			end
 
-	-- Panicking
-	panicking = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				c.afflictions[i].strength = c.afflictions[i].strength - (10 * NT.Deltatime)
-				for n, limb in pairs({LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}) do
-					HF.AddAfflictionLimb(c.character, "onfire", limb, 1 * NT.Deltatime, c.character)
+			NTCS.HF.AddAfflictionLimb(C.Human, "warmth", Limb, -1.7 * dT, C.Human)
+
+			if Limb == LimbType.Torso and C:GetAfflictionStrength("internalbleeding") > 0 then
+				C:AddAffliction("internalbleeding",0.2 * dT)
+			end
+		end
+
+	end)
+	:Build()
+)
+
+-- ntt_iced
+affLoader:Register(
+    builder:New("ntt_iced")
+    :SetStrengths(0,100,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local CoolingAbility = FetchConfigStats().WarmingAbility
+		local MaxCoolingTemp = FetchOtherStats().MaxCoolingTemp
+		local CoolScaling = -2.9
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+		local icedStr = C:GetAfflictionStrengthLimb("iced",Limb,0)
+
+		-- over time skin temperature goes up again
+		if icedStr > 0 then
+			THERM.ApplyTemperatureUpdate(C.Human.ID)
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
+			if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+			NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, ((CoolingAbility
+				/(MaxCoolingTemp/C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)))
+				* CoolScaling  
+				* dT), C.Human)
+			end
+		end
+		
+	end)
+	:Build()
+)
+
+-- wet
+affLoader:Register(
+    builder:New("wet")
+    :SetStrengths(0,100,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		-- cool down skin.
+		if affStr > 1.1 then
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
+			if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				THERM.ApplyTemperatureUpdate(C.Human.ID)
+				local WetStrength = affStr
+				local WetTempAddition = .1
+
+				if C:GetAfflictionStrengthLimb("bandaged",Limb,0) > 0 and NTCS.Config.Get("WaterDirtiesBandages",true) then
+					NTCS.HF.AddAfflictionLimb(C.Human, "dirtybandage", Limb, WetStrength/4 * dT, C.Human)
+					NTCS.HF.AddAfflictionLimb(C.Human, "bandaged", Limb, -WetStrength/4 * dT, C.Human)
 				end
+
+				NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, (.05
+						* (WetStrength + WetTempAddition) 
+							* dT), C.Human)
 			else
+				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
+				C:SetAfflictionLimb(ID,Limb,0)
+				THERM.ApplyTemperatureUpdate(C.Human.ID)
 			end
-		end,
-	},
 
-	-- Heated Diving Suit
-	heated_diving_suit = {
-		max = 100,
-		update = function(c, i)
+		end
+	end)
+	:Build()
+)
+
+-- frostnip
+affLoader:Register(
+    builder:New("frostnip")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+		local d1_frostbiteStr = C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
+
+		if affStr > 0 and d1_frostbiteStr == 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
+
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
+			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			or (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
+
+			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			if LimbTemp < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling then
+				C:AddAffliction(ID,((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* dT))
+			else
+				C:AddAffliction(ID,-((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* dT))
+			end
+			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+			if affStr > 24.9  and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
+				C:SetAfflictionLimb("d1_frostbite",Limb,1)
+			end
+			return
+		end
 
-			local CharacterTable = THERM.GetCharacter(c.character.ID,c.character)
-			if c.afflictions[i].strength > 0 then
-				local LimbsToCheck2 = {LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}
-				for index, limb in pairs(LimbsToCheck2) do
-					local LimbTemp = HF.GetAfflictionStrengthLimb(c.character, limb, "ntt_temperature", 0)
-					if LimbTemp < FetchConfigStats().NormalBodyTemp then
-						local WaterKey = THERM.LimbToWaterLimbV(limb)
-						local WaterCounter = HF.Clamp(CharacterTable.LimbWaterValues[WaterKey]/1,.1,1)
-						local IsCyber = HF.BoolToNum(THERM.IsLimbCyber(c.character,limb),1) + 1
-						local TempAmount = (HypothermiaLevel/LimbTemp/25) * (c.afflictions[i].strength/100) * 10 * IsCyber * WaterCounter * NT.Deltatime * NTConfig.Get("HeatedDivingSuitStrength",1)
-						HF.AddAfflictionLimb(c.character, "ntt_temperature", limb, TempAmount)
-					end
+		C:SetAfflictionLimb(ID,Limb,0)
+
+	end)
+	:Build()
+)
+
+-- d1_frostbite
+affLoader:Register(
+    builder:New("d1_frostbite")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.90) -- 10% slow per limb
+			C:SetSymptomTrue("sym_pins_needles", 5)
+			C:SetAfflictionLimb("frostnip",Limb,0)
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
+			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			or (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
+			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
+			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
+				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/LimbTemp)/2 * dT)
+			else
+
+				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling) * dT))
+				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+				if affStr < .1 then
+					C:SetAfflictionLimb("frostnip",Limb,24.9)
+				end
+
+			end
+			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+			if affStr > 24.9 and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
+				C:SetAfflictionLimb("d2_frostbite",Limb,1)
+			end
+
+			C:AddAfflictionLimb("reperfusion_injury",Limb, CalculateReperfusionInjury("d1", affStr,NTCS.HF.GetAfflictionStrengthLimb(C.Human, Limb, "ntt_temperature", 0)))
+			return
+		end
+		
+		C:SetAfflictionLimb(ID,Limb,0)
+
+	end)
+	:Build()
+)
+
+-- d2_frostbite
+affLoader:Register(
+    builder:New("d2_frostbite")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.80) -- 20% slow per limb
+			C:SetSymptomTrue("sym_pins_needles", 5)
+			C:SetAfflictionLimb("d1_frostbite",Limb,0)
+
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
+			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			or (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
+
+			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
+			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			C:AddAfflictionLimb("bloodclot", Limb, (CalculateBloodClots(C.Human,Limb,1,dT) * dT))
+			if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
+				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5/LimbTemp)/2 * dT)
+			else
+
+				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.1) * dT))
+				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+				if affStr < .1 then
+					C:SetAfflictionLimb("d1_frostbite",Limb,24.9)
+					C:SetAfflictionLimb("chilblains",Limb,CalculateChilblains(type,C.Human))
+					C:SetAfflictionLimb("inflammation",Limb,10)
+					C:SetAfflictionLimb("intensepain",Limb,10)
+				end
+
+			end
+			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+			if affStr > 24.9 and LimbTemp < 2 and not NTCS.NT.LimbIsAmputated(C.Human, Limb) then
+				C:SetAfflictionLimb("d3_frostbite",Limb,1)
+			end
+
+			C:AddAfflictionLimb("reperfusion_injury",Limb, CalculateReperfusionInjury("d2", affStr,NTCS.HF.GetAfflictionStrengthLimb(C.Human, Limb, "ntt_temperature", 0)))
+			return
+		end
+		
+		C:SetAfflictionLimb(ID,Limb,0)
+
+	end)
+	:Build()
+)
+
+-- d3_frostbite
+affLoader:Register(
+    builder:New("d3_frostbite")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.70) -- 30% slow per limb
+			C:SetAfflictionLimb("d2_frostbite",Limb,0)
+
+			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
+			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+			or (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
+			
+			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
+			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			C:AddAfflictionLimb("bloodclot",Limb,(CalculateBloodClots(C.Human,Limb,.1,dT) * dT))
+
+			if LimbTemp < 2 then
+				C:AddAfflictionLimb(ID,Limb, .5 * dT)
+			end
+			if affStr > 10 then
+
+				if C:GetAfflictionStrengthLimb("gangrene",Limb,0) < 15 then
+					C:SetAfflictionLimb("gangrene",Limb,15)
+				end
+				C:AddAfflictionLimb("gangrene",Limb, .1 * dT)
+
+			else
+				C:AddAfflictionLimb(ID,Limb, -.2 * dT)
+				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+				if affStr < .1 then
+					C:SetAfflictionLimb("d2_frostbite",Limb,24.9)
+					C:SetAfflictionLimb("inflammation",Limb,10)
 				end
 			end
 
-			local DivingSuit = THERM.GetSuitSlot(c.character)
-			local HeadSet = THERM.GetHeadSetSlot(c.character)
-			if DivingSuit == nil then -- Remove our heating, we dont have a suit.
-				c.afflictions[i].strength = 0
+			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+			if NTCS.NT.LimbIsAmputated(C.Human, Limb) then
+				C:SetAfflictionLimb("d3_frostbite",Limb,0)
+				C:SetAfflictionLimb("d2_frostbite",Limb,24.9)
+				C:AddAfflictionLimb("chilblains",Limb,CalculateChilblains(Limb,C.Human))
+				C:SetAfflictionLimb("pain_extremity",Limb,10)
+				C:SetAfflictionLimb("inflammation",Limb,10)
+			end
+
+			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+			C:AddAfflictionLimb("reperfusion_injury",Limb,
+				CalculateReperfusionInjury("d3", affStr, NTCS.HF.GetAfflictionStrengthLimb(C.Human, Limb, "ntt_temperature", 0)))
+			return
+
+		end
+		C:SetAfflictionLimb(ID,Limb,0)
+
+	end)
+	:Build()
+)
+
+-- bloodclot
+affLoader:Register(
+    builder:New("bloodclot")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			local BloodClotDissolvingRate = 0
+			local BloodClotGrowthRate = 0
+			local BloodPressureIncrease = 0
+			local LimbClotScaling = 1
+			
+			if C:GetBoolStat("stasis") then
 				return
 			end
-			local DivingSuitIdentifier = "BlahBlah"
-			if DivingSuit ~= nil then DivingSuitIdentifier = tostring(DivingSuit.Prefab.Identifier) end
-			local Helmet = THERM.GetInnerSlot(c.character)
-			local Bag = THERM.GetBagSlot(c.character)
-			local BatteryConsumption = NTConfig.Get("HeaterBatteryConsumption",.2) * NT.Deltatime
+			if Limb == LimbType.LeftArm or Limb == LimbType.RightArm then
+				LimbClotScaling = .4
+			else
+				LimbClotScaling = .2
+			end
+			if affStr < 16 then
 
-			local Increase = function (UseBattery, BatteryCell) -- Increase Suit Heat
-				c.afflictions[i].strength = c.afflictions[i].strength + (5 * NT.Deltatime)
-				if UseBattery then
-					BatteryCell.Condition = BatteryCell.Condition - BatteryConsumption
+				BloodClotDissolvingRate = .05
+				BloodClotGrowthRate = .02
+				BloodPressureIncrease = 1
+
+			elseif affStr < 21 then
+
+				LimbToSwelling(C.Human,Limb,5)
+				BloodClotDissolvingRate = .03
+				BloodClotGrowthRate = .03
+				BloodPressureIncrease = 2
+
+				if math.random(0,5) > 4 and C:GetAfflictionStrength("lungremoved") == 0 then
+					C:AddAffliction("pulmonary_embolism",.5 * dT)
+				end
+
+			elseif affStr > 21 then
+
+				LimbToSwelling(C.Human,Limb,5)
+				BloodPressureIncrease = 3
+				BloodClotGrowthRate = .04
+
+				if C:GetAfflictionStrength("lungremoved") == 0 then
+					C:AddAffliction("pulmonary_embolism",.5 * dT)
+				end
+
+			end
+
+			C:AddAffliction("bloodpressure",BloodPressureIncrease * dT)
+
+			C:AddAffliction(ID,
+				-((BloodClotDissolvingRate 
+					* (C:GetAfflictionStrength("thrombolytics")/10)
+						- C:GetAfflictionStrength("acidosis")/1000
+							+ C:GetAfflictionStrength("alkalosis")/1000
+								+ C:GetAfflictionStrength("bloodpressure")/1000
+									+ 1 * LimbClotScaling) 
+										+ BloodClotGrowthRate * dT))
+		end
+
+	end)
+	:Build()
+)
+
+-- chilblains
+affLoader:Register(
+    builder:New("chilblains")
+    :SetStrengths(0,100,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			local PassiveDecay = .05
+			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
+
+			C:AddAffliction(ID,.5 * - ((PassiveDecay
+				+ C:GetAfflictionStrengthLimb("bandaged",Limb,0)/500 
+					* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("ointmented",Limb,0)/500 /50,1,2))
+						* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("warmth",Limb,0)/50,1,2)
+							* dT))
+			
+			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) > HyperthermiaLevel then
+				C:AddAfflictionLimb("infectedwound",Limb,.05 * dT)
+			end
+
+			if C:GetAfflictionStrengthLimb("bandaged",Limb,0) < 1 then
+				C:AddAfflictionLimb("infectedwound",Limb,((C:GetAfflictionStrengthLimb("wet",Limb,0)/100) + math.random(.5,1) * dT))
+			end
+
+		end
+
+	end)
+	:Build()
+)
+
+-- reperfusion_injury
+affLoader:Register(
+    builder:New("reperfusion_injury")
+    :SetStrengths(0,100,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			local InternalDamageRate = .05
+			local BoneDamage = .1
+			local PassiveHeal = .1
+			C:AddAfflictionLimb("internaldamage",Limb,InternalDamageRate * dT)
+			C:AddAfflictionLimb("bonedamage",Limb,BoneDamage * dT)
+			C:AddAfflictionLimb(ID,Limb,-PassiveHeal * dT)
+		end
+
+	end)
+	:Build()
+)
+
+-- heat_cramp
+affLoader:Register(
+    builder:New("heat_cramp")
+    :SetStrengths(0,25,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
+			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", type, 10)
+			C:AddAfflictionLimb(ID,Limb,-(.5 -- Go down 1 percent each tick.
+									- (c.afflictions.afsaline.strength/50)
+									* dT))
+			
+			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) < HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
+		end
+
+	end)
+	:Build()
+)
+
+-- removed_skin
+affLoader:Register(
+    builder:New("removed_skin")
+    :SetStrengths(0,20,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			C:AddAfflictionLimb("infectedwound",Limb,.25 * dT)
+			C:SetAfflictionLimb("inflammation",Limb,10)
+		end
+
+	end)
+	:Build()
+)
+
+-- grafted_skin
+affLoader:Register(
+    builder:New("grafted_skin")
+    :SetStrengths(0,10,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.LOW)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+
+	end)
+	:Build()
+)
+
+-- stretched_skin
+affLoader:Register(
+    builder:New("stretched_skin")
+    :SetStrengths(0,10,0)
+    :IsLimbSpecific(true)
+    :SetPriority(NTCS.AfflictionsPriority.LOW)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, Limb, dT)
+
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
+		if affStr > 0 then
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.70) -- 30% slow per limb
+			C:AddAfflictionLimb(ID,Limb,-.05 * dT)
+		end
+
+	end)
+	:Build()
+)
+
+--#endregion
+
+-- pulmonary_embolism
+affLoader:Register(
+    builder:New("pulmonary_embolism")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			if C:GetAfflictionStrength("lungremoved") > 0 then
+				if C:GetAfflictionStrength("lungdamage") >= 50 then
+					C:SetAffliction("internalbleeding",50)
+				end
+				C:SetAffliction(ID,0)
+			end
+
+			if C:GetBoolStat("stasis") then
+				return
+			end
+
+			affStr = C:GetAfflictionStrength(ID)
+
+			if affStr > 10 then
+				C:SetSymptomTrue("dyspnea", 5)
+			elseif affStr > 25 then
+				C:SetSymptomTrue("dyspnea", 5)
+				C:SetSymptomTrue("pain_chest", 5)
+			elseif affStr > 75 then
+				C:SetSymptomTrue("dyspnea", 5)
+				C:SetSymptomTrue("pain_chest", 5)
+				C:SetAffliction("respiratoryarrest",100)
+			end
+			C:AddAffliction(ID,-(C:GetAfflictionStrength("thrombolytics")/3.5 - C:GetAfflictionStrength("afstreptokinase")/10 - .2 * dT))
+
+		end
+
+	end)
+	:Build()
+)
+
+-- pulmonary_edema
+affLoader:Register(
+    builder:New("pulmonary_edema")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			if C:GetAfflictionStrength("lungremoved") > 0 then
+				if C:GetAfflictionStrength("lungdamage") >= 50 then
+					C:SetAffliction("internalbleeding",50)
+				end
+				C:SetAffliction(ID,0)
+			end
+
+			if C:GetBoolStat("stasis") then
+				return
+			end
+
+			C:AddAffliction(ID,(C:GetAfflictionStrength("heartdamage")/80 + C:GetAfflictionStrength("bloodpressure")/50
+								+ C:GetAfflictionStrength("sepsis")/50 + THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50
+								- C:GetAfflictionStrength("diuretics")/10 * dT))
+			C:SetSymptomTrue("dyspnea", 5)
+			affStr = C:GetAfflictionStrength(ID)
+			if affStr > 25 then
+				C:SetSymptomTrue("wheezing", 5)
+				if affStr > 75 then
+					C:SetSymptomTrue("vomitingblood", 5)
+					C:SetAffliction("respiratoryarrest",100)
+				end
+			end
+		elseif C:GetAfflictionStrength("heartdamage") > 80 and C:GetAfflictionStrength("heartremoved") == 0 then
+			C:SetAffliction(ID,1)
+		end
+
+	end)
+	:Build()
+)
+
+-- hypothermia
+affLoader:Register(
+    builder:New("hypothermia")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 and not THERM.HasHuskSymbiosis(C.Human) then
+			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
+
+			local LowHypo = function ()
+				C:AddAffliction("bloodpressure",(.5 * dT))
+				C:SetSymptomTrue("hypoventilation", 2)
+			end
+
+			local MedHypo = function ()
+				C:AddAffliction("bloodpressure",(.1 * dT))
+				C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * dT))
+				C:SetSymptomTrue("paleskin", 5)
+				C:SetSymptomTrue("unconsciousness", 2)
+			end
+
+			local HighHypo = function ()
+				C:SetAffliction("respiratoryarrest",100)
+				C:AddAffliction("analgesia",(.5 * dT))
+				C:AddAffliction("immunity",-(5 * dT))
+			end
+
+			local CookedHypo = function ()
+				C:AddAffliction("frozen_vessels",(2 * dT))
+				C:SetAffliction("coma",100)
+			end
+			
+			C:AddAffliction("bloodpressure",(.2 * dT))
+			if TorsoTemp < 2 then -- Horrible Hypothermia
+				CookedHypo()
+				HighHypo()
+				MedHypo()
+				LowHypo()
+
+			elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/2 then -- Bad Hypothermia
+				HighHypo()
+				MedHypo()
+				LowHypo()
+
+			elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then -- Decent Hypothermia
+				MedHypo()
+				LowHypo()
+
+			elseif TorsoTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then -- Low Hypothermia
+				LowHypo()
+			end
+
+			if  NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > HypothermiaLevel then
+				C:SetAffliction(ID,0)
+			end
+
+		elseif affStr > 0 and THERM.HasHuskSymbiosis(C.Human) then
+			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * ((HypothermiaLevel/2)/NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0))/2)
+		else
+			C:SetAffliction(ID,0)
+		end
+
+	end)
+	:Build()
+)
+
+-- hyperthermia
+affLoader:Register(
+    builder:New("hyperthermia")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			local Death = (5 * dT)
+			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
+			local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
+			C:AddAffliction("bloodpressure",(-.2 * dT))
+
+			if TorsoTemp < HyperthermiaLevel then
+				C:SetAffliction(ID,0)
+				return
+			end
+
+			if TorsoTemp > HyperthermiaLevel and TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
+				C:SetSymptomTrue("sweating", 2)
+			end
+
+			local MediumHyper = function ()
+				C:AddAffliction("heat_stroke",(1 * dT))
+				NTCS.HF.AddAffliction(C.Human, "huskinfection", -10 * dT, C.Human) -- EXTERMINATE THE BITCH ASS HUSK. JUSTICE FOR ARTIE DOOLITTLE. THOSE BASTARDS SLIMED HIM OUT. God speed artie, love you.
+				-- NT Symbiote compat:
+				if NTCS.HF.HasAffliction(C.Human, "surgery_huskhealth", 1) then
+					NTCS.HF.AddAffliction(C.Human, "surgery_huskhealth", -10 * dT, C.Human)
 				end
 			end
 
-			local Decrease = function () -- Decrease Suit Heat
-				c.afflictions[i].strength = c.afflictions[i].strength - (5 * NT.Deltatime)
+			local ExtremeHyper = function ()
+				C:AddAffliction("neurotrauma",Death)
+				C:AddAffliction("lungdamage",Death)
+				C:AddAffliction("liverdamage",Death)
+				C:AddAffliction("heartdamage",Death)
+				C:AddAffliction("kidneydamage",Death)
 			end
 
-			local Compat = function () -- This is our compatibility toggle heating.
-				if NTConfig.Get("SuitCompatiblityMode", false) or (NTConfig.Get("BotSuitSafteyMode", true) and c.character.IsBot) then
-						Increase(false)
-						return true
+			if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling then
+				C:SetSymptomTrue("sweating", 2)
+
+			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
+				C:SetSymptomTrue("sweating", 2)
+				MediumHyper()
+
+			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.2 then
+				C:SetSymptomTrue("sweating", 2)
+				MediumHyper()
+				ExtremeHyper()
+
+			if THERM.HasHuskSymbiosis(C.Human) then
+				C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") / (NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)/(HyperthermiaLevel))/2)
+			end
+		end
+
+		end
+
+	end)
+	:Build()
+)
+
+-- frozen_vessels
+affLoader:Register(
+    builder:New("frozen_vessels")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			local PassiveDecay = .2
+			local CellDeathGrowth = .2
+			local BodyTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
+			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+			
+			if affStr < 10 then
+				C:AddAffliction(ID,-PassiveDecay * dT)
+			end
+
+			if BodyTemp > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/4.5 then
+				local Formula = ((CellDeathGrowth + BodyTemp/10)  * dT)
+				C:AddAffliction("cell_death",Formula)
+				C:AddAffliction(ID,-Formula)
+			end
+
+			C:AddAffliction(ID,-(C:GetAfflictionStrength("aafn")/20 * dT))
+
+		end
+
+	end)
+	:Build()
+)
+
+-- cell_death
+affLoader:Register(
+    builder:New("cell_death")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			local InternalBleedingIncrease = .2
+			local LiverDamageIncrease = 1
+			local Death = (1 * dT)
+
+			local KillOrgans = function ()
+				C:AddAffliction("cerebralhypoxia",Death)
+				C:AddAffliction("lungdamage",Death)
+				C:AddAffliction("liverdamage",Death)
+				C:AddAffliction("heartdamage",Death)
+				C:AddAffliction("kidneydamage",Death)
+			end
+
+			if affStr <= 5 then
+				C:SetSymptomTrue("confusion", 5)
+				C:AddAffliction(ID,-(.01 * dT))
+			
+			elseif affStr > 5 and affStr <= 30 then
+				C:SetSymptomTrue("nausea", 5)
+				KillOrgans()
+			
+			elseif affStr > 30 then
+				C:SetSymptomTrue("nausea", 5)
+				KillOrgans()
+				C:AddAffliction("internalbleeding",InternalBleedingIncrease * 2 * dT)
+				C:AddAffliction("stroke",100)
+			end
+
+		end
+
+	end)
+	:Build()
+)
+
+--Give temperature affliction, this is used to hook water and fire related stuff to the player for temperature.
+-- Those aren't stored in here since they have a independent tick rate.
+-- give_temp
+affLoader:Register(
+    builder:New("give_temp")
+    :SetStrengths(0,3,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			return
+		else
+			THERM.IntiateCharacterTemp(C.Human)
+			THERM.ValidateThermalCharacterData()
+			C:SetAffliction(ID,3)
+		end
+
+	end)
+	:Build()
+)
+
+-- aafn_overdose
+affLoader:Register(
+    builder:New("aafn_overdose")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+		local Death = (5 * dT)
+
+		if affStr > 0 then
+
+			if C:GetAfflictionStrength("aafn") > 0 then
+				C:AddAffliction(ID,Death)
+
+			else
+				C:AddAffliction(ID,Death * -1)
+			end
+
+			C:AddAffliction("cerebralhypoxia",Death)
+			C:AddAffliction("lungdamage",Death)
+			C:AddAffliction("liverdamage",Death)
+			C:AddAffliction("heartdamage",Death)
+			C:AddAffliction("kidneydamage",Death)
+			C:AddAffliction("seizure",10 * dT)
+
+		end
+
+	end)
+	:Build()
+)
+
+-- thermal_shock
+affLoader:Register(
+    builder:New("thermal_shock")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local HeadTemp = NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", 0)
+		local LastHeadTemp = 0
+		local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
+
+		if THERM.GetCharacter(C.Human.ID) ~= nil then
+			LastHeadTemp = THERM.GetCharacter(C.Human.ID).LastStoredHeadTemp
+		end
+
+		if LastHeadTemp == 0 then
+			LastHeadTemp = HeadTemp
+		end
+
+		local ShockMargin = FetchConfigStats().ShockMargin * dT
+		local ShockDecrease = 2.5
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+
+			C:SetAffliction("stroke",100)
+			C:SetAffliction("seizure",100)
+			C:AddAffliction("neurotrauma",.05 * dT)
+			C:AddAffliction(ID,-(ShockDecrease * dT))
+
+		elseif LastHeadTemp ~= HeadTemp then
+			if    HeadTemp/LastHeadTemp/2 > ShockMargin -- Too hot
+				or LastHeadTemp/HeadTemp/2 > ShockMargin -- Too cold
+			then
+				if (HeadTemp < NormalBodyTemp and LastHeadTemp > NormalBodyTemp)
+					or (HeadTemp > NormalBodyTemp and LastHeadTemp < NormalBodyTemp)
+					then
+					C:SetAffliction(ID,100)
 				end
 			end
+		end
 
-			local ESH = function () -- This is our ESH heating.
-				if Bag ~= nil and Bag.Prefab.Identifier == "esh" and Bag.OwnInventory.GetItemAt(0) ~= nil and Bag.OwnInventory.GetItemAt(0).Condition > 1 then
-				local BatteryCell = Bag.OwnInventory.GetItemAt(0)
-				if BatteryCell ~= nil and BatteryCell.Condition > 1 then
-					Increase(true, BatteryCell)
+	end)
+	:Build()
+)
+
+-- heat_stroke
+affLoader:Register(
+    builder:New("heat_stroke")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
+		local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
+		local affStr = C:GetAfflictionStrength(ID)
+
+		C:SetAffliction("seizure",100)
+		C:SetSymptomTrue("blurredvision", 2)
+		C:SetSymptomTrue("confusion", 2)
+
+		if affStr > 50 then
+			C:SetAffliction("heartattack",100)
+		end
+		if affStr > 75 then
+			C:AddAffliction("neurotrauma",.1 * dT)
+		end
+		if TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
+			C:SetAffliction(ID,0)
+		end
+
+	end)
+	:Build()
+)
+
+-- panicking
+affLoader:Register(
+    builder:New("panicking")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			C:AddAffliction(ID,-10 * dT)
+			for n, limb in pairs({LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}) do
+				NTCS.HF.AddAfflictionLimb(C.Human, "onfire", limb, 1 * dT, C.Human)
+			end
+		end
+
+	end)
+	:Build()
+)
+
+-- heated_diving_suit
+affLoader:Register(
+    builder:New("heated_diving_suit")
+    :SetStrengths(0,100,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+
+		local CharacterTable = THERM.GetCharacter(C.Human.ID,C.Human)
+		if affStr > 0 then
+			local LimbsToCheck2 = {LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}
+			for index, limb in pairs(LimbsToCheck2) do
+				local LimbTemp = NTCS.HF.GetAfflictionStrengthLimb(C.Human, limb, "ntt_temperature", 0)
+				if LimbTemp < FetchConfigStats().NormalBodyTemp then
+					local WaterKey = THERM.LimbToWaterLimbV(limb)
+					local WaterCounter = NTCS.HF.Clamp(CharacterTable.LimbWaterValues[WaterKey]/1,.1,1)
+					local IsCyber = NTCS.HF.BoolToNum(THERM.IsLimbCyber(C.Human,limb),1) + 1
+					local TempAmount = (HypothermiaLevel/LimbTemp/25) * (affStr/100) * 10 * IsCyber * WaterCounter * dT * NTCS.Config.Get("HeatedDivingSuitStrength",1)
+					NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", limb, TempAmount)
+				end
+			end
+		end
+
+		local DivingSuit = THERM.GetSuitSlot(C.Human)
+		local HeadSet = THERM.GetHeadSetSlot(C.Human)
+		if DivingSuit == nil then -- Remove our heating, we dont have a suit.
+			C:SetAffliction(ID,0)
+			return
+		end
+		local DivingSuitIdentifier = "BlahBlah"
+		if DivingSuit ~= nil then DivingSuitIdentifier = tostring(DivingSuit.Prefab.Identifier) end
+		local Helmet = THERM.GetInnerSlot(C.Human)
+		local Bag = THERM.GetBagSlot(C.Human)
+		local BatteryConsumption = NTCS.Config.Get("HeaterBatteryConsumption",.2) * dT
+
+		local Increase = function (UseBattery, BatteryCell) -- Increase Suit Heat
+			C:AddAffliction(ID,5 * dT)
+			if UseBattery then
+				BatteryCell.Condition = BatteryCell.Condition - BatteryConsumption
+			end
+		end
+
+		local Decrease = function () -- Decrease Suit Heat
+			C:AddAffliction(ID,-5 * dT)
+		end
+
+		local Compat = function () -- This is our compatibility toggle heating.
+			if NTCS.Config.Get("SuitCompatiblityMode", false) or (NTCS.Config.Get("BotSuitSafteyMode", true) and C.Human.IsBot) then
+					Increase(false)
 					return true
-				end
+			end
+		end
+
+		local ESH = function () -- This is our ESH heating.
+			if Bag ~= nil and Bag.Prefab.Identifier == "esh" and Bag.OwnInventory.GetItemAt(0) ~= nil and Bag.OwnInventory.GetItemAt(0).Condition > 1 then
+			local BatteryCell = Bag.OwnInventory.GetItemAt(0)
+			if BatteryCell ~= nil and BatteryCell.Condition > 1 then
+				Increase(true, BatteryCell)
+				return true
+			end
+				return false
+			end
+		end
+
+		local CSH = function () -- This is our CSH heating.
+			if CharacterTable ~= nil and CharacterTable.CompactHeater.Equipped then
+
+				local CompactHeaterItem = CharacterTable.CompactHeater.Item
+				local CompactHeaterBattery = CompactHeaterItem.OwnInventory.GetItemAt(0)
+
+				if CompactHeaterItem.ParentInventory == C.Human.Inventory then
+					if CompactHeaterBattery ~= nil and CompactHeaterBattery.Condition > 1 then
+						Increase(true, CompactHeaterBattery)
+						return true
+					else
+						return false
+					end
+
+				else
+					CharacterTable.CompactHeater.Equipped = false
 					return false
 				end
 			end
+		end
 
-			local CSH = function () -- This is our CSH heating.
-				if CharacterTable ~= nil and CharacterTable.CompactHeater.Equipped then
+		local HSH = function () -- This is our HSH heating.
+			if HeadSet ~= nil and HeadSet.Prefab.Identifier == "hsh" and HeadSet.OwnInventory.GetItemAt(0) ~= nil and HeadSet.OwnInventory.GetItemAt(0).Condition > 1 then
+			local BatteryCell = HeadSet.OwnInventory.GetItemAt(0)
+			if BatteryCell ~= nil and BatteryCell.Condition > 1 then
+				Increase(true, BatteryCell)
+				return true
+			end
+				return false
+			end
+		end
+		
+		local OtherHeaters = function () -- Combine together.
+			-- Compat Mode
+			if Compat() then return true end
 
-					local CompactHeaterItem = CharacterTable.CompactHeater.Item
-					local CompactHeaterBattery = CompactHeaterItem.OwnInventory.GetItemAt(0)
+			-- External Heater
+			if ESH() then return true end
 
-					if CompactHeaterItem.ParentInventory == c.character.Inventory then
-						if CompactHeaterBattery ~= nil and CompactHeaterBattery.Condition > 1 then
-							Increase(true, CompactHeaterBattery)
+			-- Compact Heater
+			if CSH() then return true end
+
+			-- Heaset Heater
+			if HSH() then return true end
+		end
+		
+		if THERM.IsDivingSuit(DivingSuit) and ExceptionsToNotUSE[DivingSuitIdentifier] == nil then -- Vanilla heating. (Not immersive diving gear.)
+
+			if OtherHeaters() then return end
+
+			-- Internal Heater
+			local HeatedSuitTable = HeatedSuits[DivingSuitIdentifier] -- Get our heated suit list version
+			local Index = 1 if HeatedSuitTable then Index = HeatedSuitTable.index end -- Set the index.
+			local DivingSuitInventory = DivingSuit.OwnInventory
+
+			if (DivingSuit.HasTag("thermal")                                                                            -- Base check, does it have a thermal tag?
+				or (Index ~= 1 and DivingSuit.Prefab.VariantOf ~= "" and DivingSuit.Prefab.VariantOf.HasTag("thermal"))) -- Is it a variant of a suit that has a thermal tag?
+				or (HeatedSuitTable and not HeatedSuitTable.needsTag) then                                               -- Does it need a thermal tag?
+
+				if DivingSuitInventory ~= nil and DivingSuitInventory.GetItemAt(Index) ~= nil then
+					local BatteryCell = DivingSuitInventory.GetItemAt(Index)
+					if THERM.IsBatteryCell(BatteryCell) and BatteryCell.Condition > 1 then
+						Increase(true, BatteryCell)
+						return
+					end
+				end
+				Decrease()
+			else
+				Decrease()
+			end
+
+		elseif THERM.ImmersiveDivingGearEquipped(DivingSuit,Helmet) and ExceptionsToNotUSE[DivingSuitIdentifier] == nil then -- Immersive Diving Gear compat
+
+			if OtherHeaters() then return end
+			
+			-- Internal Heater
+			local DivingSuitInventory = DivingSuit.OwnInventory
+			if DivingSuitInventory ~= nil then 
+				if DivingSuitInventory.GetItemAt(0) ~= nil then
+					local BatteryCell = DivingSuitInventory.GetItemAt(0)
+					if THERM.IsBatteryCell(BatteryCell) and BatteryCell.Condition > 1 then
+						Increase(true, BatteryCell)
+						return
+					end
+				end
+				Decrease()
+			else
+				Decrease()
+			end
+
+		end
+
+	end)
+	:Build()
+)
+
+--:IsSymptom(true)
+
+-- sym_cold
+affLoader:Register(
+    builder:New("sym_cold")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+					not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
+					or NTCS.HF.GetAfflictionStrength(C.Human, "hypothermia", 0) > 0)
+					and not THERM.HasHuskSymbiosis(C.Human),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_shivers
+affLoader:Register(
+    builder:New("sym_shivers")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
+					or (NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
+					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling))
+					and not THERM.HasHuskSymbiosis(C.Human),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_numb
+affLoader:Register(
+    builder:New("sym_numb")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
+					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling
+					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > 0)
+					and not THERM.HasHuskSymbiosis(C.Human),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_runny_nose
+affLoader:Register(
+    builder:New("sym_runny_nose")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
+					or (NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) < HypothermiaLevel 
+					and NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5))
+					and not THERM.HasHuskSymbiosis(C.Human),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_hot
+affLoader:Register(
+    builder:New("sym_hot")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local HyperthermiaLevel = FetchConfigStats().HypothermiaLevel
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and (C:HasSymptom(ID)
+					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_armswelling
+affLoader:Register(
+    builder:New("sym_armswelling")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and C:HasSymptom(ID),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- sym_pins_needles
+affLoader:Register(
+    builder:New("sym_pins_needles")
+	:IsSymptom(true)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		C:SetAffliction(ID,NTCS.HF.BoolToNum(
+				not not C:HasSymptom(ID)
+					and C:HasSymptom(ID),
+				2
+			))
+
+	end)
+	:Build()
+)
+
+-- panielevated_core_temperaturecking
+affLoader:Register(
+    builder:New("elevated_core_temperature")
+    :SetStrengths(0,50,0)
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
+		local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
+		local LimbStrength = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NormalBodyTemp)
+		local BloodPressureMultiplier = 3
+		local ElevationDecrease = .2
+		local TempIncrease = .2
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+
+			THERM.ApplyTemperatureUpdate(C.Human.ID)
+			for index, limb in pairs(FetchOtherStats().LimbsToCheck) do
+				local Chilled = NTCS.HF.Clamp(NTCS.HF.GetAfflictionStrengthLimb(C.Human, limb, "iced", 1)/50,1,2)
+				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
+				if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
+				and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+				NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", limb, 
+					TempIncrease
+					+ (MaxWarmingTemp/LimbStrength)/80 
+					* affStr/20 
+					/ Chilled
+					* dT)
+				end
+			end
+
+			affStr = C:GetAfflictionStrength(ID)
+			-- Side effect of elevated_core_temperature.
+			if affStr > 30 then
+				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
+				C:SetSymptomTrue("lightheadedness", 5)
+			
+			elseif affStr > 40 then
+				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
+				C:SetSymptomTrue("lightheadedness", 5)
+
+				C:SetSymptomTrue("confusion", 3)
+				C:AddAffliction("seizure",(10 * dT))
+				C:AddAffliction("organdamage",(.5 * dT))
+			end
+
+		end
+
+	end)
+	:Build()
+)
+
+-- thrombolytics
+affLoader:Register(
+    builder:New("thrombolytics")
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			C:AddAffliction("bloodpressure",-(affStr/800 * dT))
+			C:AddAffliction("kidneydamage",(affStr/10000 * dT))
+		end
+
+	end)
+	:Build()
+)
+
+-- diuretics
+affLoader:Register(
+    builder:New("diuretics")
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			local BloodPressureDecrease = .05
+			C:AddAffliction("bloodpressure",-(BloodPressureDecrease * dT))
+			C:SetSymptomTrue("headache", 3)
+			affStr = C:GetAfflictionStrength(ID)
+			if affStr > 50 then
+				C:SetSymptomTrue("bloating", 5)
+			end
+		end
+
+	end)
+	:Build()
+)
+
+-- aafn
+affLoader:Register(
+    builder:New("aafn")
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			C:AddAffliction("heartdamage",(.1 * dT))
+			C:SetSymptomTrue("bloating", 5)
+			if affStr > 25 then
+				C:AddAffliction("internalbleeding",(.1 * dT))
+				C:SetSymptomTrue("vomitingblood", 5)
+				if affStr > 80 then
+					C:AddAffliction("aafn_overdose",(10 * dT))
+				end
+			end
+			if C:GetAfflictionStrength("drunk") > 25 then
+				NTCS.HF.Explode(C.Human, 50, 5, 100, 2, 100, 0, 0)
+			end
+		end
+
+	end)
+	:Build()
+)
+
+-- cryo_stasis_starter
+affLoader:Register(
+    builder:New("cryo_stasis_starter")
+    :SetPriority(NTCS.AfflictionsPriority.HIGH)
+	:IsConst(true)
+    :SetUpdateAction(function(C, ID, dT)
+
+		local affStr = C:GetAfflictionStrength(ID)
+
+		if affStr > 0 then
+			C:AddAffliction("aafn_overdose",-(.15 * dT))
+
+			local temp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) - 1
+			if temp < FetchConfigStats().HyperthermiaLevel then
+
+				if temp <= 2 then
+					NTCS.HF.AddAffliction(C.Human, "stasis", 3 * dT, C.Human)
+				end
+
+				local StasisBag = function ()
+					local item = THERM.GetSuitSlot(C.Human)
+					if item ~= nil then
+						if item.Prefab.Identifier == "stasis_bag" then
 							return true
 						else
 							return false
 						end
-
-					else
-						CharacterTable.CompactHeater.Equipped = false
-						return false
 					end
 				end
-			end
 
-			local HSH = function () -- This is our HSH heating.
-				if HeadSet ~= nil and HeadSet.Prefab.Identifier == "hsh" and HeadSet.OwnInventory.GetItemAt(0) ~= nil and HeadSet.OwnInventory.GetItemAt(0).Condition > 1 then
-				local BatteryCell = HeadSet.OwnInventory.GetItemAt(0)
-				if BatteryCell ~= nil and BatteryCell.Condition > 1 then
-					Increase(true, BatteryCell)
-					return true
-				end
-					return false
-				end
-			end
-			
-			local OtherHeaters = function () -- Combine together.
-				-- Compat Mode
-				if Compat() then return true end
-
-				-- External Heater
-				if ESH() then return true end
-
-				-- Compact Heater
-				if CSH() then return true end
-
-				-- Heaset Heater
-				if HSH() then return true end
-			end
-			
-			if THERM.IsDivingSuit(DivingSuit) and ExceptionsToNotUSE[DivingSuitIdentifier] == nil then -- Vanilla heating. (Not immersive diving gear.)
-
-				if OtherHeaters() then return end
-
-				-- Internal Heater
-				local HeatedSuitTable = HeatedSuits[DivingSuitIdentifier] -- Get our heated suit list version
-				local Index = 1 if HeatedSuitTable then Index = HeatedSuitTable.index end -- Set the index.
-				local DivingSuitInventory = DivingSuit.OwnInventory
-
-				if (DivingSuit.HasTag("thermal")                                                                            -- Base check, does it have a thermal tag?
-				   or (Index ~= 1 and DivingSuit.Prefab.VariantOf ~= "" and DivingSuit.Prefab.VariantOf.HasTag("thermal"))) -- Is it a variant of a suit that has a thermal tag?
-				   or (HeatedSuitTable and not HeatedSuitTable.needsTag) then                                               -- Does it need a thermal tag?
-
-					if DivingSuitInventory ~= nil and DivingSuitInventory.GetItemAt(Index) ~= nil then
-						local BatteryCell = DivingSuitInventory.GetItemAt(Index)
-						if THERM.IsBatteryCell(BatteryCell) and BatteryCell.Condition > 1 then
-							Increase(true, BatteryCell)
-							return
-						end
-					end
-					Decrease()
-				else
-					Decrease()
-				end
-
-			elseif THERM.ImmersiveDivingGearEquipped(DivingSuit,Helmet) and ExceptionsToNotUSE[DivingSuitIdentifier] == nil then -- Immersive Diving Gear compat
-
-				if OtherHeaters() then return end
-				
-				-- Internal Heater
-				local DivingSuitInventory = DivingSuit.OwnInventory
-				if DivingSuitInventory ~= nil then 
-					if DivingSuitInventory.GetItemAt(0) ~= nil then
-						local BatteryCell = DivingSuitInventory.GetItemAt(0)
-						if THERM.IsBatteryCell(BatteryCell) and BatteryCell.Condition > 1 then
-							Increase(true, BatteryCell)
-							return
-						end
-					end
-					Decrease()
-				else
-					Decrease()
-				end
-
-			end
-		end,
-	},
-
-	-- Symptoms -----------------------------------------------
-	-- Cold
-	sym_cold = {
-		update = function(c, i)
-			c.afflictions[i].strength = HF.BoolToNum(
-					not NTC.GetSymptomFalse(c.character, i)
-					and (NTC.GetSymptom(c.character, i)
-					or HF.GetAfflictionStrength(c.character, "hypothermia", 0) > 0)
-					and not THERM.HasHuskSymbiosis(c.character),
-				2
-			)
-		end,
-	},
-
-	-- Shivers
-	sym_shivers = {
-		update = function(c, i)
-			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and (NTC.GetSymptom(c.character, i)
-					or (HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
-					and HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling))
-					and not THERM.HasHuskSymbiosis(c.character),
-				2
-			)
-		end,
-	},
-
-	-- Numb
-	sym_numb = {
-		update = function(c, i)
-			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and (NTC.GetSymptom(c.character, i)
-					or HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling
-					and HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) > 0)
-					and not THERM.HasHuskSymbiosis(c.character),
-				2
-			)
-		end,
-	},
-
-	-- Runny Nose
-	sym_runny_nose = {
-		update = function(c, i)
-			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and (NTC.GetSymptom(c.character, i)
-					or (HF.GetAfflictionStrengthLimb(c.character, LimbType.Head, "ntt_temperature", NTConfig.Get("NormalBodyTemp", 38)) < HypothermiaLevel 
-					and HF.GetAfflictionStrengthLimb(c.character, LimbType.Head, "ntt_temperature", NTConfig.Get("NormalBodyTemp", 38)) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5))
-					and not THERM.HasHuskSymbiosis(c.character),
-				2
-			)
-		end,
-	},
-
-	-- Hot
-	sym_hot = {
-		update = function(c, i)
-			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and (NTC.GetSymptom(c.character, i)
-					or HF.GetAfflictionStrength(c.character, "ntt_temperature", NTConfig.Get("NormalBodyTemp", 38)) > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling),
-				2
-			)
-		end,
-	},
-
-	-- Arm Swelling
-	sym_armswelling = {
-		update = function(c, i)
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and NTC.GetSymptom(c.character, i),
-				2
-			)
-		end,
-	},
-
-	-- Pins and Needles
-	sym_pins_needles = {
-		update = function(c, i)
-			c.afflictions[i].strength = HF.BoolToNum(
-				not NTC.GetSymptomFalse(c.character, i)
-					and NTC.GetSymptom(c.character, i),
-				2
-			)
-		end,
-	},
-
-}
-
-
--- Afflictions used for blood related stuff.
-NTCS_Thermal.UpdateBloodAfflictions = {
-
-	-- Elevated Core Temp
-	elevated_core_temperature = {
-		max = 50,
-		update = function (c, i)
-			local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
-			local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
-			local LimbStrength = HF.GetAfflictionStrength(c.character, "ntt_temperature", NormalBodyTemp)
-			local BloodPressureMultiplier = 3
-			local ElevationDecrease = .2
-			local TempIncrease = .2
-			if c.afflictions[i].strength > 0 then
-				THERM.ApplyTemperatureUpdate(c.character.ID)
-				for index, limb in pairs(FetchOtherStats().LimbsToCheck) do
-					local Chilled = HF.Clamp(HF.GetAfflictionStrengthLimb(c.character, limb, "iced", 1)/50,1,2)
-					-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
-					if not (NTConfig.Get("BotTempIgnoreMode", true) and c.character.IsBot)
-					and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(c.character, "pressurestabilized", 0) > 0) then
-					HF.AddAfflictionLimb(c.character, "ntt_temperature", limb, 
-						TempIncrease
-						+ (MaxWarmingTemp/LimbStrength)/80 
-						* c.afflictions[i].strength/20 
-						/ Chilled
-						* NT.Deltatime)
+				affStr = C:GetAfflictionStrength(ID)
+				if affStr <= 0 or (affStr > 0 and temp > 1 and NTCS.HF.GetAfflictionStrength(C.Human, "stasis", 0) > 0 ) then
+					C:SetAffliction(ID,0)
+					if not StasisBag() then
+						NTCS.HF.SetAffliction(C.Human, "stasis", 0)
 					end
 				end
-				-- Side effect of elevated_core_temperature.
-				if c.afflictions[i].strength > 30 then
-					c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength 
-					+ (c.afflictions[i].strength/15 * BloodPressureMultiplier * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "sym_lightheadedness", 5)
-				
-				elseif c.afflictions[i].strength > 40 then
-					c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength 
-					+ (c.afflictions[i].strength/15 * BloodPressureMultiplier * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "sym_lightheadedness", 5)
 
-					NTC.SetSymptomTrue(c.character, "sym_confusion", 3)
-					c.afflictions.seizure.strength = c.afflictions.seizure.strength 
-					+ (10 * NT.Deltatime)
-					c.afflictions.organdamage.strength =  c.afflictions.organdamage.strength + 
-					(.5 * NT.Deltatime)
-				end
+			else
+				C:SetAffliction(ID,0)
 			end
 		end
-	},
 
-	thrombolytics = {
-		update = function (c, i)
-			if c.afflictions[i].strength > 0 then
-				c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength - (c.afflictions[i].strength/800 * NT.Deltatime)
-				c.afflictions.kidneydamage.strength = c.afflictions.kidneydamage.strength + (c.afflictions[i].strength/10000 * NT.Deltatime)
-			end
-		end
-	},
-
-	diuretics = {
-		update = function (c, i)
-			if c.afflictions[i].strength > 0 then
-				local BloodPressureDecrease = .05
-				c.afflictions.bloodpressure.strength = c.afflictions.bloodpressure.strength - (BloodPressureDecrease * NT.Deltatime)
-				NTC.SetSymptomTrue(c.character, "sym_headache", 3)
-				if c.afflictions[i].strength > 50 then
-					NTC.SetSymptomTrue(c.character, "sym_bloating", 5)
-				end
-			end
-		end
-	},
-
-	aafn = {
-		update = function (c, i)
-			if c.afflictions[i].strength > 0 then
-				c.afflictions.heartdamage.strength = c.afflictions.heartdamage.strength + (.1 *NT.Deltatime)
-				NTC.SetSymptomTrue(c.character, "sym_bloating", 5)
-				if c.afflictions[i].strength > 25 then
-					c.afflictions.internalbleeding.strength = c.afflictions.internalbleeding.strength + (.1 * NT.Deltatime)
-					NTC.SetSymptomTrue(c.character, "sym_hematemesis", 5)
-					if c.afflictions[i].strength > 80 then
-						c.afflictions.aafn_overdose.strength = c.afflictions.aafn_overdose.strength + (10 * NT.Deltatime)
-					end
-				end
-				if c.afflictions.drunk.strength > 25 then
-					HF.Explode(c.character, 50, 5, 100, 2, 100, 0, 0)
-				end
-			end
-		end
-	},
-
-	-- Stasis Starter
-	cryo_stasis_starter = {
-		max = 100,
-		update = function(c, i)
-			if c.afflictions[i].strength > 0 then
-				c.afflictions[i].strength = c.afflictions[i].strength - (.15 * NT.Deltatime)
-
-				local temp = HF.GetAfflictionStrength(c.character, "ntt_temperature", 0) - 1
-				if temp < FetchConfigStats().HyperthermiaLevel then
-
-					if temp <= 2 then
-						HF.AddAffliction(c.character, "stasis", 3 * NT.Deltatime, c.character)
-					end
-
-					local StasisBag = function ()
-						local item = THERM.GetSuitSlot(c.character)
-						if item ~= nil then
-							if item.Prefab.Identifier == "stasis_bag" then
-								return true
-							else
-								return false
-							end
-						end
-					end
-
-					if c.afflictions[i].strength <= 0 or (c.afflictions[i].strength > 0 and temp > 1 and HF.GetAfflictionStrength(c.character, "stasis", 0) > 0 ) then
-						c.afflictions[i].strength = 0
-						if not StasisBag() then
-							HF.SetAffliction(c.character, "stasis", 0)
-						end
-					end
-
-				else
-					c.afflictions[i].strength = 0
-				end
-			end
-		end,
-	}
-
-}
-
-
--- Add to Neuro Limb Afflictions.
-for k, v in pairs(NTCS_Thermal.UpdateLimbAfflictions) do
-	NT.LimbAfflictions[k] = v
-end
-
--- Add to Neuro Afflictions.
-for k, v in pairs(NTCS_Thermal.UpdateAfflictions) do
-	NT.Afflictions[k] = v
-end
-
--- Add to neuro afflictions
-for k, v in pairs(NTCS_Thermal.UpdateBloodAfflictions) do 
-	NT.Afflictions[k] = v
-end
-
--- Add blood afflictions to the hema anaylzer.
-for index, value in pairs(FetchOtherStats().BloodAfflictions) do
-	NTC.AddHematologyAffliction(value)
-end
+	end)
+	:Build()
+)

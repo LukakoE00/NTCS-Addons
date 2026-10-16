@@ -70,7 +70,7 @@ itemLoader:Register("emergencyenergyinjection", function (d)
     if targetCharacter:GetBoolStat("stasis", false) then return end
 
     -- TODO: make it customizable in the config
-    if targetCharacter:HasAffliction("nanitebattery") then targetCharacter:AddAffliction("nanitebattery", 20) end
+    if targetCharacter:HasAffliction("nanitebattery") then targetCharacter:AddAffliction("nanitebattery", NTCS.Config.Get("NTCS_Nanite_emergencyEnergyAmount", 20)) end
 
     local mult = 1
     if NTCS.HF.GetSkillRequirementMet(usingCharacter.Human, "Medical", 40) then mult = 1.5 end

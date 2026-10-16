@@ -1,29 +1,29 @@
 --client side counter to update visual eye effects
-NTEYE.ClientUpdateCooldown = 0
-NTEYE.ClientUpdateInterval = 60
+NTCS_Eyes.ClientUpdateCooldown = 0
+NTCS_Eyes.ClientUpdateInterval = 60
 
-Hook.Add("think", "NTEYE.ClientUpdate", function()
-	if HF.GameIsPaused() or not Level.Loaded then
+Hook.Add("think", "NTCS_Eyes.ClientUpdate", function()
+	if NTCS.HF.GameIsPaused() or not Level.Loaded then
 		return
 	end
 
-	if NTEYE.ClientUpdateCooldown > 0 then
-		NTEYE.ClientUpdateCooldown = NTEYE.ClientUpdateCooldown - 1
+	if NTCS_Eyes.ClientUpdateCooldown > 0 then
+		NTCS_Eyes.ClientUpdateCooldown = NTCS_Eyes.ClientUpdateCooldown - 1
 	else
-		NTEYE.ClientUpdateCooldown = NTEYE.ClientUpdateInterval
-		NTEYE.ClientUpdate()
+		NTCS_Eyes.ClientUpdateCooldown = NTCS_Eyes.ClientUpdateInterval
+		NTCS_Eyes.ClientUpdate()
 	end
 end)
 
 --function to initiate client updates
-function NTEYE.ClientUpdate()
-	NTEYE.UpdateLights()
-	NTEYE.WriteHUD()
+function NTCS_Eyes.ClientUpdate()
+	NTCS_Eyes.UpdateLights()
+	NTCS_Eyes.WriteHUD()
 end
 
 --table for eye client effect definitions
 --"ce" stands for "client effect"
-NTEYE.ClientEffects = {
+NTCS_Eyes.ClientEffects = {
 	-- lens types
 	ce_medical = {
 		affliction = "lt_medical",
@@ -121,10 +121,10 @@ end)
 local function getConfig()
 	--check if it is SP or not, if SP get the value, if MP ask for the value
 	if not Game.IsMultiplayer then
-		configValue = NTConfig.Get("NTEYE_lightBoost", 0)
+		configValue = NTCS.Config.Get("NTEYE_lightBoost", 0)
 	else
 		--send a message to the server
-		NTEYE.GetConfigValue(target)
+		NTCS_Eyes.GetConfigValue(target)
 	end
 end
 
@@ -163,7 +163,7 @@ local function BlendColors(colors)
 end
 
 --function to update light colors
-function NTEYE.UpdateLights()
+function NTCS_Eyes.UpdateLights()
 	local ControlledCharacter = Character.Controlled
 	local LevelLight = Level.Loaded.LevelData.GenerationParams
 	--check if the player controls a character (gender check for Robotrauma)
@@ -179,8 +179,8 @@ function NTEYE.UpdateLights()
 	--define color tables
 	local levelColors, hullColors = {}, {}
 
-	for _, effect in pairs(NTEYE.ClientEffects) do
-		if HF.HasAffliction(ControlledCharacter, effect.affliction) then
+	for _, effect in pairs(NTCS_Eyes.ClientEffects) do
+		if NTCS.HF.HasAffliction(ControlledCharacter, effect.affliction) then
 			levelColors[#levelColors + 1] = effect.levelColor
 			hullColors[#hullColors + 1] = effect.hullColor
 		end

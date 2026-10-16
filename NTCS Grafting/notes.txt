@@ -1,0 +1,21 @@
+ID will be stored by the 100s per creature, to avoid confliction with vanilla appendages as
+well as other creatures. Below is a list of which number each creature starts at.
+
+100:  Crawler
+200: Fractal Guardian
+300: Human
+400: Husk
+500: Mudraptor
+600: Tiger Thresher
+700: Bone Thresher
+800: Hammerhead
+900: Moloch
+1000: Watcher
+1100: Charybdis
+1200: Endworm
+1300: Latcher
+1400: Orangeboy
+
+
+
+

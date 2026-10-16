@@ -2,7 +2,7 @@
 
 -- Prints out Thermal data.
 Hook.Add("chatMessage", "Debug", function (message, sender)
-        if not NTConfig.Get("DebugMessageMode",false) then return end
+        if not NTCS.Config.Get("DebugMessageMode",false) then return end
 
         if message == "[DEBUG]THERMALCharacterData" then -- Contents of Thermal Character Data
                 print("\n------------- Beginning Debug of NT THERMAL. -------------\n")

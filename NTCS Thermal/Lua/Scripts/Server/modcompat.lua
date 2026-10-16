@@ -84,9 +84,9 @@ THERMCompat.RemoveItem = function (item)
 end
 
 THERMCompat.ApplyTemperatureRadius = function (item, character, maxDistance, wallPenetration, armorPenetration, afflictions)
-if character.IsBot and NTConfig.Get("ReactorsGiveTemperatureBot", true) or not character.IsBot then
-    if not (NTConfig.Get("BotTempIgnoreMode", true) and character.IsBot) and not (NTConfig.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(character, "pressurestabilized", 0) > 0) then
-        if HF.GetAfflictionStrength(character, "givetemp", 0) > 0 then -- Make sure the temperature is actually set up.
+if character.IsBot and NTCS.Config.Get("ReactorsGiveTemperatureBot", true) or not character.IsBot then
+    if not (NTCS.Config.Get("BotTempIgnoreMode", true) and character.IsBot) and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(character, "pressurestabilized", 0) > 0) then
+        if NTCS.HF.GetAfflictionStrength(character, "givetemp", 0) > 0 then -- Make sure the temperature is actually set up.
             if Vector2.Distance(character.WorldPosition, item.WorldPosition) > maxDistance then
                 return
             end
@@ -110,12 +110,12 @@ if character.IsBot and NTConfig.Get("ReactorsGiveTemperatureBot", true) or not c
 end
 
 THERMCompat.ReactorTempMax = function (item)
-    if NTConfig.Get("ReactorTempAccountsForRodCount", true) then
+    if NTCS.Config.Get("ReactorTempAccountsForRodCount", true) then
         local ItemCount = THERM.IEnumerableSize(item.OwnInventory.GetAllItems(false))
         local ItemScaling = ItemCount * 20
         return 25 + ItemScaling
     else
-        return NTConfig.Get("ThermalReactorMaxTemp", 60)
+        return NTCS.Config.Get("ThermalReactorMaxTemp", 60)
     end
 end
 
@@ -127,7 +127,7 @@ local reactor = item.GetComponentString("Reactor")
             for character in Character.CharacterList do
                 local CharacterTable = THERM.GetCharacter(character.ID)
                 local BurnResistance = THERM.TotalBurnResistance(CharacterTable)
-                THERMCompat.ApplyTemperatureRadius(item, character, 750, 1, 0, { temperature.Instantiate(.15 * ((reactor.Temperature/100 + 1))/BurnResistance  * THERMCompat.EH.DeltaTime * NTConfig.Get("ThermalReactorTempScaling", 1)) }) -- :crying emoji: why does this mod have like a 1/100000 of a second tick rate.
+                THERMCompat.ApplyTemperatureRadius(item, character, 750, 1, 0, { temperature.Instantiate(.15 * ((reactor.Temperature/100 + 1))/BurnResistance  * THERMCompat.EH.DeltaTime * NTCS.Config.Get("ThermalReactorTempScaling", 1)) }) -- :crying emoji: why does this mod have like a 1/100000 of a second tick rate.
             end
         end
     end
@@ -154,7 +154,7 @@ local reactor = item.GetComponentString("Reactor")
                 local CharacterTable = THERM.GetCharacter(character.ID)
                 local BurnResistance = THERM.TotalBurnResistance(CharacterTable)
                 THERMCompat.ApplyTemperatureRadius(item, character, 750, 1, 0, {
-                    temperature.Instantiate((.5 * data.overheating * THERMCompat.EH.DeltaTime  * NTConfig.Get("ThermalReactorTempScaling", 1))/BurnResistance)})
+                    temperature.Instantiate((.5 * data.overheating * THERMCompat.EH.DeltaTime  * NTCS.Config.Get("ThermalReactorTempScaling", 1))/BurnResistance)})
             end
         end
 
@@ -164,7 +164,7 @@ local reactor = item.GetComponentString("Reactor")
                 for character in Character.CharacterList do
                     local CharacterTable = THERM.GetCharacter(character.ID)
                     local BurnResistance = THERM.TotalBurnResistance(CharacterTable)
-                    THERMCompat.ApplyTemperatureRadius(item, character, 750, 1, 0, {temperature.Instantiate((0.01 * data.overheating * THERMCompat.EH.DeltaTime  * NTConfig.Get("ThermalReactorTempScaling", 1))/BurnResistance)})
+                    THERMCompat.ApplyTemperatureRadius(item, character, 750, 1, 0, {temperature.Instantiate((0.01 * data.overheating * THERMCompat.EH.DeltaTime  * NTCS.Config.Get("ThermalReactorTempScaling", 1))/BurnResistance)})
                 end
             end
         end
@@ -186,14 +186,14 @@ end)
 
 -- Hit a lick and lifted this from the Human update.
 Hook.Add("think", "THERMCompat.updateEH", function()
-    if NTConfig.Get("ReactorsGiveTemperature", true) or NTCS_Thermal.UsingEnhancedReactors then
-        if HF.GameIsPaused() then
+    if NTCS.Config.Get("ReactorsGiveTemperature", true) or NTCS_Thermal.UsingEnhancedReactors then
+        if NTCS.HF.GameIsPaused() then
             return
         end
 
         THERMCompat.EH.Tick = THERMCompat.EH.Tick - 1
         if THERMCompat.EH.Tick <= 0 then
-                    THERMCompat.EH.UpdateInterval = NTConfig.Get("ThermalReactorTempInterval", 60)
+                    THERMCompat.EH.UpdateInterval = NTCS.Config.Get("ThermalReactorTempInterval", 60)
                     THERMCompat.EH.Tick = THERMCompat.EH.UpdateInterval
                     for item in THERMCompat.EH.ManagedItems do
                         THERMCompat.ProcessItemUpdate(item)

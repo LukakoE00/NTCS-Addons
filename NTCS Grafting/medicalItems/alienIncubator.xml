@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Item name="Alien Cell Incubator" identifier="alienIncubator" tags="alienIncubator, refrigerated" texturescale="1.0,1.0" isshootable="true" scale="0.5" category="Machine">
+  <sprite texture="Content/Map/Outposts/Art/MedicalItemResearch.png" sourcerect="0,566,205,286" depth="0.79" premultiplyalpha="false" origin="0.5,0.5" />
+  <Deconstructor canbeselected="true" showoutput="false" powerconsumption="300.0" deconstructitemssimultaneously="true" msg="ItemMsgInteractSelect" activatebuttontext="Incubate" infotext="Incubate the organ to be overtaken by alien DNA." infoareawidth="0.36">
+    <GuiFrame relativesize="0.25,0.3" style="ItemUI" anchor="Left" />
+    <sound file="Content/Items/Fabricators/Fabricator.ogg" type="OnActive" range="1000.0" loop="true" />
+    <poweronsound file="Content/Items/PowerOnLight3.ogg" range="600" loop="false" />
+    <StatusEffect type="InWater" target="This" condition="-0.5" />
+  </Deconstructor>
+  <ItemContainer capacity="2" maxstacksize="1" canbeselected="true" hideitems="true" hudpos="0.5, 0.4" slotsperrow="5" uilabel="" allowuioverlap="true">
+    <Containable items="stemCellsAegis,latcherCellsAegis,mantisCellsAegis,broodmotherCellsAegis,huskCellsAegis,viperlingCellsAegis,boneThresherCellsAegis,charybdisCellsAegis,endwormCellsAegis,hammerheadCellsAegis,molochCellsAegis,mudraptorCellsAegis,tigerThresherCellsAegis,livertransplant,livertransplant_q1,lungtransplant,lungtransplant_q1,kidneytransplant,kidneytransplant_q1,hearttransplant,hearttransplant_q1" />
+  </ItemContainer>
+  <ItemContainer capacity="2" maxstacksize="1" canbeselected="true" hideitems="true" hudpos="0.5, 0.8" slotsperrow="3" uilabel="" allowuioverlap="true">
+    <Containable items="latcherHeartAegis,huskHeartAegis,broodmotherLiverAegis,mantisLiverAegis,viperlingLiverAegis,latcherCellsAegis,mantisCellsAegis,broodmotherCellsAegis,huskCellsAegis,viperlingCellsAegis,boneThresherCellsAegis,charbydisCellsAegis,endwormCellsAegis,hammerheadCellsAegis,molochCellsAegis,mudraptorCellsAegis,tigerThresherCellsAegis" />
+  </ItemContainer>
+  <Deconstruct time="20">
+    <Item identifier="fpgacircuit" />
+    <Item identifier="steel" />
+  </Deconstruct>
+  <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="true">
+    <RequiredSkill identifier="medical" level="40" />
+    <RequiredItem identifier="fpgacircuit" />
+    <RequiredItem identifier="graftingcure" />
+    <RequiredItem identifier="plastic" />
+    <RequiredItem identifier="steel" amount="1" />
+    <RequiredItem identifier="alienpowercell" amount="1" />
+  </Fabricate>
+  <Body width="205" height="286" density="40" />
+  <Holdable slots="LeftHand+RightHand" canbeselected="true" selectkey="Select" canbepicked="true" attachable="true" attachedbydefault="true" pickkey="Use" pickingtime="5" holdpos="0,0" holdangle="0" aimable="true" aimpos="0,0" aimangle="0" limitedattachable="false" origin="0.5,0.5" msg="ItemMsgDetachWrench">
+    <RequiredItem items="wrench" type="Equipped" />
+    <StatusEffect type="OnActive" target="This" interval="1">
+      <DropContainedItems />
+    </StatusEffect>
+  </Holdable>
+  <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
+    <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
+    <RequiredSkill identifier="electrical" level="40" />
+    <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
+      <Sound file="Content/Sounds/Damage/Electrocution1.ogg" range="1000" />
+      <Explosion range="100.0" force="1.0" flames="false" shockwave="false" sparks="true" underwaterbubble="false" />
+      <Affliction identifier="stun" strength="4" />
+      <Affliction identifier="burn" strength="5" />
+    </StatusEffect>
+    <RequiredItem items="screwdriver" type="Equipped" />
+    <input name="power_in" displayname="connection.powerin" />
+    <output name="condition_out" displayname="connection.conditionout" />
+  </ConnectionPanel>
+  <Repairable selectkey="Action" header="electricalrepairsheader" deteriorationspeed="0.0" canbeselected="true" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairScrewdriver" hudpriority="10">
+    <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.0,0.27" style="ItemUI" />
+    <RequiredSkill identifier="electrical" level="50" />
+    <RequiredItem items="screwdriver" type="Equipped" />
+    <ParticleEmitter particle="spark" particleamount="5" emitinterval="2" particlespersecond="5" anglemax="360" distancemax="30" velocitymin="100" velocitymax="500" scalemin="0.5" scalemax="1" mincondition="0.0" maxcondition="15.0" />
+  </Repairable>
+</Item>

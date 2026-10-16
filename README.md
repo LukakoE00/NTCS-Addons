@@ -7,16 +7,16 @@ A list of addons adjusted to work with NTCS by Neurodevs. If your addon is in he
 - Pharmacy
 - Symbiote
 - Infection
-- 
-## WIP Adjusting:
 - Nanite Integration
+- Lobotomy
 
-## To Adjust:
-- Eyes (Spoken to author, may do it themselves)
-- Grafting (Spoken to author, desires to fix issues before rewrite)
+## WIP Adjusting:
 - Thermal
+- Eyes
+
+## To Adjust?:
+- Grafting (Spoken to author, desires to fix issues before rewrite)
 - Emergency Medicine
-- Lobotomy (Spoken to author, may do it themselves)
 
 ## Possibly Adjust:
 - Dr Javier's Surgical Bombs (forked by AceFinka, force them to fix the damn thing)

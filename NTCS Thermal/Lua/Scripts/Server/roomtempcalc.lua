@@ -2,7 +2,7 @@
 -- Used to store the temperature info of rooms and functions.
 THERMRoom = {}
 THERMRoom.Tick = 0
-THERMRoom.UpdateInterval = NTConfig.Get("ThermalRoomCalcInterval", 50)
+THERMRoom.UpdateInterval = NTCS.Config.Get("ThermalRoomCalcInterval", 50)
 THERMRoom.DeltaTime = THERMRoom.UpdateInterval/620
 THERMRoom.DefaultRoomTemp = 22
 THERMRoom.Rooms = {}
@@ -10,11 +10,10 @@ THERMRoom.Intiated = false
 THERMRoom.QueuedOxygenUpdates = {}
 
 -- Resets thermal data.
-NTC.AddPreHumanUpdateHook(
-        function(character)
-	if not THERMRoom.Intiated and NTConfig.Get("HeatTransferToggle", true) then
+Hook.Add("Neurotrauma.HumanUpdate.PreHook", "RoomTempCalcHook", function(instance, ptable)
+        if not THERMRoom.Intiated and NTCS.Config.Get("HeatTransferToggle", true) then
                 THERM.ValidateThermalCharacterData()
-		THERMRoom.Intiated = true
+                THERMRoom.Intiated = true
         end
 end)
 
@@ -25,12 +24,12 @@ end)
 
 -- Hit a lick and lifted this from the Human update.
 Hook.Add("think", "THERMRoom.update", function()
-        if not NTConfig.Get("HeatTransferToggle", true) then 
+        if not NTCS.Config.Get("HeatTransferToggle", true) then 
                 if THERMRoom.Rooms ~= {} then
                         THERMRoom.ClearRooms()
                 end
         end
-        if HF.GameIsPaused() then
+        if NTCS.HF.GameIsPaused() then
                 return
         end
 
@@ -39,14 +38,14 @@ Hook.Add("think", "THERMRoom.update", function()
                 if THERMRoom.Rooms ~= nil and THERMRoom.Intiated then
                         THERMRoom.CalculateRoomTemp()
                 end
-                THERMRoom.UpdateInterval = NTConfig.Get("ThermalRoomCalcInterval", 50)
+                THERMRoom.UpdateInterval = NTCS.Config.Get("ThermalRoomCalcInterval", 50)
                 THERMRoom.Tick = THERMRoom.UpdateInterval
         end
 end)
 
 -- Heat
 Hook.Patch("Barotrauma.Hull","AddFireSource", function (GameSession, ptable)
-        if not NTConfig.Get("HeatTransferToggle", true) then return end
+        if not NTCS.Config.Get("HeatTransferToggle", true) then return end
         local hull = ptable["fireSource"].Hull
         if THERMRoom.GetRoom(hull) == nil and THERMRoom.Intiated then
                 THERMRoom.InsertRoom(hull)
@@ -55,7 +54,7 @@ end, Hook.HookMethodType.After)
 
 -- Used to increase the temp of a adjacent room if parameters match.
 Hook.Add("gapOxygenUpdate", "NTCS_Thermal.OxygenHullUpdate", function (gap, hull1, hull2)
-        if not NTConfig.Get("HeatTransferToggle", true) then return end
+        if not NTCS.Config.Get("HeatTransferToggle", true) then return end
         if THERMRoom.Intiated and THERMRoom.QueuedOxygenUpdates[gap] == nil and (hull1.FireCount > 0 or hull2.FireCount > 0) then
                 THERMRoom.QueueOxygenUpdate(gap,hull1,hull2)
         end
@@ -89,8 +88,8 @@ THERMRoom.CalculateRoomTemp = function ()
                                 local TempTransfer = THERMRoom.GetRoom(ParentHull).Temp
                                         /(ChildHull.Size.X * ChildHull.Size.Y)
                                         * 3000  --Scale it a lil.
-                                THERMRoom.GetRoom(ChildHull).Temp = HF.Clamp(THERMRoom.GetRoom(ChildHull).Temp + (TempTransfer/2),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp)
-                                THERMRoom.GetRoom(ParentHull).Temp = HF.Clamp(THERMRoom.GetRoom(ParentHull).Temp - (TempTransfer / 50),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp/2,100)
+                                THERMRoom.GetRoom(ChildHull).Temp = NTCS.HF.Clamp(THERMRoom.GetRoom(ChildHull).Temp + (TempTransfer/2),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp)
+                                THERMRoom.GetRoom(ParentHull).Temp = NTCS.HF.Clamp(THERMRoom.GetRoom(ParentHull).Temp - (TempTransfer / 50),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp/2,100)
                         end
                         THERMRoom.QueuedOxygenUpdates[update] = nil -- I'm quite sure this one does nothing on a real note, but I'm afraid to delete it.
                         THERMRoom.QueuedOxygenUpdates[index] = nil -- Set update to nil
@@ -106,7 +105,7 @@ THERMRoom.CalculateRoomTemp = function ()
                                         for index2, fire in pairs(Hull.FireSources) do
                                                 local FireArea = fire.Size.X * fire.Size.Y
                                                 TempGain = FireArea/HullArea * 1000 / Hull.FireCount * THERMRoom.DeltaTime
-                                                room.Temp = HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
+                                                room.Temp = NTCS.HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
                                         end
                                 -- If no fireSources then check if temp is stablizied.
                                 elseif room.Temp <= THERMRoom.DefaultRoomTemp then
@@ -119,7 +118,7 @@ THERMRoom.CalculateRoomTemp = function ()
                                                         * -1 
                                                         * WaterCooling
                                                         * THERMRoom.DeltaTime
-                                        room.Temp = HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
+                                        room.Temp = NTCS.HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
                                 end
                         else
                                 THERMRoom.RemoveRoom(room)

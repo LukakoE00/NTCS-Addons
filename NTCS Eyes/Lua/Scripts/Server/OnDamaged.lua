@@ -1,14 +1,14 @@
-function NTEYE.DamageEye(targetCharacter, damage, damageType)
+function NTCS_Eyes.DamageEye(targetCharacter, damage, damageType)
 	--fill this functinon
 	if damage == nil then
 		return
 	end
 	local limb = LimbType.Head
-	if HF.HasEyes(targetCharacter) then
-		for _, eye in ipairs(NTEYE.EyeProperty) do
-			if HF.HasAffliction(targetCharacter, eye.type) then
+	if NTCS_Eyes.HasEyes(targetCharacter) then
+		for _, eye in ipairs(NTCS_Eyes.EyeProperty) do
+			if NTCS.HF.HasAffliction(targetCharacter, eye.type) then
 				--apply damage to the eye
-				HF.AddAfflictionLimb(targetCharacter, eye.damage, limb, damage)
+				NTCS.HF.AddAfflictionLimb(targetCharacter, eye.damage, limb, damage)
 			end
 		end
 	end
@@ -40,7 +40,7 @@ local function getCalculatedDamageReduction(armor, strength)
 end
 
 --code lifted from NT fork ondamaged.lua
-Hook.Add("character.applyDamage", "NTEYE.ondamaged", function(characterHealth, attackResult, hitLimb)
+Hook.Add("character.applyDamage", "NTCS_Eyes.ondamaged", function(characterHealth, attackResult, hitLimb)
 	if -- invalid attack data, don't do anything
 		--hitLimb ~= LimbType.Head --if limb isn't head return
 		hitLimb == nil
@@ -60,7 +60,7 @@ Hook.Add("character.applyDamage", "NTEYE.ondamaged", function(characterHealth, a
 
 	-- ntc
 	-- modifying ondamaged hooks
-	for key, val in pairs(NTC.ModifyingOnDamagedHooks) do
+	for key, val in pairs(NTCS.NTC.ModifyingOnDamagedHooks) do
 		afflictions = val(characterHealth, afflictions, hitLimb)
 	end
 
@@ -69,10 +69,10 @@ Hook.Add("character.applyDamage", "NTEYE.ondamaged", function(characterHealth, a
 	for value in afflictions do
 		-- execute fitting method, if available
 		identifier = value.Prefab.Identifier.Value
-		methodtorun = NTEYE.OnDamagedMethods[identifier]
+		methodtorun = NTCS_Eyes.OnDamagedMethods[identifier]
 		if methodtorun ~= nil then
 			-- make resistance from afflictions apply
-			local resistance = HF.GetResistance(characterHealth.Character, identifier, hitLimb.type)
+			local resistance = NTCS.HF.GetResistance(characterHealth.Character, identifier, hitLimb.type)
 			local strength = value.Strength * (1 - resistance)
 
 			methodtorun(characterHealth.Character, strength, hitLimb.type)
@@ -81,17 +81,17 @@ Hook.Add("character.applyDamage", "NTEYE.ondamaged", function(characterHealth, a
 
 	-- ntc
 	-- ondamaged hooks
-	for key, val in pairs(NTC.OnDamagedHooks) do
+	for key, val in pairs(NTCS.NTC.OnDamagedHooks) do
 		val(characterHealth, attackResult, hitLimb)
 	end
 end)
 
-NTEYE.OnDamagedMethods = {}
+NTCS_Eyes.OnDamagedMethods = {}
 
 --cause eye damage by gunshots
-NTEYE.OnDamagedMethods.gunshotwound = function(character, strength, limbtype)
+NTCS_Eyes.OnDamagedMethods.gunshotwound = function(character, strength, limbtype)
 	--normalize limb value
-	limbtype = HF.NormalizeLimbType(limbtype)
+	limbtype = NTCS.HF.NormalizeLimbType(limbtype)
 
 	--check if the head has been hit, if not return
 	if limbtype ~= LimbType.Head then
@@ -105,7 +105,7 @@ NTEYE.OnDamagedMethods.gunshotwound = function(character, strength, limbtype)
 	if strength >= 1 then
 		--eyes only get his at a chance
 		local hitChance = strength / 200
-		if HF.Chance(hitChance) then
+		if NTCS.HF.Chance(hitChance) then
 			--reduce damage strength based on armor
 			local armor1 = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
 			local armor2 = character.Inventory.GetItemInLimbSlot(InvSlotType.Head)
@@ -115,13 +115,13 @@ NTEYE.OnDamagedMethods.gunshotwound = function(character, strength, limbtype)
 		end
 	end
 	--run the actual function that does damage
-	NTEYE.DamageEye(character, damage, damageType)
+	NTCS_Eyes.DamageEye(character, damage, damageType)
 end
 
 --cause eye damage by explosion
-NTEYE.OnDamagedMethods.explosiondamage = function(character, strength, limbtype)
+NTCS_Eyes.OnDamagedMethods.explosiondamage = function(character, strength, limbtype)
 	--normalize limb value
-	limbtype = HF.NormalizeLimbType(limbtype)
+	limbtype = NTCS.HF.NormalizeLimbType(limbtype)
 
 	--check if the head has been hit, if not return
 	if limbtype ~= LimbType.Head then
@@ -136,7 +136,7 @@ NTEYE.OnDamagedMethods.explosiondamage = function(character, strength, limbtype)
 	if strength >= 1 then
 		--eyes only get his at a chance
 		local hitChance = strength / 200
-		if HF.Chance(hitChance) then
+		if NTCS.HF.Chance(hitChance) then
 			--reduce damage strength based on armor
 			local armor1 = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
 			local armor2 = character.Inventory.GetItemInLimbSlot(InvSlotType.Head)
@@ -146,13 +146,13 @@ NTEYE.OnDamagedMethods.explosiondamage = function(character, strength, limbtype)
 		end
 	end
 	--run the actual function that does damage
-	NTEYE.DamageEye(character, damage, damageType)
+	NTCS_Eyes.DamageEye(character, damage, damageType)
 end
 
 --cause eye damage by bitewounds
-NTEYE.OnDamagedMethods.bitewounds = function(character, strength, limbtype)
+NTCS_Eyes.OnDamagedMethods.bitewounds = function(character, strength, limbtype)
 	--normalize limb value
-	limbtype = HF.NormalizeLimbType(limbtype)
+	limbtype = NTCS.HF.NormalizeLimbType(limbtype)
 
 	--check if the head has been hit, if not return
 	if limbtype ~= LimbType.Head then
@@ -167,7 +167,7 @@ NTEYE.OnDamagedMethods.bitewounds = function(character, strength, limbtype)
 	if strength >= 1 then
 		--eyes only get his at a chance
 		local hitChance = strength / 200
-		if HF.Chance(hitChance) then
+		if NTCS.HF.Chance(hitChance) then
 			--reduce damage strength based on armor
 			local armor1 = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
 			local armor2 = character.Inventory.GetItemInLimbSlot(InvSlotType.Head)
@@ -177,13 +177,13 @@ NTEYE.OnDamagedMethods.bitewounds = function(character, strength, limbtype)
 		end
 	end
 	--run the actual function that does damage
-	NTEYE.DamageEye(character, damage, damageType)
+	NTCS_Eyes.DamageEye(character, damage, damageType)
 end
 
 --cause eye damage by laceration
-NTEYE.OnDamagedMethods.lacerations = function(character, strength, limbtype)
+NTCS_Eyes.OnDamagedMethods.lacerations = function(character, strength, limbtype)
 	--normalize limb value
-	limbtype = HF.NormalizeLimbType(limbtype)
+	limbtype = NTCS.HF.NormalizeLimbType(limbtype)
 
 	--check if the head has been hit, if not return
 	if limbtype ~= LimbType.Head then
@@ -198,7 +198,7 @@ NTEYE.OnDamagedMethods.lacerations = function(character, strength, limbtype)
 	if strength >= 1 then
 		--eyes only get his at a chance
 		local hitChance = strength / 200
-		if HF.Chance(hitChance) then
+		if NTCS.HF.Chance(hitChance) then
 			--reduce damage strength based on armor
 			local armor1 = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
 			local armor2 = character.Inventory.GetItemInLimbSlot(InvSlotType.Head)
@@ -208,5 +208,5 @@ NTEYE.OnDamagedMethods.lacerations = function(character, strength, limbtype)
 		end
 	end
 	--run the actual function that does damage
-	NTEYE.DamageEye(character, damage, damageType)
+	NTCS_Eyes.DamageEye(character, damage, damageType)
 end
