@@ -175,7 +175,7 @@ end
 
 --#endregion
 
-local affLoader = NTCS.AfflictionsLoader(NTCS_Thermal.Name)
+local affLoader = NTCS.AfflictionsLoader("NTCS Thermal")
 local builder = NTCS.AfflictionPrefabBuilder()
 
 --#region Limb Afflictions
@@ -1188,11 +1188,11 @@ affLoader:Register(
 -- Those aren't stored in here since they have a independent tick rate.
 -- give_temp
 affLoader:Register(
-    builder:New("give_temp")
+    builder:New("give_temp")  -- This should cause an error, this doesn't match any affliction
     :SetStrengths(0,3,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
-    :SetUpdateAction(function(C, ID, dT)
+    :SetUpdateAction(function(C, ID, Limb, dT)
 
 		print("Run?: " .. tostring(C.Human))
 		local affStr = C:GetAfflictionStrength(ID)

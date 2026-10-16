@@ -8,9 +8,6 @@ NTCS_Thermal.MinNTVersion = "A1.12.1"
 NTCS_Thermal.MinNTVersionNum = 01120100
 NTCS_Thermal.Path = table.pack(...)[1]
 -- I don't think this is required.
-NTCS_Thermal.UpdateAfflictions = {}
-NTCS_Thermal.UpdateLimbAfflictions = {}
-NTCS_Thermal.UpdateBloodAfflictions = {}
 NTCS_Thermal.OnDamagedMethods = {}
 NTCS_Thermal.UsingRoboTrauma = false
 NTCS_Thermal.UsingEnhancedReactors = false
