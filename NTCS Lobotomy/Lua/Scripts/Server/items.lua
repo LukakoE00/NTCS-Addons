@@ -236,7 +236,7 @@ function NTCS_Lobotomy.ApplyLobotomy(targetCharacter, prevresult, prevchance)
 	then
 		chance=0.07
 		
-		NTCS.HF.AddAfflictionLimb(targetCharacter, "cerebralhypoxia", 11, math.random(0,50))
+		NTCS.HF.AddAfflictionLimb(targetCharacter, "neurotrauma", 11, math.random(0,50))
 		targetCharacter.CharacterHealth.ReduceAfflictionOnAllLimbs("failedlobotomy", 1000)
 	end
 	
