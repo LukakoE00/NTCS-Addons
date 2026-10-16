@@ -86,7 +86,8 @@ else
 			return
 		end
 
-        dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Shared/configdata.lua") 	 --Config.
-
 	end, 1)
 end
+Timer.Wait(function()
+	dofile(NTCS_Thermal.Path .. "/Lua/Scripts/Shared/configdata.lua") 	    --Config.
+end, 1)

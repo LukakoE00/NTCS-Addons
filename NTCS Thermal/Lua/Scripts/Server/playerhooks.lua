@@ -15,7 +15,7 @@ Hook.Add("NTCS_Thermal.CustomInWater", "CustomInWater", function (effect, deltaT
                         -- Fetch the player table once.
                         if CharacterTable ~= nil  and not (NTCS.Config.Get("BotTempIgnoreMode", true) and target.IsBot) then
                                 -- Check to see if the last calculated water volume hull is different from the current water volume hull, if it is then calculate for the rat jacuzzi overlord. Or, if the y position is different.
-                                if (CharacterTable.LastHullWaterVolume ~= NTCS.HF.Round(target.CurrentHull.WaterVolume,-2))
+                                if (CharacterTable.LastHullWaterVolume ~= THERM.Round(target.CurrentHull.WaterVolume,-2))
                                 or (target.CurrentHull.WaterVolume > 0 and (math.floor(CharacterTable.LastStoredPlayerY) ~= math.floor(target.position.Y)))
                                 or CharacterTable.InCustomWater then
 
@@ -38,7 +38,7 @@ Hook.Add("NTCS_Thermal.CustomInWater", "CustomInWater", function (effect, deltaT
                                                         WaterValues.RightLegV = Result
                                                         WaterValues.LeftLegV = Result
                                                         -- This will run last, so set it in here.
-                                                        CharacterTable.LastHullWaterVolume = NTCS.HF.Round(target.CurrentHull.WaterVolume,-2)
+                                                        CharacterTable.LastHullWaterVolume = THERM.Round(target.CurrentHull.WaterVolume,-2)
                                                         CharacterTable.LastStoredPlayerY = math.floor(target.position.Y)
                                                 -- Set the value
                                                 else
