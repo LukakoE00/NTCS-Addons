@@ -38,8 +38,8 @@
       <!-- Apply nausea to nearby players if the organ is left on floor -->
       <StatusEffect type="OnNotContained" target="NearbyCharacters" range="300">
         <Affliction identifier="nausea" amount="0.2" />
-        <Affliction identifier="sym_vomiting" amount="10" probability="0.001" duration="1" />
-        <Affliction identifier="sym_lightheadedness" amount="10" probability="0.001" duration="5" />
+        <Affliction identifier="vomiting" amount="10" probability="0.001" duration="1" />
+        <Affliction identifier="lightheadedness" amount="10" probability="0.001" duration="5" />
       </StatusEffect>
 
       <StatusEffect type="OnBroken" target="This">
@@ -100,8 +100,8 @@
       <!-- Apply nausea to nearby players if the organ is left on floor -->
       <StatusEffect type="OnNotContained" target="NearbyCharacters" range="300">
         <Affliction identifier="nausea" amount="0.2" />
-        <Affliction identifier="sym_vomiting" amount="10" probability="0.001" duration="1" />
-        <Affliction identifier="sym_lightheadedness" amount="10" probability="0.001" duration="5" />
+        <Affliction identifier="vomiting" amount="10" probability="0.001" duration="1" />
+        <Affliction identifier="lightheadedness" amount="10" probability="0.001" duration="5" />
       </StatusEffect>
 
       <StatusEffect type="OnBroken" target="This">
@@ -461,8 +461,8 @@
       <!-- Terror eye applies psychosis on nearby players -->
       <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500">
         <Affliction identifier="psychosis" amount="0.5" />
-        <Affliction identifier="sym_vomiting" amount="10" probability="0.001" duration="1" />
-        <Affliction identifier="sym_lightheadedness" amount="10" probability="0.001" duration="5" />
+        <Affliction identifier="vomiting" amount="10" probability="0.001" duration="1" />
+        <Affliction identifier="lightheadedness" amount="10" probability="0.001" duration="5" />
       </StatusEffect>
 
       <StatusEffect type="OnBroken" target="This">
