@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="Mudraptor Leg (Left)" identifier="lMudraptorLegAegis" description="The torn off leg of a mudraptor" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <InventoryIcon texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="0,10,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="0,10,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    <Deconstruct time="10">
+      <Item identifier="calcium" amount="1" />
+    </Deconstruct>
+    <Price baseprice="25" soldbydefault="false"></Price>
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse"></Holdable>
+  </Item>
+  <Item name="Mudraptor Leg (Right)" identifier="rMudraptorLegAegis" description="The torn off leg of a mudraptor" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <InventoryIcon texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="220,0,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="220,0,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    <Deconstruct time="10">
+      <Item identifier="calcium" amount="1" />
+    </Deconstruct>
+    <Price baseprice="25" soldbydefault="false"></Price>
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse"></Holdable>
+  </Item>
+</Items>

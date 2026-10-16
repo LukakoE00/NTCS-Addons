@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="Broodmother Liver" identifier="broodmotherLiverAegis" description="The removed liver of a Crawler Broodmother, oozing with acids" category="Medical" scale="0.3" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
+    <InventoryIcon texture="%ModDir%/transplants/organs/broodmother/broodmotherOrgans.png" sourcerect="7,12,82,55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/transplants/organs/broodmother/broodmotherOrgans.png" sourcerect="7,12,82,55" depth="0.6" origin="0.5,0.5" />
+    <Body width="82" height="55" density="20" />
+    <Deconstruct time="10">
+      <Item identifier="sulphuricacid" amount="1" />
+    </Deconstruct>
+    <Price baseprice="300" soldbydefault="false"></Price>
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" holdangle="90">
+      <StatusEffect type="Always" target="This" condition="-1" interval="2" disabledeltatime="true" conditionalComparison="And">
+        <Conditional hastag="neq refrigerated" targetcontainer="true" />
+        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
+        <Conditional condition="gte 60" />
+        <Conditional hastag="refrigerated" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+    <SkillRequirementHint identifier="medical" level="70" />
+  </Item>
+</Items>

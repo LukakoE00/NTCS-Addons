@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="Fractal Guardian Eye" identifier="fractalGuardianEyeAegis" description="An eye from a fractal guardian, might alter the sight of a person" category="Medical" scale="0.5" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
+    <InventoryIcon texture="%ModDir%/transplants/organs/fractalguardian/fractalGuardianEye.png" sourcerect="0,0,40,40" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/transplants/organs/fractalguardian/fractalGuardianEye.png" sourcerect="0,0,40,40" depth="0.6" origin="0.5,0.5" />
+    <Body width="40" height="40" density="20" />
+    <Deconstruct time="120">
+      <Item identifier="carbon" />
+    </Deconstruct>
+    <Price baseprice="350" soldbydefault="false"></Price>
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" holdangle="90">
+      <StatusEffect type="Always" target="This" condition="-1" interval="2" disabledeltatime="true" conditionalComparison="And">
+        <Conditional hastag="neq refrigerated" targetcontainer="true" />
+        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
+        <Conditional condition="gte 60" />
+        <Conditional hastag="refrigerated" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+      <SkillRequirementHint identifier="medical" level="70" />
+    </Holdable>
+  </Item>
+</Items>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<huskappendage>
+  <limb name="Broodmother Acid" id="99" height="1" width="1" density="0" ignorecollisions="False" flip="True" scale="0.4" SpriteOrientation="0" ConstantTorque="0" ConstantAngle="0" BlinkFrequency="1.0" BlinkDuration="0.25" BlinkDurationOut="0.25" BlinkHoldTime="0" BlinkRotationIn="0" BlinkRotationOut="-180" BlinkForce="0" BlinkTransitionIn="EaseIn" BlinkTransitionOut="EaseOut">
+    <sprite texture="Content/Characters/Crawlerbroodmother/crawlerbroodmother.png" sourcerect="0,0,1,1" depth="0.1" origin="0.5,0.5" ignoretint="false" />
+    <attack context="Any" cooldown="30" cooldownrandomfactor="1" range="100" damagerange="100" duration="5" structuredamage="10" severlimbsprobability="0.0" targettype="Any" stun="0" onlyhumans="False" hitdetectiontype="Distance">
+      <Affliction identifier="acidburn" strength="7" />
+      <StatusEffect type="OnUse" target="This">
+        <SpawnItem identifier="acidmistemitter" count="5" aimpsread="360" impulse="30" rotationtype="Collider" rotation="0" spawnposition="This" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character">
+        <Affliction identifier="bloodloss" amount="20" />
+      </StatusEffect>
+    </attack>
+  </limb>
+  <joint name="Broodmother Attack Joint" limb1="0" limb2="99" limb1anchor="0,0" limb2anchor="0,0" weldjoint="true" canbesevered="False" limitenabled="False" />
+</huskappendage>

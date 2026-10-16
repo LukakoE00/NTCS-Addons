@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Talents>
+  <Talent identifier="graftingscience">
+    <Icon texture="%ModDir%/talents/talents.png" sheetindex="0,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="DNA Ligation Enhancer" color="gui.orange" />
+    </Description>
+    <AddedRecipe itemidentifier="graftingcure" />
+  </Talent>
+  <Talent identifier="physicaltherapist">
+    <Icon texture="%ModDir%/talents/talents.png" sheetindex="1,0" sheetelementsize="128,128" />
+    <Description tag="Patients near you heal from [affliction1] and [affliction2] faster.">
+      <Replace tag="[affliction1]" value="Cross Species Rejection" color="gui.green" />
+      <Replace tag="[affliction2]" value="Blunt Force Trauma" color="gui.green" />
+    </Description>
+    <AbilityGroupInterval interval="0.9">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" allowself="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="physicaltherapistAffliction" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  <Talent identifier="cellfusing">
+    <Icon texture="%ModDir%/talents/talents.png" sheetindex="2,0" sheetelementsize="128,128" />
+    <Description tag="talentdescription.unlockrecipe">
+      <Replace tag="[itemname]" value="Alien Cell Incubator" color="gui.orange" />
+    </Description>
+    <AddedRecipe itemidentifier="alienIncubator" />
+  </Talent>
+  <Talent identifier="tolerantdna">
+    <Icon texture="%ModDir%/talents/talents.png" sheetindex="0,1" sheetelementsize="128,128" />
+    <Description tag="Your DNA has become more compatible with different creatures, allowing you to graft two different creature's DNA to yourself." />
+  </Talent>
+  <Talent identifier="hackeddna">
+    <Icon texture="%ModDir%/talents/talents.png" sheetindex="0,1" sheetelementsize="128,128" />
+    <Description tag="You have hacked your DNA to be compatible with an infinite number of creatures." />
+  </Talent>
+</Talents>
