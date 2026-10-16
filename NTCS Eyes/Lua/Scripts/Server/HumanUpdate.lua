@@ -118,7 +118,7 @@ local function CauseCataracts(C, Identifier, Limb)
 		--get cataractChance from config
 		local cataractChance = 0.03 * NTCS.Config.Get("NTEYE_cataractChanceMultiplier", 1) -- 0.03% chance to cause cataracts on default
 		if NTCS.HF.Chance(cataractChance) then
-			if NTCS_Eyes.HF.HasEyes(character) then
+			if NTCS_Eyes.HasEyes(character) then
 				NTCS.HF.AddAfflictionLimb(character, "mc_cataract", Limb, 1)
 			end
 		end
