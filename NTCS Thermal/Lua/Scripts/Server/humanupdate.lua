@@ -10,8 +10,6 @@ NTCS_Thermal.ExtremeHyperthermiaScaling = 1.1
 NTCS_Thermal.MediumHyperthermiaScaling = 1.05
 NTCS_Thermal.LowHyperthermiaScaling = 1
 
-NTCS_Thermal.DeltaTime = 2
-
 --#region HU Helper Functions
 
 local Limbs = {LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}
@@ -95,7 +93,7 @@ local function GetRoomTempAddition(character,limb)
 end
 
 -- Used to set arm swelling or leg swelling from a limb type.
-local function LimbToSwelling(character,limb,duration)
+local function LimbToSwelling(ntHuman,limb,duration)
 	duration = duration or 2
 	local Symptom = nil
 	if NTCS.HF.NormalizeLimbType(limb) == LimbType.LeftArm or NTCS.HF.NormalizeLimbType(limb) == LimbType.RightArm then
@@ -104,10 +102,7 @@ local function LimbToSwelling(character,limb,duration)
 		Symptom = "legswelling"
 	end
 	if Symptom ~= nil then
-		local ActualHuman = NTHuman.getNTHumanFromCharacter(character)
-		if ActualHuman then
-			ActualHuman:SetSymptomTrue(Symptom, duration)
-		end
+		ntHuman:SetSymptomTrue(Symptom, duration)
 	end
 end
 
@@ -129,9 +124,9 @@ local function CalculateBloodClots(character,limb,special,deltaTime)
 		return .5
 		* NTCS.HF.GetAfflictionStrength(character, "bloodpressure", 100)
 		/100 
-		+ special * NTCS_Thermal.DeltaTime
+		+ special * deltaTime
 	end
-	return .25 * NTCS_Thermal.DeltaTime
+	return .25 * deltaTime
 
 end
 
@@ -193,7 +188,6 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
-		--print(dT)
         local CharacterTable = THERM.GetCharacter(C.Human.ID)
 
         local function RoomIsHot()
@@ -233,7 +227,7 @@ affLoader:Register(
 						local CompromisedTempVal = 1
 
 						-- Calculate new temperature
-						C:SetAfflictionLimb(ID,Limb,affStr + THERM.CalculateTemperature(wetStr,C.Human,Limb,NTCS_Thermal.DeltaTime))
+						C:SetAfflictionLimb(ID,Limb,affStr + THERM.CalculateTemperature(wetStr,C.Human,Limb,dT))
 						affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 						-- Calculate CompromisedTempVal: Being too low or high in temperature will make the body slower to reach normal body temp.
 						-- The division by three is a scaling feature, i'm too lazy to make it a variable.
@@ -268,7 +262,7 @@ affLoader:Register(
 								end
 
 								if affStr < 2 and not THERM.HasHuskSymbiosis(C.Human) then
-									C:AddAffliction("neurotrauma",.05 * NTCS_Thermal.DeltaTime)
+									C:AddAffliction("neurotrauma",.05 * dT)
 								elseif affStr < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 and not THERM.HasHuskSymbiosis(C.Human) then
 									C:SetSymptomTrue("lightheadedness", 5)
 								elseif affStr > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
@@ -308,9 +302,9 @@ affLoader:Register(
 								NTCS.HF.SetAffliction(C.Human, "hyperthermia", 100)
 								-- Get burnt nerd
 								if affStr > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, .5 * NTCS_Thermal.DeltaTime, C.Human)
+									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, .5 * dT, C.Human)
 								elseif affStr > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.3 then
-									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, 2 * NTCS_Thermal.DeltaTime, C.Human)
+									NTCS.HF.AddAfflictionLimb(C.Human, "burn", Limb, 2 * dT, C.Human)
 								end
 							end
 
@@ -329,7 +323,7 @@ affLoader:Register(
 									/CompromisedTempVal
 										*(C:GetAfflictionStrength("bloodpressure")
 											/100)/AmputatedLimbValue
-												* NTCS_Thermal.DeltaTime),1,NormalBodyTemp))
+												* dT),1,NormalBodyTemp))
 						
 						-- Cool down if warm
 						elseif affStr > NormalBodyTemp then
@@ -338,7 +332,7 @@ affLoader:Register(
 										/CompromisedTempVal
 											*(C:GetAfflictionStrength("bloodpressure")
 												/100)/AmputatedLimbValue 
-												* NTCS_Thermal.DeltaTime),NormalBodyTemp,101))
+												* dT),NormalBodyTemp,101))
 						end
 					else
 						-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
@@ -381,18 +375,18 @@ affLoader:Register(
 			NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, (WarmingAbility
 									/(C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)/MaxWarmingTemp)
 									/WarmthScaling 
-									* NTCS_Thermal.DeltaTime), C.Human)
+									* dT), C.Human)
 			end
 			
 			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 1.05) -- 5% speed increase per limb
 			if C:GetAfflictionStrength("bloodpressure") > 100 then
-				C:AddAffliction("bloodpressure",-.05 * NTCS_Thermal.DeltaTime)
+				C:AddAffliction("bloodpressure",-.05 * dT)
 			end
 
-			NTCS.HF.AddAfflictionLimb(C.Human, "warmth", Limb, -1.7 * NTCS_Thermal.DeltaTime, C.Human)
+			NTCS.HF.AddAfflictionLimb(C.Human, "warmth", Limb, -1.7 * dT, C.Human)
 
 			if Limb == LimbType.Torso and C:GetAfflictionStrength("internalbleeding") > 0 then
-				C:AddAffliction("internalbleeding",0.2 * NTCS_Thermal.DeltaTime)
+				C:AddAffliction("internalbleeding",0.2 * dT)
 			end
 		end
 
@@ -424,7 +418,7 @@ affLoader:Register(
 			NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, ((CoolingAbility
 				/(MaxCoolingTemp/C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)))
 				* CoolScaling  
-				* NTCS_Thermal.DeltaTime), C.Human)
+				* dT), C.Human)
 			end
 		end
 		
@@ -453,13 +447,13 @@ affLoader:Register(
 				local WetTempAddition = .1
 
 				if C:GetAfflictionStrengthLimb("bandaged",Limb,0) > 0 and NTCS.Config.Get("WaterDirtiesBandages",true) then
-					NTCS.HF.AddAfflictionLimb(C.Human, "dirtybandage", Limb, WetStrength/4 * NTCS_Thermal.DeltaTime, C.Human)
-					NTCS.HF.AddAfflictionLimb(C.Human, "bandaged", Limb, -WetStrength/4 * NTCS_Thermal.DeltaTime, C.Human)
+					NTCS.HF.AddAfflictionLimb(C.Human, "dirtybandage", Limb, WetStrength/4 * dT, C.Human)
+					NTCS.HF.AddAfflictionLimb(C.Human, "bandaged", Limb, -WetStrength/4 * dT, C.Human)
 				end
 
 				NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, (.05
 						* (WetStrength + WetTempAddition) 
-							* NTCS_Thermal.DeltaTime), C.Human)
+							* dT), C.Human)
 			else
 				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
 				C:SetAfflictionLimb(ID,Limb,0)
@@ -500,9 +494,9 @@ affLoader:Register(
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 			if LimbTemp < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling then
-				C:AddAfflictionLimb(ID,Limb,((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb,((HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling/LimbTemp)* dT))
 			else
-				C:AddAfflictionLimb(ID,Limb,-((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb,-((LimbTemp/HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling)* dT))
 			end
 			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 			if affStr > 24.9  and LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
@@ -546,10 +540,10 @@ affLoader:Register(
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 			if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling then
-				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/LimbTemp)/2 * NTCS_Thermal.DeltaTime)
+				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/LimbTemp)/2 * dT)
 			else
 
-				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling) * NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling) * dT))
 				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 				if affStr < .1 then
 					C:SetAfflictionLimb("frostnip",Limb,24.9)
@@ -601,12 +595,12 @@ affLoader:Register(
 
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			C:AddAfflictionLimb("bloodclot", Limb, (CalculateBloodClots(C.Human,Limb,1,NTCS_Thermal.DeltaTime) * NTCS_Thermal.DeltaTime))
+			C:AddAfflictionLimb("bloodclot", Limb, (CalculateBloodClots(C.Human,Limb,1,dT) * dT))
 			if LimbTemp < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5 then
-				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5/LimbTemp)/2 * NTCS_Thermal.DeltaTime)
+				C:AddAfflictionLimb(ID,Limb,(HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5/LimbTemp)/2 * dT)
 			else
 
-				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.1) * NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb(ID,Limb, -((LimbTemp/HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.1) * dT))
 				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 				if affStr < .1 then
 					C:SetAfflictionLimb("d1_frostbite",Limb,24.9)
@@ -661,7 +655,7 @@ affLoader:Register(
 			
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
-			C:AddAfflictionLimb("bloodclot",Limb,(CalculateBloodClots(C.Human,Limb,.1,NTCS_Thermal.DeltaTime) * NTCS_Thermal.DeltaTime))
+			C:AddAfflictionLimb("bloodclot",Limb,(CalculateBloodClots(C.Human,Limb,.1,dT) * dT))
 
 			if LimbTemp < 2 then
 				C:AddAfflictionLimb(ID,Limb, .5 * dT)
@@ -671,10 +665,10 @@ affLoader:Register(
 				if C:GetAfflictionStrengthLimb("gangrene",Limb,0) < 15 then
 					C:SetAfflictionLimb("gangrene",Limb,15)
 				end
-				C:AddAfflictionLimb("gangrene",Limb, .1 * NTCS_Thermal.DeltaTime)
+				C:AddAfflictionLimb("gangrene",Limb, .1 * dT)
 
 			else
-				C:AddAfflictionLimb(ID,Limb, -.2 * NTCS_Thermal.DeltaTime)
+				C:AddAfflictionLimb(ID,Limb, -.2 * dT)
 				affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 				if affStr < .1 then
 					C:SetAfflictionLimb("d2_frostbite",Limb,24.9)
@@ -737,28 +731,28 @@ affLoader:Register(
 
 			elseif affStr < 21 then
 
-				LimbToSwelling(C.Human,Limb,5)
+				LimbToSwelling(C,Limb,5)
 				BloodClotDissolvingRate = .03
 				BloodClotGrowthRate = .03
 				BloodPressureIncrease = 2
 
 				if math.random(0,5) > 4 and C:GetAfflictionStrength("lungremoved") == 0 then
-					C:AddAffliction("pulmonary_embolism",.5 * NTCS_Thermal.DeltaTime)
+					C:AddAffliction("pulmonary_embolism",.5 * dT)
 				end
 
 			elseif affStr > 21 then
 
-				LimbToSwelling(C.Human,Limb,5)
+				LimbToSwelling(C,Limb,5)
 				BloodPressureIncrease = 3
 				BloodClotGrowthRate = .04
 
 				if C:GetAfflictionStrength("lungremoved") == 0 then
-					C:AddAffliction("pulmonary_embolism",.5 * NTCS_Thermal.DeltaTime)
+					C:AddAffliction("pulmonary_embolism",.5 * dT)
 				end
 
 			end
 
-			C:AddAffliction("bloodpressure",BloodPressureIncrease * NTCS_Thermal.DeltaTime)
+			C:AddAffliction("bloodpressure",BloodPressureIncrease * dT)
 
 			C:AddAffliction(ID,
 				-((BloodClotDissolvingRate 
@@ -767,7 +761,7 @@ affLoader:Register(
 							+ C:GetAfflictionStrength("alkalosis")/1000
 								+ C:GetAfflictionStrength("bloodpressure")/1000
 									+ 1 * LimbClotScaling) 
-										+ BloodClotGrowthRate * NTCS_Thermal.DeltaTime))
+										+ BloodClotGrowthRate * dT))
 		end
 
 	end)
@@ -793,14 +787,14 @@ affLoader:Register(
 				+ C:GetAfflictionStrengthLimb("bandaged",Limb,0)/500 
 					* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("ointmented",Limb,0)/500 /50,1,2))
 						* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("warmth",Limb,0)/50,1,2)
-							* NTCS_Thermal.DeltaTime))
+							* dT))
 			
 			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) > HyperthermiaLevel then
-				C:AddAfflictionLimb("infectedwound",Limb,.05 * NTCS_Thermal.DeltaTime)
+				C:AddAfflictionLimb("infectedwound",Limb,.05 * dT)
 			end
 
 			if C:GetAfflictionStrengthLimb("bandaged",Limb,0) < 1 then
-				C:AddAfflictionLimb("infectedwound",Limb,((C:GetAfflictionStrengthLimb("wet",Limb,0)/100) + math.random(.5,1) * NTCS_Thermal.DeltaTime))
+				C:AddAfflictionLimb("infectedwound",Limb,((C:GetAfflictionStrengthLimb("wet",Limb,0)/100) + math.random(.5,1) * dT))
 			end
 
 		end
@@ -824,9 +818,9 @@ affLoader:Register(
 			local InternalDamageRate = .05
 			local BoneDamage = .1
 			local PassiveHeal = .1
-			C:AddAfflictionLimb("internaldamage",Limb,InternalDamageRate * NTCS_Thermal.DeltaTime)
-			C:AddAfflictionLimb("bonedamage",Limb,BoneDamage * NTCS_Thermal.DeltaTime)
-			C:AddAfflictionLimb(ID,Limb,-PassiveHeal * NTCS_Thermal.DeltaTime)
+			C:AddAfflictionLimb("internaldamage",Limb,InternalDamageRate * dT)
+			C:AddAfflictionLimb("bonedamage",Limb,BoneDamage * dT)
+			C:AddAfflictionLimb(ID,Limb,-PassiveHeal * dT)
 		end
 
 	end)
@@ -849,7 +843,7 @@ affLoader:Register(
 			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", Limb, 10)
 			C:AddAfflictionLimb(ID,Limb,-(.5 -- Go down 1 percent each tick.
 									- (C:GetAfflictionStrength("afsaline")/50)
-									* NTCS_Thermal.DeltaTime))
+									* dT))
 			
 			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) < HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling then
 				C:SetAfflictionLimb(ID,Limb,0)
@@ -872,7 +866,7 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 then
-			C:AddAfflictionLimb("infectedwound",Limb,.25 * NTCS_Thermal.DeltaTime)
+			C:AddAfflictionLimb("infectedwound",Limb,.25 * dT)
 			C:SetAfflictionLimb("inflammation",Limb,10)
 		end
 
@@ -907,7 +901,7 @@ affLoader:Register(
 
 		if affStr > 0 then
 			C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * 0.70) -- 30% slow per limb
-			C:AddAfflictionLimb(ID,Limb,-.05 * NTCS_Thermal.DeltaTime)
+			C:AddAfflictionLimb(ID,Limb,-.05 * dT)
 		end
 
 	end)
@@ -950,7 +944,7 @@ affLoader:Register(
 				C:SetSymptomTrue("chestpain", 5)
 				C:SetAffliction("respiratoryarrest",100)
 			end
-			C:AddAffliction(ID,-(C:GetAfflictionStrength("thrombolytics")/3.5 - C:GetAfflictionStrength("afstreptokinase")/10 - .2 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction(ID,-(C:GetAfflictionStrength("thrombolytics")/3.5 - C:GetAfflictionStrength("afstreptokinase")/10 - .2 * dT))
 
 		end
 
@@ -982,7 +976,7 @@ affLoader:Register(
 
 			C:AddAffliction(ID,(C:GetAfflictionStrength("heartdamage")/80 + C:GetAfflictionStrength("bloodpressure")/50
 								+ C:GetAfflictionStrength("sepsis")/50 + THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50
-								- C:GetAfflictionStrength("diuretics")/10 * NTCS_Thermal.DeltaTime))
+								- C:GetAfflictionStrength("diuretics")/10 * dT))
 			C:SetSymptomTrue("shortnessofbreath", 5)
 			affStr = C:GetAfflictionStrength(ID)
 			if affStr > 25 then
@@ -1015,29 +1009,29 @@ affLoader:Register(
 			local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
 
 			local LowHypo = function ()
-				C:AddAffliction("bloodpressure",(.5 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("bloodpressure",(.5 * dT))
 				C:SetSymptomTrue("hypoventilation", 2)
 			end
 
 			local MedHypo = function ()
-				C:AddAffliction("bloodpressure",(.1 * NTCS_Thermal.DeltaTime))
-				C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("bloodpressure",(.1 * dT))
+				C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * dT))
 				C:SetSymptomTrue("paleskin", 5)
 				C:SetSymptomTrue("unconsciousness", 2)
 			end
 
 			local HighHypo = function ()
 				C:SetAffliction("respiratoryarrest",100)
-				C:AddAffliction("analgesia",(.5 * NTCS_Thermal.DeltaTime))
-				C:AddAffliction("immunity",-(5 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("analgesia",(.5 * dT))
+				C:AddAffliction("immunity",-(5 * dT))
 			end
 
 			local CookedHypo = function ()
-				C:AddAffliction("frozen_vessels",(2 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("frozen_vessels",(2 * dT))
 				C:SetAffliction("coma",100)
 			end
 			
-			C:AddAffliction("bloodpressure",(.2 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("bloodpressure",(.2 * dT))
 			if TorsoTemp < 2 then -- Horrible Hypothermia
 				CookedHypo()
 				HighHypo()
@@ -1082,10 +1076,10 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
-			local Death = (5 * NTCS_Thermal.DeltaTime)
+			local Death = (5 * dT)
 			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
 			local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
-			C:AddAffliction("bloodpressure",(-.2 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("bloodpressure",(-.2 * dT))
 
 			if TorsoTemp < HyperthermiaLevel then
 				C:SetAffliction(ID,0)
@@ -1097,11 +1091,11 @@ affLoader:Register(
 			end
 
 			local MediumHyper = function ()
-				C:AddAffliction("heat_stroke",(1 * NTCS_Thermal.DeltaTime))
-				NTCS.HF.AddAffliction(C.Human, "huskinfection", -10 * NTCS_Thermal.DeltaTime, C.Human) -- EXTERMINATE THE BITCH ASS HUSK. JUSTICE FOR ARTIE DOOLITTLE. THOSE BASTARDS SLIMED HIM OUT. God speed artie, love you.
+				C:AddAffliction("heat_stroke",(1 * dT))
+				NTCS.HF.AddAffliction(C.Human, "huskinfection", -10 * dT, C.Human) -- EXTERMINATE THE BITCH ASS HUSK. JUSTICE FOR ARTIE DOOLITTLE. THOSE BASTARDS SLIMED HIM OUT. God speed artie, love you.
 				-- NT Symbiote compat:
 				if NTCS.HF.HasAffliction(C.Human, "surgery_huskhealth", 1) then
-					NTCS.HF.AddAffliction(C.Human, "surgery_huskhealth", -10 * NTCS_Thermal.DeltaTime, C.Human)
+					NTCS.HF.AddAffliction(C.Human, "surgery_huskhealth", -10 * dT, C.Human)
 				end
 			end
 
@@ -1153,16 +1147,16 @@ affLoader:Register(
 			local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 			
 			if affStr < 10 then
-				C:AddAffliction(ID,-PassiveDecay * NTCS_Thermal.DeltaTime)
+				C:AddAffliction(ID,-PassiveDecay * dT)
 			end
 
 			if BodyTemp > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/4.5 then
-				local Formula = ((CellDeathGrowth + BodyTemp/10)  * NTCS_Thermal.DeltaTime)
+				local Formula = ((CellDeathGrowth + BodyTemp/10)  * dT)
 				C:AddAffliction("cell_death",Formula)
 				C:AddAffliction(ID,-Formula)
 			end
 
-			C:AddAffliction(ID,-(C:GetAfflictionStrength("aafn")/20 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction(ID,-(C:GetAfflictionStrength("aafn")/20 * dT))
 
 		end
 
@@ -1183,7 +1177,7 @@ affLoader:Register(
 		if affStr > 0 then
 			local InternalBleedingIncrease = .2
 			local LiverDamageIncrease = 1
-			local Death = (1 * NTCS_Thermal.DeltaTime)
+			local Death = (1 * dT)
 
 			local KillOrgans = function ()
 				C:AddAffliction("neurotrauma",Death)
@@ -1195,7 +1189,7 @@ affLoader:Register(
 
 			if affStr <= 5 then
 				C:SetSymptomTrue("confusion", 5)
-				C:AddAffliction(ID,-(.01 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction(ID,-(.01 * dT))
 			
 			elseif affStr > 5 and affStr <= 30 then
 				C:SetSymptomTrue("nausea_nt", 5)
@@ -1204,7 +1198,7 @@ affLoader:Register(
 			elseif affStr > 30 then
 				C:SetSymptomTrue("nausea_nt", 5)
 				KillOrgans()
-				C:AddAffliction("internalbleeding",InternalBleedingIncrease * 2 * NTCS_Thermal.DeltaTime)
+				C:AddAffliction("internalbleeding",InternalBleedingIncrease * 2 * dT)
 				C:AddAffliction("stroke",100)
 			end
 
@@ -1247,7 +1241,7 @@ affLoader:Register(
     :SetUpdateAction(function(C, ID, Limb, dT)
 
 		local affStr = C:GetAfflictionStrength(ID)
-		local Death = (5 * NTCS_Thermal.DeltaTime)
+		local Death = (5 * dT)
 
 		if affStr > 0 then
 
@@ -1263,7 +1257,7 @@ affLoader:Register(
 			C:AddAffliction("liverdamage",Death)
 			C:AddAffliction("heartdamage",Death)
 			C:AddAffliction("kidneydamage",Death)
-			C:AddAffliction("seizure",10 * NTCS_Thermal.DeltaTime)
+			C:AddAffliction("seizure",10 * dT)
 
 		end
 
@@ -1291,7 +1285,7 @@ affLoader:Register(
 			LastHeadTemp = HeadTemp
 		end
 
-		local ShockMargin = FetchConfigStats().ShockMargin * NTCS_Thermal.DeltaTime
+		local ShockMargin = FetchConfigStats().ShockMargin * dT
 		local ShockDecrease = 2.5
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1299,8 +1293,8 @@ affLoader:Register(
 
 			C:SetAffliction("stroke",100)
 			C:SetAffliction("seizure",100)
-			C:AddAffliction("neurotrauma",.05 * NTCS_Thermal.DeltaTime)
-			C:AddAffliction(ID,-(ShockDecrease * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("neurotrauma",.05 * dT)
+			C:AddAffliction(ID,-(ShockDecrease * dT))
 
 		elseif LastHeadTemp ~= HeadTemp then
 			if    HeadTemp/LastHeadTemp/2 > ShockMargin -- Too hot
@@ -1339,7 +1333,7 @@ affLoader:Register(
 				C:SetAffliction("heartattack",100)
 			end
 			if affStr > 75 then
-				C:AddAffliction("neurotrauma",.1 * NTCS_Thermal.DeltaTime)
+				C:AddAffliction("neurotrauma",.1 * dT)
 			end
 			if TorsoTemp < HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
 				C:SetAffliction(ID,0)
@@ -1361,9 +1355,9 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
-			C:AddAffliction(ID,-10 * NTCS_Thermal.DeltaTime)
+			C:AddAffliction(ID,-10 * dT)
 			for n, limb in pairs({LimbType.Head,LimbType.Torso,LimbType.RightArm,LimbType.LeftArm,LimbType.LeftLeg,LimbType.RightLeg}) do
-				NTCS.HF.AddAfflictionLimb(C.Human, "onfire", limb, 1 * NTCS_Thermal.DeltaTime, C.Human)
+				NTCS.HF.AddAfflictionLimb(C.Human, "onfire", limb, 1 * dT, C.Human)
 			end
 		end
 
@@ -1392,7 +1386,7 @@ affLoader:Register(
 					local WaterKey = THERM.LimbToWaterLimbV(limb)
 					local WaterCounter = NTCS.HF.Clamp(CharacterTable.LimbWaterValues[WaterKey]/1,.1,1)
 					local IsCyber = NTCS.HF.BoolToNum(THERM.IsLimbCyber(C.Human,limb),1) + 1
-					local TempAmount = (HypothermiaLevel/LimbTemp/25) * (affStr/100) * 10 * IsCyber * WaterCounter * NTCS_Thermal.DeltaTime * NTCS.Config.Get("HeatedDivingSuitStrength",1)
+					local TempAmount = (HypothermiaLevel/LimbTemp/25) * (affStr/100) * 10 * IsCyber * WaterCounter * dT * NTCS.Config.Get("HeatedDivingSuitStrength",1)
 					NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", limb, TempAmount)
 				end
 			end
@@ -1408,17 +1402,17 @@ affLoader:Register(
 		if DivingSuit ~= nil then DivingSuitIdentifier = tostring(DivingSuit.Prefab.Identifier) end
 		local Helmet = THERM.GetInnerSlot(C.Human)
 		local Bag = THERM.GetBagSlot(C.Human)
-		local BatteryConsumption = NTCS.Config.Get("HeaterBatteryConsumption",.2) * NTCS_Thermal.DeltaTime
+		local BatteryConsumption = NTCS.Config.Get("HeaterBatteryConsumption",.2) * dT
 
 		local Increase = function (UseBattery, BatteryCell) -- Increase Suit Heat
-			C:AddAffliction(ID,5 * NTCS_Thermal.DeltaTime)
+			C:AddAffliction(ID,5 * dT)
 			if UseBattery then
 				BatteryCell.Condition = BatteryCell.Condition - BatteryConsumption
 			end
 		end
 
 		local Decrease = function () -- Decrease Suit Heat
-			C:AddAffliction(ID,-5 * NTCS_Thermal.DeltaTime)
+			C:AddAffliction(ID,-5 * dT)
 		end
 
 		local Compat = function () -- This is our compatibility toggle heating.
@@ -1708,23 +1702,23 @@ affLoader:Register(
 					+ (MaxWarmingTemp/LimbStrength)/80 
 					* affStr/20 
 					/ Chilled
-					* NTCS_Thermal.DeltaTime)
+					* dT)
 				end
 			end
 
 			affStr = C:GetAfflictionStrength(ID)
 			-- Side effect of elevated_core_temperature.
 			if affStr > 30 then
-				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
 				C:SetSymptomTrue("lightheadedness", 5)
 			
 			elseif affStr > 40 then
-				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
 				C:SetSymptomTrue("lightheadedness", 5)
 
 				C:SetSymptomTrue("confusion", 3)
-				C:AddAffliction("seizure",(10 * NTCS_Thermal.DeltaTime))
-				C:AddAffliction("organdamage",(.5 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("seizure",(10 * dT))
+				C:AddAffliction("organdamage",(.5 * dT))
 			end
 
 		end
@@ -1743,8 +1737,8 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
-			C:AddAffliction("bloodpressure",-(affStr/800 * NTCS_Thermal.DeltaTime))
-			C:AddAffliction("kidneydamage",(affStr/10000 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("bloodpressure",-(affStr/800 * dT))
+			C:AddAffliction("kidneydamage",(affStr/10000 * dT))
 		end
 
 	end)
@@ -1762,7 +1756,7 @@ affLoader:Register(
 
 		if affStr > 0 then
 			local BloodPressureDecrease = .05
-			C:AddAffliction("bloodpressure",-(BloodPressureDecrease * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("bloodpressure",-(BloodPressureDecrease * dT))
 			C:SetSymptomTrue("headache", 3)
 			affStr = C:GetAfflictionStrength(ID)
 			if affStr > 50 then
@@ -1784,13 +1778,13 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
-			C:AddAffliction("heartdamage",(.1 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("heartdamage",(.1 * dT))
 			C:SetSymptomTrue("bloating", 5)
 			if affStr > 25 then
-				C:AddAffliction("internalbleeding",(.1 * NTCS_Thermal.DeltaTime))
+				C:AddAffliction("internalbleeding",(.1 * dT))
 				C:SetSymptomTrue("vomitingblood", 5)
 				if affStr > 80 then
-					C:AddAffliction("aafn_overdose",(10 * NTCS_Thermal.DeltaTime))
+					C:AddAffliction("aafn_overdose",(10 * dT))
 				end
 			end
 			if C:GetAfflictionStrength("drunk") > 25 then
@@ -1812,13 +1806,13 @@ affLoader:Register(
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
-			C:AddAffliction("aafn_overdose",-(.15 * NTCS_Thermal.DeltaTime))
+			C:AddAffliction("aafn_overdose",-(.15 * dT))
 
 			local temp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) - 1
 			if temp < FetchConfigStats().HyperthermiaLevel then
 
 				if temp <= 2 then
-					NTCS.HF.AddAffliction(C.Human, "stasis", 3 * NTCS_Thermal.DeltaTime, C.Human)
+					NTCS.HF.AddAffliction(C.Human, "stasis", 3 * dT, C.Human)
 				end
 
 				local StasisBag = function ()
