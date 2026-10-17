@@ -104,7 +104,10 @@ local function LimbToSwelling(character,limb,duration)
 		Symptom = "legswelling"
 	end
 	if Symptom ~= nil then
-		NTHuman.getNTHumanFromCharacter(character):SetSymptomTrue(Symptom, duration)
+		local ActualHuman = NTHuman.getNTHumanFromCharacter(character)
+		if ActualHuman then
+			ActualHuman:SetSymptomTrue(Symptom, duration)
+		end
 	end
 end
 

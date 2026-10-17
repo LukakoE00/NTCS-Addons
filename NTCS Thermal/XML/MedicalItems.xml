@@ -198,7 +198,7 @@
       <PreferredContainer primary="outpostmedcompartment" minamount="3" maxamount="4" spawnprobability="0.05" />
       <Fabricate suitablefabricators="medicalfabricator" amount="4" requiredtime="10">
         <RequiredSkill identifier="medical" level="40" />
-        <RequiredItem identifier="bloodpackoplus" amount="2" />
+        <RequiredItem identifier="bloodpacko_positive" amount="2" />
         <RequiredItem identifier="magnesium" amount="2" />
       </Fabricate>
       <Deconstruct />
