@@ -55,7 +55,7 @@ Hook.Patch("Neurotrauma.HF", "DislocateLimb", function(instance, ptable)
     local GivenLimbType  = ptable["GivenLimbType"]
     local Strength  = ptable["Strength"]
 
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
         ptable.PreventExecution = true
     end
 end, Hook.HookMethodType.Before)
@@ -65,7 +65,7 @@ Hook.Patch("Neurotrauma.HF", "BreakLimb", function(instance, ptable)
     local GivenLimbType  = ptable["GivenLimbType"]
     local Strength  = ptable["Strength"]
 
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
         ptable.PreventExecution = true
     end
 end, Hook.HookMethodType.Before)
@@ -75,7 +75,7 @@ Hook.Patch("Neurotrauma.HF", "ArteryCutLimb", function(instance, ptable)
     local GivenLimbType  = ptable["GivenLimbType"]
     local Strength  = ptable["Strength"]
 
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(chaCharacterracter, GivenLimbType) then
+    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
         ptable.PreventExecution = true
     end
 end, Hook.HookMethodType.Before)
