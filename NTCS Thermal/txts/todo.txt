@@ -1,0 +1,29 @@
+Items to add:
+
+    - Wet Suit: A suit that heats up like a diving suit, however it goes in the shirt slot, not suit.
+
+    - Temperature Stabilizer: A one time use medicine, makes player immune to temperature for a minute.
+
+Mechanics to add:
+
+    - Visible Room Temperature: On nav monitor.
+
+    - Thermal Vision Displays Temperature:
+
+    - vanishing backpack (baroverhaul)
+
+Bugs to fix:
+
+    - Make stasis starter more useful.
+
+    - Integrate better EH patch.
+
+    - Fix EK patch (kill me).
+
+    - IMPORTANT
+
+    - Extend EK patch functionality
+
+    - Make baroverhaul classic patch
+
+Ideas:

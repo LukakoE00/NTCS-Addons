@@ -1,0 +1,183 @@
+-- The base of this code has been lifted from NT Eyes.
+
+-- The default normal body temp is 37c, however due to the fact I can't have an affliction be at 0 (If I can let me know.), I offset all temp related values by 1. So normal body temp is now 38 and so on so forth.
+-- Another note, Added 'New' prefix since it was bugged when I didn't, I'm not too sure why that was the case.
+
+NTCS_Thermal.ConfigData = {
+	NTCS_Thermal_Header1 = { name = NTCS_Thermal.Name, type = "category"},
+
+	NTCS_Thermal_HeaderTemp = { name = "------------------------------- Temperature Settings -------------------------------", type = "category" },
+	
+	NewHypothermiaLevel = {
+		name = "Hypothermia level",
+		default = 36,
+		range = { 0, 100 },
+		type = "float",
+		description = "Sets the value at which hypothermia will occur.",
+		group = true,
+		resettable = true,
+	},
+	NewHyperthermiaLevel = {
+		name = "Hyperthermia level",
+		default = 39,
+		range = { 0, 100 },
+		type = "float",
+		description = "Sets the value at which hyperthermia will occur.",
+		group = true,
+		resettable = true,
+	},
+	NewNormalBodyTemp = {
+		name = "Normal Body Temp",
+		default = 38,
+		range = { 0, 100 },
+		type = "float",
+		description = "The normal temperature of the body.\nWARNING: Setting this value to a substantially higher or lower value will cause all characters to remain at their current temperature whilst they advance to this.\nProceed with caution.",
+		group = true,
+		resettable = true,
+	},
+	NewHypothermiaScaling = {
+		name = "Hypothermia Scaling",
+		default = 5,
+		range = { 0, 10 },
+		type = "float",
+		description = "Multiplies hypothermia by this value.",
+		group = true,
+		resettable = true,
+	},
+	NewHyperthermiaScaling = {
+		name = "Hyperthermia Scaling",
+		default = 1,
+		range = { 0, 10 },
+		type = "float",
+		description = "Multiplies hyperthermia by this value.",
+		group = true,
+		resettable = true,
+	},
+	NewWarmingAbility = {
+		name = "Warming Ability",
+		default = .05,
+		range = { 0, 1 },
+		type = "float",
+		description = "How much the warmth affliction provides in temperature.",
+		group = true,
+		resettable = true,
+	},
+	NewDryingSpeed = {
+		name = "Drying Speed",
+		default = -.1,
+		range = { -1, 0 },
+		type = "float",
+		description = "How fast the wet affliction wears off per Thermal interval.",
+		group = true,
+		resettable = true,
+	},
+	ETempScaling = {
+		name = "External Temperature Scaling",
+		default = 1.5,
+		range = { 1, 10 },
+		type = "float",
+		description = "Multiplies incoming external temperature changes by this value. Water, Fire etc.",
+		group = true,
+		resettable = true,
+	},
+	HeaterBatteryConsumption = {
+		name = "Heater Battery Consumption",
+		default = 0.2,
+		range = {0, 1},
+		type = "float",
+		description = "How much of a heater's battery condition is used per NT interval.",
+		group = true,
+		resettable = true,
+	},
+	ThermalRoomCalcInterval = {
+		name = "Room Temperature Calculation Intervals",
+		default = 300,
+		range = {10, 500},
+		type = "float",
+		description = "The time between temperature calculations of rooms. Higher values mean better performance but less accuracy. Lower values mean worse performance but more accuracy.",
+		group = true,
+		resettable = true,
+	},
+	ShockMargin = {
+		name = "Thermal Shock Margin",
+		default = 200,
+		range = {1, 400},
+		type = "float",
+		description = "The margin in which thermal shock will activate. Extremely sensitive. Higher values mean less margin, lower means higher margin.",
+		group = true,
+		resettable = true,
+	},
+	HeatedDivingSuitStrength = {
+		name = "Heated Diving Suit Strength",
+		default = 1.2,
+		range = {1, 3},
+		type = "float",
+		description = "The strengh of the heat from the heated diving suit.",
+		group = true,
+		resettable = true,
+	},
+
+	NTCS_Thermal_HeaderCompat = { name = "------------------------------- Compatibility Toggles -------------------------------", type = "category" },
+
+	SuitCompatiblityMode = { name = "Suit Compatibility Mode", default = false, type = "bool", description = "This makes all suits heated by default, rather than using batteries or external heaters. This should be used only when needed and a patch isn't out." },
+	BotSuitSafteyMode = { name = "Bot Suit Compatibility Mode", default = true, type = "bool", description = "This makes all suits worn by a bot heated. Useful so you don't have to babysit them."},
+	BotTempIgnoreMode = { name = "Temperature Ignores Bot Mode", default = false, type = "bool", description = "This makes all bots immune to temperature and it's effects. This should theoretically give a performance boost."},
+	PressureStabilizerTemperature = { name = "Pressure Stabilizers Stabilize Temperature", default = false, type = "bool", description = "This setting makes pressure stabilizers also stabilize temperature, on top of pressure and oxygen." },
+	HuskGenesHypothermia = { name = "Husk Genes Are Immune To Hypothermia", default = true, type = "bool", description = "This makes it so husk genes make you immune to hypothermia." },
+	RepairToolsTemp = { name = "Repair Tools Have Temperature Interactions", default = true, type = "bool", description = "This makes it so certain repair tools give or take heat when used." },
+	WaterDirtiesBandages = { name = "Water Dirties Bandages", default = true, type = "bool", description = "This makes it so water will dirty bandages." },
+	WaterColdHull = { name = "Water Temperature Accounts For Hull Volume", default = true, type = "bool", description = "This makes it so water will be less cold the smaller the water amount in a hull, and vice versa." },
+
+	NTCS_Thermal_HeaderReactor = { name = "---------------------------------- Reactor Settings ----------------------------------", type = "category" },
+
+	ReactorsGiveTemperature = { name = "Reactors Give Temperature", default = false, type = "bool", description = "This is a small fork of a enhanced reactors. It makes reactors give you temperature, this is forced on if you are using enhanced reactors." },
+	ReactorsGiveTemperatureBot = { name = "Reactors Give Temperature To Bots", default = true, type = "bool", description = "This makes it so bots will gain temperature from reactors (if the reactor toggle is on)." },
+	ReactorTempAccountsForRodCount = { name = "Reactors Account For Rod Count", default = true, type = "bool", description = "This makes it so reactors will account for the number of fuel rods in a reactor. This makes reactors much nicer to be around, since they won't give temperature as along as they are stable. If off, reactors will give temperature, even if stable, as long as the reactor temp is high enough." },
+	ThermalReactorTempInterval = {
+		name = "Reactor Temperature Interval",
+		default = 60,
+		range = {10, 500},
+		type = "float",
+		description = "The time between temperature calculations of reactors giving temperature. Higher values mean better performance but less accuracy. Lower values mean worse performance but more accuracy.",
+		group = true,
+		resettable = true,
+	},
+	ThermalReactorTempScaling = {
+		name = "Reactor Temperature Scaling",
+		default = 1,
+		range = {0, 2},
+		type = "float",
+		description = "Scales the temperature given from reactors.",
+		group = true,
+		resettable = true,
+	},
+	ThermalReactorMaxTemp = {
+		name = "Reactor Max Temperature",
+		default = 60,
+		range = {0, 100},
+		type = "float",
+		description = "The max temperature a reactor can reach before heating up nearby crewmates. ONLY APPLIES IF ROD COUNT COFIG IS OFF!",
+		group = true,
+		resettable = true,
+	},
+
+	NTCS_Thermal_HeaderPerformance = { name = "------------------------------- Performance Settings -------------------------------", type = "category" },
+
+	SkipCalculations = { name = "Skip Calculations", default = false, type = "bool", description = "Due to the fact that this addon is heavy on performance, there might be situations where the performance is horrific. \
+																									Turn this on when in said situation, I.E in a outpost, just note this SKIPS all calculations, so the mod basically is toggled off when this is active!" },
+	SimpleWaterCalculation = { name = "Simple Water Calculations", default = false, type = "bool", description = "This setting makes water calculations extremely simple, the game will make you wet, only when 'in' water. However due to barotrauma limitations this is highly inaccurate." },
+	HeatTransferToggle = { name = "Fire Transfers Heat", default = true, type = "bool", description = "This setting allows heat to transfer between hulls in a submarine. This should be left on for the intended experience." },
+	PerformanceMode = { name = "Performance Mode", default = true, type = "bool", description = "This mode increases performance, however it sometimes might make inaccurate calculation. There really shouldn't be a difference though." },
+
+	NTCS_Thermal_HeaderExperimental = { name = "------------------------------- Experimental Features -------------------------------", type = "category" },
+
+	FireCausePanic = { name = "On Fire Causes Panicking (Experimental)", default = false, type = "bool", description = "This makes it so being on fire will cause people to panic. Making them vulnerable to attacks and prevents them from using guns." },
+	--SmartHeaterDetect = { name = "Smart Heater Detection (Experimental)", default = false, type = "bool", description = "This system will 'try' and auto detect a battery slot heater in your suit!." },
+
+	NTCS_Thermal_HeaderDebug = { name = "----------------------------------------- Debug -----------------------------------------", type = "category" },
+
+	DebugMessageMode = { name = "Enable Debug Messages", default = false, type = "bool", description = "This mode lets you type NT Thermal Debug Commands into the Chat, not console! Will print the corresponding info into the console. It's really just for me, so I can ask you for info!" },
+}
+
+--this adds above config options to the Neurotrauma config menu
+NTCS.Config.AddConfigOptions(NTCS_Thermal)

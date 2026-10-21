@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Polish" nowhitespace="false" translatedname="Polish">
+  <Override>
+    <!-- /// Gear /// -->
+    <entityname.heatpads>Plastry rozgrzewające</entityname.heatpads>
+    <entitydescription.heatpads>Łatwy w przechowywaniu plaster służący do ogrzewania zimnej tkanki.</entitydescription.heatpads>
+    <entityname.handheld_thermometer>Termometr elektroniczny</entityname.handheld_thermometer>
+    <entitydescription.handheld_thermometer>Bezdotykowa metoda mierzenia temperatury pacjenta. Wymaga baterii do użytku.</entitydescription.handheld_thermometer>
+    <entityname.alteplase>Alteplaza</entityname.alteplase>
+    <entitydescription.alteplase>Środek trombolityczny stosowany w celu rozpuszczenia skrzepów krwi powstałych w organizmie. Pomaga w leczeniu zatorowości płucnej.</entitydescription.alteplase>
+    <entityname.furosemide>Furosemid</entityname.furosemide>
+    <entitydescription.furosemide>Stosowany w leczeniu obrzęku płuc i obniżaniu ciśnienia krwi.</entitydescription.furosemide>
+    <entityname.aafn>A.A.F.N</entityname.aafn>
+    <entitydescription.aafn>Wysoce eksperymentalne rozwiązanie oparte na nanitach, służące do rozszerzania naczyń krwionośnych. W połączeniu z alkoholem wykazuje silne właściwości wybuchowe..</entitydescription.aafn>
+    <entityname.towel>Ręcznik</entityname.towel>
+    <entitydescription.towel>Ręcznik służy do osuszenia pacjenta.</entitydescription.towel>
+    <entityname.warm_rag>Ciepła ściereczka</entityname.warm_rag>
+    <entitydescription.warm_rag>Wilgotną, ciepłą szmatkę można wykorzystać do ogrzania zimnej tkanki. Należy ją przechowywać w pojemniku grzewczym.</entitydescription.warm_rag>
+    <entityname.warm_iv_bag>Ciepły worek płynów dożylnych</entityname.warm_iv_bag>
+    <entitydescription.warm_iv_bag>Podgrzewalny worek z płynami dożylnymi, idealny do podwyższenia temperatury wewnętrznej ciała pacjenta. Należy przechowywać w pojemniku grzewczym.</entitydescription.warm_iv_bag>
+    <entityname.heatcontainer>Pojemnik grzewczy</entityname.heatcontainer>
+    <entitydescription.heatcontainer>Pojemnik służący przechowywaniu przedmiotów które wymagają bycia ciepłym do bycia skutecznym.</entitydescription.heatcontainer>
+    <entityname.heatcrate>Skrzynia grzewcza</entityname.heatcrate>
+    <entitydescription.heatcrate>Większy pojemnik służący przechowywaniu przedmiotów które wymagają bycia ciepłym do bycia skutecznym.</entitydescription.heatcrate>
+    <entityname.esh>E.S.H</entityname.esh>
+    <entitydescription.esh>Zewnętrzny ogrzewacz do kombinezonów nurkowych, stosowany w sytuacji, gdy nie ma możliwości skorzystania z ogrzewania wewnętrznego. Wykonany z przerobionego pasa narzędziowego jakiegoś biednego mechanika; wymaga zasilania z baterii.</entitydescription.esh>
+    <entityname.csh>C.S.H</entityname.csh>
+    <entitydescription.csh>Zewnętrzny ogrzewacz do kombinezonów nurkowych, stosowany w sytuacji, gdy nie ma możliwości skorzystania z ogrzewania wewnętrznego. Działa w ekwipunku; wymaga zasilania z baterii</entitydescription.csh>
+    <entityname.cryotank>Butla kriogeniczna</entityname.cryotank>
+    <entitydescription.cryotank>Specjalistyczna butla tlenowa, przeznaczona do dostarczania sprężonego powietrza o temperaturze bliskiej zeru. Należy używać ostrożnie. OSTRZEŻENIE: W przypadku zapalenia się wybucha gwałtownie.</entitydescription.cryotank>
+    <entityname.stasis_starter>Starter-Stazy</entityname.stasis_starter>
+    <entitydescription.stasis_starter>Znacznie tańsza alternatywa dla worka stazy medycznej. Obniżając temperaturę ciała pacjenta do 1°C lub poniżej, wprowadza się go w stan hibernacji, który utrzyma się tak długo, jak długo będzie w niej przebywał.</entitydescription.stasis_starter>
+    <entityname.skin_grafter>Dermatom</entityname.skin_grafter>
+    <entitydescription.skin_grafter>Urządzenie służące do pobierania skóry od pacjenta. Należy go używać po rozwarciu skóry.</entitydescription.skin_grafter>
+    <entityname.ntt_skin>Skóra</entityname.ntt_skin>
+    <entitydescription.ntt_skin>Skóra pobrana od pacjenta, miejmy nadzieję, że za jego zgodą. Może posłużyć do przeszczepu skóry u pacjenta z oparzeniami.</entitydescription.ntt_skin>
+    <entityname.hsh>H.S.H</entityname.hsh>
+    <entitydescription.hsh>Zewnętrzny podgrzewacz (i zestaw słuchawkowy) dla kombinezonów, wymaga baterii do zasilania.</entitydescription.hsh>
+    <!-- /// Afflictions /// -->
+    <afflictionname.frostnip>Oziębienie</afflictionname.frostnip>
+    <afflictiondescription.frostnip>Skóra jest trochę czerwona i zimna.</afflictiondescription.frostnip>
+    <afflictionname.d1_frostbite>Odmrożenie pierwszego stopnia</afflictionname.d1_frostbite>
+    <afflictiondescription.d1_frostbite>Skóra jest biała i woskowata, pozbawiona czucia.</afflictiondescription.d1_frostbite>
+    <afflictionname.d2_frostbite>Odmrożenie drugiego stopnia</afflictionname.d2_frostbite>
+    <afflictiondescription.d2_frostbite>Skóra jest blada i woskowata, a dotyk nie wywołuje żadnych odczuć. Na skórze pojawiają się bolesne pęcherze.</afflictiondescription.d2_frostbite>
+    <afflictionname.d3_frostbite>Odmrożenie trzeciego stopnia</afflictionname.d3_frostbite>
+    <afflictiondescription.d3_frostbite>Skóra przybrała gnijący fioletowy kolor; konieczna jest amputacja, aby uratować to, co z niej pozostało.</afflictiondescription.d3_frostbite>
+    <afflictionname.chilblains>Odmrożenia</afflictionname.chilblains>
+    <afflictiondescription.chilblains>W wyniku ekstremalnego zimna powstały pęcherze, które są podatne na infekcje. Należy je opatrzyć i chronić przed wodą.</afflictiondescription.chilblains>
+    <afflictionname.hypothermia>Hipotermia</afflictionname.hypothermia>
+    <afflictiondescription.hypothermia>Ciało jest zdecydowanie za zimne.</afflictiondescription.hypothermia>
+    <afflictionname.hyperthermia>Hipertermia</afflictionname.hyperthermia>
+    <afflictiondescription.hyperthermia>Ciało jest zdecydowanie za gorące.</afflictiondescription.hyperthermia>
+    <afflictionname.aafn_overdose>Przedawkowanie A.A.F.N</afflictionname.aafn_overdose>
+    <afflictiondescription.aafn_overdose>Ciało ulega gwałtownemu rozkładowi z powodu nadmiaru nanitów.</afflictiondescription.aafn_overdose>
+    <afflictionname.reperfusion_injury>Uraz reperfuzyjny</afflictionname.reperfusion_injury>
+    <afflictiondescription.reperfusion_injury>Tkanka uległa uszkodzeniu w wyniku zbyt szybkiego ogrzania..</afflictiondescription.reperfusion_injury>
+    <afflictionname.cell_death>Śmierć komórek</afflictionname.cell_death>
+    <afflictiondescription.cell_death>Komórki uległy śmierci w wyniku zamrożenia.</afflictiondescription.cell_death>
+    <afflictionname.pulmonary_edema>Obrzęk płuc</afflictionname.pulmonary_edema>
+    <afflictiondescription.pulmonary_edema>Płyn gromadzi się w płucach, utrudniając oddychanie.</afflictiondescription.pulmonary_edema>
+    <afflictionname.pulmonary_embolism>Zatorowość płucna</afflictionname.pulmonary_embolism>
+    <afflictiondescription.pulmonary_embolism>Skrzepy krwi z kończyn zablokowały dopływ krwi do płuc.</afflictiondescription.pulmonary_embolism>
+    <afflictionname.frozen_vessels>Zamarznięte naczynia krwionośne</afflictionname.frozen_vessels>
+    <afflictiondescription.frozen_vessels>W naczyniach doszło do krystalizacji, co stanowi stan zagrażający życiu, jeśli nie zostanie odpowiednio opanowany.</afflictiondescription.frozen_vessels>
+    <afflictionname.bloodclot>Skrzep krwi</afflictionname.bloodclot>
+    <afflictiondescription.bloodclot>Krew skrzepła w grudki.</afflictiondescription.bloodclot>
+    <afflictionname.elevated_core_temperature>Podwyższona temperatura ciała</afflictionname.elevated_core_temperature>
+    <afflictiondescription.elevated_core_temperature>Temperatura ciała została zwiększona.</afflictiondescription.elevated_core_temperature>
+    <afflictionname.thrombolytics>Leki trombolityczne</afflictionname.thrombolytics>
+    <afflictiondescription.thrombolytics>Podano leki trombolityczne, które pomagają w leczeniu zakrzepów krwi.</afflictiondescription.thrombolytics>
+    <afflictionname.diuretics>Leki moczopędne</afflictionname.diuretics>
+    <afflictiondescription.diuretics>Wprowadzono leki moczopędne. Pomagają one w leczeniu obrzęku płuc.</afflictiondescription.diuretics>
+    <afflictionname.heated_diving_suit>Podgrzewany skafander nurkowy</afflictionname.heated_diving_suit>
+    <afflictiondescription.heated_diving_suit>Kombinezon jest podgrzewany, a temperatura marznięcia jest znikoma.</afflictiondescription.heated_diving_suit>
+    <afflictionname.heat_cramp>Skurcz cieplny</afflictionname.heat_cramp>
+    <afflictiondescription.heat_cramp>Gorąc powoduje skurcze mięśni.</afflictiondescription.heat_cramp>
+    <afflictionname.thermal_shock>Szok termiczny</afflictionname.thermal_shock>
+    <afflictiondescription.thermal_shock>Nagła zmiana temperatury spowodowała, że u pacjenta wystąpił szok termiczny.</afflictiondescription.thermal_shock>
+    <afflictionname.wet>Po kąpieli</afflictionname.wet>
+    <afflictiondescription.wet>Ciało jest przemoczone i kapie z niego woda.</afflictiondescription.wet>
+    <afflictionname.heat_stroke>Udar cieplny</afflictionname.heat_stroke>
+    <afflictiondescription.heat_stroke>Pacjent stracił przytomność z powodu gorąca.</afflictiondescription.heat_stroke>
+    <afflictionname.sym_cold>Zimno</afflictionname.sym_cold>
+    <afflictiondescription.sym_cold>Skóra pacjenta jest zimna w dotyku.</afflictiondescription.sym_cold>
+    <afflictionname.sym_shivers>Dreszcze</afflictionname.sym_shivers>
+    <afflictiondescription.sym_shivers>Ciało pacjenta drży, aby wytworzyć ciepło.</afflictiondescription.sym_shivers>
+    <afflictionname.sym_numb>Odrętwienie</afflictionname.sym_numb>
+    <afflictiondescription.sym_numb>Pacjent nie odczuwa żadnych bodźców dotykowych.</afflictiondescription.sym_numb>
+    <afflictionname.sym_runny_nose>Katar</afflictionname.sym_runny_nose>
+    <afflictiondescription.sym_runny_nose>Śluz wycieka z nosa.</afflictiondescription.sym_runny_nose>
+    <afflictionname.sym_pins_needles>Mrowienie</afflictionname.sym_pins_needles>
+    <afflictiondescription.sym_pins_needles>Pacjent odczuwa mrowienie.</afflictiondescription.sym_pins_needles>
+    <afflictionname.sym_hot>Gorąco</afflictionname.sym_hot>
+    <afflictiondescription.sym_hot>Skóra pacjenta jest gorąca w dotyku.</afflictiondescription.sym_hot>
+    <afflictionname.sym_armswelling>Obrzęk ramienia</afflictionname.sym_armswelling>
+    <afflictiondescription.sym_armswelling>Ramię jest nienaturalnie spuchnięte.</afflictiondescription.sym_armswelling>
+    <afflictionname.warmth>Ciepło</afflictionname.warmth>
+    <afflictiondescription.warmth>Zastosowano ogrzewanie.</afflictiondescription.warmth>
+    <afflictionname.aafn>A.A.F.N</afflictionname.aafn>
+    <afflictiondescription.aafn>Wprowadzono nanoboty specjalizujące się w usuwaniu kryształków lodu z krwioobiegu.</afflictiondescription.aafn>
+    <afflictionname.panicking>Panika</afflictionname.panicking>
+    <afflictiondescription.panicking>Wpadłeś w panikę, nie możesz normalnie strzelać z powodu bólu.</afflictiondescription.panicking>
+    <afflictionname.removed_skin>Usunięta skóra</afflictionname.removed_skin>
+    <afflictiondescription.removed_skin>Skóra została usunięta.</afflictiondescription.removed_skin>
+    <afflictionname.grafted_skin>Przeszczepiona skóra</afflictionname.grafted_skin>
+    <afflictiondescription.grafted_skin>Przeszczepiono skórę.</afflictiondescription.grafted_skin>
+    <!-- /// Dialog /// -->
+    <npcdialogsym.sym_cold>Robi mi się tu trochę zimno.</npcdialogsym.sym_cold>
+    <npcdialogsym.sym_shivers>Trochę mi zimno.</npcdialogsym.sym_shivers>
+    <npcdialogsym.sym_numb>Nie potrafię… zbyt wiele czuć.</npcdialogsym.sym_numb>
+    <npcdialogsym.sym_hot>Zaczynam się pocić.</npcdialogsym.sym_hot>
+    <npcdialogsym.heat_cramp>Mam… skurcze!.</npcdialogsym.heat_cramp>
+	</Override>
+	 <!-- /// Tips /// -->
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Temperatura staje się śmiertelna tylko w ekstremalnych wartościach.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Szok termiczny to rzadka dolegliwość spowodowana gwałtowną zmianą temperatury ciała pacjenta.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Chociaż długotrwała hipertermia jest niebezpieczna, temperatura powyżej 43,8°C może zabić infekcję Husk.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Alteplaza i furosemid mogą zostać wykorzystane jako alternatywa dla nitroprusydku sodu.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Ciepło z ognia będzie się przenosić z pokoju do pokoju. Dlatego należy pamiętać o zamykaniu drzwi.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Cyberkończyny są wrażliwe na zmiany temperatury.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Hipotermia może stanowić alternatywę dla środków przeciwbólowych, jednak stan zdrowia pacjenta może budzić obawy.</loadingscreentip>
+    
+    <!-- /// Thermometer /// -->
+    
+    <thermometer.readout>Odczyt temperatury </thermometer.readout>
+    <thermometer.hypothermic>Hipotermiczny</thermometer.hypothermic>
+    <thermometer.hyperthermic>Hipertermiczny</thermometer.hyperthermic>
+    <thermometer.normal_temperature_range>Normalny zakres temperatury</thermometer.normal_temperature_range>
+    <thermometer.body>Ciało</thermometer.body>
+    <thermometer.limbs_to_check.torso>Tors</thermometer.limbs_to_check.torso>
+    <thermometer.limbs_to_check.head>Głowa</thermometer.limbs_to_check.head>
+    <thermometer.limbs_to_check.leftarm>Lew Ramię</thermometer.limbs_to_check.leftarm>
+    <thermometer.limbs_to_check.rightarm>Prawe Ramię</thermometer.limbs_to_check.rightarm>
+    <thermometer.limbs_to_check.leftleg>Lewa Noga</thermometer.limbs_to_check.leftleg>
+    <thermometer.limbs_to_check.rightleg>Prawa Noga</thermometer.limbs_to_check.rightleg>
+
+</infotexts>
