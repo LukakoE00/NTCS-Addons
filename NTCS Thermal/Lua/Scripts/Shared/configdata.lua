@@ -163,6 +163,8 @@ NTCS_Thermal.ConfigData = {
 
 	NTCS_Thermal_HeaderPerformance = { name = "------------------------------- Performance Settings -------------------------------", type = "category" },
 
+	SkipCalculations = { name = "Skip Calculations", default = false, type = "bool", description = "Due to the fact that this addon is heavy on performance, there might be situations where the performance is horrific. \
+																									Turn this on when in said situation, I.E in a outpost, just note this SKIPS all calculations, so the mod basically is toggled off when this is active!" },
 	SimpleWaterCalculation = { name = "Simple Water Calculations", default = false, type = "bool", description = "This setting makes water calculations extremely simple, the game will make you wet, only when 'in' water. However due to barotrauma limitations this is highly inaccurate." },
 	HeatTransferToggle = { name = "Fire Transfers Heat", default = true, type = "bool", description = "This setting allows heat to transfer between hulls in a submarine. This should be left on for the intended experience." },
 	PerformanceMode = { name = "Performance Mode", default = true, type = "bool", description = "This mode increases performance, however it sometimes might make inaccurate calculation. There really shouldn't be a difference though." },

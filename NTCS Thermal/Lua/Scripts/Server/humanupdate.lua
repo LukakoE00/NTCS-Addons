@@ -188,6 +188,9 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
         local CharacterTable = THERM.GetCharacter(C.Human.ID)
 
         local function RoomIsHot()
@@ -253,9 +256,9 @@ affLoader:Register(
 
 								-- Overlays
 								if affStr < HypothermiaLevel and not THERM.HasHuskSymbiosis(C.Human) then
-									NTCS.HF.SetAffliction(C.Human, "overlay_ice", NTCS.HF.Clamp(5/affStr*150,0,60))
+									NTCS.HF.SetAffliction(C.Human, "overlay_ice", THERM.Clamp(5/affStr*150,0,60))
 								elseif affStr > HyperthermiaLevel then
-									NTCS.HF.SetAffliction(C.Human, "overlay_fire", NTCS.HF.Clamp(affStr/NormalBodyTemp*50,0,100))
+									NTCS.HF.SetAffliction(C.Human, "overlay_fire", THERM.Clamp(affStr/NormalBodyTemp*50,0,100))
 								else
 									NTCS.HF.SetAffliction(C.Human, "overlay_ice", 0)
 									NTCS.HF.SetAffliction(C.Human, "overlay_fire", 0)
@@ -271,10 +274,10 @@ affLoader:Register(
 							else
 								--FrostNip
 								if affStr < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
-									and C:GetAfflictionStrengthLimb("frostnip",Limb,0)
-									and C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
-									and C:GetAfflictionStrengthLimb("d2_frostbite",Limb,0)
-									and C:GetAfflictionStrengthLimb("d3_frostbite",Limb,0)
+									and C:GetAfflictionStrengthLimb("frostnip",Limb,0) == 0
+									and C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0) == 0
+									and C:GetAfflictionStrengthLimb("d2_frostbite",Limb,0) == 0
+									and C:GetAfflictionStrengthLimb("d3_frostbite",Limb,0) == 0
 									and not THERM.IsLimbCyber(C.Human,Limb) 
 									and not THERM.HasHuskSymbiosis(C.Human) then
 										C:SetAfflictionLimb("frostnip",Limb,1)
@@ -318,7 +321,7 @@ affLoader:Register(
 						local RoomTempGain = GetRoomTempAddition(C.Human,Limb)
 						local AmputatedLimbValue = NTCS.HF.BoolToNum(NTCS.HF.LimbIsAmputated(C.Human, Limb),1) + 1
 						if affStr < NormalBodyTemp then
-							C:SetAfflictionLimb(ID,Limb,NTCS.HF.Clamp(affStr
+							C:SetAfflictionLimb(ID,Limb,THERM.Clamp(affStr
 								+ RoomTempGain + (.05
 									/CompromisedTempVal
 										*(C:GetAfflictionStrength("bloodpressure")
@@ -327,7 +330,7 @@ affLoader:Register(
 						
 						-- Cool down if warm
 						elseif affStr > NormalBodyTemp then
-							C:SetAfflictionLimb(ID,Limb,NTCS.HF.Clamp(affStr
+							C:SetAfflictionLimb(ID,Limb,THERM.Clamp(affStr
 									- RoomTempGain - (.05
 										/CompromisedTempVal
 											*(C:GetAfflictionStrength("bloodpressure")
@@ -359,6 +362,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local WarmingAbility = FetchConfigStats().WarmingAbility
 		local WarmthScaling = 4
@@ -403,6 +408,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local CoolingAbility = FetchConfigStats().WarmingAbility
 		local MaxCoolingTemp = FetchOtherStats().MaxCoolingTemp
 		local CoolScaling = -2.9
@@ -434,6 +441,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
@@ -473,6 +482,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
@@ -520,6 +531,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+		
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
@@ -574,6 +587,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
@@ -612,7 +627,7 @@ affLoader:Register(
 			end
 			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
-			if affStr > 24.9 and LimbTemp < 2 and not NTCS.NT.LimbIsAmputated(C.Human, Limb) then
+			if affStr > 24.9 and LimbTemp < 2 and not NTCS.HF.LimbIsAmputated(C.Human, Limb) then
 				C:SetAfflictionLimb("d3_frostbite",Limb,1)
 			end
 
@@ -634,6 +649,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
@@ -678,7 +695,7 @@ affLoader:Register(
 
 			affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
-			if NTCS.NT.LimbIsAmputated(C.Human, Limb) then
+			if NTCS.HF.LimbIsAmputated(C.Human, Limb) then
 				C:SetAfflictionLimb("d3_frostbite",Limb,0)
 				C:SetAfflictionLimb("d2_frostbite",Limb,24.9)
 				C:AddAfflictionLimb("chilblains",Limb,CalculateChilblains(Limb,C.Human))
@@ -706,6 +723,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
@@ -777,6 +796,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 then
@@ -785,8 +806,8 @@ affLoader:Register(
 
 			C:AddAffliction(ID,.5 * - ((PassiveDecay
 				+ C:GetAfflictionStrengthLimb("bandaged",Limb,0)/500 
-					* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("ointmented",Limb,0)/500 /50,1,2))
-						* NTCS.HF.Clamp(C:GetAfflictionStrengthLimb("warmth",Limb,0)/50,1,2)
+					* THERM.Clamp(C:GetAfflictionStrengthLimb("ointmented",Limb,0)/500 /50,1,2))
+						* THERM.Clamp(C:GetAfflictionStrengthLimb("warmth",Limb,0)/50,1,2)
 							* dT))
 			
 			if C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0) > HyperthermiaLevel then
@@ -812,6 +833,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 then
@@ -836,11 +859,13 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 then
 			local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
-			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", Limb, 10)
+			NTCS.HF.AddAfflictionLimb(C.Human, "spasm", Limb, 100)
 			C:AddAfflictionLimb(ID,Limb,-(.5 -- Go down 1 percent each tick.
 									- (C:GetAfflictionStrength("afsaline")/50)
 									* dT))
@@ -862,6 +887,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
@@ -897,6 +924,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
 
 		if affStr > 0 then
@@ -918,6 +947,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
@@ -936,12 +967,11 @@ affLoader:Register(
 
 			if affStr > 10 then
 				C:SetSymptomTrue("shortnessofbreath", 5)
-			elseif affStr > 25 then
-				C:SetSymptomTrue("shortnessofbreath", 5)
+			end
+			if affStr > 25 then
 				C:SetSymptomTrue("chestpain", 5)
-			elseif affStr > 75 then
-				C:SetSymptomTrue("shortnessofbreath", 5)
-				C:SetSymptomTrue("chestpain", 5)
+			end
+			if affStr > 75 then
 				C:SetAffliction("respiratoryarrest",100)
 			end
 			C:AddAffliction(ID,-(C:GetAfflictionStrength("thrombolytics")/3.5 - C:GetAfflictionStrength("afstreptokinase")/10 - .2 * dT))
@@ -960,6 +990,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
@@ -974,9 +1006,11 @@ affLoader:Register(
 				return
 			end
 
-			C:AddAffliction(ID,(C:GetAfflictionStrength("heartdamage")/80 + C:GetAfflictionStrength("bloodpressure")/50
-								+ C:GetAfflictionStrength("sepsis")/50 + THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50
-								- C:GetAfflictionStrength("diuretics")/10 * dT))
+			if THERM.GetCharacter(C.Human.ID) ~= nil then
+				C:AddAffliction(ID,(C:GetAfflictionStrength("heartdamage")/80 + C:GetAfflictionStrength("bloodpressure")/50
+									+ C:GetAfflictionStrength("sepsis")/50 + THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50
+									- C:GetAfflictionStrength("diuretics")/10 * dT))
+			end
 			C:SetSymptomTrue("shortnessofbreath", 5)
 			affStr = C:GetAfflictionStrength(ID)
 			if affStr > 25 then
@@ -1002,6 +1036,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 and not THERM.HasHuskSymbiosis(C.Human) then
@@ -1015,7 +1051,11 @@ affLoader:Register(
 
 			local MedHypo = function ()
 				C:AddAffliction("bloodpressure",(.1 * dT))
-				C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * dT))
+
+				if THERM.GetCharacter(C.Human.ID) ~= nil then -- Unsure why this keeps coming back nil
+					C:AddAffliction("pulmonary_edema",(THERM.GetCharacter(C.Human.ID).LimbWaterValues.TorsoV/50 + C:GetAfflictionStrength("lungdamage")/50 * dT))
+				end
+
 				C:SetSymptomTrue("paleskin", 5)
 				C:SetSymptomTrue("unconsciousness", 2)
 			end
@@ -1073,6 +1113,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
@@ -1109,21 +1151,16 @@ affLoader:Register(
 
 			if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling then
 				C:SetSymptomTrue("sweating", 2)
-
-			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
-				C:SetSymptomTrue("sweating", 2)
+			end
+			if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.05 then
 				MediumHyper()
-
-			elseif TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.2 then
-				C:SetSymptomTrue("sweating", 2)
-				MediumHyper()
+			end
+			if TorsoTemp > HyperthermiaLevel * NTCS_Thermal.ExtremeHyperthermiaScaling * 1.2 then
 				ExtremeHyper()
-
+			end
 			if THERM.HasHuskSymbiosis(C.Human) then
 				C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") / (NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)/(HyperthermiaLevel))/2)
 			end
-		end
-
 		end
 
 	end)
@@ -1137,6 +1174,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1171,6 +1210,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1212,11 +1253,13 @@ affLoader:Register(
 -- Those aren't stored in here since they have a independent tick rate.
 -- give_temp
 affLoader:Register(
-    builder:New("givetemp")  -- This should cause an error, this doesn't match any affliction
+    builder:New("givetemp")
     :SetStrengths(0,3,0)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1239,6 +1282,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 		local Death = (5 * dT)
@@ -1272,6 +1317,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local HeadTemp = NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", 0)
 		local LastHeadTemp = 0
@@ -1320,6 +1367,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local TorsoTemp = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0)
 		local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
 		local affStr = C:GetAfflictionStrength(ID)
@@ -1352,6 +1401,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
@@ -1373,6 +1424,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
@@ -1384,7 +1437,7 @@ affLoader:Register(
 				local LimbTemp = NTCS.HF.GetAfflictionStrengthLimb(C.Human, limb, "ntt_temperature", 0)
 				if LimbTemp < FetchConfigStats().NormalBodyTemp then
 					local WaterKey = THERM.LimbToWaterLimbV(limb)
-					local WaterCounter = NTCS.HF.Clamp(CharacterTable.LimbWaterValues[WaterKey]/1,.1,1)
+					local WaterCounter = THERM.Clamp(CharacterTable.LimbWaterValues[WaterKey]/1,.1,1)
 					local IsCyber = NTCS.HF.BoolToNum(THERM.IsLimbCyber(C.Human,limb),1) + 1
 					local TempAmount = (HypothermiaLevel/LimbTemp/25) * (affStr/100) * 10 * IsCyber * WaterCounter * dT * NTCS.Config.Get("HeatedDivingSuitStrength",1)
 					NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", limb, TempAmount)
@@ -1529,8 +1582,6 @@ affLoader:Register(
 	:Build()
 )
 
---:IsSymptom(true)
-
 -- sym_cold
 affLoader:Register(
     builder:New("sym_cold")
@@ -1539,12 +1590,13 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-					not not C:HasSymptom(ID)
-					and (C:HasSymptom(ID)
+					(C:HasSymptom(ID)
 					or NTCS.HF.GetAfflictionStrength(C.Human, "hypothermia", 0) > 0)
 					and not THERM.HasHuskSymbiosis(C.Human),
-				2
+				100
 			))
 
 	end)
@@ -1559,14 +1611,15 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and (C:HasSymptom(ID)
+				(C:HasSymptom(ID)
 					or (NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.MediumHypothermiaScaling 
 					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling))
 					and not THERM.HasHuskSymbiosis(C.Human),
-				2
+				100
 			))
 
 	end)
@@ -1581,14 +1634,15 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and (C:HasSymptom(ID)
+				(C:HasSymptom(ID)
 					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) < HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling
 					and NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", 0) > 0)
 					and not THERM.HasHuskSymbiosis(C.Human),
-				2
+				100
 			))
 
 	end)
@@ -1603,14 +1657,15 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local HypothermiaLevel = FetchConfigStats().HypothermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and (C:HasSymptom(ID)
+				(C:HasSymptom(ID)
 					or (NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) < HypothermiaLevel 
 					and NTCS.HF.GetAfflictionStrengthLimb(C.Human, LimbType.Head, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HypothermiaLevel/NTCS_Thermal.ExtremeHypothermiaScaling/1.5))
 					and not THERM.HasHuskSymbiosis(C.Human),
-				2
+				100
 			))
 
 	end)
@@ -1625,12 +1680,13 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
-		local HyperthermiaLevel = FetchConfigStats().HypothermiaLevel
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
+		local HyperthermiaLevel = FetchConfigStats().HyperthermiaLevel
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and (C:HasSymptom(ID)
-					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling),
-				2
+				C:HasSymptom(ID)
+					or NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NTCS.Config.Get("NormalBodyTemp", 38)) > HyperthermiaLevel * NTCS_Thermal.MediumHyperthermiaScaling,
+				100
 			))
 
 	end)
@@ -1645,10 +1701,11 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and C:HasSymptom(ID),
-				2
+				C:HasSymptom(ID),
+				100
 			))
 
 	end)
@@ -1663,10 +1720,11 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		C:SetAffliction(ID,NTCS.HF.BoolToNum(
-				not not C:HasSymptom(ID)
-					and C:HasSymptom(ID),
-				2
+				C:HasSymptom(ID),
+				100
 			))
 
 	end)
@@ -1681,6 +1739,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local NormalBodyTemp = FetchConfigStats().NormalBodyTemp
 		local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
 		local LimbStrength = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NormalBodyTemp)
@@ -1693,7 +1753,7 @@ affLoader:Register(
 
 			THERM.ApplyTemperatureUpdate(C.Human.ID)
 			for index, limb in pairs(FetchOtherStats().LimbsToCheck) do
-				local Chilled = NTCS.HF.Clamp(NTCS.HF.GetAfflictionStrengthLimb(C.Human, limb, "iced", 1)/50,1,2)
+				local Chilled = THERM.Clamp(NTCS.HF.GetAfflictionStrengthLimb(C.Human, limb, "iced", 1)/50,1,2)
 				-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, set the temperature to normal body temp
 				if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
 				and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
@@ -1711,11 +1771,8 @@ affLoader:Register(
 			if affStr > 30 then
 				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
 				C:SetSymptomTrue("lightheadedness", 5)
-			
-			elseif affStr > 40 then
-				C:AddAffliction("bloodpressure",(affStr/15 * BloodPressureMultiplier * dT))
-				C:SetSymptomTrue("lightheadedness", 5)
-
+			end
+			if affStr > 40 then
 				C:SetSymptomTrue("confusion", 3)
 				C:AddAffliction("seizure",(10 * dT))
 				C:AddAffliction("organdamage",(.5 * dT))
@@ -1734,6 +1791,8 @@ affLoader:Register(
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
 
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
+
 		local affStr = C:GetAfflictionStrength(ID)
 
 		if affStr > 0 then
@@ -1751,6 +1810,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1774,6 +1835,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 
@@ -1802,6 +1865,8 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
+
+		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrength(ID)
 

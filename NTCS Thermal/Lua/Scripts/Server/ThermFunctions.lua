@@ -674,7 +674,7 @@ end
 ---@param limb LimbType
 ---@param usingCharacter Character
 THERM.ReduceBurns = function (targetCharacter, limb, usingCharacter)
-        for Identifier in {"burn_deg3","burn_deg2","burn_deg1","burn"} do
+        for Identifier in {"thirddegreeburn","seconddegreeburn","firstdegreeburn","burn"} do
                 NTCS.HF.AddAfflictionLimb(targetCharacter, Identifier, limb.type, -100, usingCharacter)
         end
 end
@@ -714,4 +714,13 @@ end
 THERM.Round = function(num, numDecimalPlaces)
 	local mult = 10 ^ (numDecimalPlaces or 0)
 	return math.floor(num * mult + 0.5) / mult
+end
+
+-- Old functionality of HF.Clamp
+THERM.Clamp = function (value, min, max)
+        min = min or 0
+        max = max or 0
+        if value < min then return min end
+        if value > max then return max end
+        return value
 end

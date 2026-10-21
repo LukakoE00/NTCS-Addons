@@ -32,7 +32,7 @@ NTCS_Thermal.warm_rag = function (itemPackage)
         local item = itemPackage.item
         local usingCharacter = itemPackage.user.Human
         local targetCharacter = itemPackage.target.Human
-        local targetLimb = itemPackage.targetLimb
+        local targetLimb = itemPackage.targetLimb.type
         if item.Condition <= 25 then
 		return
 	end
@@ -50,7 +50,7 @@ NTCS_Thermal.aafn = function (itemPackage)
         local item = itemPackage.item
         local usingCharacter = itemPackage.user.Human
         local targetCharacter = itemPackage.target.Human
-        local targetLimb = itemPackage.targetLimb
+        local targetLimb = itemPackage.targetLimb.type
         local success = NTCS.HF.BoolToNum(NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 60), 1)
         local limbtype = targetLimb
         if NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "clampedbleeders", 0) == 100 then
@@ -71,7 +71,7 @@ NTCS_Thermal.skin_grafter = function (itemPackage)
         local item = itemPackage.item
         local usingCharacter = itemPackage.user.Human
         local targetCharacter = itemPackage.target.Human
-        local targetLimb = itemPackage.targetLimb
+        local targetLimb = itemPackage.targetLimb.type
         local success = NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 50)
         local limbtype = targetLimb
         if NTCS.HF.GetAfflictionStrengthLimb(targetCharacter, limbtype, "retractedskin", 0) ~= 100 then
@@ -105,7 +105,7 @@ NTCS_Thermal.ntt_skin = function (itemPackage)
         local item = itemPackage.item
         local usingCharacter = itemPackage.user.Human
         local targetCharacter = itemPackage.target.Human
-        local targetLimb = itemPackage.targetLimb
+        local targetLimb = itemPackage.targetLimb.type
         local success = NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 50)
         local limbtype = targetLimb
         

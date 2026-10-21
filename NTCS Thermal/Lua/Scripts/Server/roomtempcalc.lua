@@ -88,8 +88,8 @@ THERMRoom.CalculateRoomTemp = function ()
                                 local TempTransfer = THERMRoom.GetRoom(ParentHull).Temp
                                         /(ChildHull.Size.X * ChildHull.Size.Y)
                                         * 3000  --Scale it a lil.
-                                THERMRoom.GetRoom(ChildHull).Temp = NTCS.HF.Clamp(THERMRoom.GetRoom(ChildHull).Temp + (TempTransfer/2),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp)
-                                THERMRoom.GetRoom(ParentHull).Temp = NTCS.HF.Clamp(THERMRoom.GetRoom(ParentHull).Temp - (TempTransfer / 50),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp/2,100)
+                                THERMRoom.GetRoom(ChildHull).Temp = THERM.Clamp(THERMRoom.GetRoom(ChildHull).Temp + (TempTransfer/2),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp)
+                                THERMRoom.GetRoom(ParentHull).Temp = THERM.Clamp(THERMRoom.GetRoom(ParentHull).Temp - (TempTransfer / 50),THERMRoom.DefaultRoomTemp,THERMRoom.GetRoom(ParentHull).Temp/2,100)
                         end
                         THERMRoom.QueuedOxygenUpdates[update] = nil -- I'm quite sure this one does nothing on a real note, but I'm afraid to delete it.
                         THERMRoom.QueuedOxygenUpdates[index] = nil -- Set update to nil
@@ -105,7 +105,7 @@ THERMRoom.CalculateRoomTemp = function ()
                                         for index2, fire in pairs(Hull.FireSources) do
                                                 local FireArea = fire.Size.X * fire.Size.Y
                                                 TempGain = FireArea/HullArea * 1000 / Hull.FireCount * THERMRoom.DeltaTime
-                                                room.Temp = NTCS.HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
+                                                room.Temp = THERM.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
                                         end
                                 -- If no fireSources then check if temp is stablizied.
                                 elseif room.Temp <= THERMRoom.DefaultRoomTemp then
@@ -118,7 +118,7 @@ THERMRoom.CalculateRoomTemp = function ()
                                                         * -1 
                                                         * WaterCooling
                                                         * THERMRoom.DeltaTime
-                                        room.Temp = NTCS.HF.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
+                                        room.Temp = THERM.Clamp(room.Temp + TempGain,THERMRoom.DefaultRoomTemp,100)
                                 end
                         else
                                 THERMRoom.RemoveRoom(room)
