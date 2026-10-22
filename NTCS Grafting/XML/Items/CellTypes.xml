@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <Items>
+    <!-- Bone Thresher Cells -->
+    <Item name="" description="" identifier="Cells_BoneThresher" scale="0.13" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
+        <Price baseprice="150" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="2" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="803,817,222,197" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="803,817,222,197" depth="0.6" origin="0.5,0.5" />
+        <Body width="25" height="25" density="20" />
+
+        <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" holdangle="90">
+            <!-- Cells degrade if not stored properly. -->
+            <StatusEffect type="Always" target="This" condition="-0.025" interval="5" disabledeltatime="true" conditionalComparison="and">
+                <Conditional hastag="neq refrigerated" targetcontainer="true" />
+                <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
+            </StatusEffect>
+
+            <!-- If stored properly, regenerate the cells. -->
+            <StatusEffect type="OnContained" target="This" condition="0.5" interval="5" disabledeltatime="true" conditionalComparison="and">
+                <Conditional condition="gte 60" />
+                <Conditional hastag="refrigerated" targetcontainer="true" />
+            </StatusEffect>
+
+            <StatusEffect type="OnBroken" target="This">
+                <Remove />
+            </StatusEffect>
+        </Holdable>
+
+        <SkillRequirementHint identifier="medical" level="70" />
+    </Item>
+
+    <!-- Charybdis Cells -->
+    <Item name="" description="" identifier="Cells_Charybdis" variantof="Cells_BoneThresher">
+        <Price baseprice="1000" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="284,841,226,210" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="284,841,226,210" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="90" />
+    </Item>
+
+    <!-- Endworm Cells -->
+    <Item name="" description="" identifier="Cells_Endworm" variantof="Cells_BoneThresher">
+        <Price baseprice="1000" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="55,854,183,206" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="55,854,183,206" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="90" />
+    </Item>
+
+    <!-- Hammerhead Cells -->
+    <Item name="" description="" identifier="Cells_Hammerhead" variantof="Cells_BoneThresher">
+        <Price baseprice="110" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="805,596,234,201" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="805,596,234,201" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="70" />
+    </Item>
+
+    <!-- Moloch Cells -->
+    <Item name="" description="" identifier="Cells_Moloch"  variantof="Cells_BoneThresher">
+        <Price baseprice="200" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="269,600,240,198" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="269,600,240,198" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="70" />
+    </Item>
+
+    <!-- Mudraptor Cells -->
+    <Item name="" description="" identifier="Cells_Mudraptor"  variantof="Cells_BoneThresher">
+        <Price baseprice="95" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="536,835,223,197" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="536,835,223,197" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="70" />
+    </Item>
+
+    <!-- Tiger Thresher Cells -->
+    <Item name="" description="" identifier="Cells_TigerThresher" variantof="Cells_BoneThresher">
+        <Price baseprice="100" soldbydefault="false" />
+
+        <Deconstruct time="10">
+            <Item identifier="carbon" amount="1" />
+        </Deconstruct>
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="51,623,183,173" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="51,623,183,173" depth="0.6" origin="0.5,0.5" />
+
+        <SkillRequirementHint identifier="medical" level="70" />
+    </Item>
+
+    <!-- Crawler Broodmother Cells -->
+    <Item name="" description="" identifier="Cells_Broodmother" variantof="Cells_BoneThresher" useinhealthinterface="False">
+        <Price baseprice="120" soldbydefault="false" />
+
+        <!-- <Deconstruct time="120" requireddeconstructor="alienIncubator">
+            <Item identifier="broodmotherLiverAegis" requiredotheritem="livertransplant" />
+            <Item identifier="broodmotherLiverAegis" requiredotheritem="livertransplant_q1" />
+        </Deconstruct> -->
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="794,388,209,183" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="794,388,209,183" depth="0.6" origin="0.5,0.5" />
+    </Item>
+
+    <!-- Husk Cells -->
+    <Item name="" description="" identifier="Cells_Husk" variantof="Cells_BoneThresher" useinhealthinterface="False">
+        <Price baseprice="100" soldbydefault="false" />
+
+        <!-- <Deconstruct time="120" requireddeconstructor="alienIncubator">
+            <Item identifier="huskHeartAegis" requiredotheritem="hearttransplant" />
+            <Item identifier="huskHeartAegis" requiredotheritem="hearttransplant_q1" />
+        </Deconstruct> -->
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="556,398,187,172" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="556,398,187,172" depth="0.6" origin="0.5,0.5" />
+    </Item>
+
+    <!-- Latcher Cells -->
+    <Item name="" description="" identifier="Cells_Latcher" variantof="Cells_BoneThresher" useinhealthinterface="False">
+        <Price baseprice="250" soldbydefault="false" />
+
+        <!-- <Deconstruct time="120" requireddeconstructor="alienIncubator">
+            <Item identifier="latcherHeartAegis" requiredotheritem="hearttransplant" />
+            <Item identifier="latcherHeartAegis" requiredotheritem="hearttransplant_q1" />
+        </Deconstruct> -->
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="545,579,204,239" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="545,579,204,239" depth="0.6" origin="0.5,0.5" />
+    </Item>
+
+    <!-- Mantis Cells -->
+    <Item name="" description="" identifier="Cells_Mantis" variantof="Cells_BoneThresher" useinhealthinterface="False">
+        <Price baseprice="100" soldbydefault="false" />
+
+        <!-- <Deconstruct time="120" requireddeconstructor="alienIncubator">
+            <Item identifier="mantisLiverAegis" requiredotheritem="livertransplant" />
+            <Item identifier="mantisLiverAegis" requiredotheritem="livertransplant_q1" />
+        </Deconstruct> -->
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="286,395,198,202" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="286,395,198,202" depth="0.6" origin="0.5,0.5" />
+    </Item>
+
+    <!-- Viperling Cells -->
+    <Item name="" description="" identifier="Cells_Viperling" variantof="Cells_BoneThresher" useinhealthinterface="False">
+        <Price baseprice="120" soldbydefault="false" />
+
+        <!-- <Deconstruct time="120" requireddeconstructor="alienIncubator">
+            <Item identifier="viperlingLiverAegis" requiredotheritem="livertransplant" />
+            <Item identifier="viperlingLiverAegis" requiredotheritem="livertransplant_q1" />
+        </Deconstruct> -->
+
+        <InventoryIcon texture="%ModDir%/Images/Cells.png" sourcerect="42,416,191,168" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/Images/Cells.png" sourcerect="42,416,191,168" depth="0.6" origin="0.5,0.5" />
+    </Item>
+ </Items>

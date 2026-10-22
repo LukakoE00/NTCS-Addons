@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<huskappendage>
+  <limb name="Orangeboy Tail" id="1400" height="42" width="72" density="2" ignorecollisions="False" flip="True" scale="1" SpriteOrientation="0" ConstantTorque="0" ConstantAngle="0" BlinkFrequency="1.0" BlinkDuration="0.25" BlinkDurationOut="0.25" BlinkHoldTime="0" BlinkRotationIn="0" BlinkRotationOut="-180" BlinkForce="10" BlinkTransitionIn="EaseIn" BlinkTransitionOut="EaseOut">
+    <damagemodifier armorsector="0,360" afflictiontypes="damage" damagemultiplier="1.0" />
+    <damagemodifier armorsector="0,360" afflictiontypes="bleeding" damagemultiplier="1.0" />
+    <damagemodifier armorsector="0,360" afflictiontypes="burn" damagemultiplier="1.0" />
+    <sprite texture="%ModDir%/transplants/limbs/orangeboy/orangeboyTail.png" sourcerect="0,0,72,42" depth="0.1" origin="0.5,0.5" ignoretint="false" />
+  </limb>
+  <joint name="Tail to Torso" limb1="0" limb2="1400" limb1anchor="-10,-30" limb2anchor="22,5" Upperlimit="35" Lowerlimit="-35" canbesevered="False" limitenabled="True" />
+</huskappendage>

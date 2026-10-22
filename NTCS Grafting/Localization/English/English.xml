@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="English" nowhitespace="false" translatedname="English">
+  <!-- ================================================= ITEMS ================================================= -->
+  <!-- Cells -->
+  <!-- Bone Thresher -->
+  <entityname.Cells_BoneThresher>Bone Thresher Cells</entityname.Cells_BoneThresher>
+  <entitydescription.Cells_BoneThresher>A tissue sample from a Bone Thresher; could be used to replicate their extraordinary jaws.</entitydescription.Cells_BoneThresher>
+
+  <!-- Charybdis -->
+  <entityname.Cells_Charybdis>Charybdis Cells</entityname.Cells_Charybdis>
+  <entitydescription.Cells_Charybdis>A tissue sample from a formidable Charybdis; the key to replicating their intensely powerful jaws - but at what cost?</entitydescription.Cells_Charybdis>
+  
+  <!-- Endworm -->
+  <entityname.Cells_Endworm>Endworm Cells</entityname.Cells_Endworm>
+  <entitydescription.Cells_Endworm>A tissue sample from an Endworm. The shell feels nearly impenetrable.</entitydescription.Cells_Endworm>
+
+  <!-- Hammerhead -->
+  <entityname.Cells_Hammerhead>Hammerhead Cells</entityname.Cells_Hammerhead>
+  <entitydescription.Cells_Hammerhead>A tissue sample from a Hammerhead. Irregularly tough to protect Hammerheads from trauma.</entitydescription.Cells_Hammerhead>
+
+  <!-- Moloch -->
+  <entityname.Cells_Moloch>Moloch Cells</entityname.Cells_Moloch>
+  <entitydescription.Cells_Moloch>A tissue sample from the tough shell of a Moloch used to protect its head. Required to develop and patch their shells.</entitydescription.Cells_Moloch>
+
+  <!-- Mudraptor -->
+  <entityname.Cells_Mudraptor>Mudraptor Cells</entityname.Cells_Mudraptor>
+  <entitydescription.Cells_Mudraptor>A tissue sample from the tough shell of a Mudraptor used to protect itself.</entitydescription.Cells_Mudraptor>
+  
+  <!-- Tiger Thresher -->
+  <entityname.Cells_TigerThresher>Tiger Thresher Cells</entityname.Cells_TigerThresher>
+  <entitydescription.Cells_TigerThresher>A tissue sample from a tiger thresher. Could be used to replicate their powerful jaws.</entitydescription.Cells_TigerThresher>
+  
+  <!-- Crawler Broodmother -->
+  <entityname.Cells_Broodmother>Broodmother Cells</entityname.Cells_Broodmother>
+  <entitydescription.Cells_Broodmother>A tissue sample from a broodmother. Could be cultured into organs.</entitydescription.Cells_Broodmother>
+  
+  <!-- Husk -->
+  <entityname.Cells_Husk>Husk Cells</entityname.Cells_Husk>
+  <entitydescription.Cells_Husk>A tissue sample from a husk. Could be cultured into organs</entitydescription.Cells_Husk>
+  
+  <!-- Latcher -->
+  <entityname.Cells_Latcher>Latcher Cells</entityname.Cells_Latcher>
+  <entitydescription.Cells_Latcher>A tissue sample from a latcher. Could be cultured into organs.</entitydescription.Cells_Latcher>
+  
+  <!-- Mantis -->
+  <entityname.Cells_Mantis>Mantis Cells</entityname.Cells_Mantis>
+  <entitydescription.Cells_Mantis>A tissue sample from a mantis. Could be cultured into organs.</entitydescription.Cells_Mantis>
+  
+  <!-- Viperling -->
+  <entityname.Cells_Viperling>Viperling Cells</entityname.Cells_Viperling>
+  <entitydescription.Cells_Viperling>A tissue sample from a viperling. Could be cultured into organs.</entitydescription.Cells_Viperling>
+  
+
+  <!-- ================================================= TALENTS ================================================= -->
+  <!-- Grafting Science -->
+  <talentname.graftingscience>Grafting Science</talentname.graftingscience>
+
+  <!-- Physical Therapist -->
+  <talentname.physicaltherapist>Physical Therapist</talentname.physicaltherapist>
+
+  <!-- Cell Fusing -->
+  <talentname.cellfusing>Cell Fusing</talentname.cellfusing>
+
+  <!-- Tolerant DNA -->
+  <talentname.tolerantdna>Tolerant DNA</talentname.tolerantdna>
+</infotexts>

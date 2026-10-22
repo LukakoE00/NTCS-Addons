@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="NTCS Grafting" corepackage="false" modversion="1.0.0" gameversion="1.13.4.0">
+    <!-- Character Overrides -->
+    <Character file="%ModDir%/HumanOverrides/Human/Human.xml" />
+    <Character file="%ModDir%/HumanOverrides/Humanhusk.xml" />
+    <Character file="%ModDir%/HumanOverrides/HumanHusk_chimera.xml" />
+
+    <!-- Localization -->
+    <Text file="%ModDir%/Localization/English/English.xml" />
+
+    <!-- Talents -->
+    <Talents file="%ModDir%/Talents/GraftingTalents.xml" />
+    <TalentTrees file="%ModDir%/Talents/GraftingTree.xml" />
+
+    <!-- Afflictions -->
+    <Afflictions file="%ModDir%/XML/Afflictions/GraftingAfflictions.xml" />
+    <Afflictions file="%ModDir%/XML/Afflictions/Overrides.xml" />
+
+    <!-- Items -->
+    <Item file="%ModDir%/XML/Items/CellTypes.xml" />
+    <Item file="%ModDir%/XML/Items/LimbTypes.xml" />
+    <Item file="%ModDir%/XML/Items/Miscellaneous.xml" />
+    <Item file="%ModDir%/XML/Items/OrganTypes.xml" />
+    <Item file="%ModDir%/XML/Items/Overrides.xml" />
+    <Item file="%ModDir%/XML/Items/Tools.xml" />
+</contentpackage>
