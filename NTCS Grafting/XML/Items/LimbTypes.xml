@@ -1,168 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-    <Item name="Crawler Tail" identifier="crawlerTailAegis" description="The torn off tail of a crawler" category="Medical" scale="0.2" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/crawler/crawlerTail.png" sourcerect="0,0,440,140" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/crawler/crawlerTail.png" sourcerect="0,0,440,140" depth="0.6" origin="0.5,0.5" />
+    <!-- Crawler Tail -->
+    <Item name="" description="" identifier="crawlerTailAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="300" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/crawlerTail.png" sourcerect="0,0,440,140" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/crawlerTail.png" sourcerect="0,0,440,140" depth="0.6" origin="0.5,0.5" />
     <Body width="46" height="90" density="20" />
-    <Deconstruct time="10">
-      <Item identifier="carbon" amount="1" />
-    </Deconstruct>
-    <Price baseprice="300" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.4,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="nq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+
     <SkillRequirementHint identifier="medical" level="70" />
   </Item>
 
-  <Item name="Hammerhead Limbs" identifier="hammerheadLimbsAegis" description="A pair of limbs from a hammerhead. Provides stability, similar to that of a resistant hammerhead." category="Medical" scale="0.2" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/hammerhead/hammerheadLimbsItem.png" sourcerect="0,0,351,364" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/hammerhead/hammerheadLimbsItem.png" sourcerect="0,0,351,364" depth="0.6" origin="0.5,0.5" />
+  <!-- Hammerhead Limbs -->
+  <Item name="" description="" identifier="hammerheadLimbsAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="110" soldbydefault="false" />
+    
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/hammerheadLimbsItem.png" sourcerect="0,0,351,364" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/hammerheadLimbsItem.png" sourcerect="0,0,351,364" depth="0.6" origin="0.5,0.5" />
     <Body width="351" height="364" density="60" />
-    <Deconstruct time="10">
-      <Item identifier="carbon" amount="1" />
-    </Deconstruct>
-    <Price baseprice="110" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+
     <SkillRequirementHint identifier="medical" level="70" />
   </Item>
 
-   <Item name="Husk Arm" identifier="huskArmAegis" description="The sharp scythe of a husk chimera" category="Medical" scale="0.2" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/husk/huskItems.png" sourcerect="35,20,540,355" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/husk/huskItems.png" sourcerect="35,20,540,355" depth="0.6" origin="0.5,0.5" />
-    <Body width="540" height="355" density="20" />
+  <!-- Chimera Husk Arm -->
+   <Item name="" description="" identifier="huskArmAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
     <Deconstruct time="10">
       <Item identifier="carbon" amount="3" />
     </Deconstruct>
-    <Price baseprice="600" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.4,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+
+    <InventoryIcon texture="%ModDir%/Images/huskItems.png" sourcerect="35,20,540,355" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/huskItems.png" sourcerect="35,20,540,355" depth="0.6" origin="0.5,0.5" />
+    <Body width="540" height="355" density="20" />
+    
     <SkillRequirementHint identifier="medical" level="90" />
   </Item>
 
-  <Item name="Latcher Tongue" identifier="latcherTongueAegis" description="A segment of the long and restrictive tongue of a Latcher" category="Medical" scale="0.08" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
+  <!-- Latcher Tongue -->
+  <Item name="" description="" identifier="latcherTongueAegis" scale="0.08" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="3" />
+    </Deconstruct>
+    
     <InventoryIcon texture="Content/Characters/Latcher/Latcher.png" sourcerect="8,5,496,246" origin="0.5,0.5" />
     <Sprite texture="Content/Characters/Latcher/Latcher.png" sourcerect="8,5,496,246" depth="0.6" origin="0.5,0.5" />
     <Body width="496" height="246" density="20" />
-    <Deconstruct time="10">
-      <Item identifier="carbon" amount="3" />
-    </Deconstruct>
-    <Price baseprice="600" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.4,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+    
     <SkillRequirementHint identifier="medical" level="90" />
   </Item>
 
-  <Item name="Mudraptor Leg (Left)" identifier="lMudraptorLegAegis" description="The torn off leg of a mudraptor" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="0,10,220,410" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="0,10,220,410" depth="0.6" origin="0.5,0.5" />
-    <Body width="46" height="90" density="20" />
+  <!-- Mudraptor Leg (Left) -->
+  <Item name="" description="" identifier="lMudraptorLegAegis" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <Price baseprice="25" soldbydefault="false" />
+
     <Deconstruct time="10">
       <Item identifier="calcium" amount="1" />
     </Deconstruct>
-    <Price baseprice="25" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse"></Holdable>
+
+    <InventoryIcon texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="0,10,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="0,10,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" />
   </Item>
 
-  <Item name="Mudraptor Leg (Right)" identifier="rMudraptorLegAegis" description="The torn off leg of a mudraptor" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="220,0,220,410" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLeg.png" sourcerect="220,0,220,410" depth="0.6" origin="0.5,0.5" />
-    <Body width="46" height="90" density="20" />
+  <!-- Mudraptor Leg (Right) -->
+  <Item name="" description="" identifier="rMudraptorLegAegis" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <Price baseprice="25" soldbydefault="false" />
+
     <Deconstruct time="10">
       <Item identifier="calcium" amount="1" />
     </Deconstruct>
-    <Price baseprice="25" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse"></Holdable>
+
+    <InventoryIcon texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="220,0,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="220,0,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" />
   </Item>
 
-  <Item name="Orangeboy Tail" identifier="orangeboyTailAegis" description="The torn off tail of an orangeboy. The size makes it useless, and it frequently sheds." category="Medical" scale="0.5" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/orangeboy/orangeboyTail.png" sourcerect="0,0,72,42" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/orangeboy/orangeboyTail.png" sourcerect="0,0,72,42" depth="0.6" origin="0.5,0.5" />
-    <Body width="72" height="42" density="20" />
+  <!-- Orange Boy Tail-->
+  <Item name="" description="" identifier="orangeboyTailAegis" scale="0.5" variantof="Cells_BoneThresher">
+    <Price baseprice="300" soldbydefault="false" />
+    
     <Deconstruct time="10">
       <Item identifier="carbon" amount="1" />
     </Deconstruct>
-    <Price baseprice="300" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.4,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+
+    <InventoryIcon texture="%ModDir%/Images/orangeboyTail.png" sourcerect="0,0,72,42" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/orangeboyTail.png" sourcerect="0,0,72,42" depth="0.6" origin="0.5,0.5" />
+    <Body width="72" height="42" density="20" />
+    
     <SkillRequirementHint identifier="medical" level="30" />
   </Item>
 
-  <Item name="Tiger Thresher Tail" identifier="tigerThresherTailAegis" description="The torn off tail of a tiger thresher" category="Medical" scale="0.5" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
-    <InventoryIcon texture="%ModDir%/transplants/limbs/tigerThresher/tigerThresherTail.png" sourcerect="0,0,190,50" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/transplants/limbs/tigerThresher/tigerThresherTail.png" sourcerect="0,0,190,50" depth="0.6" origin="0.5,0.5" />
-    <Body width="46" height="90" density="20" />
+  <!-- Tiger Thresher Tail -->
+  <Item name="" description="" identifier="tigerThresherTailAegis" scale="0.5" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
     <Deconstruct time="10">
       <Item identifier="carbon" amount="1" />
     </Deconstruct>
-    <Price baseprice="600" soldbydefault="false"></Price>
-    <Holdable slots="Any,RightHand,LeftHand" handle="0.4,0.5" msg="ItemMsgPickUpUse" holdangle="90">
-      <StatusEffect type="Always" target="This" condition="-0.005" conditionalComparison="And">
-        <Conditional hastag="neq refrigerated" targetcontainer="true" />
-        <Conditional hastag="neq medicalfabricator" Locked="neq true" targetitemcomponent="ItemContainer" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnContained" target="This" condition="0.1" comparison="and">
-        <Conditional condition="gte 60" />
-        <Conditional hastag="refrigerated" targetcontainer="true" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <Remove />
-      </StatusEffect>
-    </Holdable>
+    
+    <InventoryIcon texture="%ModDir%/Images/tigerThresherTail.png" sourcerect="0,0,190,50" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/tigerThresherTail.png" sourcerect="0,0,190,50" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    
     <SkillRequirementHint identifier="medical" level="75" />
   </Item>
 </Items>
