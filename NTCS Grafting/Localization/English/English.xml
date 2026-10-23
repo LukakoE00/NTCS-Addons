@@ -82,6 +82,43 @@
   <!-- Tiger Thresher Tail -->
   <entityname.tigerThresherTailAegis>Tiger Thresher Tail</entityname.tigerThresherTailAegis>
   <entitydescription.tigerThresherTailAegis>The torn off tail of a tiger thresher</entitydescription.tigerThresherTailAegis>
+
+  <!-- =================================== Organs =================================== -->
+  <!-- Broodmother Liver -->
+  <entityname.broodmotherLiverAegis>Broodmother Liver</entityname.broodmotherLiverAegis>
+  <entitydescription.broodmotherLiverAegis>The removed liver of a Crawler Broodmother, oozing with acids.</entitydescription.broodmotherLiverAegis>
+
+  <!-- Crawler Lungs -->
+  <entityname.crawlerLungsAegis>Crawler Lungs</entityname.crawlerLungsAegis>
+  <entitydescription.crawlerLungsAegis>The lungs of a crawler, they seem slightly larger than a human's.</entitydescription.crawlerLungsAegis>
+
+  <!-- Fractal Guardian Eye -->
+  <entityname.fractalGuardianEyeAegis>Fractal Guardian Eye</entityname.fractalGuardianEyeAegis>
+  <entitydescription.fractalGuardianEyeAegis>An eye from a fractal guardian, might alter the sight of a person.</entitydescription.fractalGuardianEyeAegis>
+
+  <!-- Husk Heart -->
+  <entityname.huskHeartAegis>Husk Heart</entityname.huskHeartAegis>
+  <entitydescription.huskHeartAegis>The 'heart' of a husk, though it appears more like a cluster of husk limbs.</entitydescription.huskHeartAegis>
+
+  <!-- Latcher Heart -->
+  <entityname.latcherHeartAegis>Latcher Heart</entityname.latcherHeartAegis>
+  <entitydescription.latcherHeartAegis>A human heart overtaken by latcher DNA.</entitydescription.latcherHeartAegis>
+
+  <!-- Mantis Liver -->
+  <entityname.mantisLiverAegis>Mantis Liver</entityname.mantisLiverAegis>
+  <entitydescription.mantisLiverAegis>The removed liver of a Mantis, produces a large amount of paralyzants.</entitydescription.mantisLiverAegis>
+
+  <!-- Mudraptor Lungs -->
+  <entityname.mudraptorLungsAegis>Mudraptor Lungs</entityname.mudraptorLungsAegis>
+  <entitydescription.mudraptorLungsAegis>The lungs of a mudraptor, they seem much larger than a human's</entitydescription.mudraptorLungsAegis>
+
+  <!-- Viperling Liver -->
+  <entityname.viperlingLiverAegis>Viperling Liver</entityname.viperlingLiverAegis>
+  <entitydescription.viperlingLiverAegis>The removed liver of a Viperling, filters poison from the blood sooner than a human liver could.</entitydescription.viperlingLiverAegis>
+
+  <!-- Watcher Eye -->
+  <entityname.watcherEyeAegis>Watcher Eye</entityname.watcherEyeAegis>
+  <entitydescription.watcherEyeAegis>A segment from the eye of a watcher, used to madden their foes and heighten their foe's prey.</entitydescription.watcherEyeAegis>
   
   <!-- ================================================= AFFLICTIONS ================================================= -->
   <!-- Cross Species Rejection -->
