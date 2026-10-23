@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="English" nowhitespace="false" translatedname="English">
+  <!-- ================================================= ITEMS ================================================= -->
+  <!-- =================================== Cells =================================== -->
+  <!-- Bone Thresher -->
+  <entityname.Cells_BoneThresher>Bone Thresher Cells</entityname.Cells_BoneThresher>
+  <entitydescription.Cells_BoneThresher>A tissue sample from a Bone Thresher; could be used to replicate their extraordinary jaws.</entitydescription.Cells_BoneThresher>
+
+  <!-- Charybdis -->
+  <entityname.Cells_Charybdis>Charybdis Cells</entityname.Cells_Charybdis>
+  <entitydescription.Cells_Charybdis>A tissue sample from a formidable Charybdis; the key to replicating their intensely powerful jaws - but at what cost?</entitydescription.Cells_Charybdis>
+  
+  <!-- Endworm -->
+  <entityname.Cells_Endworm>Endworm Cells</entityname.Cells_Endworm>
+  <entitydescription.Cells_Endworm>A tissue sample from an Endworm. The shell feels nearly impenetrable.</entitydescription.Cells_Endworm>
+
+  <!-- Hammerhead -->
+  <entityname.Cells_Hammerhead>Hammerhead Cells</entityname.Cells_Hammerhead>
+  <entitydescription.Cells_Hammerhead>A tissue sample from a Hammerhead. Irregularly tough to protect Hammerheads from trauma.</entitydescription.Cells_Hammerhead>
+
+  <!-- Moloch -->
+  <entityname.Cells_Moloch>Moloch Cells</entityname.Cells_Moloch>
+  <entitydescription.Cells_Moloch>A tissue sample from the tough shell of a Moloch used to protect its head. Required to develop and patch their shells.</entitydescription.Cells_Moloch>
+
+  <!-- Mudraptor -->
+  <entityname.Cells_Mudraptor>Mudraptor Cells</entityname.Cells_Mudraptor>
+  <entitydescription.Cells_Mudraptor>A tissue sample from the tough shell of a Mudraptor used to protect itself.</entitydescription.Cells_Mudraptor>
+  
+  <!-- Tiger Thresher -->
+  <entityname.Cells_TigerThresher>Tiger Thresher Cells</entityname.Cells_TigerThresher>
+  <entitydescription.Cells_TigerThresher>A tissue sample from a tiger thresher. Could be used to replicate their powerful jaws.</entitydescription.Cells_TigerThresher>
+  
+  <!-- Crawler Broodmother -->
+  <entityname.Cells_Broodmother>Broodmother Cells</entityname.Cells_Broodmother>
+  <entitydescription.Cells_Broodmother>A tissue sample from a broodmother. Could be cultured into organs.</entitydescription.Cells_Broodmother>
+  
+  <!-- Husk -->
+  <entityname.Cells_Husk>Husk Cells</entityname.Cells_Husk>
+  <entitydescription.Cells_Husk>A tissue sample from a husk. Could be cultured into organs</entitydescription.Cells_Husk>
+  
+  <!-- Latcher -->
+  <entityname.Cells_Latcher>Latcher Cells</entityname.Cells_Latcher>
+  <entitydescription.Cells_Latcher>A tissue sample from a latcher. Could be cultured into organs.</entitydescription.Cells_Latcher>
+  
+  <!-- Mantis -->
+  <entityname.Cells_Mantis>Mantis Cells</entityname.Cells_Mantis>
+  <entitydescription.Cells_Mantis>A tissue sample from a mantis. Could be cultured into organs.</entitydescription.Cells_Mantis>
+  
+  <!-- Viperling -->
+  <entityname.Cells_Viperling>Viperling Cells</entityname.Cells_Viperling>
+  <entitydescription.Cells_Viperling>A tissue sample from a viperling. Could be cultured into organs.</entitydescription.Cells_Viperling>
+
+  <!-- =================================== Limbs =================================== -->
+  <!-- Crawler Tail -->
+  <entityname.crawlerTailAegis>Crawler Tail</entityname.crawlerTailAegis>
+  <entitydescription.crawlerTailAegis>The torn off tail of a crawler.</entitydescription.crawlerTailAegis>
+  
+  <!-- Hammerhead Limbs -->
+  <entityname.hammerheadLimbsAegis>Hammerhead Limbs</entityname.hammerheadLimbsAegis>
+  <entitydescription.hammerheadLimbsAegis>A pair of limbs from a hammerhead. Provides stability, similar to that of a resistant hammerhead.</entitydescription.hammerheadLimbsAegis>
+  
+  <!-- Husk Arm -->
+  <entityname.huskArmAegis>Husk Arm</entityname.huskArmAegis>
+  <entitydescription.huskArmAegis>The sharp scythe of a husk chimera.</entitydescription.huskArmAegis>
+  
+  <!-- Latcher Tongue -->
+  <entityname.latcherTongueAegis>Latcher Tongue</entityname.latcherTongueAegis>
+  <entitydescription.latcherTongueAegis>A segment of the long and restrictive tongue of a Latcher.</entitydescription.latcherTongueAegis>
+  
+  <!-- Mudraptor Leg (Left) -->
+  <entityname.lMudraptorLegAegis>Mudraptor Leg (Left)</entityname.lMudraptorLegAegis>
+  <entitydescription.lMudraptorLegAegis>The torn off leg of a mudraptor.</entitydescription.lMudraptorLegAegis>
+  
+  <!-- Mudraptor Leg (Right) -->
+  <entityname.rMudraptorLegAegis>Mudraptor Leg (Right)</entityname.rMudraptorLegAegis>
+  <entitydescription.rMudraptorLegAegis>The torn off leg of a mudraptor.</entitydescription.rMudraptorLegAegis>
+  
+  <!-- Orangeboy Tail -->
+  <entityname.orangeboyTailAegis>Orangeboy Tail</entityname.orangeboyTailAegis>
+  <entitydescription.orangeboyTailAegis>The torn off tail of an orangeboy. The size makes it useless, and it frequently sheds.</entitydescription.orangeboyTailAegis>
+  
+  <!-- Tiger Thresher Tail -->
+  <entityname.tigerThresherTailAegis>Tiger Thresher Tail</entityname.tigerThresherTailAegis>
+  <entitydescription.tigerThresherTailAegis>The torn off tail of a tiger thresher</entitydescription.tigerThresherTailAegis>
+
+  <!-- =================================== Organs =================================== -->
+  <!-- Broodmother Liver -->
+  <entityname.broodmotherLiverAegis>Broodmother Liver</entityname.broodmotherLiverAegis>
+  <entitydescription.broodmotherLiverAegis>The removed liver of a Crawler Broodmother, oozing with acids.</entitydescription.broodmotherLiverAegis>
+
+  <!-- Crawler Lungs -->
+  <entityname.crawlerLungsAegis>Crawler Lungs</entityname.crawlerLungsAegis>
+  <entitydescription.crawlerLungsAegis>The lungs of a crawler, they seem slightly larger than a human's.</entitydescription.crawlerLungsAegis>
+
+  <!-- Fractal Guardian Eye -->
+  <entityname.fractalGuardianEyeAegis>Fractal Guardian Eye</entityname.fractalGuardianEyeAegis>
+  <entitydescription.fractalGuardianEyeAegis>An eye from a fractal guardian, might alter the sight of a person.</entitydescription.fractalGuardianEyeAegis>
+
+  <!-- Husk Heart -->
+  <entityname.huskHeartAegis>Husk Heart</entityname.huskHeartAegis>
+  <entitydescription.huskHeartAegis>The 'heart' of a husk, though it appears more like a cluster of husk limbs.</entitydescription.huskHeartAegis>
+
+  <!-- Latcher Heart -->
+  <entityname.latcherHeartAegis>Latcher Heart</entityname.latcherHeartAegis>
+  <entitydescription.latcherHeartAegis>A human heart overtaken by latcher DNA.</entitydescription.latcherHeartAegis>
+
+  <!-- Mantis Liver -->
+  <entityname.mantisLiverAegis>Mantis Liver</entityname.mantisLiverAegis>
+  <entitydescription.mantisLiverAegis>The removed liver of a Mantis, produces a large amount of paralyzants.</entitydescription.mantisLiverAegis>
+
+  <!-- Mudraptor Lungs -->
+  <entityname.mudraptorLungsAegis>Mudraptor Lungs</entityname.mudraptorLungsAegis>
+  <entitydescription.mudraptorLungsAegis>The lungs of a mudraptor, they seem much larger than a human's</entitydescription.mudraptorLungsAegis>
+
+  <!-- Viperling Liver -->
+  <entityname.viperlingLiverAegis>Viperling Liver</entityname.viperlingLiverAegis>
+  <entitydescription.viperlingLiverAegis>The removed liver of a Viperling, filters poison from the blood sooner than a human liver could.</entitydescription.viperlingLiverAegis>
+
+  <!-- Watcher Eye -->
+  <entityname.watcherEyeAegis>Watcher Eye</entityname.watcherEyeAegis>
+  <entitydescription.watcherEyeAegis>A segment from the eye of a watcher, used to madden their foes and heighten their foe's prey.</entitydescription.watcherEyeAegis>
+  
+  <!-- ================================================= AFFLICTIONS ================================================= -->
+  <!-- Cross Species Rejection -->
+  <afflictionname.crossspeciesrejection>Cross Species Rejection</afflictionname.crossspeciesrejection>
+  <afflictiondescription.crossspeciesrejection>The patient's body is rejecting the graft!</afflictiondescription.crossspeciesrejection>
+  <afflictioncauseofdeath.crossspeciesrejection>Rejected Grafting</afflictioncauseofdeath.crossspeciesrejection>
+  <afflictioncauseofdeathself.crossspeciesrejection>Your body rejected the grafting procedure.</afflictioncauseofdeathself.crossspeciesrejection>
+
+  <!-- DNA Ligation Enhancer -->
+  <afflictionname.graftingcureoverdose>DNA Ligation Enhancer</afflictionname.graftingcureoverdose>
+  <afflictiondescription.graftingcureoverdose>PLACEHOLDER</afflictiondescription.graftingcureoverdose>
+
+  <!-- DNA Ligation Enhancer Overdose -->
+  <afflictionname.graftingcureoverdosekiller>DNA Ligation Enhancer Overdose</afflictionname.graftingcureoverdosekiller>
+  <afflictiondescription.graftingcureoverdosekiller>A lethal amount of DNA Ligation Enhancer is present on the patient.</afflictiondescription.graftingcureoverdosekiller>
+
+  <!-- Hybrid DNA -->
+  <afflictionname.hybriddna>Hybrid DNA</afflictionname.hybriddna>
+  <afflictiondescription.hybriddna>PLACEHOLDER</afflictiondescription.hybriddna>
+
+  <!-- DNA Deterioration -->
+  <afflictionname.alienDNARemoval>DNA Deterioration</afflictionname.alienDNARemoval>
+  <afflictiondescription.alienDNARemoval>PLACEHOLDER</afflictiondescription.alienDNARemoval>
+
+  <!-- Physical Therapy -->
+  <afflictionname.physicaltherapistAffliction>Physical Therapy</afflictionname.physicaltherapistAffliction>
+  <afflictiondescription.physicaltherapistAffliction>PLACEHOLDER</afflictiondescription.physicaltherapistAffliction>
+
+  <!-- Crawler Tail -->
+  <afflictionname.crawlerTailAegis>Crawler Tail</afflictionname.crawlerTailAegis>
+  <afflictiondescription.crawlerTailAegis>PLACEHOLDER</afflictiondescription.crawlerTailAegis>
+
+  <!-- Crawler Lungs -->
+  <afflictionname.crawlerLungsAffliction>Crawler Lungs</afflictionname.crawlerLungsAffliction>
+  <afflictiondescription.crawlerLungsAffliction>PLACEHOLDER</afflictiondescription.crawlerLungsAffliction>
+
+  <!-- Fractal Guardian Eyes -->
+  <afflictionname.fractalGuardianEyesAffliction>Fractal Guardian Eyes</afflictionname.fractalGuardianEyesAffliction>
+  <afflictiondescription.fractalGuardianEyesAffliction>PLACEHOLDER</afflictiondescription.fractalGuardianEyesAffliction>
+
+  <!-- Chimera Infection -->
+  <afflictionname.chimeraHuskInfection>Chimera Infection</afflictionname.chimeraHuskInfection>
+  <afflictiondescription.chimeraHuskInfection>PLACEHOLDER</afflictiondescription.chimeraHuskInfection>
+
+  <!-- Husk Arm -->
+  <afflictionname.huskArmAffliction>Husk Arm</afflictionname.huskArmAffliction>
+  <afflictiondescription.huskArmAffliction>PLACEHOLDER</afflictiondescription.huskArmAffliction>
+
+  <!-- Husk Heart -->
+  <afflictionname.huskHeartAffliction>Husk Heart</afflictionname.huskHeartAffliction>
+  <afflictiondescription.huskHeartAffliction>PLACEHOLDER</afflictiondescription.huskHeartAffliction>
+
+  <!-- Mantis Liver -->
+  <afflictionname.mantisLiverAffliction>Mantis Liver</afflictionname.mantisLiverAffliction>
+  <afflictiondescription.mantisLiverAffliction>PLACEHOLDER</afflictiondescription.mantisLiverAffliction>
+
+  <!-- Mudraptor Lungs -->
+  <afflictionname.mudraptorLungsAffliction>Mudraptor Lungs</afflictionname.mudraptorLungsAffliction>
+  <afflictiondescription.mudraptorLungsAffliction>PLACEHOLDER</afflictiondescription.mudraptorLungsAffliction>
+
+  <!-- Mudraptor Head -->
+  <afflictionname.mudraptorHeadAffliction>Mudraptor Head</afflictionname.mudraptorHeadAffliction>
+  <afflictiondescription.mudraptorHeadAffliction>PLACEHOLDER</afflictiondescription.mudraptorHeadAffliction>
+
+  <!-- Mudraptor Right Leg -->
+  <afflictionname.mudraptorLegRightAffliction>Mudraptor Right Leg</afflictionname.mudraptorLegRightAffliction>
+  <afflictiondescription.mudraptorLegRightAffliction>PLACEHOLDER</afflictiondescription.mudraptorLegRightAffliction>
+
+  <!-- Broodmother Liver -->
+  <afflictionname.broodmotherLiverAffliction>Broodmother Liver</afflictionname.broodmotherLiverAffliction>
+  <afflictiondescription.broodmotherLiverAffliction>PLACEHOLDER</afflictiondescription.broodmotherLiverAffliction>
+
+  <!-- Tiger Thresher Jaw -->
+  <afflictionname.tigerThresherJawAffliction>Tiger Thresher Jaw</afflictionname.tigerThresherJawAffliction>
+  <afflictiondescription.tigerThresherJawAffliction>PLACEHOLDER</afflictiondescription.tigerThresherJawAffliction>
+
+  <!-- Tiger Thresher Tail -->
+  <afflictionname.tigerThresherTailAffliction>Tiger Thresher Tail</afflictionname.tigerThresherTailAffliction>
+  <afflictiondescription.tigerThresherTailAffliction>PLACEHOLDER</afflictiondescription.tigerThresherTailAffliction>
+
+  <!-- Bone Thresher Jaw -->
+  <afflictionname.boneThresherJawAffliction>Bone Thresher Jaw</afflictionname.boneThresherJawAffliction>
+  <afflictiondescription.boneThresherJawAffliction>PLACEHOLDER</afflictiondescription.boneThresherJawAffliction>
+
+  <!-- Hammerhead Skin -->
+  <afflictionname.hammerheadTorsoAffliction>Hammerhead Skin</afflictionname.hammerheadTorsoAffliction>
+  <afflictiondescription.hammerheadTorsoAffliction>PLACEHOLDER</afflictiondescription.hammerheadTorsoAffliction>
+
+  <!-- Hammerhead Limbs -->
+  <afflictionname.hammerheadLimbsAffliction>Hammerhead Limbs</afflictionname.hammerheadLimbsAffliction>
+  <afflictiondescription.hammerheadLimbsAffliction>PLACEHOLDER</afflictiondescription.hammerheadLimbsAffliction>
+
+  <!-- Moloch Shell -->
+  <afflictionname.molochHeadAffliction>Moloch Shell</afflictionname.molochHeadAffliction>
+  <afflictiondescription.molochHeadAffliction>PLACEHOLDER</afflictiondescription.molochHeadAffliction>
+
+  <!-- Cracked Shell -->
+  <afflictionname.molochCracked>Cracked Shell</afflictionname.molochCracked>
+  <afflictiondescription.molochCracked>PLACEHOLDER</afflictiondescription.molochCracked>
+
+  <!-- Viperling Liver -->
+  <afflictionname.viperlingLiverAffliction>Viperling Liver</afflictionname.viperlingLiverAffliction>
+  <afflictiondescription.viperlingLiverAffliction>PLACEHOLDER</afflictiondescription.viperlingLiverAffliction>
+
+  <!-- Watcher Eyes -->
+  <afflictionname.watcherEyesAffliction>Watcher Eyes</afflictionname.watcherEyesAffliction>
+  <afflictiondescription.watcherEyesAffliction>PLACEHOLDER</afflictiondescription.watcherEyesAffliction>
+
+  <!-- Hybrid's Gaze -->
+  <afflictionname.graftedWatcherGaze>Hybrid's Gaze</afflictionname.graftedWatcherGaze>
+  <afflictiondescription.graftedWatcherGaze>PLACEHOLDER</afflictiondescription.graftedWatcherGaze>
+
+  <!-- Charybdis Jaw -->
+  <afflictionname.charybdisJawAffliction>Charybdis Jaw</afflictionname.charybdisJawAffliction>
+  <afflictiondescription.charybdisJawAffliction>PLACEHOLDER</afflictiondescription.charybdisJawAffliction>
+
+  <!-- Insatiable Hunger -->
+  <afflictionname.charybdisJawNerf>Insatiable Hunger</afflictionname.charybdisJawNerf>
+  <afflictiondescription.charybdisJawNerf>PLACEHOLDER</afflictiondescription.charybdisJawNerf>
+
+  <!-- Latcher Heart -->
+  <afflictionname.latcherHeartAffliction>Latcher Heart</afflictionname.latcherHeartAffliction>
+  <afflictiondescription.latcherHeartAffliction>PLACEHOLDER</afflictiondescription.latcherHeartAffliction>
+
+  <!-- Latcher Tongue -->
+  <afflictionname.latcherTongueAffliction>Latcher Tongue</afflictionname.latcherTongueAffliction>
+  <afflictiondescription.latcherTongueAffliction>PLACEHOLDER</afflictiondescription.latcherTongueAffliction>
+
+  <!-- Endworm Skin -->
+  <!-- TODO: Fold these -->
+  <afflictionname.endwormTorsoAffliction>Endworm Skin</afflictionname.endwormTorsoAffliction>
+  <afflictiondescription.endwormTorsoAffliction>PLACEHOLDER</afflictiondescription.endwormTorsoAffliction>
+
+  <afflictionname.endwormLArmAffliction>Endworm Skin</afflictionname.endwormLArmAffliction>
+  <afflictiondescription.endwormLArmAffliction>PLACEHOLDER</afflictiondescription.endwormLArmAffliction>
+
+  <afflictionname.endwormRArmAffliction>Endworm Skin</afflictionname.endwormRArmAffliction>
+  <afflictiondescription.endwormRArmAffliction>PLACEHOLDER</afflictiondescription.endwormRArmAffliction>
+
+  <afflictionname.endwormLLegAffliction>Endworm Skin</afflictionname.endwormLLegAffliction>
+  <afflictiondescription.endwormLLegAffliction>PLACEHOLDER</afflictiondescription.endwormLLegAffliction>
+
+  <afflictionname.endwormRLegAffliction>Endworm Skin</afflictionname.endwormRLegAffliction>
+  <afflictiondescription.endwormRLegAffliction>PLACEHOLDER</afflictiondescription.endwormRLegAffliction>
+
+  <!-- Orangeboy Tail -->
+  <afflictionname.orangeboyTailAffliction>Orangeboy Tail</afflictionname.orangeboyTailAffliction>
+  <afflictiondescription.orangeboyTailAffliction>PLACEHOLDER</afflictiondescription.orangeboyTailAffliction>
+
+  <!-- ================================================= TALENTS ================================================= -->
+  <!-- Grafting Science -->
+  <talentname.graftingscience>Grafting Science</talentname.graftingscience>
+
+  <!-- Physical Therapist -->
+  <talentname.physicaltherapist>Physical Therapist</talentname.physicaltherapist>
+
+  <!-- Cell Fusing -->
+  <talentname.cellfusing>Cell Fusing</talentname.cellfusing>
+
+  <!-- Tolerant DNA -->
+  <talentname.tolerantdna>Tolerant DNA</talentname.tolerantdna>
+</infotexts>

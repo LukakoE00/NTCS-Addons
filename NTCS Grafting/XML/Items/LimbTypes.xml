@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+    <!-- Crawler Tail -->
+    <Item name="" description="" identifier="crawlerTailAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="300" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/crawlerTail.png" sourcerect="0,0,440,140" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/crawlerTail.png" sourcerect="0,0,440,140" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+
+    <SkillRequirementHint identifier="medical" level="70" />
+  </Item>
+
+  <!-- Hammerhead Limbs -->
+  <Item name="" description="" identifier="hammerheadLimbsAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="110" soldbydefault="false" />
+    
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/hammerheadLimbsItem.png" sourcerect="0,0,351,364" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/hammerheadLimbsItem.png" sourcerect="0,0,351,364" depth="0.6" origin="0.5,0.5" />
+    <Body width="351" height="364" density="60" />
+
+    <SkillRequirementHint identifier="medical" level="70" />
+  </Item>
+
+  <!-- Chimera Husk Arm -->
+   <Item name="" description="" identifier="huskArmAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="3" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/huskItems.png" sourcerect="35,20,540,355" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/huskItems.png" sourcerect="35,20,540,355" depth="0.6" origin="0.5,0.5" />
+    <Body width="540" height="355" density="20" />
+    
+    <SkillRequirementHint identifier="medical" level="90" />
+  </Item>
+
+  <!-- Latcher Tongue -->
+  <Item name="" description="" identifier="latcherTongueAegis" scale="0.08" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="3" />
+    </Deconstruct>
+    
+    <InventoryIcon texture="Content/Characters/Latcher/Latcher.png" sourcerect="8,5,496,246" origin="0.5,0.5" />
+    <Sprite texture="Content/Characters/Latcher/Latcher.png" sourcerect="8,5,496,246" depth="0.6" origin="0.5,0.5" />
+    <Body width="496" height="246" density="20" />
+    
+    <SkillRequirementHint identifier="medical" level="90" />
+  </Item>
+
+  <!-- Mudraptor Leg (Left) -->
+  <Item name="" description="" identifier="lMudraptorLegAegis" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <Price baseprice="25" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="calcium" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="0,10,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="0,10,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" />
+  </Item>
+
+  <!-- Mudraptor Leg (Right) -->
+  <Item name="" description="" identifier="rMudraptorLegAegis" category="Medical" scale="0.2" useinhealthinterface="True" cargocontaineridentifier="organcrate" Tags="smallitem">
+    <Price baseprice="25" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="calcium" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="220,0,220,410" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/mudraptorLeg.png" sourcerect="220,0,220,410" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+
+    <Holdable slots="Any,RightHand,LeftHand" handle="0.5,0.5" msg="ItemMsgPickUpUse" />
+  </Item>
+
+  <!-- Orange Boy Tail-->
+  <Item name="" description="" identifier="orangeboyTailAegis" scale="0.5" variantof="Cells_BoneThresher">
+    <Price baseprice="300" soldbydefault="false" />
+    
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+
+    <InventoryIcon texture="%ModDir%/Images/orangeboyTail.png" sourcerect="0,0,72,42" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/orangeboyTail.png" sourcerect="0,0,72,42" depth="0.6" origin="0.5,0.5" />
+    <Body width="72" height="42" density="20" />
+    
+    <SkillRequirementHint identifier="medical" level="30" />
+  </Item>
+
+  <!-- Tiger Thresher Tail -->
+  <Item name="" description="" identifier="tigerThresherTailAegis" scale="0.5" variantof="Cells_BoneThresher">
+    <Price baseprice="600" soldbydefault="false" />
+
+    <Deconstruct time="10">
+      <Item identifier="carbon" amount="1" />
+    </Deconstruct>
+    
+    <InventoryIcon texture="%ModDir%/Images/tigerThresherTail.png" sourcerect="0,0,190,50" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Images/tigerThresherTail.png" sourcerect="0,0,190,50" depth="0.6" origin="0.5,0.5" />
+    <Body width="46" height="90" density="20" />
+    
+    <SkillRequirementHint identifier="medical" level="75" />
+  </Item>
+</Items>

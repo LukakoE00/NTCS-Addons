@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<huskappendage>
+  <limb name="Moloch Head" id="900" height="104" width="65" density="1" ignorecollisions="False" flip="True" scale="0.5" SpriteOrientation="0" ConstantTorque="0" ConstantAngle="0" BlinkFrequency="1.0" BlinkDuration="0.25" BlinkDurationOut="0.25" BlinkHoldTime="0" BlinkRotationIn="0" BlinkRotationOut="-180" BlinkForce="10" BlinkTransitionIn="EaseIn" BlinkTransitionOut="EaseOut">
+    <damagemodifier armorsector="0,360" afflictiontypes="damage" damagemultiplier="1.0" />
+    <damagemodifier armorsector="0,360" afflictiontypes="bleeding" damagemultiplier="1.0" />
+    <damagemodifier armorsector="0,360" afflictiontypes="burn" damagemultiplier="1.0" />
+    <sprite texture="%ModDir:NT Grafting%/transplants/limbs/moloch/molochHeadCracked.png" sourcerect="0,0,104,65" depth="0.049" origin="0.5,0.5" ignoretint="true" />
+  </limb>
+  <joint name="Shell to Head" limb1="1" limb2="900" limb1anchor="-6,14" limb2anchor="0,0" Upperlimit="0" Lowerlimit="0" canbesevered="False" limitenabled="True" />
+</huskappendage>
