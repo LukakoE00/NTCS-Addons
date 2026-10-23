@@ -1,9 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Afflictions>
   <!-- GENERAL AFFLICTIONS -->
-
   <!-- Cross-Species Rejection -->
-  <Afflicton name="Cross Species Rejection" identifier="crossspeciesrejection" type="graftingNerf" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="false" showiconthreshold="20" showinhealthscannerthreshold="0" treatmentthreshold="1000" maxstrength="100" causeofdeathdescription="Rejected Grafting" selfcauseofdeathdescription="Your body rejected the grafting procedure" iconcolors="102,0,102;81,0,81;61,0,61">
+  <Afflicton 
+    name=""
+    description=""
+    identifier="crossspeciesrejection" 
+
+    type="graftingNerf" 
+    limbspecific="false" 
+    healableinmedicalclinic="false" 
+    indicatorlimb="Torso" 
+    hideiconafterdelay="false" 
+    treatmentthreshold="1000" 
+
+    showinhealthscannerthreshold="0" 
+    showiconthreshold="20"
+    maxstrength="100" 
+
+    iconcolors="102,0,102;81,0,81;61,0,61">
+
     <Effect minstrength="0" maxstrength="10" strengthchange="-0.1" />
     <Effect minstrength="10" maxstrength="20" minspeedmultiplier="0.9" maxspeedmultiplier="0.8" strengthchange="0.01" />
     <Effect minstrength="20" maxstrength="40" minspeedmultiplier="0.8" maxspeedmultiplier="0.7" strengthchange="0.02" />
@@ -13,16 +29,35 @@
         <Affliction identifier="psychosis" amount="0.75" />
       </StatusEffect>
     </Effect>
+
     <Effect minstrength="80" maxstrength="100" minvitalitydecrease="10" maxvitalitydecrease="100" minspeedmultiplier="0.5" maxspeedmultiplier="0.1" minscreenblur="0.3" maxscreenblur="0.8" minskillmultiplier="0.7" maxskillmultiplier="0.5" strengthchange="0.05">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
         <Affliction identifier="psychosis" amount="1.25" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="2,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="2,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- DNA Ligation Enhancer -->
-  <Affliction name="DNA Ligation Enhancer" identifier="graftingcureoverdose" type="graftingoverdose" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="50" showinhealthscannerthreshold="10" treatmentthreshold="1000" maxstrength="100" iconcolors="81,0,81;81,0,81;61,0,61">
+  <Affliction
+    name=""
+    description=""
+    identifier="graftingcureoverdose"
+
+    type="graftingoverdose"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="10"
+    showiconthreshold="50"
+    maxstrength="100"
+
+    iconcolors="81,0,81;81,0,81;61,0,61">
+    
     <Effect minstrength="0" maxstrength="50" strengthchange="-0.2" />
     <Effect minstrength="50" maxstrength="80" strengthchange="-0.5" />
     <Effect minstrength="80" maxstrength="90" minvitalitydecrease="10" maxvitalitydecrease="50" minscreenblur="0.1" maxscreenblur="0.4" strengthchange="-0.1" />
@@ -31,11 +66,28 @@
         <Affliction identifier="graftingcureoverdosekiller" amount="10" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="6,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="6,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
-  <!-- DNA Ligation Enhancer Overdoes -->
-  <Affliction name="DNA Ligation Enhancer Overdose" identifier="graftingcureoverdosekiller" type="graftingoverdose" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" maxstrength="10" iconcolors="81,0,81;81,0,81;61,0,61">
+  <!-- DNA Ligation Enhancer Overdose -->
+  <Affliction
+    name=""
+    description=""
+    identifier="graftingcureoverdosekiller"
+
+    type="graftingoverdose"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="10"
+
+    iconcolors="81,0,81;81,0,81;61,0,61">
     <Effect minstrength="0" maxstrength="10" minvitalitydecrease="50" maxvitalitydecrease="120" minscreenblur="0.5" maxscreenblur="0.8" strengthchange="-3.5">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
         <Affliction identifier="lungdamage" amount="7" />
@@ -48,12 +100,44 @@
   </Affliction>
 
   <!-- Hybrid DNA -->
-  <Affliction name="Hybrid DNA" identifier="hybriddna" type="graftingoverdose" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="1000" showinhealthscannerthreshold="1" treatmentthreshold="1000" maxstrength="3" iconcolors="81,0,81;81,0,81;61,0,61">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="7,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <Affliction
+    name=""
+    description=""
+    identifier="hybriddna"
+
+    type="graftingoverdose"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1"
+    showiconthreshold="1000"
+    maxstrength="3"
+
+    iconcolors="81,0,81;81,0,81;61,0,61">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="7,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
   <!-- Hybrid DNA (Lethal) -->
-  <Affliction name="" identifier="hybriddnakiller" type="graftingoverdose" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="100" showinhealthscannerthreshold="100" treatmentthreshold="1000" maxstrength="10" iconcolors="81,0,81;81,0,81;61,0,61">
+  <Affliction
+    name=""
+    description=""
+    identifier="hybriddnakiller"
+
+    type="graftingoverdose"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="100"
+    showiconthreshold="100"
+    maxstrength="10"
+
+    iconcolors="81,0,81;81,0,81;61,0,61">
     <Effect minstrength="0" maxstrength="10" minvitalitydecrease="10" maxvitalitydecrease="30" strengthchange="-2">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
         <Affliction identifier="lungdamage" amount="1" />
@@ -66,7 +150,22 @@
   </Affliction>
 
   <!-- DNA Deterioration -->
-  <Afflicton name="DNA Deterioration" identifier="alienDNARemoval" type="graftingBuff" limbspecific="true" healableinmedicalclinic="false" hideiconafterdelay="false" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" maxstrength="100" iconcolors="20,13,47;20,13,47;20,13,47">
+  <Afflicton
+    name=""
+    description=""
+    identifier="alienDNARemoval"
+
+    type="graftingBuff"
+    limbspecific="true"
+    healableinmedicalclinic="false"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="20,13,47;20,13,47;20,13,47">
     <Effect minstrength="0" maxstrength="100" strengthchange="-1">
       <!-- Add all other afflictions where skin is applied directly to the body -->
       <StatusEffect target="Limb" interval="1" disabledeltatime="true">
@@ -86,55 +185,174 @@
         <ReduceAffliction identifier="endwormRLegAffliction" amount="5" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="8,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="8,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- Physical Therapy -->
-  <Afflicton name="Physical Therapy" identifier="physicaltherapistAffliction" type="graftingBuff" limbspecific="false" healableinmedicalclinic="false" isbuff="true" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" maxstrength="1" duration="1" iconcolors="47,47,47;47,47,47;47,47,47">
+  <Afflicton
+    name=""
+    description=""
+    identifier="physicaltherapistAffliction"
+
+    type="graftingBuff"
+    isbuff="true"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="1"
+    duration="1"
+
+    iconcolors="47,47,47;47,47,47;47,47,47">
     <Effect minstrength="0" maxstrength="1">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
         <ReduceAffliction identifier="crossspeciesrejection" amount="0.02" />
         <ReduceAffliction identifier="blunttrauma" amount="0.1" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="1,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="1,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- Blind -->
-  <Afflicton name="Blind" identifier="blindAegis" type="graftingBuff" limbspecific="false" healableinmedicalclinic="false" hideiconafterdelay="false" showiconthreshold="1" indicatorlimb="Head" showinhealthscannerthreshold="1" treatmentthreshold="1000" maxstrength="10" iconcolors="255,255,255;0,0,0;0,0,0">
+  <Afflicton
+    name=""
+    description=""
+    identifier="blindAegis"
+
+    type="graftingBuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1"
+    showiconthreshold="1"
+    maxstrength="10"
+
+    iconcolors="255,255,255;0,0,0;0,0,0">
     <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-1" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
-  <Afflicton name="Blind" identifier="blindAegis2" type="graftingBuff" limbspecific="false" healableinmedicalclinic="false" hideiconafterdelay="false" showiconthreshold="100" indicatorlimb="Head" showinhealthscannerthreshold="1" treatmentthreshold="1000" maxstrength="10" iconcolors="255,255,255;0,0,0;0,0,0">
+  <Afflicton
+    name=""
+    description=""
+    identifier="blindAegis2"
+
+    type="graftingBuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1"
+    showiconthreshold="100"
+    maxstrength="10"
+
+    iconcolors="255,255,255;0,0,0;0,0,0">
     <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-0.9" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
-  <Afflicton name="Blind" identifier="blindAegis3" type="graftingBuff" limbspecific="false" healableinmedicalclinic="false" hideiconafterdelay="false" showiconthreshold="100" indicatorlimb="Head" showinhealthscannerthreshold="1" treatmentthreshold="1000" maxstrength="10" iconcolors="255,255,255;0,0,0;0,0,0">
+  <Afflicton
+    name=""
+    description=""
+    identifier="blindAegis3"
+
+    type="graftingBuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1"
+    showiconthreshold="100"
+    maxstrength="10"
+
+    iconcolors="255,255,255;0,0,0;0,0,0">
     <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-0.8" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- EMP'd -->
-  <Afflicton name="" identifier="empAegis" type="" limbspecific="false" hideiconafterdelay="false" showiconthreshold="100" showinhealthscannerthreshold="100" treatmentthreshold="1000" maxstrength="10" iconcolors="255,255,255;0,0,0;0,0,0">
+  <Afflicton
+    name=""
+    description=""
+    identifier="empAegis"
+
+    type=""
+    limbspecific="false"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="100"
+    showiconthreshold="100"
+    maxstrength="10"
+
+    iconcolors="255,255,255;0,0,0;0,0,0">
     <Effect minstrength="0" maxstrength="10" strengthchange="-1.5" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- CRAWLER RELATED AFFLICTIONS -->
-  <AfflictionHusk name="Crawler Tail" identifier="crawlerTailAegis" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="44,37,27;44,37,27;44,37,27">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="crawlerTailAegis"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="44,37,27;44,37,27;44,37,27">
     <Effect minstrength="0" maxstrength="100">
       <StatValue stattype="SwimmingSpeed" minvalue="0.4" maxvalue="0.4" />
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
   <!-- Commented until used -->
   <!--
-  <Affliction name="Traumatically amputating tail" identifier="gate_ta_ct" targets="human" limbspecific="True" showinhealthscannerthreshold="3" showiconthreshold="3" maxstrength="1">
+  <Affliction
+    name="Traumatically amputating tail"
+    description=""
+    identifier="gate_ta_ct"
+
+    limbspecific="True"
+    targets="human"
+
+    showinhealthscannerthreshold="3"
+    showiconthreshold="3"
+    maxstrength="1">
     <Effect minstrength="0" maxstrength="1" strengthchange="-1000">
       <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" targetlimb="Torso" disabledeltatime="True" stackable="false" delay="0.2">
         <Affliction identifier="severepain" amount="100" />
@@ -144,10 +362,20 @@
         <SpawnItem identifier="crawlerTailAegis" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
   </Affliction>
 
-  <Affliction name="Traumatically amputating tail" identifier="gate_ta_ct_2" targets="human" limbspecific="True" showinhealthscannerthreshold="3" showiconthreshold="3" maxstrength="1">
+  <Affliction
+    name="Traumatically amputating tail"
+    description=""
+    identifier="gate_ta_ct_2"
+
+    limbspecific="True"
+    targets="human"
+
+    showinhealthscannerthreshold="3"
+    showiconthreshold="3"
+    maxstrength="1">
     <Effect minstrength="0" maxstrength="1" strengthchange="-1000">
       <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" targetlimb="Torso" disabledeltatime="True" stackable="false" delay="0.2">
         <Affliction identifier="severepain" amount="100" />
@@ -156,19 +384,64 @@
         <Affliction identifier="increasedSwimmingSpeedAegis" amount="-100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
   </Affliction>
   -->
-  <Affliction name="Crawler Lungs" identifier="crawlerLungsAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" maxstrength="100" iconcolors="44,37,27;44,37,27;44,37,27">
+  <Affliction
+    name=""
+    description=""
+    identifier="crawlerLungsAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="44,37,27;44,37,27;44,37,27">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100">
       <StatValue stattype="HoldBreathMultiplier" minvalue="0.3" maxvalue="0.3" />
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="1,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="1,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
   <!-- FRACTAL GUARDIAN RELATED AFFLICTIONS -->
-  <AfflictionHusk name="Fractal Guardian Eyes" identifier="fractalGuardianEyesAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="80" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="53,78,57;53,78,57;53,78,57">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="fractalGuardianEyesAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="80"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="53,78,57;53,78,57;53,78,57">
     <Effect minstrength="0" maxstrength="80" strengthchange="1" />
     <Effect minstrength="80" maxstrength="100" strengthchange="1" ThermalOverlayRange="1000" ThermalOverlayColor="53,78,57">
       <StatusEffect type="OnActive" target="Character" interval="1" disabledeltatime="true">
@@ -181,15 +454,72 @@
         <Affliction identifier="blindAegis3" amount="10" />
       </Statuseffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="8,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="8,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- HUSK RELATED AFFLICTIONS -->
-  <AfflictionHusk name="Chimera Infection" identifier="chimeraHuskInfection" type="alieninfection" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="Husk_chimera" transferbuffs="False" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="100" transformthresholdondeath="100" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="50,3,1;50,3,1;50,3,1">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="5,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="chimeraHuskInfection"
+
+    type="alieninfection"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="Husk_chimera"
+    transferbuffs="False"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="100"
+    transformthresholdondeath="100"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="50,3,1;50,3,1;50,3,1">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="5,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
-  <AfflictionHusk name="Husk Arm" identifier="huskArmAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="Husk_chimera" transferbuffs="False" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="38,3,1;38,3,1;38,3,1">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="1,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="huskArmAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="Husk_chimera"
+    transferbuffs="False"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="38,3,1;38,3,1;38,3,1">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="1,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
     <Effect minstrength="0" maxstrength="100">
       <StatusEffect target="Character" type="OnActive" interval="1" disabledeltatime="true">
         <Conditional husktransformimmunity="lt 99" />
@@ -197,8 +527,27 @@
       </StatusEffect>
     </Effect>
   </AfflictionHusk>
-  <Affliction name="Husk Heart" identifier="huskHeartAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="38,3,1;38,3,1;38,3,1">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <Affliction
+    name=""
+    description=""
+    identifier="huskHeartAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="38,3,1;38,3,1;38,3,1">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
     <Effect minstrength="0" maxstrength="100">
       <StatusEffect target="Character" type="OnActive" interval="1" disabledeltatime="true">
         <Conditional husktransformimmunity="lt 99" />
@@ -208,7 +557,23 @@
   </Affliction>
 
   <!-- MANTIS AFFLICTIONS -->
-  <Affliction name="Mantis Liver" identifier="mantisLiverAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" maxstrength="100" iconcolors="255,196,12;255,196,12;255,196,12">
+  <Affliction
+    name=""
+    description=""
+    identifier="mantisLiverAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="255,196,12;255,196,12;255,196,12">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100" resistancefor="paralysis" minresistance="100" maxresistance="100">
       <StatusEffect type="OnActive" target="NearbyCharacters" targetLimb="Torso" interval="1" disabledeltatime="True" Range="100">
@@ -219,107 +584,298 @@
         <ReduceAffliction identifier="paralysis" amount="40" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
   <!-- MUDRAPTOR AFFLICTIONS -->
-  <Affliction name="Mudraptor Lungs" identifier="mudraptorLungsAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" minstrength="0" maxstrength="100" iconcolors="12,19,24;12,19,24;12,19,24">
+  <Affliction
+    name=""
+    description=""
+    identifier="mudraptorLungsAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="12,19,24;12,19,24;12,19,24">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100">
       <StatValue stattype="HoldBreathMultiplier" minvalue="0.5" maxvalue="0.5" />
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="1,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="1,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="Mudraptor Head" identifier="mudraptorHeadAffliction" type="graftingbuff" limbspecific="true" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" minstrength="0" maxstrength="100" iconcolors="12,19,24;12,19,24;12,19,24">
+  <Affliction
+    name=""
+    description=""
+    identifier="mudraptorHeadAffliction"
+
+    type="graftingbuff"
+    limbspecific="true"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="12,19,24;12,19,24;12,19,24">
     <Effect minstrength="0" maxstrength="100" strengthchange="1" resistancefor="damage" resistancelimbs="Head" minresistance="0.1" maxresistance="0.4" minskillmultiplier="0.95" maxskillmultiplier="0.9"></Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="2,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="2,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
   <!--
   <Affliction
     name=""
+    description=""
     identifier="mudraptorHeadAfflictionSprite"
+
     type="alieninfection"
     isbuff="True"
-    healableinmedicalclinic="false"
     limbspecific="false"
     targets="human"
+    healableinmedicalclinic="false"
     indicatorlimb="Head"
     hideiconafterdelay="true"
-    showiconthreshold="1000"
-    showinhealthscannerthreshold="1000"
     treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
     minstrength="0"
     maxstrength="10"
+
     iconcolors="12,19,24;12,19,24;12,19,24">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
   </Affliction>
 
 
   <AfflictionHusk
     name=""
+    description=""
     identifier="mudraptorHeadSuitAffliction"
+
     type="alieninfection"
     isbuff="True"
-    healableinmedicalclinic="false"
     limbspecific="false"
     targets="human"
-    huskedspeciesname="husk"
-    transferbuffs="True"
+    healableinmedicalclinic="false"
     indicatorlimb="Head"
     hideiconafterdelay="true"
-    showiconthreshold="1000"
-    showinhealthscannerthreshold="1000"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
     needsair="true"
     causespeechimpediment="false"
-    treatmentthreshold="1000"
     dormantthreshold="0"
     activethreshold="10"
     transitionthreshold="1000"
     transformthresholdondeath="1000"
     sendmessages="false"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
     minstrength="0"
     maxstrength="100"
+
     iconcolors="38,42,46;38,42,46;38,42,46">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
   </AfflictionHusk>
 -->
-  <Affliction name="Mudraptor Right Leg" identifier="mudraptorLegRightAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="RightLeg" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" minstrength="0" maxstrength="100" iconcolors="12,19,24;12,19,24;12,19,24">
+  <Affliction
+    name=""
+    description=""
+    identifier="mudraptorLegRightAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="RightLeg"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="12,19,24;12,19,24;12,19,24">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100">
       <StatusEffect target="Character">
         <StatValue stattype="FlowResistance" value="0.3" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
   <!-- BROODMOTHER AFFLICTIONS -->
-  <AfflictionHusk name="Broodmother Liver" identifier="broodmotherLiverAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" huskedspeciesname="husk" needsair="true" causespeechimpediment="false" sendmessages="false" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" maxstrength="100" iconcolors="47,38,29;47,38,29;47,38,29">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="broodmotherLiverAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    huskedspeciesname="husk"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="47,38,29;47,38,29;47,38,29">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100" resistancefor="acidburn" minresistance="0.7" maxresistance="0.7"></Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- TIGER THRESHER AFFLICTIONS -->
-  <AfflictionHusk name="Tiger Thresher Jaw" identifier="tigerThresherJawAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="90" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="32,32,31;32,32,31;32,32,31">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="tigerThresherJawAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="90"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="32,32,31;32,32,31;32,32,31">
     <Effect minstrength="0" maxstrength="100" strengthchange="1" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
-  <AfflictionHusk name="Tiger Thresher Tail" identifier="tigerThresherTailAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="32,32,31;32,32,31;32,32,31">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="tigerThresherTailAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="32,32,31;32,32,31;32,32,31">
     <Effect minstrength="0" maxstrength="100">
       <StatValue stattype="SwimmingSpeed" minvalue="0.55" maxvalue="0.55" />
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- BONE THRESHER AFFLICTIONS -->
-  <AfflictionHusk name="Bone Thresher Jaw" identifier="boneThresherJawAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="90" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="58,58,36;58,58,36;58,58,36">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="boneThresherJawAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="90"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="58,58,36;58,58,36;58,58,36">
     <Effect minstrength="0" maxstrength="100" strengthchange="2" />
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- HAMMERHEAD AFFLICTIONS -->
-  <Affliction name="Hammerhead Skin" identifier="hammerheadTorsoAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="140,57,40;140,57,40;140,57,40">
+  <Affliction
+    name=""
+    description=""
+    identifier="hammerheadTorsoAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="140,57,40;140,57,40;140,57,40">
     <Effect minstrength="0" maxstrength="90" strengthchange="2" resistancefor="damage" minresistance="0.0" maxresistance="0.2" resistancelimbs="Torso" />
     <Effect minstrength="90" maxstrength="100" strengthchange="2" resistancefor="damage" minresistance="0.2" maxresistance="0.4" resistancelimbs="Torso">
       <StatValue stattype="MedicalItemEffectivenessMultiplier" minvalue="-0.33" maxvalue="-0.33" />
@@ -328,24 +884,120 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="" identifier="hammerheadTorsoAfflictionSprite" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="1000" showinhealthscannerthreshold="1000" treatmentthreshold="1000" minstrength="0" maxstrength="10" iconcolors="140,57,40;140,57,40;140,57,40">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <Affliction
+    name=""
+    description=""
+    identifier="hammerheadTorsoAfflictionSprite"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
+    minstrength="0"
+    maxstrength="10"
+
+    iconcolors="140,57,40;140,57,40;140,57,40">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <AfflictionHusk name="Hammerhead Limbs" identifier="hammerheadLimbsAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="140,57,40;140,57,40;140,57,40">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="hammerheadLimbsAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="140,57,40;140,57,40;140,57,40">
     <Effect minstrength="0" maxstrength="100">
       <StatValue stattype="FlowResistance" minvalue="0.7" maxvalue="0.55" />
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- MOLOCH AFFLICTIONS -->
-  <AfflictionHusk name="Moloch Shell" identifier="molochHeadAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="1" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="38,42,46;38,42,46;38,42,46">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="molochHeadAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="1"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="38,42,46;38,42,46;38,42,46">
     <Effect minstrength="0" maxstrength="100" resistancelimbs="Head" resistancefor="damage" minresistance="0.2" maxresistance="0.6" strengtchange="2.5"></Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="4,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="4,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
-  <Affliction name="Cracked Shell" identifier="molochCracked" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="67,2,0;67,2,0;67,2,0">
+  <Affliction
+    name=""
+    description=""
+    identifier="molochCracked"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="67,2,0;67,2,0;67,2,0">
     <Effect minstrength="0" maxstrength="95" strengthchange="-0.2" />
     <Effect minstrength="95" maxstrength="100" strengthchange="0.5" minvitalitydecrease="50" maxvitalitydecrease="75">
       <StatusEffect type="OnActive" target="Character">
@@ -354,14 +1006,59 @@
         <Affliction identifier="cerebralhypoxia" amount="0.1" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <AfflictionHusk name="" identifier="molochCrackedSprite" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="1000" showinhealthscannerthreshold="1000" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="100" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="38,42,46;38,42,46;38,42,46">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="molochCrackedSprite"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="100"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="38,42,46;38,42,46;38,42,46">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- VIPERLING AFFLICTIONS -->
-  <Affliction name="Viperling Liver" identifier="viperlingLiverAffliction" type="graftingbuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="100" maxstrength="100" iconcolors="28,43,32;28,43,32;28,43,32">
+  <Affliction
+    name=""
+    description=""
+    identifier="viperlingLiverAffliction"
+
+    type="graftingbuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="100"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="28,43,32;28,43,32;28,43,32">
     <!-- Figure out iconcolors real values and icon texture -->
     <Effect minstrength="0" maxstrength="100" resistancefor="poison" minresistance="0.8" maxresistance="0.8">
       <StatusEffect type="OnActive" target="Character" interval="1" disabledeltatime="true">
@@ -369,26 +1066,100 @@
         <ReduceAffliction identifier="drunk" amount="0.5" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="4,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
 
   <!-- WATCHER AFFLICTIONS -->
-  <AfflictionHusk name="Watcher Eyes" identifier="watcherEyesAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="80" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="38,11,11;38,11,11;38,11,11">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="watcherEyesAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="80"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="38,11,11;38,11,11;38,11,11">
     <Effect minstrength="0" maxstrength="80" strengthchange="2" />
     <Effect minstrength="80" maxstrength="100" strengthchange="2"></Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="7,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="7,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
-  <Afflicton name="Hybrid's Gaze" identifier="graftedWatcherGaze" type="graftingBuff" limbspecific="false" healableinmedicalclinic="false" indicatorlimb="Head" hideiconafterdelay="false" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" maxstrength="100" iconcolors="77,25,25;77,25,25;77,25,25">
+  <Afflicton
+    name=""
+    description=""
+    identifier="graftedWatcherGaze"
+
+    type="graftingBuff"
+    limbspecific="false"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="false"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    maxstrength="100"
+
+    iconcolors="77,25,25;77,25,25;77,25,25">
     <Effect minstrength="0" maxstrength="100" strengthchange="-1.5" minspeedmultiplier="0.8" maxspeedmultiplier="0.8">
       <StatusEffect target="Character" type="OnActive">
         <Affliction identifier="psychosis" amount="1" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="9,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
 
   <!-- CHARYBDIS AFFLICTIONS -->
-  <AfflictionHusk name="Charybdis Jaw" identifier="charybdisJawAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="90" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="25,24,23;25,24,23;25,24,23">
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="charybdisJawAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="90"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="25,24,23;25,24,23;25,24,23">
     <Effect minstrength="0" maxstrength="90" strengthchange="3.5">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
         <ReduceAffliction identifier="charybdisJawNerf" amount="10" />
@@ -400,9 +1171,27 @@
         <Affliction identifier="charybdisJawNerf" amount="1" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
-  <Affliction name="Insatiable Hunger" identifier="charybdisJawNerf" type="alieninfection" isbuff="False" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Head" showiconthreshold="5" showinhealthscannerthreshold="5" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="51,13,13;51,13,13;51,13,13">
+  <Affliction
+    name=""
+    description=""
+    identifier="charybdisJawNerf"
+
+    type="alieninfection"
+    isbuff="False"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="5"
+    showiconthreshold="5"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="51,13,13;51,13,13;51,13,13">
     <Effect minstrength="0" maxstrength="25" strengthchange="0.05" />
     <Effect minstrength="25" maxstrength="50" strengthchange="0.4">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
@@ -419,9 +1208,27 @@
         <Affliction identifier="psychosis" amount="0.75" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="6,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="6,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="" identifier="charybdisCure" type="alieninfection" isbuff="False" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Head" showiconthreshold="1000" showinhealthscannerthreshold="1000" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="51,13,13;51,13,13;51,13,13">
+  <Affliction
+    name=""
+    description=""
+    identifier="charybdisCure"
+
+    type="alieninfection"
+    isbuff="False"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="51,13,13;51,13,13;51,13,13">
     <Effect minstrength="0" maxstrength="10" strengthchange="-1">
       <StatusEffect type="OnDamaged" target="NearbyCharacters" targetLimb="Torso" delay="0.1" disabledeltatime="True" Range="100">
         <ReduceAffliction identifier="charybdisJawNerf" amount="10" />
@@ -435,18 +1242,85 @@
   </Affliction>
 
   <!-- LATCHER AFFLICTIONS -->
-  <Affliction name="Latcher Heart" identifier="latcherHeartAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="15,14,14;15,14,14;15,14,14">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="2,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <Affliction
+    name=""
+    description=""
+    identifier="latcherHeartAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="15,14,14;15,14,14;15,14,14">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="2,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
     <Effect minstrength="0" maxstrength="100" minspeedmultiplier="1.3" maxspeedmultiplier="1.3" resistancefor="damage" minresistance="-0.2" maxresistance="-0.2">
       <StatValue stattype="SwimmingSpeed" minvalue="0.3" maxvalue="0.3" />
     </Effect>
   </Affliction>
-  <AfflictionHusk name="Latcher Tongue" identifier="latcherTongueAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="90" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="15,14,14;15,14,14;15,14,14">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="4,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="latcherTongueAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="90"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="15,14,14;15,14,14;15,14,14">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="4,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 
   <!-- ENDWORM AFFLICTIONS -->
-  <Affliction name="Endworm Skin" identifier="endwormTorsoAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="34,34,34;34,34,34;34,34,34">
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormTorsoAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
     <Effect minstrength="0" maxstrength="90" strengthchange="2" resistancefor="damage" minresistance="0.0" maxresistance="0.4" resistancelimbs="Torso" />
     <Effect minstrength="90" maxstrength="100" strengthchange="3.5" resistancefor="damage" minresistance="0.4" maxresistance="0.9" resistancelimbs="Torso">
       <StatValue stattype="MedicalItemEffectivenessMultiplier" minvalue="-0.66" maxvalue="-0.66" />
@@ -455,12 +1329,50 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="" identifier="endwormTorsoAfflictionSprite" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" indicatorlimb="Head" hideiconafterdelay="true" showiconthreshold="1000" showinhealthscannerthreshold="1000" treatmentthreshold="1000" minstrength="0" maxstrength="10" iconcolors="34,34,34;34,34,34;34,34,34">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormTorsoAfflictionSprite"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Head"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="1000"
+    showiconthreshold="1000"
+    minstrength="0"
+    maxstrength="10"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="Endworm Skin" identifier="endwormLArmAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="LeftArm" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="34,34,34;34,34,34;34,34,34">
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormLArmAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="LeftArm"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
     <Effect minstrength="0" maxstrength="90" strengthchange="0.5" resistancefor="damage" minresistance="0.0" maxresistance="0.4" resistancelimbs="LeftArm" />
     <Effect minstrength="90" maxstrength="100" strengthchange="0.5" resistancefor="damage" minresistance="0.4" maxresistance="0.7" resistancelimbs="LeftArm">
       <StatusEffect type="OnActive" target="Limb" disabledeltatime="True">
@@ -468,9 +1380,28 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="Endworm Skin" identifier="endwormRArmAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="RightArm" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="34,34,34;34,34,34;34,34,34">
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormRArmAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="RightArm"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
     <Effect minstrength="0" maxstrength="90" strengthchange="0.5" resistancefor="damage" minresistance="0.0" maxresistance="0.4" resistancelimbs="RightArm" />
     <Effect minstrength="90" maxstrength="100" strengthchange="0.5" resistancefor="damage" minresistance="0.4" maxresistance="0.7" resistancelimbs="RightArm">
       <StatusEffect type="OnActive" target="Limb" disabledeltatime="True">
@@ -478,9 +1409,28 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="Endworm Skin" identifier="endwormLLegAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="LeftLeg" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="34,34,34;34,34,34;34,34,34">
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormLLegAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="LeftLeg"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
     <Effect minstrength="0" maxstrength="90" strengthchange="0.5" resistancefor="damage" minresistance="0.0" maxresistance="0.4" resistancelimbs="LeftLeg" />
     <Effect minstrength="90" maxstrength="100" strengthchange="0.5" resistancefor="damage" minresistance="0.4" maxresistance="0.7" resistancelimbs="LeftLeg">
       <StatusEffect type="OnActive" target="Limb" disabledeltatime="True">
@@ -488,9 +1438,28 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
-  <Affliction name="Endworm Skin" identifier="endwormRLegAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="true" targets="human" indicatorlimb="RightLeg" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" treatmentthreshold="1000" minstrength="0" maxstrength="100" iconcolors="34,34,34;34,34,34;34,34,34">
+  <Affliction
+    name=""
+    description=""
+    identifier="endwormRLegAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="true"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="RightLeg"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="34,34,34;34,34,34;34,34,34">
     <Effect minstrength="0" maxstrength="90" strengthchange="0.5" resistancefor="damage" minresistance="0.0" maxresistance="0.4" resistancelimbs="RightLeg" />
     <Effect minstrength="90" maxstrength="100" strengthchange="0.5" resistancefor="damage" minresistance="0.4" maxresistance="0.7" resistancelimbs="RightLeg">
       <StatusEffect type="OnActive" target="Limb" disabledeltatime="True">
@@ -498,11 +1467,40 @@
         <ReduceAffliction identifier="surgeryincision" amount="100" />
       </StatusEffect>
     </Effect>
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="3,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Affliction>
   
   <!-- ORANGEBOY AFFLICTIONS -->
-  <AfflictionHusk name="Orangeboy Tail" identifier="orangeboyTailAffliction" type="alieninfection" isbuff="True" healableinmedicalclinic="false" limbspecific="false" targets="human" huskedspeciesname="husk" transferbuffs="True" indicatorlimb="Torso" hideiconafterdelay="true" showiconthreshold="0" showinhealthscannerthreshold="0" needsair="true" causespeechimpediment="false" treatmentthreshold="1000" dormantthreshold="0" activethreshold="0" transitionthreshold="1000" transformthresholdondeath="1000" sendmessages="false" minstrength="0" maxstrength="100" iconcolors="223,188,128;223,188,128;223,188,128">
-    <icon texture="%ModDir%/graftedAfflictions.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
+  <AfflictionHusk
+    name=""
+    description=""
+    identifier="orangeboyTailAffliction"
+
+    type="alieninfection"
+    isbuff="True"
+    limbspecific="false"
+    targets="human"
+    healableinmedicalclinic="false"
+    indicatorlimb="Torso"
+    hideiconafterdelay="true"
+    treatmentthreshold="1000"
+
+    huskedspeciesname="husk"
+    transferbuffs="True"
+    needsair="true"
+    causespeechimpediment="false"
+    dormantthreshold="0"
+    activethreshold="0"
+    transitionthreshold="1000"
+    transformthresholdondeath="1000"
+    sendmessages="false"
+
+    showinhealthscannerthreshold="0"
+    showiconthreshold="0"
+    minstrength="0"
+    maxstrength="100"
+
+    iconcolors="223,188,128;223,188,128;223,188,128">
+    <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </AfflictionHusk>
 </Afflictions>
