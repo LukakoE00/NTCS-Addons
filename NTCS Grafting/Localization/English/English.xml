@@ -50,6 +50,153 @@
   <entityname.Cells_Viperling>Viperling Cells</entityname.Cells_Viperling>
   <entitydescription.Cells_Viperling>A tissue sample from a viperling. Could be cultured into organs.</entitydescription.Cells_Viperling>
   
+  <!-- ================================================= AFFLICTIONS ================================================= -->
+  <!-- Cross Species Rejection -->
+  <afflictionname.crossspeciesrejection>Cross Species Rejection</afflictionname.crossspeciesrejection>
+  <afflictiondescription.crossspeciesrejection>The patient's body is rejecting the graft!</afflictiondescription.crossspeciesrejection>
+  <afflictioncauseofdeath.crossspeciesrejection>Rejected Grafting</afflictioncauseofdeath.crossspeciesrejection>
+  <afflictioncauseofdeathself.crossspeciesrejection>Your body rejected the grafting procedure.</afflictioncauseofdeathself.crossspeciesrejection>
+
+  <!-- DNA Ligation Enhancer -->
+  <afflictionname.graftingcureoverdose>DNA Ligation Enhancer</afflictionname.graftingcureoverdose>
+  <afflictiondescription.graftingcureoverdose>PLACEHOLDER</afflictiondescription.graftingcureoverdose>
+
+  <!-- DNA Ligation Enhancer Overdose -->
+  <afflictionname.graftingcureoverdosekiller>DNA Ligation Enhancer Overdose</afflictionname.graftingcureoverdosekiller>
+  <afflictiondescription.graftingcureoverdosekiller>A lethal amount of DNA Ligation Enhancer is present on the patient.</afflictiondescription.graftingcureoverdosekiller>
+
+  <!-- Hybrid DNA -->
+  <afflictionname.hybriddna>Hybrid DNA</afflictionname.hybriddna>
+  <afflictiondescription.hybriddna>PLACEHOLDER</afflictiondescription.hybriddna>
+
+  <!-- DNA Deterioration -->
+  <afflictionname.alienDNARemoval>DNA Deterioration</afflictionname.alienDNARemoval>
+  <afflictiondescription.alienDNARemoval>PLACEHOLDER</afflictiondescription.alienDNARemoval>
+
+  <!-- Physical Therapy -->
+  <afflictionname.physicaltherapistAffliction>Physical Therapy</afflictionname.physicaltherapistAffliction>
+  <afflictiondescription.physicaltherapistAffliction>PLACEHOLDER</afflictiondescription.physicaltherapistAffliction>
+
+  <!-- Crawler Tail -->
+  <afflictionname.crawlerTailAegis>Crawler Tail</afflictionname.crawlerTailAegis>
+  <afflictiondescription.crawlerTailAegis>PLACEHOLDER</afflictiondescription.crawlerTailAegis>
+
+  <!-- Crawler Lungs -->
+  <afflictionname.crawlerLungsAffliction>Crawler Lungs</afflictionname.crawlerLungsAffliction>
+  <afflictiondescription.crawlerLungsAffliction>PLACEHOLDER</afflictiondescription.crawlerLungsAffliction>
+
+  <!-- Fractal Guardian Eyes -->
+  <afflictionname.fractalGuardianEyesAffliction>Fractal Guardian Eyes</afflictionname.fractalGuardianEyesAffliction>
+  <afflictiondescription.fractalGuardianEyesAffliction>PLACEHOLDER</afflictiondescription.fractalGuardianEyesAffliction>
+
+  <!-- Chimera Infection -->
+  <afflictionname.chimeraHuskInfection>Chimera Infection</afflictionname.chimeraHuskInfection>
+  <afflictiondescription.chimeraHuskInfection>PLACEHOLDER</afflictiondescription.chimeraHuskInfection>
+
+  <!-- Husk Arm -->
+  <afflictionname.huskArmAffliction>Husk Arm</afflictionname.huskArmAffliction>
+  <afflictiondescription.huskArmAffliction>PLACEHOLDER</afflictiondescription.huskArmAffliction>
+
+  <!-- Husk Heart -->
+  <afflictionname.huskHeartAffliction>Husk Heart</afflictionname.huskHeartAffliction>
+  <afflictiondescription.huskHeartAffliction>PLACEHOLDER</afflictiondescription.huskHeartAffliction>
+
+  <!-- Mantis Liver -->
+  <afflictionname.mantisLiverAffliction>Mantis Liver</afflictionname.mantisLiverAffliction>
+  <afflictiondescription.mantisLiverAffliction>PLACEHOLDER</afflictiondescription.mantisLiverAffliction>
+
+  <!-- Mudraptor Lungs -->
+  <afflictionname.mudraptorLungsAffliction>Mudraptor Lungs</afflictionname.mudraptorLungsAffliction>
+  <afflictiondescription.mudraptorLungsAffliction>PLACEHOLDER</afflictiondescription.mudraptorLungsAffliction>
+
+  <!-- Mudraptor Head -->
+  <afflictionname.mudraptorHeadAffliction>Mudraptor Head</afflictionname.mudraptorHeadAffliction>
+  <afflictiondescription.mudraptorHeadAffliction>PLACEHOLDER</afflictiondescription.mudraptorHeadAffliction>
+
+  <!-- Mudraptor Right Leg -->
+  <afflictionname.mudraptorLegRightAffliction>Mudraptor Right Leg</afflictionname.mudraptorLegRightAffliction>
+  <afflictiondescription.mudraptorLegRightAffliction>PLACEHOLDER</afflictiondescription.mudraptorLegRightAffliction>
+
+  <!-- Broodmother Liver -->
+  <afflictionname.broodmotherLiverAffliction>Broodmother Liver</afflictionname.broodmotherLiverAffliction>
+  <afflictiondescription.broodmotherLiverAffliction>PLACEHOLDER</afflictiondescription.broodmotherLiverAffliction>
+
+  <!-- Tiger Thresher Jaw -->
+  <afflictionname.tigerThresherJawAffliction>Tiger Thresher Jaw</afflictionname.tigerThresherJawAffliction>
+  <afflictiondescription.tigerThresherJawAffliction>PLACEHOLDER</afflictiondescription.tigerThresherJawAffliction>
+
+  <!-- Tiger Thresher Tail -->
+  <afflictionname.tigerThresherTailAffliction>Tiger Thresher Tail</afflictionname.tigerThresherTailAffliction>
+  <afflictiondescription.tigerThresherTailAffliction>PLACEHOLDER</afflictiondescription.tigerThresherTailAffliction>
+
+  <!-- Bone Thresher Jaw -->
+  <afflictionname.boneThresherJawAffliction>Bone Thresher Jaw</afflictionname.boneThresherJawAffliction>
+  <afflictiondescription.boneThresherJawAffliction>PLACEHOLDER</afflictiondescription.boneThresherJawAffliction>
+
+  <!-- Hammerhead Skin -->
+  <afflictionname.hammerheadTorsoAffliction>Hammerhead Skin</afflictionname.hammerheadTorsoAffliction>
+  <afflictiondescription.hammerheadTorsoAffliction>PLACEHOLDER</afflictiondescription.hammerheadTorsoAffliction>
+
+  <!-- Hammerhead Limbs -->
+  <afflictionname.hammerheadLimbsAffliction>Hammerhead Limbs</afflictionname.hammerheadLimbsAffliction>
+  <afflictiondescription.hammerheadLimbsAffliction>PLACEHOLDER</afflictiondescription.hammerheadLimbsAffliction>
+
+  <!-- Moloch Shell -->
+  <afflictionname.molochHeadAffliction>Moloch Shell</afflictionname.molochHeadAffliction>
+  <afflictiondescription.molochHeadAffliction>PLACEHOLDER</afflictiondescription.molochHeadAffliction>
+
+  <!-- Cracked Shell -->
+  <afflictionname.molochCracked>Cracked Shell</afflictionname.molochCracked>
+  <afflictiondescription.molochCracked>PLACEHOLDER</afflictiondescription.molochCracked>
+
+  <!-- Viperling Liver -->
+  <afflictionname.viperlingLiverAffliction>Viperling Liver</afflictionname.viperlingLiverAffliction>
+  <afflictiondescription.viperlingLiverAffliction>PLACEHOLDER</afflictiondescription.viperlingLiverAffliction>
+
+  <!-- Watcher Eyes -->
+  <afflictionname.watcherEyesAffliction>Watcher Eyes</afflictionname.watcherEyesAffliction>
+  <afflictiondescription.watcherEyesAffliction>PLACEHOLDER</afflictiondescription.watcherEyesAffliction>
+
+  <!-- Hybrid's Gaze -->
+  <afflictionname.graftedWatcherGaze>Hybrid's Gaze</afflictionname.graftedWatcherGaze>
+  <afflictiondescription.graftedWatcherGaze>PLACEHOLDER</afflictiondescription.graftedWatcherGaze>
+
+  <!-- Charybdis Jaw -->
+  <afflictionname.charybdisJawAffliction>Charybdis Jaw</afflictionname.charybdisJawAffliction>
+  <afflictiondescription.charybdisJawAffliction>PLACEHOLDER</afflictiondescription.charybdisJawAffliction>
+
+  <!-- Insatiable Hunger -->
+  <afflictionname.charybdisJawNerf>Insatiable Hunger</afflictionname.charybdisJawNerf>
+  <afflictiondescription.charybdisJawNerf>PLACEHOLDER</afflictiondescription.charybdisJawNerf>
+
+  <!-- Latcher Heart -->
+  <afflictionname.latcherHeartAffliction>Latcher Heart</afflictionname.latcherHeartAffliction>
+  <afflictiondescription.latcherHeartAffliction>PLACEHOLDER</afflictiondescription.latcherHeartAffliction>
+
+  <!-- Latcher Tongue -->
+  <afflictionname.latcherTongueAffliction>Latcher Tongue</afflictionname.latcherTongueAffliction>
+  <afflictiondescription.latcherTongueAffliction>PLACEHOLDER</afflictiondescription.latcherTongueAffliction>
+
+  <!-- Endworm Skin -->
+  <!-- TODO: Fold these -->
+  <afflictionname.endwormTorsoAffliction>Endworm Skin</afflictionname.endwormTorsoAffliction>
+  <afflictiondescription.endwormTorsoAffliction>PLACEHOLDER</afflictiondescription.endwormTorsoAffliction>
+
+  <afflictionname.endwormLArmAffliction>Endworm Skin</afflictionname.endwormLArmAffliction>
+  <afflictiondescription.endwormLArmAffliction>PLACEHOLDER</afflictiondescription.endwormLArmAffliction>
+
+  <afflictionname.endwormRArmAffliction>Endworm Skin</afflictionname.endwormRArmAffliction>
+  <afflictiondescription.endwormRArmAffliction>PLACEHOLDER</afflictiondescription.endwormRArmAffliction>
+
+  <afflictionname.endwormLLegAffliction>Endworm Skin</afflictionname.endwormLLegAffliction>
+  <afflictiondescription.endwormLLegAffliction>PLACEHOLDER</afflictiondescription.endwormLLegAffliction>
+
+  <afflictionname.endwormRLegAffliction>Endworm Skin</afflictionname.endwormRLegAffliction>
+  <afflictiondescription.endwormRLegAffliction>PLACEHOLDER</afflictiondescription.endwormRLegAffliction>
+
+  <!-- Orangeboy Tail -->
+  <afflictionname.orangeboyTailAffliction>Orangeboy Tail</afflictionname.orangeboyTailAffliction>
+  <afflictiondescription.orangeboyTailAffliction>PLACEHOLDER</afflictiondescription.orangeboyTailAffliction>
 
   <!-- ================================================= TALENTS ================================================= -->
   <!-- Grafting Science -->
