@@ -7,9 +7,14 @@ NTCS.Config = {
 
     ---@public
     ---@static
-    ---@overload fun(Expansion : table) : nil
-    ---@param Expansion ConfigExpansion
+    ---@param Expansion ConfigExpansion|table
     ---@return nil
     AddConfigOptions = function(Expansion) end,
+
+    ---@public
+    ---@static
+    ---@param EntryName string
+    ---@return boolean|number|unknown
+    Get = function(EntryName) end,
 
 }

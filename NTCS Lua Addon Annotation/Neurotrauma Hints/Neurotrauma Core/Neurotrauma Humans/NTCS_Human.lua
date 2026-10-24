@@ -27,7 +27,7 @@ NTCS.NTHuman = {
 
     ---@public
     ---@type Character
-    Human = {},
+    Human = nil,
 
     ---@public
     ---@type CharacterTags
@@ -89,91 +89,76 @@ NTCS.NTHuman = {
     GetAfflictionLimb = function(self, AfflictionID, Limb) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string) : number
     ---@param AfflictionID string
-    ---@param DefaultValue number
+    ---@param DefaultValue number?
     ---@return number
     GetAfflictionStrength = function(self, AfflictionID, DefaultValue) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType) : number
     ---@param AfflictionID string
     ---@param Limb LimbType
-    ---@param DefaultValue number
+    ---@param DefaultValue number?
     ---@return number
     GetAfflictionStrengthLimb = function(self, AfflictionID, Limb, DefaultValue) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string,Strength : number) : nil
-    ---@overload fun(self, AfflictionID : string,Strength : number,Aggressor : NTHuman) : nil
     ---@param AfflictionID string
     ---@param Strength number
-    ---@param Aggressor Character
+    ---@param Aggressor Character|NTHuman|nil
     ---@return nil
     AddAffliction = function(self, AfflictionID, Strength, Aggressor) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType, Strength : number) : nil
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType, Strength : number,Aggressor : NTHuman) : nil
     ---@param AfflictionID string
     ---@param Limb LimbType
     ---@param Strength number
-    ---@param Aggressor Character
+    ---@param Aggressor Character|NTHuman|nil
     ---@return nil
     AddAfflictionLimb = function(self, AfflictionID, Limb, Strength, Aggressor) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Strength : number, Aggressor : NTHuman) : nil
-    ---@overload fun(self, AfflictionID : string, Strength : number) : nil
     ---@param AfflictionID string
     ---@param Strength number
-    ---@param Aggressor Character
+    ---@param Aggressor Character|NTHuman|nil
     ---@return nil
     AddAfflictionResisted = function(self, AfflictionID, Strength, Aggressor) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Strength : number, Aggressor : NTHuman) : nil
-    ---@overload fun(self, AfflictionID : string, Strength : number) : nil
     ---@param AfflictionID string
     ---@param Strength number
-    ---@param Aggressor Character
+    ---@param Aggressor Character|NTHuman|nil
     ---@return nil
     SetAffliction = function(self, AfflictionID, Strength, Aggressor) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType, Strength : number, Aggressor : NTHuman) : nil
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType, Strength : number) : nil
     ---@param AfflictionID string
     ---@param Limb LimbType
     ---@param Strength number
-    ---@param Aggressor Character
+    ---@param Aggressor Character|NTHuman|nil
     ---@return nil
     SetAfflictionLimb = function(self, AfflictionID, Limb, Strength, Aggressor) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string) : boolean
     ---@param AfflictionID string
-    ---@param MinStrength number
+    ---@param MinStrength number?
     ---@return boolean
     HasAffliction = function(self, AfflictionID, MinStrength) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType) : boolean
     ---@param AfflictionID string
     ---@param Limb LimbType
-    ---@param MinStrength number
+    ---@param MinStrength number?
     ---@return boolean
     HasAfflictionLimb = function(self, AfflictionID, Limb, MinStrength) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : string, Limb : LimbType) : boolean
     ---@param AfflictionID string
     ---@param Limb LimbType
-    ---@param MinStrength number
+    ---@param MinStrength number?
     ---@return boolean
     HasAfflictionExtremity = function(self, AfflictionID, Limb, MinStrength) end,
 
-    ---@public
+    ---@private
     ---@param DeltaTime number
     ---@return nil
     PreHook = function(self, DeltaTime) end,
@@ -189,30 +174,27 @@ NTCS.NTHuman = {
     ---@return nil
     UpdateAfflictions = function(self, AfflictionList, DeltaTime) end,
 
-    ---@public
+    ---@private
     ---@param DeltaTime number
     ---@return nil
     PostHook = function(self, DeltaTime) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : NTAfflictionPrefab, Duration : int, Limb : LimbType) : boolean
-    ---@param AfflictionID string
+    ---@param AfflictionID string|NTAfflictionPrefab
     ---@param Duration integer
-    ---@param Limb LimbType
+    ---@param Limb LimbType?
     ---@return nil
     SetSymptomTrue = function(self, AfflictionID, Duration, Limb) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : NTAfflictionPrefab, Limb : LimbType) : boolean
-    ---@param AfflictionID string
-    ---@param Limb LimbType
+    ---@param AfflictionID string|NTAfflictionPrefab
+    ---@param Limb LimbType?
     ---@return nil
     SetSymptomFalse = function(self, AfflictionID, Limb) end,
 
     ---@public
-    ---@overload fun(self, AfflictionID : NTAfflictionPrefab, Limb : LimbType) : boolean
-    ---@param AfflictionID string
-    ---@param Limb LimbType
+    ---@param AfflictionID string|NTAfflictionPrefab
+    ---@param Limb LimbType?
     ---@return nil
     HasSymptom = function(self, AfflictionID, Limb) end,
     

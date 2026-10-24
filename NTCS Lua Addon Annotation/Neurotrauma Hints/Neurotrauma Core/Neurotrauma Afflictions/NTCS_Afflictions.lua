@@ -2,8 +2,7 @@
 ---Namespace: Neurotrauma.NTAfflictions
 
 ---@public
----@enum
----@class AfflictionPriority
+---@enum AfflictionPriority
 NTCS.AfflictionPriority = {LOW = 1,MEDIUM = 2,HIGH = 3}
 
 ---@public
@@ -13,6 +12,8 @@ NTCS.Afflictions.NTAfflictionsPrefabRegistry = {}
 ---@public
 ---@type Dictionary<string,string>
 NTCS.Afflictions.NTAfflictionsPrefabModDefinerRegistry = {}
+
+--{ [string]: VALUE_TYPE }
 
 ---@public
 ---@type Dictionary<[string,string],NTAfflictionPrefab>

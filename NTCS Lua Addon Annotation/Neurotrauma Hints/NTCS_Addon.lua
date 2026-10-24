@@ -3,16 +3,15 @@
 
 ---@public
 ---@class NTAddon
-NTCS.NTAddon = {}
+NTCS.Addon = {}
 
 ---@public
 ---@class NTInfo
-NTCS.NTInfo = {
+NTCS.Info = {
 
     ---@public
     ---@static
-    ---@overload fun(Addon : table) : nil
-    ---@param Addon NTAddon
+    ---@param Addon NTAddon|table
     ---@return nil
     RegisterAddon = function(Addon) end,
 
