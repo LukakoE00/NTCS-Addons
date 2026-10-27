@@ -17,7 +17,7 @@
 
     <Effect minstrength="0" maxstrength="2">
         <StatusEffect target="Character">
-        <Conditional huskHeartAffliction="lt 5" />
+        <Conditional grafting_HuskHeart="lt 5" />
         <TriggerAnimation Type="Crouch" path="%ModDir:3744761298%\Characters\Human\Animations\HumanProneCrouch.xml" priority="10" ExpectedSpecies="Human" />
         <TriggerAnimation Type="Walk" path="%ModDir:3744761298%\Characters\Human\Animations\HumanProneWalkProperBowthWays.xml" priority="10" ExpectedSpecies="Human" />
         <TriggerAnimation Type="Run" path="%ModDir:3744761298%\Characters\Human\Animations\HumanProneRunProperBowthWays.xml" priority="10" ExpectedSpecies="Human" />

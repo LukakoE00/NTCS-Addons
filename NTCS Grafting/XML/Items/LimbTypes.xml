@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
     <!-- Crawler Tail -->
-    <Item name="" description="" identifier="crawlerTailAegis" scale="0.2" variantof="Cells_BoneThresher">
+    <Item name="" description="" identifier="grafting_CrawlerTail" scale="0.2" variantof="Cells_BoneThresher">
     <Price baseprice="300" soldbydefault="false" />
 
     <Deconstruct time="10">

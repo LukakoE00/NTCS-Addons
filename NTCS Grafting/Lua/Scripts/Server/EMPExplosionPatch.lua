@@ -16,7 +16,7 @@ function (instance, ptable)
         local distance_sq = Vector2.DistanceSquared(character.worldPosition, explode_worldposition)
         if distance_sq < explode_range_sq then
           local affliction_strength = 2 * explode_empstrength
-          if HF.HasAfflictionLimb(character,"fractalGuardianEyesAffliction",LimbType.Head,90) then
+          if HF.HasAfflictionLimb(character,"grafting_FractalGuardianEyes",LimbType.Head,90) then
             HF.AddAffliction(character,"empAegis",affliction_strength,explode_attacker)
           end
 

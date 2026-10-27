@@ -34,11 +34,11 @@
           <Affliction identifier="nausea" amount="5" />
         </StatusEffect>
         <StatusEffect type="OnSuccess" target="UseTarget" duration="20" interval="1" disabledeltatime="true">
-          <Conditional mudraptorLungsAffliction="gt 1" />
+          <Conditional grafting_MudraptorLungs="gt 1" />
           <Affliction identifier="lungdamage" amount="0.1" />
         </StatusEffect>
         <StatusEffect type="OnSuccess" target="UseTarget" duration="20" interval="1" disabledeltatime="true">
-          <Conditional mudraptorHeadAffliction="gt 1" />
+          <Conditional grafting_MudraptorHead="gt 1" />
           <Affliction identifier="neurotrauma" amount="0.1" />
         </StatusEffect>
         <StatusEffect type="OnSuccess" target="UseTarget" duration="20">

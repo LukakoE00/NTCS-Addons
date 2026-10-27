@@ -9,11 +9,11 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="1.1" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="gunshotwound,lacerations,blunttrauma" AfflictionTypes="" />
     <!--<damagemodifier damagemultiplier="1" armorsector="0,360" deflectprojectiles="False" afflictionidentifiers="bleeding,bitewounds" damagesound="" afflictiontypes="" probabilitymultiplier="1" damageparticle="" />-->
     <conditionalsprite exclusive="True">
-      <conditional hammerheadTorsoAfflictionSprite="gt 1" />
+      <conditional grafting_HammerheadTorsoSprite="gt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="160,755,112,192" origin="0.5,0.5" depth="0.06" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True">
-      <conditional endwormTorsoAfflictionSprite="gt 1" />
+      <conditional grafting_EndwormTorsoSprite="gt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="160,1019,112,192" origin="0.5,0.5" depth="0.06" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
@@ -32,7 +32,7 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="190,510,50,10" depth="0.05" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional mudraptorHeadAfflictionSprite="gt 0" />
+      <conditional grafting_MudraptorHeadSprite="gt 0" />
       <conditional sh_amputation="lt 1" />
       <conditional th_amputation="lt 1" />
       <sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorHead.png" sourcerect="0,0,198,141" depth="0.05" origin="0.38,0.45" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -49,7 +49,7 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,512,64,96" origin="0.5,0.5" depth="0.02" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
-      <conditional endwormRArmAffliction="gt 90" />
+      <conditional grafting_EndwormRightArm="gt 90" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,1025,64,96" origin="0.5,0.5" depth="0.02" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
@@ -61,7 +61,7 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tra_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -70,21 +70,21 @@
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sra_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tra_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,927,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sra_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,927,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormRArmAffliction="gt 90" />
+      <conditional grafting_EndwormRightArm="gt 90" />
       <conditional tra_amputation="lt 1" />
       <conditional sra_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,1190,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -101,7 +101,7 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,512,64,96" origin="0.5,0.5" depth="0.14" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
-      <conditional endwormLArmAffliction="gt 90" />
+      <conditional grafting_EndwormLeftArm="gt 90" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,1025,64,96" origin="0.5,0.5" depth="0.14" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
@@ -113,7 +113,7 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tla_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,420,64,48" origin="0.44,0.4" depth="0.16" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -122,21 +122,21 @@
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sla_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tla_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,927,64,48" origin="0.44,0.4" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sla_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,927,64,48" origin="0.44,0.4" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormLArmAffliction="gt 90" />
+      <conditional grafting_EndwormLeftArm="gt 90" />
       <conditional sla_amputation="lt 1" />
       <conditional tla_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,1190,64,48" origin="0.44,0.4" depth="0.016" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -153,7 +153,7 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,512,80,128" origin="0.5,0.5" depth="0.13" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
-      <conditional endwormLLegAffliction="gt 90" />
+      <conditional grafting_EndwormLeftLeg="gt 90" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,1030,80,128" origin="0.5,0.5" depth="0.13" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
@@ -165,12 +165,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tll_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,378,80,128" origin="0.5,0.5" depth="0.2" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sll_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.2" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -178,17 +178,17 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,628,80,128" origin="0.5,0.5" depth="0.2" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tll_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,891,80,128" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sll_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,891,80,128" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormLLegAffliction="gt 90" />
+      <conditional grafting_EndwormLeftLeg="gt 90" />
       <conditional sll_ampuation="lt 1" />
       <conditional tll_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="80,1155,80,128" origin="0.5,0.5" depth="0.2" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -203,12 +203,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tll_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,420,64,48" origin="0.5,0.65" depth="0.3" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sll_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.3" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -216,17 +216,17 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,708,64,48" origin="0.48,0.55" depth="0.3" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tll_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,970,64,48" origin="0.48,0.55" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sll_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,970,64,48" origin="0.48,0.55" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormLLegAffliction="gt 90" />
+      <conditional grafting_EndwormLeftLeg="gt 90" />
       <conditional sll_amputation="lt 1" />
       <conditional tll_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,1235,64,48" origin="0.48,0.55" depth="0.3" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -239,7 +239,7 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.7" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="gunshotwound,lacerations,blunttrauma,bitewounds" AfflictionTypes="" />
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="False">
-      <conditional endwormRLegAffliction="gt 90" />
+      <conditional grafting_EndwormRightLeg="gt 90" />
       <sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorLegAppendages.png" sourcerect="196,0,100,110" origin="0.5,0.5" depth="0.13" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
@@ -251,12 +251,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional trl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="0,378,80,128" origin="0.5,0.5" depth="0.121" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional srl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.121" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -264,12 +264,12 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="0,628,80,128" origin="0.5,0.5" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional srl_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="0,891,80,128" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormRLegAffliction="gt 90" />
+      <conditional grafting_EndwormRightLeg="gt 90" />
       <conditional srl_amputation="lt 1" />
       <conditional trl_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="196,113,80,87" origin="0.5,0.5" depth="0.121" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -284,12 +284,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional trl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,420,64,48" origin="0.5,0.65" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional srl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -297,12 +297,12 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,708,64,48" origin="0.48,0.55" depth="0.0123" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional srl_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,974,64,48" origin="0.48,0.55" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormRLegAffliction="gt 90" />
+      <conditional grafting_EndwormRightLeg="gt 90" />
       <conditional srl_amputation="lt 1" />
       <conditional trl_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="196,269,98,22" origin="0.48,0.55" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -323,12 +323,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tla_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,346,64,64" origin="0.5,0.5" depth="0.16" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sla_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -336,17 +336,17 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,596,64,64" origin="0.5,0.5" depth="0.016" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tla_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,859,64,64" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sla_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,859,64,64" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormLArmAffliction="gt 90" />
+      <conditional grafting_EndwormLeftArm="gt 90" />
       <conditional tla_amputation="lt 1" />
       <conditional sla_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,1123,64,64" origin="0.5,0.5" depth="0.016" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -360,7 +360,7 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional tra_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,346,64,64" origin="0.5,0.5" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -369,21 +369,21 @@
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional sra_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.5,0.5" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional sra_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,859,64,64" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional tra_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,859,64,64" origin="0.5,0.5" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormRArmAffliction="gt 90" />
+      <conditional grafting_EndwormRightArm="gt 90" />
       <conditional tra_amputation="lt 1" />
       <conditional sra_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,1123,64,64" origin="0.5,0.5" depth="0.015" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
@@ -398,12 +398,12 @@
     <damagemodifier DamageSound="" DamageParticle="" DamageMultiplier="0.75" ProbabilityMultiplier="1" ArmorSector="0,360" DeflectProjectiles="False" AfflictionIdentifiers="bleeding" AfflictionTypes="" />
     <conditionalsprite exclusive="True" comparison="and">
       <conditional trl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="336,420,64,48" origin="0.5,0.65" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="True" comparison="and">
       <conditional srl_amputation="gt 0" />
-      <conditional huskHeartAffliction="lt 1" />
+      <conditional grafting_HuskHeart="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,420,64,48" origin="0.44,0.4" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False">
@@ -411,12 +411,12 @@
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,708,64,48" origin="0.48,0.55" depth="0.0123" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional huskHeartAffliction="gt 1" />
+      <conditional grafting_HuskHeart="gt 1" />
       <conditional srl_amputation="gt 0" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="272,974,64,48" origin="0.48,0.55" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
     <conditionalsprite exclusive="False" comparison="and">
-      <conditional endwormRLegAffliction="gt 90" />
+      <conditional grafting_EndwormRightLeg="gt 90" />
       <conditional srl_amputation="lt 1" />
       <conditional trl_amputation="lt 1" />
       <sprite texture="%ModDir%/humanTransformations/Human/Images/Human_[GENDER].png" sourcerect="196,209,100,46" origin="0.48,0.55" depth="0.122" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />

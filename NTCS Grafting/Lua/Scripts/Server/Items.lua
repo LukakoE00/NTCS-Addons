@@ -44,11 +44,11 @@ local function organIdentifier(targetCharacter, usingCharacter, organ)
   if (organ == "Lungs") then
     --Lungs, Grafting Removal
     --Current List: crawlerLungs, mudraptorLungs
-    if (HF.HasAffliction(targetCharacter, "crawlerLungsAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "crawlerLungsAffliction", 0, usingCharacter)
+    if (HF.HasAffliction(targetCharacter, "grafting_CrawlerLungs", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 0, usingCharacter)
       return "crawlerLungsAegis"
-    elseif (HF.HasAffliction(targetCharacter, "mudraptorLungsAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "mudraptorLungsAffliction", 0, usingCharacter)
+    elseif (HF.HasAffliction(targetCharacter, "grafting_MudraptorLungs", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 0, usingCharacter)
       return "mudraptorLungsAegis"
     else
       if NTC.HasTag(usingCharacter, "organssellforfull") then
@@ -60,11 +60,11 @@ local function organIdentifier(targetCharacter, usingCharacter, organ)
   elseif (organ == "Heart") then
     --Heart, Grafting Removal
     --Current List: huskHeart, latcherHeart
-    if (HF.HasAffliction(targetCharacter, "huskHeartAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "huskHeartAffliction", 0, usingCharacter)
+    if (HF.HasAffliction(targetCharacter, "grafting_HuskHeart", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 0, usingCharacter)
       return "huskHeartAegis"
-    elseif (HF.HasAffliction(targetCharacter, "latcherHeartAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "latcherHeartAffliction", 0, usingCharacter)
+    elseif (HF.HasAffliction(targetCharacter, "grafting_LatcherHeart", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 0, usingCharacter)
       return "latcherHeartAegis"
     else
 			if NTC.HasTag(usingCharacter, "organssellforfull") then
@@ -76,14 +76,14 @@ local function organIdentifier(targetCharacter, usingCharacter, organ)
   elseif (organ == "Liver") then
     --Livers, Grafting Removal
     --Current List: mantisLiver, broodmotherLiver, viperlingLiver
-    if (HF.HasAffliction(targetCharacter, "mantisLiverAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "mantisLiverAffliction", 0, usingCharacter)
+    if (HF.HasAffliction(targetCharacter, "grafting_MantisLiver", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 0, usingCharacter)
       return "mantisLiverAegis"
-    elseif (HF.HasAffliction(targetCharacter, "broodmotherLiverAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "broodmotherLiverAffliction", 0)
+    elseif (HF.HasAffliction(targetCharacter, "grafting_BroodmotherLiver", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 0)
       return "broodmotherLiverAegis"
-    elseif (HF.HasAffliction(targetCharacter, "viperlingLiverAffliction", 1)) then
-      HF.SetAffliction(targetCharacter, "viperlingLiverAffliction", 0, usingCharacter)
+    elseif (HF.HasAffliction(targetCharacter, "grafting_ViperlingLiver", 1)) then
+      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 0, usingCharacter)
       return "viperlingLiverAegis"
     else
       if NTC.HasTag(usingCharacter, "organssellforfull") then
@@ -135,9 +135,9 @@ NTGraft.ItemMethods.dnasplicer = function(item, usingCharacter, targetCharacter,
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
   local strength = 100
-  if (HF.HasAfflictionLimb(targetCharacter, "hammerheadTorsoAffliction", limbtype, 1)) then
+  if (HF.HasAfflictionLimb(targetCharacter, "grafting_HammerheadTorso", limbtype, 1)) then
     strength = 66
-  elseif (HF.HasAfflictionLimb(targetCharacter, "endwormTorsoAffliction",LimbType.Torso,1)) and limbtype ~= LimbType.Head then
+  elseif (HF.HasAfflictionLimb(targetCharacter, "grafting_EndwormTorso",LimbType.Torso,1)) and limbtype ~= LimbType.Head then
     strength = 33
   end
 
@@ -171,20 +171,20 @@ NTGraft.ItemMethods.alienscalpel = function(item, usingCharacter, targetCharacte
   --Current List: CrawlerTail, HuskArm, TigerThresherTail, HammerheadLimbs, OrangeboyTail
   if(limbtype == LimbType.Torso) then
     if (medicalLevel >= 30) then
-      if (HF.HasAffliction(targetCharacter,"orangeboyTailAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedSkin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",0,usingCharacter,0)
+      if (HF.HasAffliction(targetCharacter,"grafting_OrangeboyTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedSkin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"orangeboyTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"crawlerTailAegis",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"crawlerTailAegis",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"crawlerTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"tigerThresherTailAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",0,usingCharacter,0)
+      elseif(HF.HasAffliction(targetCharacter,"grafting_CrawlerTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",0,usingCharacter,0)
+        HF.GiveItem(usingCharacter,"grafting_CrawlerTail")
+      elseif(HF.HasAffliction(targetCharacter,"grafting_TigerThresherTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"tigerThresherTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"huskArmAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"huskArmAffliction",0,usingCharacter,0)
+      elseif(HF.HasAffliction(targetCharacter,"grafting_HuskArm",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_HuskArm",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"huskArmAegis")
-      elseif(HF.HasAffliction(targetCharacter,"hammerheadLimbsAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",0,usingCharacter,0)
+      elseif(HF.HasAffliction(targetCharacter,"grafting_HammerheadLimbs",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"hammerheadLimbsAegis")
       end
     else
@@ -192,20 +192,20 @@ NTGraft.ItemMethods.alienscalpel = function(item, usingCharacter, targetCharacte
       local skillcheck = math.random(0, 30)
       if (skillcheck > medicalLevel) then
         HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
-      elseif (HF.HasAffliction(targetCharacter,"orangeboyTailAffliction",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",0,usingCharacter,0)
+      elseif (HF.HasAffliction(targetCharacter,"grafting_OrangeboyTail",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",0,usingCharacter,0)
         HF.GiveItem(targetCharacter,"orangeboyTailAegis")
-      elseif (HF.HasAffliction(targetCharacter,"crawlerTailAegis",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"crawlerTailAegis",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"crawlerTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"tigerThresherTailAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",0,usingCharacter,0)
+      elseif (HF.HasAffliction(targetCharacter,"grafting_CrawlerTail",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",0,usingCharacter,0)
+        HF.GiveItem(usingCharacter,"grafting_CrawlerTail")
+      elseif(HF.HasAffliction(targetCharacter,"grafting_TigerThresherTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"tigerThresherTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"huskArmAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"huskArmAffliction",0,usingCharacter,0)
+      elseif(HF.HasAffliction(targetCharacter,"grafting_HuskArm",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_HuskArm",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"huskArmAegis")
-      elseif(HF.HasAffliction(targetCharacter,"hammerheadLimbsAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",0,usingCharacter,0)
+      elseif(HF.HasAffliction(targetCharacter,"grafting_HammerheadLimbs",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"hammerheadLimbsAegis")
       end
     end
@@ -213,8 +213,8 @@ NTGraft.ItemMethods.alienscalpel = function(item, usingCharacter, targetCharacte
   --Current List: LatcherTongue 
   elseif(limbtype == LimbType.Head) then
     if (medicalLevel >= 30) then
-      if (HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"latcherTongueAffliction",0,usingCharacter,0)
+      if (HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"latcherTongueAegis")
       end
     else
@@ -222,8 +222,8 @@ NTGraft.ItemMethods.alienscalpel = function(item, usingCharacter, targetCharacte
       local skillcheck = math.random(0,30)
       if (skillcheck > medicalLevel) then
         HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 5, usingCharacter)
-      elseif (HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"latcherTongueAffliction",0,usingCharacter,0)
+      elseif (HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
+        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",0,usingCharacter,0)
         HF.GiveItem(usingCharacter,"latcherTongueAegis")
       end
     end
@@ -1088,8 +1088,8 @@ NT.ItemMethods.emptybloodpack = function(item, usingCharacter, targetCharacter, 
 			acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
 			alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
 			sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-      paralysis = HF.GetAfflictionStrength(targetCharacter, "mantisLiverAffliction"),
-      acidburn = HF.GetAfflictionStrength(targetCharacter, "broodmotherLiverAffliction"),
+      paralysis = HF.GetAfflictionStrength(targetCharacter, "grafting_MantisLiver"),
+      acidburn = HF.GetAfflictionStrength(targetCharacter, "grafting_BroodmotherLiver"),
 		}
 
 		-- move towards isotonic
@@ -1215,25 +1215,25 @@ end
 
 -- CRAWLER TRANSPLANTS
 
-NTGraft.ItemMethods.crawlerTailAegis = function(item, usingCharacter, targetCharacter, limb)
+NTGraft.ItemMethods.grafting_CrawlerTail = function(item, usingCharacter, targetCharacter, limb)
   local limbtype = HF.NormalizeLimbType(limb.type)
 
   if limbtype ~= LimbType.Torso then return end
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"crawlerTailAegis",limbtype,1)) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
     return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"tigerThresherTailAffliction",limbtype,1)) then
+  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
     return
   end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"crawlerTailAegis",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",45,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"crawlerTailAegis",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1243,11 +1243,11 @@ NTGraft.ItemMethods.crawlerTailAegis = function(item, usingCharacter, targetChar
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"crawlerTailAegis",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"crawlerTailAegis",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -1279,7 +1279,7 @@ NTGraft.ItemStartsWithMethods.crawlerLungsAegis = function(item, usingCharacter,
 			HF.AddAffliction(targetCharacter, "lungdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "crawlerLungsAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 45)
       else
@@ -1293,7 +1293,7 @@ NTGraft.ItemStartsWithMethods.crawlerLungsAegis = function(item, usingCharacter,
 			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
 			HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
       
-      HF.SetAffliction(targetCharacter, "crawlerLungsAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 45)
       else
@@ -1375,16 +1375,16 @@ NTGraft.ItemMethods.fractalGuardianEyeAegis = function(item, usingCharacter, tar
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,1)then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,1)then
     return end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1394,11 +1394,11 @@ NTGraft.ItemMethods.fractalGuardianEyeAegis = function(item, usingCharacter, tar
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -1421,15 +1421,15 @@ NTGraft.ItemMethods.huskArmAegis = function(item, usingCharacter, targetCharacte
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"huskArmAffliction",limbtype,1)) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_HuskArm",limbtype,1)) then
     return end
   if(medicalLevel >= 90) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"huskArmAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"huskArmAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1439,11 +1439,11 @@ NTGraft.ItemMethods.huskArmAegis = function(item, usingCharacter, targetCharacte
     local skillcheck = math.random(0, 90)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"huskArmAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"huskArmAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -1477,7 +1477,7 @@ NTGraft.ItemStartsWithMethods.huskHeartAegis = function(item, usingCharacter, ta
 			HF.AddAffliction(targetCharacter, "heartdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "huskHeartAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
       else
@@ -1491,7 +1491,7 @@ NTGraft.ItemStartsWithMethods.huskHeartAegis = function(item, usingCharacter, ta
 			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
 			HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
 
-      HF.SetAffliction(targetCharacter, "huskHeartAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
       else
@@ -1580,7 +1580,7 @@ NTGraft.ItemStartsWithMethods.mantisLiverAegis = function(item, usingCharacter, 
 			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "mantisLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -1594,7 +1594,7 @@ NTGraft.ItemStartsWithMethods.mantisLiverAegis = function(item, usingCharacter, 
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
 
-      HF.SetAffliction(targetCharacter, "mantisLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -1683,7 +1683,7 @@ NTGraft.ItemStartsWithMethods.mudraptorLungsAegis = function(item, usingCharacte
 			HF.AddAffliction(targetCharacter, "lungdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "mudraptorLungsAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50)
       else
@@ -1697,7 +1697,7 @@ NTGraft.ItemStartsWithMethods.mudraptorLungsAegis = function(item, usingCharacte
 			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
 			HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
       
-      HF.SetAffliction(targetCharacter, "mudraptorLungsAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50)
       else
@@ -1773,15 +1773,15 @@ NTGraft.ItemMethods.mudraptorCellsAegis = function(item, usingCharacter, targetC
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,1)) or HF.HasAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,1)) or HF.HasAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,1) then
     return end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1791,11 +1791,11 @@ NTGraft.ItemMethods.mudraptorCellsAegis = function(item, usingCharacter, targetC
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -1831,7 +1831,7 @@ NTGraft.ItemStartsWithMethods.broodmotherLiverAegis = function(item, usingCharac
 			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "broodmotherLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -1845,7 +1845,7 @@ NTGraft.ItemStartsWithMethods.broodmotherLiverAegis = function(item, usingCharac
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
 
-      HF.SetAffliction(targetCharacter, "broodmotherLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -1922,18 +1922,18 @@ NTGraft.ItemMethods.tigerThresherCellsAegis = function(item, usingCharacter, tar
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,1) 
-  or HF.HasAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1) 
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
+  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
     return end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1943,11 +1943,11 @@ NTGraft.ItemMethods.tigerThresherCellsAegis = function(item, usingCharacter, tar
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -1966,18 +1966,18 @@ NTGraft.ItemMethods.tigerThresherTailAegis = function(item, usingCharacter, targ
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"crawlerTailAegis",limbtype,1)) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
     return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"tigerThresherTailAffliction",limbtype,1)) then
+  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
     return
   end
   if(medicalLevel >= 75) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -1987,11 +1987,11 @@ NTGraft.ItemMethods.tigerThresherTailAegis = function(item, usingCharacter, targ
     local skillcheck = math.random(0, 75)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"tigerThresherTailAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2018,18 +2018,18 @@ NTGraft.ItemMethods.boneThresherCellsAegis = function(item, usingCharacter, targ
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,1)
-  or HF.HasAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1)
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
+  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
     return end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2039,11 +2039,11 @@ NTGraft.ItemMethods.boneThresherCellsAegis = function(item, usingCharacter, targ
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2071,15 +2071,15 @@ NTGraft.ItemMethods.hammerheadCellsAegis = function(item, usingCharacter, target
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
   if(HF.HasAfflictionLimb(targetCharacter,"hammerTorsoAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,1) then
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,1) then
     return end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"hammerheadTorsoAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"hammerheadTorsoAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2089,11 +2089,11 @@ NTGraft.ItemMethods.hammerheadCellsAegis = function(item, usingCharacter, target
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"hammerheadTorsoAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"hammerheadTorsoAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2114,11 +2114,11 @@ NTGraft.ItemMethods.hammerheadLimbsAegis = function(item, usingCharacter, target
 
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2128,11 +2128,11 @@ NTGraft.ItemMethods.hammerheadLimbsAegis = function(item, usingCharacter, target
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"hammerheadLimbsAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2155,17 +2155,17 @@ NTGraft.ItemMethods.molochCellsAegis = function(item, usingCharacter, targetChar
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"mudraptorHeadAffliction",limbtype,1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,1) then
     return
   end
 
-  if(HF.HasAffliction(targetCharacter,"molochCracked",95)) then
+  if(HF.HasAffliction(targetCharacter,"grafting_MolochHeadCracked",95)) then
     if (medicalLevel >= 70) then
       if(HF.HasAffliction(targetCharacter,"retractedskin", 1)) then
-        HF.SetAffliction(targetCharacter, "molochCracked", 20, usingCharacter)
-        HF.SetAffliction(targetCharacter, "molochCrackedSprite", 0, usingCharacter)
-        HF.AddAfflictionLimb(targetCharacter, "molochHeadAffliction",limbtype, 10, usingCharacter)
+        HF.SetAffliction(targetCharacter, "grafting_MolochHeadCracked", 20, usingCharacter)
+        HF.SetAffliction(targetCharacter, "grafting_MolochHeadCrackedSprite", 0, usingCharacter)
+        HF.AddAfflictionLimb(targetCharacter, "grafting_MolochHead",limbtype, 10, usingCharacter)
         HF.RemoveItem(item)
       end
     else
@@ -2173,9 +2173,9 @@ NTGraft.ItemMethods.molochCellsAegis = function(item, usingCharacter, targetChar
       local skillcheck = math.random(0, 70)
       if (medicalLevel >= skillcheck) then
         if(HF.HasAffliction(targetCharacter,"retractedskin", 1)) then
-          HF.SetAffliction(targetCharacter, "molochCracked", 20, usingCharacter)
-          HF.SetAffliction(targetCharacter, "molochCrackedSprite", 0, usingCharacter)
-          HF.AddAfflictionLimb(targetCharacter, "molochHeadAffliction",limbtype, 10, usingCharacter)
+          HF.SetAffliction(targetCharacter, "grafting_MolochHeadCracked", 20, usingCharacter)
+          HF.SetAffliction(targetCharacter, "grafting_MolochHeadCrackedSprite", 0, usingCharacter)
+          HF.AddAfflictionLimb(targetCharacter, "grafting_MolochHead",limbtype, 10, usingCharacter)
           HF.RemoveItem(item)
         end
       else
@@ -2186,11 +2186,11 @@ NTGraft.ItemMethods.molochCellsAegis = function(item, usingCharacter, targetChar
   end
   if(medicalLevel >= 70) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2200,11 +2200,11 @@ NTGraft.ItemMethods.molochCellsAegis = function(item, usingCharacter, targetChar
     local skillcheck = math.random(0, 70)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"molochHeadAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2239,7 +2239,7 @@ NTGraft.ItemStartsWithMethods.viperlingLiverAegis = function(item, usingCharacte
 			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "viperlingLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -2253,7 +2253,7 @@ NTGraft.ItemStartsWithMethods.viperlingLiverAegis = function(item, usingCharacte
 			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
 
-      HF.SetAffliction(targetCharacter, "viperlingLiverAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
       else
@@ -2330,16 +2330,16 @@ NTGraft.ItemMethods.watcherEyeAegis = function(item, usingCharacter, targetChara
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"fractalGuardianEyesAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,1) then
     return end
   if(medicalLevel >= 80) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2349,11 +2349,11 @@ NTGraft.ItemMethods.watcherEyeAegis = function(item, usingCharacter, targetChara
     local skillcheck = math.random(0, 80)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"watcherEyesAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2378,18 +2378,18 @@ NTGraft.ItemMethods.charybdisCellsAegis = function(item, usingCharacter, targetC
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,1)
-  or HF.HasAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1)
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1)
+  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
     return end
   if(medicalLevel >= 90) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2399,11 +2399,11 @@ NTGraft.ItemMethods.charybdisCellsAegis = function(item, usingCharacter, targetC
     local skillcheck = math.random(0, 90)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2440,7 +2440,7 @@ NTGraft.ItemStartsWithMethods.latcherHeartAegis = function(item, usingCharacter,
 			HF.AddAffliction(targetCharacter, "heartdamage", -workcondition, usingCharacter)
 			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
 			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "latcherHeartAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
       else
@@ -2454,7 +2454,7 @@ NTGraft.ItemStartsWithMethods.latcherHeartAegis = function(item, usingCharacter,
 			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
 			HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
 
-      HF.SetAffliction(targetCharacter, "latcherHeartAffliction", 100, usingCharacter)
+      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 100, usingCharacter)
       if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
         HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
       else
@@ -2528,18 +2528,18 @@ NTGraft.ItemMethods.latcherTongueAegis = function(item, usingCharacter, targetCh
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"tigerThresherJawAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"boneThresherJawAffliction",limbtype,1) 
-  or HF.HasAfflictionLimb(targetCharacter,"charybdisJawAffliction",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"latcherTongueAffliction",1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1) 
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
+  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
     return end
   if(medicalLevel >= 90) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"latcherTongueAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"latcherTongueAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2549,11 +2549,11 @@ NTGraft.ItemMethods.latcherTongueAegis = function(item, usingCharacter, targetCh
     local skillcheck = math.random(0, 90)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"latcherTongueAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"latcherTongueAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2578,16 +2578,16 @@ NTGraft.ItemMethods.endwormCellsAegis = function(item, usingCharacter, targetCha
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"hammerheadTorsoAffliction",limbtype,1) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,1))
+  or HF.HasAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,1) then
     return end
   if(medicalLevel >= 90) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,10,usingCharacter,0)
+      HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2597,11 +2597,11 @@ NTGraft.ItemMethods.endwormCellsAegis = function(item, usingCharacter, targetCha
     local skillcheck = math.random(0, 90)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"endwormTorsoAffliction",limbtype,10,usingCharacter,0)
+        HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)
@@ -2622,20 +2622,20 @@ NTGraft.ItemMethods.orangeboyTailAegis = function(item, usingCharacter, targetCh
 
   local medicalLevel = HF.GetSurgerySkill(usingCharacter)
 
-  if(HF.HasAfflictionLimb(targetCharacter,"crawlerTailAegis",limbtype,1)) then
+  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
     return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"tigerThresherTailAffliction",limbtype,1)) then
+  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
     return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"orangeboyTailAffliction",limbtype,1)) then
+  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_OrangeboyTail",limbtype,1)) then
     return
   end
   if(medicalLevel >= 30) then
     if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",30,usingCharacter,0)
       HF.RemoveItem(item)
     elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",100,usingCharacter,0)
+      HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
       HF.AddAffliction(targetCharacter,"crossspeciesrejection",45,usingCharacter,0)
       HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
       HF.RemoveItem(item)
@@ -2645,11 +2645,11 @@ NTGraft.ItemMethods.orangeboyTailAegis = function(item, usingCharacter, targetCh
     local skillcheck = math.random(0, 30)
     if (medicalLevel >= skillcheck) then
       if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
         HF.RemoveItem(item)
       elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"orangeboyTailAffliction",100,usingCharacter,0)
+        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
         HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
         HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
         HF.RemoveItem(item)

@@ -10,7 +10,7 @@
       <Affliction identifier="bleeding" strength="50" />
       <Affliction identifier="blunttrauma" strength="20" />
       <Affliction identifier="stun" strength="2" probability="1" />
-      <Affliction identifier="charybdisCure" strength="3" />
+      <Affliction identifier="grafting_CharybdisJawBuff" strength="3" />
       <StatusEffect type="OnUse" target="This">
         <sound file="Content/Characters/Charybdis/CHARYBDIS_attack1.ogg" range="1200" volume="1" selectionmode="random" />
         <sound file="Content/Characters/Charybdis/CHARYBDIS_attack2.ogg" range="1200" volume="1" selectionmode="random" />

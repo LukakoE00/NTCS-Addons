@@ -15,32 +15,32 @@ NT.Afflictions.hybriddna = {
       -- If one graft is identified from a table then it skips the rest and moves onto the next row.
 
       local GraftingTypes = {
-                            {Parent="crawlerTailAegis",Child="crawlerLungsAffliction"                 -- Crawler
+                            {Parent="grafting_CrawlerTail",Child="grafting_CrawlerLungs"                 -- Crawler
                           },
-                            {Parent="fractalGuardianEyesAffliction",Child="watcherEyesAffliction"     -- Eyes
+                            {Parent="grafting_FractalGuardianEyes",Child="grafting_WatcherEyes"     -- Eyes
                           },
-                            {Parent="huskArmAffliction",Child="huskHeartAffliction"                   -- Husk
+                            {Parent="grafting_HuskArm",Child="grafting_HuskHeart"                   -- Husk
                           },
-                            {Parent="latcherHeartAffliction",Child="latcherTongueAffliction"          -- Latcher
+                            {Parent="grafting_LatcherHeart",Child="grafting_LatcherTongue"          -- Latcher
                           },
-                            {Parent="mantisLiverAffliction",Child="broodmotherLiverAffliction",       -- Liver
-                            Child2="viperlingLiverAffliction"
+                            {Parent="grafting_MantisLiver",Child="grafting_BroodmotherLiver",       -- Liver
+                            Child2="grafting_ViperlingLiver"
                           },
-                            {Parent="mudraptorLungsAffliction",Child="mudraptorHeadAffliction"        -- Mudraptor
+                            {Parent="grafting_MudraptorLungs",Child="grafting_MudraptorHead"        -- Mudraptor
                           },
-                            {Parent="tigerThresherJawAffliction",Child="tigerThresherTailAffliction"  -- Tiger Thresher
+                            {Parent="grafting_TigerThresherJaw",Child="grafting_TigerThresherTail"  -- Tiger Thresher
                           },
-                            {Parent="boneThresherJawAffliction",Child="charybdisJawAffliction"        -- Jaw
+                            {Parent="grafting_BoneThresherJaw",Child="grafting_CharybdisJaw"        -- Jaw
                           },
-                            {Parent="hammerheadTorsoAffliction",Child="hammerheadLimbsAffliction"     -- Hammerhead
+                            {Parent="grafting_HammerheadTorso",Child="grafting_HammerheadLimbs"     -- Hammerhead
                           },
-                            {Parent="endwormTorsoAffliction",Child="endwormLArmAffliction",           -- Endworm
-                            Child2="endwormRArmAffliction",Child3="endwormLLegAffliction",
-                            Child4="endwormRLegAffliction"
+                            {Parent="grafting_EndwormTorso",Child="grafting_EndwormLeftArm",           -- Endworm
+                            Child2="grafting_EndwormRightArm",Child3="grafting_EndwormLeftLeg",
+                            Child4="grafting_EndwormRightLeg"
                           },
-                            {Parent="molochHeadAffliction",Child="molochCracked"                      -- Moloch
+                            {Parent="grafting_MolochHead",Child="grafting_MolochHeadCracked"                      -- Moloch
                           },
-                            {Parent="orangeboyTailAffliction"}                                        -- Tail?
+                            {Parent="grafting_OrangeboyTail"}                                        -- Tail?
                           }
       
       for Key, Value in pairs(GraftingTypes) do -- We iterate through our graft types using this structure, which is much more compact and easy to mainatain.
@@ -87,7 +87,7 @@ function limbLockedInitialAegis(c, limbtype, key)
 				HF.GetAfflictionStrengthLimb(c.character, limbtype, "gypsumcast", 0) <= 0
 				and NT.LimbIsBroken(c.character, limbtype)
 			)
-		) and HF.HasAffliction(c.character,"huskHeartAffliction",5)
+		) and HF.HasAffliction(c.character,"grafting_HuskHeart",5)
 end
 
 
@@ -101,7 +101,7 @@ NT.Afflictions.lockedhands = {
 			local handcuffs = c.character.Inventory.FindItemByIdentifier("handcuffs", false)
 			local handcuffed = handcuffs ~= nil and c.character.Inventory.FindIndex(handcuffs) <= 6
 
-      if not handcuffed and HF.HasAffliction(c.character,"huskHeartAffliction",5) then
+      if not handcuffed and HF.HasAffliction(c.character,"grafting_HuskHeart",5) then
         HF.RemoveItem(leftlockitem)
         HF.RemoveItem(rightlockitem)
         return
@@ -170,19 +170,19 @@ NT.Afflictions.lockrightleg = {
 
 -- Hooks related to Hammerhead and Endworm Afflictions
 
-NT.Afflictions.hammerheadTorsoAffliction = {
+NT.Afflictions.grafting_HammerheadTorso = {
 
   update = function(c,i)
     if c.afflictions[i].strength > 10 then
       local outwearItem = c.character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
       local clothes = c.character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
       if outwearItem == nil and clothes == nil then
-        HF.SetAffliction(c.character,"hammerheadTorsoAfflictionSprite",100)  
+        HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",100)  
       else
-        HF.SetAffliction(c.character,"hammerheadTorsoAfflictionSprite",0)
+        HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",0)
       end
     else
-      HF.SetAffliction(c.character,"hammerheadTorsoAfflictionSprite",0)
+      HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",0)
     end
   end,
 
@@ -191,22 +191,22 @@ NT.Afflictions.hammerheadTorsoAffliction = {
 
 Hook.Add("item.equip", "graftedTorsoFixEquip", function(item, character)
 
-  if (HF.HasAfflictionLimb(character, "hammerheadTorsoAffliction", LimbType.Torso, 5)) then
+  if (HF.HasAfflictionLimb(character, "grafting_HammerheadTorso", LimbType.Torso, 5)) then
     local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
     local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
     if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"hammerheadTorsoAfflictionSprite",100)  
+      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",100)  
     else
-      HF.SetAffliction(character,"hammerheadTorsoAfflictionSprite",0)
+      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",0)
     end
 
-  elseif (HF.HasAfflictionLimb(character, "endwormTorsoAffliction", LimbType.Torso, 5)) then
+  elseif (HF.HasAfflictionLimb(character, "grafting_EndwormTorso", LimbType.Torso, 5)) then
     local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
     local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
     if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"endwormTorsoAfflictionSprite",100)  
+      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",100)  
     else
-      HF.SetAffliction(character,"endwormTorsoAfflictionSprite",0)
+      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",0)
     end
 
   end
@@ -215,22 +215,22 @@ end)
 
 Hook.Add("item.unequip", "graftedTorsoFixUnequip", function(item, character)
 
-  if (HF.HasAfflictionLimb(character, "hammerheadTorsoAffliction", LimbType.Torso, 5)) then
+  if (HF.HasAfflictionLimb(character, "grafting_HammerheadTorso", LimbType.Torso, 5)) then
     local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
     local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
     if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"hammerheadTorsoAfflictionSprite",100)  
+      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",100)  
     else
-      HF.SetAffliction(character,"hammerheadTorsoAfflictionSprite",0)
+      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",0)
     end
 
-  elseif (HF.HasAfflictionLimb(character, "endwormTorsoAffliction", LimbType.Torso, 5)) then
+  elseif (HF.HasAfflictionLimb(character, "grafting_EndwormTorso", LimbType.Torso, 5)) then
     local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
     local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
     if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"endwormTorsoAfflictionSprite",100)  
+      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",100)  
     else
-      HF.SetAffliction(character,"endwormTorsoAfflictionSprite",0)
+      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",0)
     end
 
   end
@@ -241,18 +241,18 @@ end)
 
 
 
-NT.Afflictions.molochHeadAffliction = {
+NT.Afflictions.grafting_MolochHead = {
   update = function(c,i)
 
     if c.afflictions[i].strength > 0 then
       if HF.HasAfflictionLimb(c.character,"blunttrauma",LimbType.Head,40) 
       or HF.HasAfflictionLimb(c.character,"lacerations",LimbType.Head,40)
       or HF.HasAfflictionLimb(c.character,"gunshotwound",LimbType.Head,40) then
-        HF.AddAffliction(c.character,"molochCracked",1.5)
+        HF.AddAffliction(c.character,"grafting_MolochHeadCracked",1.5)
       elseif HF.HasAfflictionLimb(c.character,"blunttrauma",LimbType.Head,4) 
       or HF.HasAfflictionLimb(c.character,"lacerations",LimbType.Head,4)
       or HF.HasAfflictionLimb(c.character,"gunshotwound",LimbType.Head,7) then
-        HF.AddAffliction(c.character,"molochCracked",0.5)
+        HF.AddAffliction(c.character,"grafting_MolochHeadCracked",0.5)
       end
     end      
 
@@ -263,26 +263,26 @@ NT.Afflictions.molochHeadAffliction = {
 
 
 
-NT.Afflictions.endwormTorsoAffliction = {
+NT.Afflictions.grafting_EndwormTorso = {
 
   update = function(c,i)
     if c.afflictions[i].strength > 10 and NTCyb == nil then
-      if HF.HasAfflictionLimb(c.character,"endwormTorsoAffliction",LimbType.Torso,90) then
-        HF.AddAfflictionLimb(c.character,"endwormLArmAffliction",LimbType.LeftArm,1)
-        HF.AddAfflictionLimb(c.character,"endwormRArmAffliction",LimbType.RightArm,1)
-        HF.AddAfflictionLimb(c.character,"endwormLLegAffliction",LimbType.LeftLeg,1)
-        HF.AddAfflictionLimb(c.character,"endwormRLegAffliction",LimbType.RightLeg,1)
+      if HF.HasAfflictionLimb(c.character,"grafting_EndwormTorso",LimbType.Torso,90) then
+        HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftArm",LimbType.LeftArm,1)
+        HF.AddAfflictionLimb(c.character,"grafting_EndwormRightArm",LimbType.RightArm,1)
+        HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftLeg",LimbType.LeftLeg,1)
+        HF.AddAfflictionLimb(c.character,"grafting_EndwormRightLeg",LimbType.RightLeg,1)
       end
     elseif c.afflictions[i].strength > 10 and NTCyb ~= nil then
-      if HF.HasAfflictionLimb(c.character,"endwormTorsoAffliction",LimbType.Torso,90) then
+      if HF.HasAfflictionLimb(c.character,"grafting_EndwormTorso",LimbType.Torso,90) then
         if HF.HasAfflictionLimb(c.character,"ntc_cyberarm",LimbType.LeftArm,1) then
-        else HF.AddAfflictionLimb(c.character,"endwormLArmAffliction",LimbType.LeftArm,1) end
+        else HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftArm",LimbType.LeftArm,1) end
         if HF.HasAfflictionLimb(c.character,"ntc_cyberarm",LimbType.RightArm,1) then
-        else HF.AddAfflictionLimb(c.character,"endwormRArmAffliction",LimbType.RightArm,1) end
+        else HF.AddAfflictionLimb(c.character,"grafting_EndwormRightArm",LimbType.RightArm,1) end
         if HF.HasAfflictionLimb(c.character,"ntc_cyberleg",LimbType.LeftLeg,1) then
-        else HF.AddAfflictionLimb(c.character,"endwormLLegAffliction",LimbType.LeftLeg,1) end
+        else HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftLeg",LimbType.LeftLeg,1) end
         if HF.HasAfflictionLimb(c.character,"ntc_cyberleg",LimbType.RightLeg,1) then
-        else HF.AddAfflictionLimb(c.character,"endwormRLegAffliction",LimbType.RightLeg,1) end
+        else HF.AddAfflictionLimb(c.character,"grafting_EndwormRightLeg",LimbType.RightLeg,1) end
     end
 
 
@@ -290,12 +290,12 @@ NT.Afflictions.endwormTorsoAffliction = {
       local outwearItem = c.character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
       local clothes = c.character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
       if outwearItem == nil and clothes == nil then
-        HF.SetAffliction(c.character,"endwormTorsoAfflictionSprite",100)  
+        HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",100)  
       else
-        HF.SetAffliction(c.character,"endwormTorsoAfflictionSprite",0)
+        HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",0)
       end
     else
-      HF.SetAffliction(c.character,"endwormTorsoAfflictionSprite",0)
+      HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",0)
     end
   end,
 
@@ -303,7 +303,7 @@ NT.Afflictions.endwormTorsoAffliction = {
 
 
 math.randomseed(os.time())
-NT.Afflictions.orangeboyTailAffliction = {
+NT.Afflictions.grafting_OrangeboyTail = {
   update = function(c,i)
     if c.afflictions[i].strength > 1 then
       local dropChance = math.random(0,1250)

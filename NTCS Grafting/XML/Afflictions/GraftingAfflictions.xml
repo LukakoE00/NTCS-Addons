@@ -169,20 +169,20 @@
     <Effect minstrength="0" maxstrength="100" strengthchange="-1">
       <!-- Add all other afflictions where skin is applied directly to the body -->
       <StatusEffect target="Limb" interval="1" disabledeltatime="true">
-        <ReduceAffliction identifier="tigerThresherJawAffliction" amount="5" />
-        <ReduceAffliction identifier="boneThresherJawAffliction" amount="5" />
-        <ReduceAffliction identifier="mudraptorHeadAffliction" amount="5" />
-        <ReduceAffliction identifier="hammerheadTorsoAffliction" amount="5" />
-        <ReduceAffliction identifier="molochHeadAffliction" amount="5" />
-        <ReduceAffliction identifier="molochCracked" amount="5" />
-        <ReduceAffliction identifier="charybdisJawAffliction" amount="5" />
-        <ReduceAffliction identifier="fractalGuardianEyesAffliction" amount="5" />
-        <ReduceAffliction identifier="watcherEyesAffliction" amount="5" />
-        <ReduceAffliction identifier="endwormTorsoAffliction" amount="5" />
-        <ReduceAffliction identifier="endwormLArmAffliction" amount="5" />
-        <ReduceAffliction identifier="endwormRArmAffliction" amount="5" />
-        <ReduceAffliction identifier="endwormLLegAffliction" amount="5" />
-        <ReduceAffliction identifier="endwormRLegAffliction" amount="5" />
+        <ReduceAffliction identifier="grafting_TigerThresherJaw" amount="5" />
+        <ReduceAffliction identifier="grafting_BoneThresherJaw" amount="5" />
+        <ReduceAffliction identifier="grafting_MudraptorHead" amount="5" />
+        <ReduceAffliction identifier="grafting_HammerheadTorso" amount="5" />
+        <ReduceAffliction identifier="grafting_MolochHead" amount="5" />
+        <ReduceAffliction identifier="grafting_MolochHeadCracked" amount="5" />
+        <ReduceAffliction identifier="grafting_CharybdisJaw" amount="5" />
+        <ReduceAffliction identifier="grafting_FractalGuardianEyes" amount="5" />
+        <ReduceAffliction identifier="grafting_WatcherEyes" amount="5" />
+        <ReduceAffliction identifier="grafting_EndwormTorso" amount="5" />
+        <ReduceAffliction identifier="grafting_EndwormLeftArm" amount="5" />
+        <ReduceAffliction identifier="grafting_EndwormRightArm" amount="5" />
+        <ReduceAffliction identifier="grafting_EndwormLeftLeg" amount="5" />
+        <ReduceAffliction identifier="grafting_EndwormRightLeg" amount="5" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="8,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
@@ -221,7 +221,7 @@
   <Afflicton
     name=""
     description=""
-    identifier="blindAegis"
+    identifier="grafting_blind1"
 
     type="graftingBuff"
     limbspecific="false"
@@ -243,7 +243,7 @@
   <Afflicton
     name=""
     description=""
-    identifier="blindAegis2"
+    identifier="grafting_blind2"
 
     type="graftingBuff"
     limbspecific="false"
@@ -265,7 +265,7 @@
   <Afflicton
     name=""
     description=""
-    identifier="blindAegis3"
+    identifier="grafting_blind3"
 
     type="graftingBuff"
     limbspecific="false"
@@ -288,7 +288,7 @@
   <Afflicton
     name=""
     description=""
-    identifier="empAegis"
+    identifier="grafting_emp"
 
     type=""
     limbspecific="false"
@@ -308,7 +308,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="crawlerTailAegis"
+    identifier="grafting_CrawlerTail"
 
     type="alieninfection"
     isbuff="True"
@@ -357,9 +357,9 @@
       <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" targetlimb="Torso" disabledeltatime="True" stackable="false" delay="0.2">
         <Affliction identifier="severepain" amount="100" />
         <Affliction identifier="t_arterialcut" amount="99999" />
-        <Affliction identifier="crawlerTailAegis" amount="-100" />
+        <Affliction identifier="grafting_CrawlerTail" amount="-100" />
         <Affliction identifier="increasedSwimmingSpeedAegis" amount="-100" />
-        <SpawnItem identifier="crawlerTailAegis" />
+        <SpawnItem identifier="grafting_CrawlerTail" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0"/>
@@ -380,7 +380,7 @@
       <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" targetlimb="Torso" disabledeltatime="True" stackable="false" delay="0.2">
         <Affliction identifier="severepain" amount="100" />
         <Affliction identifier="t_arterialcut" amount="99999" />
-        <Affliction identifier="crawlerTailAegis" amount="-100" />
+        <Affliction identifier="grafting_CrawlerTail" amount="-100" />
         <Affliction identifier="increasedSwimmingSpeedAegis" amount="-100" />
       </StatusEffect>
     </Effect>
@@ -390,7 +390,7 @@
   <Affliction
     name=""
     description=""
-    identifier="crawlerLungsAffliction"
+    identifier="grafting_CrawlerLungs"
 
     type="graftingbuff"
     limbspecific="false"
@@ -415,7 +415,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="fractalGuardianEyesAffliction"
+    identifier="grafting_FractalGuardianEyes"
 
     type="alieninfection"
     isbuff="True"
@@ -449,9 +449,9 @@
       </StatusEffect>
       <Statuseffect type="OnActive" target="Character" interval="1" disabledeltatime="true">
         <Conditional empAegis="gt 1" />
-        <Affliction identifier="blindAegis" amount="10" />
-        <Affliction identifier="blindAegis2" amount="10" />
-        <Affliction identifier="blindAegis3" amount="10" />
+        <Affliction identifier="grafting_blind1" amount="10" />
+        <Affliction identifier="grafting_blind2" amount="10" />
+        <Affliction identifier="grafting_blind3" amount="10" />
       </Statuseffect>
     </Effect>
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="8,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
@@ -461,7 +461,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="chimeraHuskInfection"
+    identifier="grafting_HuskChimeraInfection"
 
     type="alieninfection"
     limbspecific="false"
@@ -492,7 +492,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="huskArmAffliction"
+    identifier="grafting_HuskArm"
 
     type="alieninfection"
     isbuff="True"
@@ -523,14 +523,14 @@
     <Effect minstrength="0" maxstrength="100">
       <StatusEffect target="Character" type="OnActive" interval="1" disabledeltatime="true">
         <Conditional husktransformimmunity="lt 99" />
-        <Affliction identifier="chimeraHuskInfection" amount="1000" />
+        <Affliction identifier="grafting_HuskChimeraInfection" amount="1000" />
       </StatusEffect>
     </Effect>
   </AfflictionHusk>
   <Affliction
     name=""
     description=""
-    identifier="huskHeartAffliction"
+    identifier="grafting_HuskHeart"
 
     type="alieninfection"
     isbuff="True"
@@ -551,7 +551,7 @@
     <Effect minstrength="0" maxstrength="100">
       <StatusEffect target="Character" type="OnActive" interval="1" disabledeltatime="true">
         <Conditional husktransformimmunity="lt 99" />
-        <Affliction identifier="chimeraHuskInfection" amount="1000" />
+        <Affliction identifier="grafting_HuskChimeraInfection" amount="1000" />
       </StatusEffect>
     </Effect>
   </Affliction>
@@ -560,7 +560,7 @@
   <Affliction
     name=""
     description=""
-    identifier="mantisLiverAffliction"
+    identifier="grafting_MantisLiver"
 
     type="graftingbuff"
     limbspecific="false"
@@ -591,7 +591,7 @@
   <Affliction
     name=""
     description=""
-    identifier="mudraptorLungsAffliction"
+    identifier="grafting_MudraptorLungs"
 
     type="graftingbuff"
     limbspecific="false"
@@ -615,7 +615,7 @@
   <Affliction
     name=""
     description=""
-    identifier="mudraptorHeadAffliction"
+    identifier="grafting_MudraptorHead"
 
     type="graftingbuff"
     limbspecific="true"
@@ -637,7 +637,7 @@
   <Affliction
     name=""
     description=""
-    identifier="mudraptorHeadAfflictionSprite"
+    identifier="grafting_MudraptorHeadSprite"
 
     type="alieninfection"
     isbuff="True"
@@ -694,7 +694,7 @@
   <Affliction
     name=""
     description=""
-    identifier="mudraptorLegRightAffliction"
+    identifier="grafting_MudraptorRightLeg"
 
     type="graftingbuff"
     limbspecific="false"
@@ -722,7 +722,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="broodmotherLiverAffliction"
+    identifier="grafting_BroodmotherLiver"
 
     type="graftingbuff"
     limbspecific="false"
@@ -754,7 +754,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="tigerThresherJawAffliction"
+    identifier="grafting_TigerThresherJaw"
 
     type="alieninfection"
     isbuff="True"
@@ -787,7 +787,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="tigerThresherTailAffliction"
+    identifier="grafting_TigerThresherTail"
 
     type="alieninfection"
     isbuff="True"
@@ -824,7 +824,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="boneThresherJawAffliction"
+    identifier="grafting_BoneThresherJaw"
 
     type="alieninfection"
     isbuff="True"
@@ -859,7 +859,7 @@
   <Affliction
     name=""
     description=""
-    identifier="hammerheadTorsoAffliction"
+    identifier="grafting_HammerheadTorso"
 
     type="alieninfection"
     isbuff="True"
@@ -889,7 +889,7 @@
   <Affliction
     name=""
     description=""
-    identifier="hammerheadTorsoAfflictionSprite"
+    identifier="grafting_HammerheadTorsoSprite"
 
     type="alieninfection"
     isbuff="True"
@@ -911,7 +911,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="hammerheadLimbsAffliction"
+    identifier="grafting_HammerheadLimbs"
 
     type="alieninfection"
     isbuff="True"
@@ -948,7 +948,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="molochHeadAffliction"
+    identifier="grafting_MolochHead"
 
     type="alieninfection"
     isbuff="True"
@@ -981,7 +981,7 @@
   <Affliction
     name=""
     description=""
-    identifier="molochCracked"
+    identifier="grafting_MolochHeadCracked"
 
     type="alieninfection"
     isbuff="True"
@@ -1001,8 +1001,8 @@
     <Effect minstrength="0" maxstrength="95" strengthchange="-0.2" />
     <Effect minstrength="95" maxstrength="100" strengthchange="0.5" minvitalitydecrease="50" maxvitalitydecrease="75">
       <StatusEffect type="OnActive" target="Character">
-        <Affliction identifier="molochCrackedSprite" amount="10000" />
-        <ReduceAffliction identifier="molochHeadAffliction" amount="100" />
+        <Affliction identifier="grafting_MolochHeadCrackedSprite" amount="10000" />
+        <ReduceAffliction identifier="grafting_MolochHead" amount="100" />
         <Affliction identifier="cerebralhypoxia" amount="0.1" />
       </StatusEffect>
     </Effect>
@@ -1011,7 +1011,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="molochCrackedSprite"
+    identifier="grafting_MolochHeadCrackedSprite"
 
     type="alieninfection"
     isbuff="True"
@@ -1045,7 +1045,7 @@
   <Affliction
     name=""
     description=""
-    identifier="viperlingLiverAffliction"
+    identifier="grafting_ViperlingLiver"
 
     type="graftingbuff"
     limbspecific="false"
@@ -1073,7 +1073,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="watcherEyesAffliction"
+    identifier="grafting_WatcherEyes"
 
     type="alieninfection"
     isbuff="True"
@@ -1107,7 +1107,7 @@
   <Afflicton
     name=""
     description=""
-    identifier="graftedWatcherGaze"
+    identifier="grafting_WatcherGaze"
 
     type="graftingBuff"
     limbspecific="false"
@@ -1133,7 +1133,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="charybdisJawAffliction"
+    identifier="grafting_CharybdisJaw"
 
     type="alieninfection"
     isbuff="True"
@@ -1162,13 +1162,13 @@
     iconcolors="25,24,23;25,24,23;25,24,23">
     <Effect minstrength="0" maxstrength="90" strengthchange="3.5">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
-        <ReduceAffliction identifier="charybdisJawNerf" amount="10" />
+        <ReduceAffliction identifier="grafting_CharybdisJawDebuff" amount="10" />
       </StatusEffect>
     </Effect>
     <Effect minstrength="90" maxstrength="100" strengthchange="3.5">
       <StatusEffect target="Character" interval="1" disabledeltatime="true">
-        <Conditional charybdisJawNerf="lt 2" />
-        <Affliction identifier="charybdisJawNerf" amount="1" />
+        <Conditional grafting_CharybdisJawDebuff="lt 2" />
+        <Affliction identifier="grafting_CharybdisJawDebuff" amount="1" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="5,0" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
@@ -1176,7 +1176,7 @@
   <Affliction
     name=""
     description=""
-    identifier="charybdisJawNerf"
+    identifier="grafting_CharybdisJawDebuff"
 
     type="alieninfection"
     isbuff="False"
@@ -1213,7 +1213,7 @@
   <Affliction
     name=""
     description=""
-    identifier="charybdisCure"
+    identifier="grafting_CharybdisJawBuff"
 
     type="alieninfection"
     isbuff="False"
@@ -1231,7 +1231,7 @@
     iconcolors="51,13,13;51,13,13;51,13,13">
     <Effect minstrength="0" maxstrength="10" strengthchange="-1">
       <StatusEffect type="OnDamaged" target="NearbyCharacters" targetLimb="Torso" delay="0.1" disabledeltatime="True" Range="100">
-        <ReduceAffliction identifier="charybdisJawNerf" amount="10" />
+        <ReduceAffliction identifier="grafting_CharybdisJawDebuff" amount="10" />
         <Affliction identifier="haste" amount="10" />
         <ReduceAffliction identifier="psychosis" amount="3" />
         <ReduceAffliction identifier="bleeding" amount="1" />
@@ -1245,7 +1245,7 @@
   <Affliction
     name=""
     description=""
-    identifier="latcherHeartAffliction"
+    identifier="grafting_LatcherHeart"
 
     type="alieninfection"
     isbuff="True"
@@ -1270,7 +1270,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="latcherTongueAffliction"
+    identifier="grafting_LatcherTongue"
 
     type="alieninfection"
     isbuff="True"
@@ -1304,7 +1304,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormTorsoAffliction"
+    identifier="grafting_EndwormTorso"
 
     type="alieninfection"
     isbuff="True"
@@ -1334,7 +1334,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormTorsoAfflictionSprite"
+    identifier="grafting_EndwormTorsoSprite"
 
     type="alieninfection"
     isbuff="True"
@@ -1356,7 +1356,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormLArmAffliction"
+    identifier="grafting_EndwormLeftArm"
 
     type="alieninfection"
     isbuff="True"
@@ -1385,7 +1385,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormRArmAffliction"
+    identifier="grafting_EndwormRightArm"
 
     type="alieninfection"
     isbuff="True"
@@ -1414,7 +1414,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormLLegAffliction"
+    identifier="grafting_EndwormLeftLeg"
 
     type="alieninfection"
     isbuff="True"
@@ -1443,7 +1443,7 @@
   <Affliction
     name=""
     description=""
-    identifier="endwormRLegAffliction"
+    identifier="grafting_EndwormRightLeg"
 
     type="alieninfection"
     isbuff="True"
@@ -1474,7 +1474,7 @@
   <AfflictionHusk
     name=""
     description=""
-    identifier="orangeboyTailAffliction"
+    identifier="grafting_OrangeboyTail"
 
     type="alieninfection"
     isbuff="True"

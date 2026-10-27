@@ -6,7 +6,7 @@
     <damagemodifier armorsector="0,360" afflictiontypes="burn" damagemultiplier="1.0" />
     <sprite texture="Content/Characters/Watcher/Watcher.png" sourcerect="0,640,380,383" depth="0.049" origin="0.5,0.5" ignoretint="false" />
     <attack context="Any" cooldown="5" cooldownrandomfactor="0.5" ranged="True" range="5000" damagerange="5000" duration="5" structuredamage="10" severlimbsprobability="0.0" targettype="Any" stun="0" onlyhumans="False" hitdetectiontype="Distance">
-      <Affliction identifier="graftedWatcherGaze" strength="33" />
+      <Affliction identifier="grafting_WatcherGaze" strength="33" />
     </attack>
   </limb>
   <joint name="Fractal Guardian Eye to Head" limb1="1" limb2="1000" limb1anchor="10,2" limb2anchor="0,0" Upperlimit="0" Lowerlimit="0" weldjoint="True" canbesevered="False" limitenabled="True" />

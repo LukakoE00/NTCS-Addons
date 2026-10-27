@@ -3,11 +3,11 @@
 -- This is the commonness value originally present, just adjusted for a 0 to 1 chance value.
 NTCS_Grafting.CreatureDrops = {
     crawler = {
-        { item = "crawlerTailAegis", chance = 0.119403 },
+        { item = "grafting_CrawlerTail", chance = 0.119403 },
         { item = "crawlerLungsAegis", chance = 0.119403 },
     },
     crawlerhusk = {
-        { item = "crawlerTailAegis", chance = 0.107463 },
+        { item = "grafting_CrawlerTail", chance = 0.107463 },
         { item = "crawlerLungsAegis", chance = 0.107463 },
         { item = "Cells_Husk", chance = 0.1 },
     },
