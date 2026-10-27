@@ -14,7 +14,8 @@ NTCS.Config = {
     ---@public
     ---@static
     ---@param EntryName string
-    ---@return boolean|number|unknown
-    Get = function(EntryName) end,
+    ---@param DefaultValue unknown
+    ---@return boolean|number|unknown|nil
+    Get = function(EntryName, DefaultValue) end,
 
 }

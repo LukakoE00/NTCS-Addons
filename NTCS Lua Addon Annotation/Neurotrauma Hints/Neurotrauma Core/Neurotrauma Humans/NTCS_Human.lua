@@ -38,39 +38,49 @@ NTCS.NTHuman = {
     ---@return NTHuman
     New = function(self, Human) end,
 
+    -- [STATIC]
+    -- Returns the NTHuman instance associated with the given Character. If no NTHuman exists for that Character, returns null.
     ---@public
     ---@static
     ---@param Human Character
     ---@return NTHuman
     getNtHumanFromCharacter = function(Human) end,
 
-    ---@public
+    -- [STATIC]
+    -- Removes a human from the human update.
+    -- Not intended for external use, leave alone unless you know what your doing.
+    ---@private
     ---@static
     ---@param Human NTHuman
     ---@return NTHuman
     RemoveNTHuman = function(Human) end,
 
+    -- Updates all stats of a character. Calls the update function of each bool and float stat.
     ---@public
     ---@param DeltaTime number
     ---@return nil
     UpdateStats = function(self, DeltaTime) end,
 
+    -- Returns the value of a given boolean stat.
     ---@public
     ---@param StatID string
     ---@return boolean
     GetBoolStat = function(self, StatID) end,
 
+    -- Returns the value of a given float stat.
     ---@public
     ---@param StatID string
     ---@return number
     GetFloatStat = function(self, StatID) end,
 
+    -- Sets a boolean stat to a new value.
     ---@public
     ---@param StatID string
     ---@param Value boolean
     ---@return nil
     SetBoolStat = function(self, StatID, Value) end,
 
+    -- Sets a float stat to a new value.
     ---@public
     ---@param StatID string
     ---@param Value number
