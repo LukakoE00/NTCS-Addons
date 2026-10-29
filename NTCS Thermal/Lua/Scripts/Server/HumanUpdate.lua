@@ -485,13 +485,18 @@ affLoader:Register(
 
 		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
+		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			C:SetAfflictionLimb(ID,Limb,0)
+			-- Only clear it if the affliction exists
+			if affStr > 0 then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
 			return
 		end
 
-		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
+		local d1_frostbiteStr = C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
 		local d1_frostbiteStr = C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
 
 		if affStr > 0 and d1_frostbiteStr == 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
@@ -516,7 +521,10 @@ affLoader:Register(
 			return
 		end
 
-		C:SetAfflictionLimb(ID,Limb,0)
+		-- Only clear it if above paths are invalid AND!!! the affliction exists
+		if affStr > 0 then
+		 	C:SetAfflictionLimb(ID,Limb,0)
+		end
 
 	end)
 	:Build()
@@ -537,7 +545,10 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			C:SetAfflictionLimb(ID,Limb,0)
+			-- Only clear it if the affliction exists
+			if affStr > 0 then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
 			return
 		end
 
@@ -572,7 +583,10 @@ affLoader:Register(
 			return
 		end
 		
-		C:SetAfflictionLimb(ID,Limb,0)
+		-- Only clear it if above paths are invalid AND!!! the affliction exists
+		if affStr > 0 then
+		 	C:SetAfflictionLimb(ID,Limb,0)
+		end
 
 	end)
 	:Build()
@@ -593,7 +607,10 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			C:SetAfflictionLimb(ID,Limb,0)
+			-- Only clear it if the affliction exists
+			if affStr > 0 then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
 			return
 		end
 
@@ -635,7 +652,10 @@ affLoader:Register(
 			return
 		end
 		
-		C:SetAfflictionLimb(ID,Limb,0)
+		-- Only clear it if above paths are invalid AND!!! the affliction exists
+		if affStr > 0 then
+		 	C:SetAfflictionLimb(ID,Limb,0)
+		end
 
 	end)
 	:Build()
@@ -656,7 +676,10 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			C:SetAfflictionLimb(ID,Limb,0)
+			-- Only clear it if the affliction exists
+			if affStr > 0 then
+				C:SetAfflictionLimb(ID,Limb,0)
+			end
 			return
 		end
 
@@ -709,7 +732,11 @@ affLoader:Register(
 			return
 
 		end
-		C:SetAfflictionLimb(ID,Limb,0)
+
+		-- Only clear it if above paths are invalid AND!!! the affliction exists
+		if affStr > 0 then
+		 	C:SetAfflictionLimb(ID,Limb,0)
+		end
 
 	end)
 	:Build()
