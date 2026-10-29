@@ -1,5 +1,7 @@
 Items to add:
 
+    - Cryo Grenade: A grende that freezes everything in it's radius.
+
     - Wet Suit: A suit that heats up like a diving suit, however it goes in the shirt slot, not suit.
 
     - Temperature Stabilizer: A one time use medicine, makes player immune to temperature for a minute.
@@ -22,8 +24,40 @@ Bugs to fix:
 
     - IMPORTANT
 
-    - Extend EK patch functionality
+    - Extend EK patch functionality.
 
-    - Make baroverhaul classic patch
+    - Make baroverhaul classic patch.
+
+Optimizations:
+
+    - Port heavy afflictions to C#.
+
+Things to Do:
+
+    - Overhaul Room Temperature calculations in C#.
+
+    - Inverted Mode: A funny mode that flips Cold and Hot.
+
+    - Dynamic Biome Temp Mode: Each biome has a different temp.
+
+    - Finish Auto Heater detection.
+
+    - Add freezing noise when freezing, headache noise when hot
+
+    - Make cold bodies stiffen.
+
+    - Emergency Medicine Compat, integrate skin grafting
+
+    - Nanite Compat, make it so merging a set of nanites and A.A.F.N will make you develop some resistance to frozen blood vessels.
+
+    - Grafting Compat. Some organs make you more resistant to the cold.
+
+    - Eyes Compat. Cold and Heat will damage eyes.
+
+    - Infection Compat, Heat will kill dangerous infections at high temps. (like husk) 
+
+    - Cybernetics Compat, cyber limbs can have their own afflictions, like melting metal, frozen bolts.
+
+    - Make a better workshp page.
 
 Ideas:

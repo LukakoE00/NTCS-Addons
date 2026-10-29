@@ -74,7 +74,7 @@ NTCS_Thermal.OnDamagedMethods.explosiondamage = function(character, strength, li
     if NTCS.HF.LimbIsExtremity(limbtype) then
         SeverFrostbittenLimb(character, strength, limbtype)
     end
-
+	
 	--RuptureStretchedSkin(character, strength, limbtype)
 end
 

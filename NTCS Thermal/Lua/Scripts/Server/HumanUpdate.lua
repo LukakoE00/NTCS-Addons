@@ -176,7 +176,7 @@ end
 --#endregion
 
 local affLoader = NTCS.AfflictionsLoader("NTCS Thermal")
-local builder = NTCS.AfflictionPrefabBuilder()
+local builder = NTCS.AfflictionPrefabBuilder("NTCS Thermal")
 
 --#region Limb Afflictions
 
@@ -187,7 +187,8 @@ affLoader:Register(
     :IsLimbSpecific(true)
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
-    :SetUpdateAction(function(C, ID, Limb, dT)
+    :SetUpdateAction(function(C , ID, Limb, dT)
+		C, Limb = THERM.UpdateActionTypeConvert(C,Limb)
 
 		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
@@ -407,7 +408,7 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.MEDIUM)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
-
+		
 		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local CoolingAbility = FetchConfigStats().WarmingAbility
@@ -421,7 +422,7 @@ affLoader:Register(
 			THERM.ApplyTemperatureUpdate(C.Human.ID)
 			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, don't change the temperature
 			if not (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
-			and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
+			and not (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
 			NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, ((CoolingAbility
 				/(MaxCoolingTemp/C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)))
 				* CoolScaling  
@@ -456,8 +457,8 @@ affLoader:Register(
 				local WetTempAddition = .1
 
 				if C:GetAfflictionStrengthLimb("bandaged",Limb,0) > 0 and NTCS.Config.Get("WaterDirtiesBandages",true) then
-					NTCS.HF.AddAfflictionLimb(C.Human, "dirtybandage", Limb, WetStrength/4 * dT, C.Human)
-					NTCS.HF.AddAfflictionLimb(C.Human, "bandaged", Limb, -WetStrength/4 * dT, C.Human)
+					NTCS.HF.AddAfflictionLimb(C.Human, "bandageddirty", Limb, WetStrength/4 * dT, C.Human)
+					NTCS.HF.AddAfflictionLimb(C.Human, "bandaged", Limb, -(WetStrength/4 * dT), C.Human)
 				end
 
 				NTCS.HF.AddAfflictionLimb(C.Human, "ntt_temperature", Limb, (.05
@@ -482,21 +483,18 @@ affLoader:Register(
     :SetPriority(NTCS.AfflictionsPriority.HIGH)
 	:IsConst(true)
     :SetUpdateAction(function(C, ID, Limb, dT)
-
+		
 		if NTCS.Config.Get("SkipCalculations", false) then return end -- Skip if we turn off calculations
 
 		local affStr = C:GetAfflictionStrengthLimb(ID,Limb,0)
-
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			-- Only clear it if the affliction exists
 			if affStr > 0 then
 				C:SetAfflictionLimb(ID,Limb,0)
 			end
 			return
 		end
 
-		local d1_frostbiteStr = C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
 		local d1_frostbiteStr = C:GetAfflictionStrengthLimb("d1_frostbite",Limb,0)
 
 		if affStr > 0 and d1_frostbiteStr == 0 and not THERM.IsLimbCyber(C.Human,Limb) and not THERM.HasHuskSymbiosis(C.Human) then
@@ -521,9 +519,8 @@ affLoader:Register(
 			return
 		end
 
-		-- Only clear it if above paths are invalid AND!!! the affliction exists
 		if affStr > 0 then
-		 	C:SetAfflictionLimb(ID,Limb,0)
+			C:SetAfflictionLimb(ID,Limb,0)
 		end
 
 	end)
@@ -545,7 +542,6 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			-- Only clear it if the affliction exists
 			if affStr > 0 then
 				C:SetAfflictionLimb(ID,Limb,0)
 			end
@@ -582,10 +578,9 @@ affLoader:Register(
 			C:AddAfflictionLimb("reperfusion_injury",Limb, CalculateReperfusionInjury("d1", affStr,NTCS.HF.GetAfflictionStrengthLimb(C.Human, Limb, "ntt_temperature", 0)))
 			return
 		end
-		
-		-- Only clear it if above paths are invalid AND!!! the affliction exists
+	
 		if affStr > 0 then
-		 	C:SetAfflictionLimb(ID,Limb,0)
+			C:SetAfflictionLimb(ID,Limb,0)
 		end
 
 	end)
@@ -607,7 +602,6 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			-- Only clear it if the affliction exists
 			if affStr > 0 then
 				C:SetAfflictionLimb(ID,Limb,0)
 			end
@@ -652,9 +646,8 @@ affLoader:Register(
 			return
 		end
 		
-		-- Only clear it if above paths are invalid AND!!! the affliction exists
 		if affStr > 0 then
-		 	C:SetAfflictionLimb(ID,Limb,0)
+			C:SetAfflictionLimb(ID,Limb,0)
 		end
 
 	end)
@@ -676,7 +669,6 @@ affLoader:Register(
 
 		local normalizedLimb = NTCS.HF.NormalizeLimbType(Limb)
 		if normalizedLimb == LimbType.Head or normalizedLimb == LimbType.Torso then
-			-- Only clear it if the affliction exists
 			if affStr > 0 then
 				C:SetAfflictionLimb(ID,Limb,0)
 			end
@@ -690,7 +682,9 @@ affLoader:Register(
 			-- If the character is a bot with the temp ignore config on or is under pressure stabilizer effect with config on, remove the affliction
 			if (NTCS.Config.Get("BotTempIgnoreMode", true) and C.Human.IsBot)
 			or (NTCS.Config.Get("PressureStabilizerTemperature", true) and NTCS.HF.GetAfflictionStrength(C.Human, "pressurestabilized", 0) > 0) then
-				C:SetAfflictionLimb(ID,Limb,0)
+				if affStr > 0 then
+					C:SetAfflictionLimb(ID,Limb,0)
+				end
 			end
 			
 			local LimbTemp = C:GetAfflictionStrengthLimb("ntt_temperature",Limb,0)
@@ -732,10 +726,8 @@ affLoader:Register(
 			return
 
 		end
-
-		-- Only clear it if above paths are invalid AND!!! the affliction exists
 		if affStr > 0 then
-		 	C:SetAfflictionLimb(ID,Limb,0)
+			C:SetAfflictionLimb(ID,Limb,0)
 		end
 
 	end)
@@ -1772,7 +1764,6 @@ affLoader:Register(
 		local MaxWarmingTemp = FetchOtherStats().MaxWarmingTemp
 		local LimbStrength = NTCS.HF.GetAfflictionStrength(C.Human, "ntt_temperature", NormalBodyTemp)
 		local BloodPressureMultiplier = 3
-		local ElevationDecrease = .2
 		local TempIncrease = .2
 		local affStr = C:GetAfflictionStrength(ID)
 
