@@ -1,5 +1,9 @@
+
+
 function NTCS_Nanite.addAfflictionAllLimbs(character, affliction, strength)
-    character.Human.CharacterHealth.ReduceAfflictionOnAllLimbs(affliction, -strength)
+    for _,limb in pairs(NTCS.HF.LimbsToCheck) do
+        character:AddAfflictionLimb(affliction, limb, strength)
+    end
 end
 
 function NTCS_Nanite.downBattery(ntHuman, amount)

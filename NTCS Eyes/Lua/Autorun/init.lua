@@ -50,5 +50,5 @@ Timer.Wait(function()
 	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/ConfigData.lua")
 	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/InterfaceEnable.lua")
 	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/HelperFunctions.lua")
-	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Client/HUIButtons.lua") -- Add SurgeryButtons
+	dofile(NTCS_Eyes.Path .. "/Lua/Scripts/Shared/HUIButtons.lua") -- Add SurgeryButtons
 end, 1)

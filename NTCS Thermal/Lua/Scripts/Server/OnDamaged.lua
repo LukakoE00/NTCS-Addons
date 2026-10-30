@@ -1,0 +1,90 @@
+
+Hook.Add("character.applyDamage", "NTCS_Thermal.ondamaged", function(characterHealth, attackResult, hitLimb)
+	--print(hitLimb.HealthIndex or hitLimb ~= nil)
+
+	if -- invalid attack data, don't do anything
+		characterHealth == nil
+		or characterHealth.Character == nil
+		or characterHealth.Character.IsDead
+		or not characterHealth.Character.IsHuman
+		or attackResult == nil
+		or attackResult.Afflictions == nil
+		or #attackResult.Afflictions <= 0
+		or hitLimb == nil
+		or hitLimb.IsSevered
+		or not NTCS.Config.Get("NT_Calculations", true)
+	then
+		return
+	end
+
+	if not NTCS.HF.HasAffliction(characterHealth.Character, "luabotomy") then
+		NTCS.HF.SetAffliction(characterHealth.Character, "luabotomy", 1)
+	end
+
+	local afflictions = attackResult.Afflictions
+
+	-- ntc
+	-- modifying ondamaged hooks
+	for key, val in pairs(NTCS.NTC.ModifyingOnDamagedHooks) do
+		afflictions = val(characterHealth, afflictions, hitLimb)
+	end
+
+	local identifier = ""
+	local methodtorun = nil
+	for value in afflictions do
+		-- execute fitting method, if available
+		identifier = value.Prefab.Identifier.Value
+		methodtorun = NTCS_Thermal.OnDamagedMethods[identifier]
+		if methodtorun ~= nil then
+			-- make resistance from afflictions apply
+			local resistance = NTCS.HF.GetResistance(characterHealth.Character, identifier, hitLimb.type)
+			local strength = value.Strength * (1 - resistance)
+
+			methodtorun(characterHealth.Character, strength, hitLimb.type)
+		end
+	end
+
+	-- ntc
+	-- ondamaged hooks
+	for key, val in pairs(NTCS.NTC.OnDamagedHooks) do
+		val(characterHealth, attackResult, hitLimb)
+	end
+end)
+
+local SeverFrostbittenLimb = function (Character, Strength, Limb) -- Blast that limb
+    local MinimumStrength = 5
+    if NTCS.HF.GetAfflictionStrengthLimb(Character, Limb, "d3_frostbite", 0) > 0 and Strength > MinimumStrength then
+        NTCS.NT.TraumamputateLimbMinusItem(Character, Limb)
+    end
+end
+
+--local RuptureStretchedSkin = function (character, strength, limbtype) -- If the skin is stretched and lots of damage, we rupture it.
+	--if HF.GetAfflictionStrengthLimb(character, limbtype, "stretched_skin", 0) > 10 then
+		--if strength > 2 then
+			--HF.AddAfflictionLimb(character, "bleeding", limbtype,75, character)
+			--HF.AddAffliction(character, "traumaticshock", 25, character)
+			--HF.AddAfflictionLimb(character, "stretched_skin", limbtype,-20, character)
+		--end
+	--end
+--end
+
+NTCS_Thermal.OnDamagedMethods.explosiondamage = function(character, strength, limbtype) -- Heat from grenades and stuff
+    NTCS.HF.AddAfflictionLimb(character, "ntt_temperature", limbtype, strength/10, character) 
+
+    if NTCS.HF.LimbIsExtremity(limbtype) then
+        SeverFrostbittenLimb(character, strength, limbtype)
+    end
+	
+	--RuptureStretchedSkin(character, strength, limbtype)
+end
+
+NTCS_Thermal.OnDamagedMethods.gunshotwound = function (character, strength, limbtype)
+    if NTCS.HF.LimbIsExtremity(limbtype) then
+        SeverFrostbittenLimb(character, strength, limbtype)
+    end
+	--RuptureStretchedSkin(character, strength, limbtype)
+end
+
+--NTCS_Thermal.OnDamagedMethods.bitewounds = function (character, strength, limbtype)
+	--RuptureStretchedSkin(character, strength, limbtype)
+--end

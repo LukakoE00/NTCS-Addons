@@ -10,7 +10,8 @@
     <id>BigEvilGreenBean.NTCS_Thermal</id>
   </meta>
   <dependencies>
-    <requiredAnyOrder name="Neurotrauma" steamID="3190189044" />
+    <requiredAnyOrder name="Neurotrauma CS" steamID="3744761298" />
+    <conflict name="Deprecated Neurotrauma Lua" steamID="3190189044" message="Remove deprecated Neurotrauma Lua" level="error" />
     <conflict name="Deprecated Neurotrauma" steamID="2776270649" message="Remove deprecated Neurotrauma" level="error" />
   </dependencies>
 </metadata>

@@ -1,8 +1,8 @@
 
 NTCS_Nanite = {} -- Neurotrauma Nanite Integration
 NTCS_Nanite.Name="Nanite Integration"
-NTCS_Nanite.Version = "2.1.3"
-NTCS_Nanite.VersionNum = 02001003
+NTCS_Nanite.Version = "2.1.4"
+NTCS_Nanite.VersionNum = 02001004
 NTCS_Nanite.MinNTVersion = "2.0.0"
 NTCS_Nanite.MinNTVersionNum = 02000000
 NTCS_Nanite.Path = table.pack(...)[1]
