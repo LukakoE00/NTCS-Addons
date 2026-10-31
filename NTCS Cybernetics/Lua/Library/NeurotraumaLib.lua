@@ -29,6 +29,7 @@ NTCS.StatFloat = LuaUserData.CreateStatic("Neurotrauma.NTStats+NTStatFloat", tru
 NTCS.StatLoader = LuaUserData.CreateStatic("Neurotrauma.NTStats+NTStatLoader", true)
 
 NTCS.Items = LuaUserData.CreateStatic("Neurotrauma.NTItems", false)
+NTCS.ItemsData = LuaUserData.CreateStatic("Neurotrauma.NTItemsData", false)
 NTCS.ItemsAfflictionInfos = LuaUserData.CreateStatic("Neurotrauma.NTItems+ItemsAfflictionInfos", true)
 NTCS.ItemUpdateFunctionInfos = LuaUserData.CreateStatic("Neurotrauma.NTItems+ItemUpdateFunctionInfos", true)
 NTCS.ItemFunctionLoader = LuaUserData.CreateStatic("Neurotrauma.NTItems+NTItemFunctionLoader", true)

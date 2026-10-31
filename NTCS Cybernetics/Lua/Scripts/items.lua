@@ -1242,7 +1242,15 @@ local RemoveBrain = function (d)
 
     RemoveCyberBrain(d.item, d.user.Human, d.target.Human, d.targetLimb, ConfigDatas)
 end
+
 itemLoader:Override("organscalpel_brain", RemoveBrain)
+
+-- Bloodpack
+local InfuseBloodpackABC = function (d)
+	NTCS.ItemsData.InfuseBloodpack(d)
+end
+
+itemLoader:Register("bloodpackabc_positive", InfuseBloodpackABC)
 
 -- ==================== Miscellaneous ====================
 Timer.Wait(function()
