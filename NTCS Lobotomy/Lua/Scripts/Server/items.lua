@@ -98,7 +98,7 @@ itemLoader:Override("advretractors", function (d)
     targetCharacter.Human.CharacterHealth.ReduceAfflictionOnAllLimbs("orbitoclastready", 1000) --remove affliction
 
     ::jmp::
-    itemLoader:CallOld("advretractors", "Neurotrauma C#", d)
+    itemLoader:CallPrevious("advretractors", d)
 
 end)
 
