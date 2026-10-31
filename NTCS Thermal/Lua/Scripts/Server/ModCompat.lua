@@ -186,7 +186,7 @@ end)
 
 -- Hit a lick and lifted this from the Human update.
 Hook.Add("think", "THERMCompat.updateEH", function()
-    if NTCS.Config.Get("ReactorsGiveTemperature", true) or NTCS_Thermal.UsingEnhancedReactors then
+    if NTCS.Config.Get("ReactorsGiveTemperature", true) or NTCS_Thermal.UsingEnhancedReactors and not NTCS.Config.Get("TurnOffEHReactors", true) then
         if NTCS.HF.GameIsPaused() then
             return
         end

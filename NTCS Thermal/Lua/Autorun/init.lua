@@ -2,7 +2,7 @@
 -- Set up dictonary
 NTCS_Thermal = {}
 NTCS_Thermal.Name = "Thermal"
-NTCS_Thermal.Version = "1.0.2h3"
+NTCS_Thermal.Version = "1.0.2h4"
 NTCS_Thermal.VersionNum = 000000001
 NTCS_Thermal.MinNTVersion = "A1.12.1"
 NTCS_Thermal.MinNTVersionNum = 01120100

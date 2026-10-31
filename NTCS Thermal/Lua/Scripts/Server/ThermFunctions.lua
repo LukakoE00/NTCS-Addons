@@ -310,7 +310,7 @@ end
 
 -- Fetches character data from THERMCharacters. This is needed since it stores water related data.
 ---@param characterID ID
----@param character Character
+---@param character Character?
 ---@return table
 THERM.GetCharacter = function (characterID,character)
         character = character or nil
@@ -723,4 +723,16 @@ THERM.Clamp = function (value, min, max)
         if value < min then return min end
         if value > max then return max end
         return value
+end
+
+---@param C any
+---@param Limb any
+---@return NTHuman
+---@return LimbType
+THERM.UpdateActionTypeConvert = function (C ,Limb)
+	---@type NTHuman
+	C = C
+	---@type LimbType
+	Limb = Limb
+	return C,Limb
 end

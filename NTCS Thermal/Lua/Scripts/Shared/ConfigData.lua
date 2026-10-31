@@ -130,6 +130,7 @@ NTCS_Thermal.ConfigData = {
 
 	NTCS_Thermal_HeaderReactor = { name = "---------------------------------- Reactor Settings ----------------------------------", type = "category" },
 
+	TurnOffEHReactors = { name = "Disable Enhanced Reactors Heating", default = false, type = "bool", description = "This will force disable Enhaced Reactors from irridating heat." },
 	ReactorsGiveTemperature = { name = "Reactors Give Temperature", default = false, type = "bool", description = "This is a small fork of a enhanced reactors. It makes reactors give you temperature, this is forced on if you are using enhanced reactors." },
 	ReactorsGiveTemperatureBot = { name = "Reactors Give Temperature To Bots", default = true, type = "bool", description = "This makes it so bots will gain temperature from reactors (if the reactor toggle is on)." },
 	ReactorTempAccountsForRodCount = { name = "Reactors Account For Rod Count", default = true, type = "bool", description = "This makes it so reactors will account for the number of fuel rods in a reactor. This makes reactors much nicer to be around, since they won't give temperature as along as they are stable. If off, reactors will give temperature, even if stable, as long as the reactor temp is high enough." },
