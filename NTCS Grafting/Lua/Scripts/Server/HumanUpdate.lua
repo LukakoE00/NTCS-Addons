@@ -1,315 +1,259 @@
+local AfflictionLoader = NTCS.AfflictionsLoader("NTCS Grafting")
+local AfflictionBuilder = NTCS.AfflictionPrefabBuilder()
 
+-- Groups of grafts since you cant have more than 2 unique graft groups
+local GraftingTypes = {
 
+  -- Crawler
+  { "grafting_CrawlerTail", "grafting_CrawlerLungs" },
 
-NT.Afflictions.hybriddna = {
-  update = function(c,i)
+  -- Eyes
+  { "grafting_FractalGuardianEyes", "grafting_WatcherEyes" },
 
-    if (HF.HasAffliction(c.character,"crossspeciesrejection",1)) then
-      local creatures = 0
+  -- Husk
+  { "grafting_HuskArm", "grafting_HuskHeart" },
 
-      local function AddCreatureMark() -- Rather then doign a augmented assignment every where we just reference this instead.
-          creatures=creatures+1
-      end
-      
-      -- Grafting Types is a table containing our possible grafts, each row has a 'parent' graft and it's alternatives.
-      -- If one graft is identified from a table then it skips the rest and moves onto the next row.
+  -- Latcher
+  { "grafting_LatcherHeart", "grafting_LatcherTongue" },
 
-      local GraftingTypes = {
-                            {Parent="grafting_CrawlerTail",Child="grafting_CrawlerLungs"                 -- Crawler
-                          },
-                            {Parent="grafting_FractalGuardianEyes",Child="grafting_WatcherEyes"     -- Eyes
-                          },
-                            {Parent="grafting_HuskArm",Child="grafting_HuskHeart"                   -- Husk
-                          },
-                            {Parent="grafting_LatcherHeart",Child="grafting_LatcherTongue"          -- Latcher
-                          },
-                            {Parent="grafting_MantisLiver",Child="grafting_BroodmotherLiver",       -- Liver
-                            Child2="grafting_ViperlingLiver"
-                          },
-                            {Parent="grafting_MudraptorLungs",Child="grafting_MudraptorHead"        -- Mudraptor
-                          },
-                            {Parent="grafting_TigerThresherJaw",Child="grafting_TigerThresherTail"  -- Tiger Thresher
-                          },
-                            {Parent="grafting_BoneThresherJaw",Child="grafting_CharybdisJaw"        -- Jaw
-                          },
-                            {Parent="grafting_HammerheadTorso",Child="grafting_HammerheadLimbs"     -- Hammerhead
-                          },
-                            {Parent="grafting_EndwormTorso",Child="grafting_EndwormLeftArm",           -- Endworm
-                            Child2="grafting_EndwormRightArm",Child3="grafting_EndwormLeftLeg",
-                            Child4="grafting_EndwormRightLeg"
-                          },
-                            {Parent="grafting_MolochHead",Child="grafting_MolochHeadCracked"                      -- Moloch
-                          },
-                            {Parent="grafting_OrangeboyTail"}                                        -- Tail?
-                          }
-      
-      for Key, Value in pairs(GraftingTypes) do -- We iterate through our graft types using this structure, which is much more compact and easy to mainatain.
+  -- Liver
+  { "grafting_MantisLiver", "grafting_BroodmotherLiver", "grafting_ViperlingLiver" },
 
-        for GraftKey, GraftName in pairs(Value) do
+  -- Mudraptor
+  { "grafting_MudraptorLungs", "grafting_MudraptorHead" },
 
-          if (HF.HasAffliction(c.character,GraftName,1)) then
-            AddCreatureMark()
-            break -- Incase we do have the affliction we break and move onto the next graft type. Keeps the old functionality.
+  -- Tiger Thresher
+  { "grafting_TigerThresherJaw", "grafting_TigerThresherTail" },
 
-          end
-      end
-        
-      HF.SetAffliction(c.character,"hybriddna",creatures) -- I'm not too sure what this is needed for but I'll keep it lol.
+  -- Jaw
+  { "grafting_BoneThresherJaw", "grafting_CharybdisJaw" },
 
-    end
+  -- Hammerhead
+  { "grafting_HammerheadTorso", "grafting_HammerheadLimbs" },
 
-      if c.afflictions[i].strength >= 2 and not HF.HasTalent(c.character,"tolerantdna") and not HF.HasTalent(c.character, "hackeddna") then
-        HF.SetAffliction(c.character,"crossspeciesrejection",100)
-        HF.SetAffliction(c.character,"hybriddnakiller",100)
-      elseif c.afflictions[i].strength >= 3 and not HF.HasTalent(c.character,"hackeddna") then
-        HF.SetAffliction(c.character,"crossspeciesrejection",100)
-        HF.SetAffliction(c.character,"hybriddnakiller",100)
-      end
+  -- Endworm
+  { "grafting_EndwormTorso", "grafting_EndwormLeftArm", "grafting_EndwormRightArm",
+    "grafting_EndwormLeftLeg", "grafting_EndwormRightLeg" },
 
-  end
-end
+  -- Moloch
+  { "grafting_MolochHead", "grafting_MolochHeadCracked" },
+
+  -- Orang
+  { "grafting_OrangeboyTail" },
 }
 
-
-function limbLockedInitialAegis(c, limbtype, key)
-	return not NTC.GetSymptomFalse(c.character, key)
-		and (
-			NTC.GetSymptom(c.character, key)
-			or c.afflictions.t_paralysis.strength > 0
-			or NT.LimbIsAmputated(c.character, limbtype)
-			or (HF.GetAfflictionStrengthLimb(c.character, limbtype, "bandaged", 0) <= 0 and HF.GetAfflictionStrengthLimb(
-				c.character,
-				limbtype,
-				"dirtybandage",
-				0
-			) <= 0 and NT.LimbIsDislocated(c.character, limbtype))
-			or (
-				HF.GetAfflictionStrengthLimb(c.character, limbtype, "gypsumcast", 0) <= 0
-				and NT.LimbIsBroken(c.character, limbtype)
-			)
-		) and HF.HasAffliction(c.character,"grafting_HuskHeart",5)
+local function CountGrafts(Character)
+  local Count = 0
+  for g = 1, #GraftingTypes do
+    local Row = GraftingTypes[g]
+    for k = 1, #Row do
+      if NTCS.HF.HasAffliction(Character, Row[k], 1) then
+        Count = Count + 1
+        break
+      end
+    end
+  end
+  return Count
 end
 
+local HybridDNA = AfflictionBuilder:New("hybriddna"):SetUpdateAction(
+  function(C, Identifier, Limb, DeltaT)
 
+    local Character = C.Human
+    if not NTCS.HF.HasAffliction(Character, "crossspeciesrejection", 1) then return end
 
-NT.Afflictions.lockedhands = {
-		update = function(c, i)
-			-- arm locking
-			local leftlockitem = c.character.Inventory.FindItemByIdentifier("armlock2", false)
-			local rightlockitem = c.character.Inventory.FindItemByIdentifier("armlock1", false)
-			-- handcuffs
-			local handcuffs = c.character.Inventory.FindItemByIdentifier("handcuffs", false)
-			local handcuffed = handcuffs ~= nil and c.character.Inventory.FindIndex(handcuffs) <= 6
+    local Strength = C:GetAfflictionStrength("hybriddna")
 
-      if not handcuffed and HF.HasAffliction(c.character,"grafting_HuskHeart",5) then
-        HF.RemoveItem(leftlockitem)
-        HF.RemoveItem(rightlockitem)
-        return
+    C:SetAffliction("hybriddna", CountGrafts(Character))
+
+    if Strength < 2 or NTCS.HF.HasTalent(Character, "hackeddna") then return end
+
+    -- Strength >= 3: always. Strength >= 2: only without the tolerant talent.
+    if Strength >= 3 or not NTCS.HF.HasTalent(Character, "tolerantdna") then
+      NTCS.HF.SetAffliction(Character, "crossspeciesrejection", 100)
+      NTCS.HF.SetAffliction(Character, "hybriddnakiller", 100)
+    end
+
+  end):Build()
+
+AfflictionLoader:Register(HybridDNA)
+
+-- ========================================================= LIMB LOCKING =========================================================
+-- Probably works? I fucking hate these vro
+local LockedHands = AfflictionBuilder:New("lockedhands")
+  :IsConst(true)
+  :SetUpdateAction(
+  function(C, Identifier, Limb, DeltaT)
+
+    local Character = C.Human
+
+    local LeftHandItem = NTCS.HF.GetItemInLeftHand(Character)
+    local RightHandItem = NTCS.HF.GetItemInRightHand(Character)
+
+    local LeftLockItem = LeftHandItem
+    if LeftLockItem == nil or LeftLockItem.Prefab.Identifier.Value ~= "armlock" then
+      LeftLockItem = nil
+    end
+
+    local RightLockItem = RightHandItem
+    if RightLockItem == nil or RightLockItem.Prefab.Identifier.Value ~= "armlock" then
+      RightLockItem = nil
+    end
+
+    -- Handcuffs check
+    local Handcuffs = Character.Inventory.FindItemByIdentifier("handcuffs", false)
+    local Handcuffed = Handcuffs ~= nil and Character.Inventory.FindIndex(Handcuffs) <= 6
+
+    -- Husk Heart makes you immune to arm locks (unless handcuffed).
+    if not Handcuffed and NTCS.HF.HasAffliction(Character, "grafting_HuskHeart", 5) then
+      if LeftLockItem then NTCS.HF.RemoveItem(LeftLockItem) end
+      if RightLockItem then NTCS.HF.RemoveItem(RightLockItem) end
+      C:SetAffliction(Identifier, 0)
+      return
+    end
+
+    if Handcuffed then
+      -- Drop non-handcuff items
+      if LeftHandItem ~= nil and LeftHandItem ~= Handcuffs and LeftLockItem == nil then
+        LeftHandItem.Drop(Character)
       end
-
-      if handcuffed then
-				-- drop non-handcuff items
-				local leftHandItem = HF.GetItemInLeftHand(c.character)
-				local rightHandItem = HF.GetItemInRightHand(c.character)
-				if leftHandItem ~= nil and leftHandItem ~= handcuffs and leftlockitem == nil then
-					leftHandItem.Drop(c.character)
-				end
-				if rightHandItem ~= nil and rightHandItem ~= handcuffs and rightlockitem == nil then
-					rightHandItem.Drop(c.character)
-				end
-			end
-
-			local leftarmlocked = leftlockitem ~= nil and not handcuffed
-			local rightarmlocked = rightlockitem ~= nil and not handcuffed
-    
-			if leftarmlocked and not c.stats.lockleftarm then
-				HF.RemoveItem(leftlockitem)
-			end
-			if rightarmlocked and not c.stats.lockrightarm then
-				HF.RemoveItem(rightlockitem)
-			end
-
-
-      if not leftarmlocked and c.stats.lockleftarm then
-				HF.ForceArmLock(c.character, "armlock2")
-			end
-			if not rightarmlocked and c.stats.lockrightarm then
-				HF.ForceArmLock(c.character, "armlock1")
-			end
-
-			c.afflictions[i].strength = HF.BoolToNum((c.stats.lockleftarm and c.stats.lockrightarm) or handcuffed, 100)
-		end,
-}
-
-NT.Afflictions.lockleftarm = {
-  getter = function(c)
-    return limbLockedInitialAegis(c, LimbType.LeftArm, "lockleftarm")
-  end,
-}
-
-NT.Afflictions.lockrightarm = {
-  getter = function(c)
-    return limbLockedInitialAegis(c, LimbType.RightArm, "lockrightarm")
-  end,
-}
-NT.Afflictions.lockleftleg = {
-  getter = function(c)
-    return limbLockedInitialAegis(c, LimbType.LeftLeg, "lockleftleg")
-  end,
-}
-NT.Afflictions.lockrightleg = {
-  getter = function(c)
-    return limbLockedInitialAegis(c, LimbType.RightLeg, "lockrightleg")
-  end,
-}
-
-
-
-
-
-
--- Hooks related to Hammerhead and Endworm Afflictions
-
-NT.Afflictions.grafting_HammerheadTorso = {
-
-  update = function(c,i)
-    if c.afflictions[i].strength > 10 then
-      local outwearItem = c.character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-      local clothes = c.character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-      if outwearItem == nil and clothes == nil then
-        HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",100)  
-      else
-        HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",0)
+      if RightHandItem ~= nil and RightHandItem ~= Handcuffs and RightLockItem == nil then
+        RightHandItem.Drop(Character)
       end
-    else
-      HF.SetAffliction(c.character,"grafting_HammerheadTorsoSprite",0)
-    end
-  end,
-
-
-}
-
-Hook.Add("item.equip", "graftedTorsoFixEquip", function(item, character)
-
-  if (HF.HasAfflictionLimb(character, "grafting_HammerheadTorso", LimbType.Torso, 5)) then
-    local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-    local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-    if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",100)  
-    else
-      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",0)
     end
 
-  elseif (HF.HasAfflictionLimb(character, "grafting_EndwormTorso", LimbType.Torso, 5)) then
-    local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-    local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-    if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",100)  
-    else
-      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",0)
+    local WantLeft = C:GetBoolStat("lockleftarm")
+    local WantRight = C:GetBoolStat("lockrightarm")
+
+    local LeftArmLocked = LeftLockItem ~= nil and not Handcuffed
+    local RightArmLocked = RightLockItem ~= nil and not Handcuffed
+
+    if LeftArmLocked and not WantLeft then
+      NTCS.HF.RemoveItem(LeftLockItem)
+    end
+    if RightArmLocked and not WantRight then
+      NTCS.HF.RemoveItem(RightLockItem)
     end
 
+    if not LeftArmLocked and WantLeft then
+      NTCS.HF.ForceArmLock(Character, "LeftArm")
+    end
+    if not RightArmLocked and WantRight then
+      NTCS.HF.ForceArmLock(Character, "RightArm")
+    end
+
+    C:SetAffliction(Identifier, NTCS.HF.BoolToNum((WantLeft and WantRight) or Handcuffed, 100))
+
+  end):Build()
+
+AfflictionLoader:Override(LockedHands)
+
+-- ========================================================= HAMMERHEAD =========================================================
+-- :drool:
+local function IsUnclothed(Character)
+  local Inventory = Character.Inventory
+  return Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes) == nil
+    and Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes) == nil
+end
+
+local function SetSprite(Character, Sprite, Show)
+  NTCS.HF.SetAffliction(Character, Sprite, Show and 100 or 0)
+end
+
+local HammerheadTorso = AfflictionBuilder:New("grafting_HammerheadTorso")
+  :IsConst(true)
+  :SetUpdateAction(function(C, Identifier, Limb, DeltaT)
+
+    local Character = C.Human
+    SetSprite(Character, "grafting_HammerheadTorsoSprite", C:GetAfflictionStrength("grafting_HammerheadTorso") > 10 and IsUnclothed(Character))
+
+  end):Build()
+
+AfflictionLoader:Register(HammerheadTorso)
+
+local function RefreshTorsoSprite(Item, Character)
+  if NTCS.HF.HasAfflictionLimb(Character, "grafting_HammerheadTorso", LimbType.Torso, 5) then
+    SetSprite(Character, "grafting_HammerheadTorsoSprite", IsUnclothed(Character))
+  elseif NTCS.HF.HasAfflictionLimb(Character, "grafting_EndwormTorso", LimbType.Torso, 5) then
+    SetSprite(Character, "grafting_EndwormTorsoSprite", IsUnclothed(Character))
   end
-end)
+end
 
+Hook.Add("item.equip", "graftedTorsoFixEquip", RefreshTorsoSprite)
+Hook.Add("item.unequip", "graftedTorsoFixUnequip", RefreshTorsoSprite)
 
-Hook.Add("item.unequip", "graftedTorsoFixUnequip", function(item, character)
+-- ========================================================= MOLOCH =========================================================
+-- moloch head
+-- moloch head
+local MolochHead = AfflictionBuilder:New("grafting_MolochHead"):SetUpdateAction(
+  function(C, Identifier, Limb, DeltaT)
 
-  if (HF.HasAfflictionLimb(character, "grafting_HammerheadTorso", LimbType.Torso, 5)) then
-    local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-    local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-    if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",100)  
-    else
-      HF.SetAffliction(character,"grafting_HammerheadTorsoSprite",0)
+    if C:GetAfflictionStrength("grafting_MolochHead") <= 0 then return end
+
+    local Character = C.Human
+    local Head = LimbType.Head
+
+    local Blunt = NTCS.HF.GetAfflictionStrengthLimb(Character, Head, "blunttrauma", 0)
+    local Lacerations = NTCS.HF.GetAfflictionStrengthLimb(Character, Head, "lacerations", 0)
+    local Gunshot = NTCS.HF.GetAfflictionStrengthLimb(Character, Head, "gunshotwound", 0)
+
+    if Blunt >= 40 or Lacerations >= 40 or Gunshot >= 40 then
+      NTCS.HF.AddAffliction(Character, "grafting_MolochHeadCracked", 1.5)
+    elseif Blunt >= 4 or Lacerations >= 4 or Gunshot >= 7 then
+      NTCS.HF.AddAffliction(Character, "grafting_MolochHeadCracked", 0.5)
     end
 
-  elseif (HF.HasAfflictionLimb(character, "grafting_EndwormTorso", LimbType.Torso, 5)) then
-    local outwearItem = character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-    local clothes = character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-    if outwearItem == nil and clothes == nil then
-      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",100)  
-    else
-      HF.SetAffliction(character,"grafting_EndwormTorsoSprite",0)
-    end
+  end):Build()
 
-  end
-end)
+AfflictionLoader:Register(MolochHead)
 
+-- ========================================================= ENDWORM =========================================================
 
-
-
-
-
-NT.Afflictions.grafting_MolochHead = {
-  update = function(c,i)
-
-    if c.afflictions[i].strength > 0 then
-      if HF.HasAfflictionLimb(c.character,"blunttrauma",LimbType.Head,40) 
-      or HF.HasAfflictionLimb(c.character,"lacerations",LimbType.Head,40)
-      or HF.HasAfflictionLimb(c.character,"gunshotwound",LimbType.Head,40) then
-        HF.AddAffliction(c.character,"grafting_MolochHeadCracked",1.5)
-      elseif HF.HasAfflictionLimb(c.character,"blunttrauma",LimbType.Head,4) 
-      or HF.HasAfflictionLimb(c.character,"lacerations",LimbType.Head,4)
-      or HF.HasAfflictionLimb(c.character,"gunshotwound",LimbType.Head,7) then
-        HF.AddAffliction(c.character,"grafting_MolochHeadCracked",0.5)
-      end
-    end      
-
-
-  end,
+-- TODO: fold afflictions
+local EndwormLimbs = {
+  { LimbType.LeftArm,  "grafting_EndwormLeftArm",  "ntc_cyberarm" },
+  { LimbType.RightArm, "grafting_EndwormRightArm", "ntc_cyberarm" },
+  { LimbType.LeftLeg,  "grafting_EndwormLeftLeg",  "ntc_cyberleg" },
+  { LimbType.RightLeg, "grafting_EndwormRightLeg", "ntc_cyberleg" },
 }
 
+local EndwormTorso = AfflictionBuilder:New("grafting_EndwormTorso"):SetUpdateAction(
+  function(C, Identifier, Limb, DeltaT)
 
+    local Character = C.Human
 
-
-NT.Afflictions.grafting_EndwormTorso = {
-
-  update = function(c,i)
-    if c.afflictions[i].strength > 10 and NTCyb == nil then
-      if HF.HasAfflictionLimb(c.character,"grafting_EndwormTorso",LimbType.Torso,90) then
-        HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftArm",LimbType.LeftArm,1)
-        HF.AddAfflictionLimb(c.character,"grafting_EndwormRightArm",LimbType.RightArm,1)
-        HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftLeg",LimbType.LeftLeg,1)
-        HF.AddAfflictionLimb(c.character,"grafting_EndwormRightLeg",LimbType.RightLeg,1)
-      end
-    elseif c.afflictions[i].strength > 10 and NTCyb ~= nil then
-      if HF.HasAfflictionLimb(c.character,"grafting_EndwormTorso",LimbType.Torso,90) then
-        if HF.HasAfflictionLimb(c.character,"ntc_cyberarm",LimbType.LeftArm,1) then
-        else HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftArm",LimbType.LeftArm,1) end
-        if HF.HasAfflictionLimb(c.character,"ntc_cyberarm",LimbType.RightArm,1) then
-        else HF.AddAfflictionLimb(c.character,"grafting_EndwormRightArm",LimbType.RightArm,1) end
-        if HF.HasAfflictionLimb(c.character,"ntc_cyberleg",LimbType.LeftLeg,1) then
-        else HF.AddAfflictionLimb(c.character,"grafting_EndwormLeftLeg",LimbType.LeftLeg,1) end
-        if HF.HasAfflictionLimb(c.character,"ntc_cyberleg",LimbType.RightLeg,1) then
-        else HF.AddAfflictionLimb(c.character,"grafting_EndwormRightLeg",LimbType.RightLeg,1) end
+    if C:GetAfflictionStrength("grafting_EndwormTorso") <= 10 then
+      SetSprite(Character, "grafting_EndwormTorsoSprite", false)
+      return
     end
 
-
-
-      local outwearItem = c.character.Inventory.GetItemInLimbSlot(InvSlotType.OuterClothes)
-      local clothes = c.character.Inventory.GetItemInLimbSlot(InvSlotType.InnerClothes)
-      if outwearItem == nil and clothes == nil then
-        HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",100)  
-      else
-        HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",0)
+    if NTCS.HF.HasAfflictionLimb(Character, "grafting_EndwormTorso", LimbType.Torso, 90) then
+      local HasCyber = NTCS_Cybernetics ~= nil
+      for n = 1, #EndwormLimbs do
+        local Entry = EndwormLimbs[n]
+        if not (HasCyber and NTCS.HF.HasAfflictionLimb(Character, Entry[3], Entry[1], 1)) then
+          NTCS.HF.AddAfflictionLimb(Character, Entry[2], Entry[1], 1)
+        end
       end
-    else
-      HF.SetAffliction(c.character,"grafting_EndwormTorsoSprite",0)
     end
-  end,
 
-}
+    SetSprite(Character, "grafting_EndwormTorsoSprite", IsUnclothed(Character))
 
+  end):Build()
+
+AfflictionLoader:Register(EndwormTorso)
+
+-- ========================================================= ORANG BOY =========================================================
 
 math.randomseed(os.time())
-NT.Afflictions.grafting_OrangeboyTail = {
-  update = function(c,i)
-    if c.afflictions[i].strength > 1 then
-      local dropChance = math.random(0,1250)
-      if(dropChance <= 3) then
-        HF.GiveItem(c.character,"chitin")
-      end
+
+local OrangeboyTail = AfflictionBuilder:New("grafting_OrangeboyTail"):SetUpdateAction(
+  function(C, Identifier, Limb, DeltaT)
+
+    if C:GetAfflictionStrength("grafting_OrangeboyTail") > 1 and math.random(0, 1250) <= 3 then
+      NTCS.HF.GiveItem(C.Human, "chitin")
     end
-  end,
-}
+
+  end):Build()
+
+AfflictionLoader:Register(OrangeboyTail)
