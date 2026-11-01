@@ -30,11 +30,8 @@ Timer.Wait(function()
 	-- Singleplayer + Serverside code
 	if SERVER or (CLIENT and not Game.IsMultiplayer) then
 		dofile(NTCS_Grafting.Path .. "/Lua/Scripts/Server/CreatureDrops.lua") -- Add loot drops via Lua instead of XML overrides
+		dofile(NTCS_Grafting.Path .. "/Lua/Scripts/Server/HumanUpdate.lua")
+		dofile(NTCS_Grafting.Path .. "/Lua/Scripts/Server/Items.lua")
+		dofile(NTCS_Grafting.Path .. "/Lua/Scripts/Server/EMPExplosionPatch.lua")
 	end
-
-	-- Client code
-	if CLIENT then
-	end
-
-	-- Shared code
 end, 1)

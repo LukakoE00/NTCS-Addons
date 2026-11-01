@@ -1,2662 +1,800 @@
+local itemLoader = NTCS.ItemFunctionLoader("NTCS_Grafting")
 
+-- ========================================================= GENERAL ITEMS =========================================================
 
+-- Graft Cure
+local GraftingCure = function (d)
 
-Hook.Add("item.applyTreatment", "NTGraft.itemused", function(item, usingCharacter, targetCharacter, limb)
-  local identifier = item.Prefab.Identifier.Value
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
 
-  local methodtorun = NTGraft.ItemMethods[identifier]
-  if(methodtorun~=nil) then
+  local medicalLevel = NTCS.HF.GetSkillLevel(usingCharacter, "medical")
 
-      methodtorun(item, usingCharacter, targetCharacter, limb)
-      return
+  -- Skillcheck
+  local overdose = 70
+  if medicalLevel < 50 then
+    overdose = medicalLevel >= math.random(0, 50) and 75 or 85
   end
 
-  for key,value in pairs(NTGraft.ItemStartsWithMethods) do
-    if HF.StartsWith(identifier,key) then
-      value(item, usingCharacter, targetCharacter, limb)
-      return
-    end
-  end
-
-
-end)
-
-
-
-
-
-local function forceSyncAfflictions(character)
-  if Game.IsSinglePlayer then return end
-
-  Networking.CreateEntityEvent(character, Character.CharacterStatusEventData.__new(true))
+  NTCS.HF.AddAffliction(targetCharacter, "graftingcureoverdose", overdose, usingCharacter)
+  NTCS.HF.AddAffliction(targetCharacter, "crossspeciesrejection", -25, usingCharacter)
+  NTCS.HF.RemoveItem(d.item)
 end
 
-NTGraft.ItemMethods = {}
-NTGraft.ItemStartsWithMethods = {}
+itemLoader:Register("graftingcure", GraftingCure)
 
+-- DNA Splicer
+local DNASplicer = function (d)
 
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+  local limbtype = NTCS.HF.NormalizeLimbType(d.targetLimb.type)
 
+  local medicalLevel = NTCS.HF.GetSurgerySkill(usingCharacter)
 
--- ORGAN IDENTIFIER FUNCTION
-
-local function organIdentifier(targetCharacter, usingCharacter, organ)
-
-  if (organ == "Lungs") then
-    --Lungs, Grafting Removal
-    --Current List: crawlerLungs, mudraptorLungs
-    if (HF.HasAffliction(targetCharacter, "grafting_CrawlerLungs", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 0, usingCharacter)
-      return "crawlerLungsAegis"
-    elseif (HF.HasAffliction(targetCharacter, "grafting_MudraptorLungs", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 0, usingCharacter)
-      return "mudraptorLungsAegis"
-    else
-      if NTC.HasTag(usingCharacter, "organssellforfull") then
-        return "lungtransplant"
-      else
-        return "lungtransplant_q1"
-      end
-    end
-  elseif (organ == "Heart") then
-    --Heart, Grafting Removal
-    --Current List: huskHeart, latcherHeart
-    if (HF.HasAffliction(targetCharacter, "grafting_HuskHeart", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 0, usingCharacter)
-      return "huskHeartAegis"
-    elseif (HF.HasAffliction(targetCharacter, "grafting_LatcherHeart", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 0, usingCharacter)
-      return "latcherHeartAegis"
-    else
-			if NTC.HasTag(usingCharacter, "organssellforfull") then
-				return "hearttransplant"
-      else
-        return "hearttransplant_q1"
-      end
-    end
-  elseif (organ == "Liver") then
-    --Livers, Grafting Removal
-    --Current List: mantisLiver, broodmotherLiver, viperlingLiver
-    if (HF.HasAffliction(targetCharacter, "grafting_MantisLiver", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 0, usingCharacter)
-      return "mantisLiverAegis"
-    elseif (HF.HasAffliction(targetCharacter, "grafting_BroodmotherLiver", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 0)
-      return "broodmotherLiverAegis"
-    elseif (HF.HasAffliction(targetCharacter, "grafting_ViperlingLiver", 1)) then
-      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 0, usingCharacter)
-      return "viperlingLiverAegis"
-    else
-      if NTC.HasTag(usingCharacter, "organssellforfull") then
-        return "livertransplant"
-      else
-        return "livertransplant_q1"
-      end
-    end
-  end
-
-end
-
-
-
--- GENERAL ITEMS
-
-
-NTGraft.ItemMethods.graftingcure = function(item, usingCharacter, targetCharacter, limb)
-
-  local medicalLevel = HF.GetSkillLevel(usingCharacter, "medical")
-
-  if (medicalLevel >= 50) then
-    HF.AddAffliction(targetCharacter, "graftingcureoverdose", 70, usingCharacter)
-    HF.AddAffliction(targetCharacter, "crossspeciesrejection", -25, usingCharacter)
-    HF.RemoveItem(item)
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 50)
-    if(medicalLevel >= skillcheck) then
-      HF.AddAffliction(targetCharacter, "graftingcureoverdose", 75, usingCharacter)
-      HF.AddAffliction(targetCharacter, "crossspeciesrejection", -25, usingCharacter)
-      HF.RemoveItem(item)
-    elseif(medicalLevel < skillcheck) then
-      HF.AddAffliction(targetCharacter, "graftingcureoverdose", 85, usingCharacter)
-      HF.AddAffliction(targetCharacter, "crossspeciesrejection", -25, usingCharacter)
-      HF.RemoveItem(item)
-    end
-  end
-
-end
-
-
-
-
-NTGraft.ItemMethods.dnasplicer = function(item, usingCharacter, targetCharacter, limb)
-
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
+  -- Hammerhead / Endworm grafts resist
   local strength = 100
-  if (HF.HasAfflictionLimb(targetCharacter, "grafting_HammerheadTorso", limbtype, 1)) then
+  if NTCS.HF.HasAfflictionLimb(targetCharacter, "grafting_HammerheadTorso", limbtype, 1) then
     strength = 66
-  elseif (HF.HasAfflictionLimb(targetCharacter, "grafting_EndwormTorso",LimbType.Torso,1)) and limbtype ~= LimbType.Head then
+  elseif NTCS.HF.HasAfflictionLimb(targetCharacter, "grafting_EndwormTorso", LimbType.Torso, 1) and limbtype ~= LimbType.Head then
     strength = 33
   end
 
-  if (medicalLevel >= 50) then
-      HF.AddAfflictionLimb(targetCharacter, "alienDNARemoval", limbtype, strength, usingCharacter)
-    HF.RemoveItem(item)
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 50)
-    if(medicalLevel >= skillcheck) then
-      HF.AddAfflictionLimb(targetCharacter, "alienDNARemoval", limbtype, strength, usingCharacter)
-      HF.RemoveItem(item)
-    elseif(medicalLevel < skillcheck) then
-      strength = strength / 2
-      HF.AddAfflictionLimb(targetCharacter, "alienDNARemoval", limbtype, strength, usingCharacter)
-      HF.RemoveItem(item)
-    end
+  -- Skill check
+  if medicalLevel < 50 and medicalLevel < math.random(0, 50) then
+    strength = strength / 2
   end
 
+  NTCS.HF.AddAfflictionLimb(targetCharacter, "alienDNARemoval", limbtype, strength, usingCharacter)
+  NTCS.HF.RemoveItem(d.item)
 end
 
+itemLoader:Register("dnasplicer", DNASplicer)
 
-
-
-NTGraft.ItemMethods.alienscalpel = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  --Torso, Grafting Removal.
-  --Current List: CrawlerTail, HuskArm, TigerThresherTail, HammerheadLimbs, OrangeboyTail
-  if(limbtype == LimbType.Torso) then
-    if (medicalLevel >= 30) then
-      if (HF.HasAffliction(targetCharacter,"grafting_OrangeboyTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedSkin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"orangeboyTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_CrawlerTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"grafting_CrawlerTail")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_TigerThresherTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"tigerThresherTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_HuskArm",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HuskArm",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"huskArmAegis")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_HammerheadLimbs",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"hammerheadLimbsAegis")
-      end
-    else
-      math.randomseed(os.time())
-      local skillcheck = math.random(0, 30)
-      if (skillcheck > medicalLevel) then
-        HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
-      elseif (HF.HasAffliction(targetCharacter,"grafting_OrangeboyTail",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",0,usingCharacter,0)
-        HF.GiveItem(targetCharacter,"orangeboyTailAegis")
-      elseif (HF.HasAffliction(targetCharacter,"grafting_CrawlerTail",limbtype,1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"grafting_CrawlerTail")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_TigerThresherTail",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"tigerThresherTailAegis")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_HuskArm",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HuskArm",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"huskArmAegis")
-      elseif(HF.HasAffliction(targetCharacter,"grafting_HammerheadLimbs",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"hammerheadLimbsAegis")
-      end
-    end
-  --Head, Grafting Removal.
-  --Current List: LatcherTongue 
-  elseif(limbtype == LimbType.Head) then
-    if (medicalLevel >= 30) then
-      if (HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"latcherTongueAegis")
-      end
-    else
-      math.randomseed(os.time())
-      local skillcheck = math.random(0,30)
-      if (skillcheck > medicalLevel) then
-        HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 5, usingCharacter)
-      elseif (HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) and HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",0,usingCharacter,0)
-        HF.GiveItem(usingCharacter,"latcherTongueAegis")
-      end
-    end
-  end
-
-end
-
-
-
-NT.SutureAfflictions = {
-	bonecut = { xpgain = 0, case = "surgeryincision" },
-	drilledbones = { xpgain = 0, case = "surgeryincision" },
-
-	ll_arterialcut = { xpgain = 3, case = "retractedskin" },
-	rl_arterialcut = { xpgain = 3, case = "retractedskin" },
-	la_arterialcut = { xpgain = 3, case = "retractedskin" },
-	ra_arterialcut = { xpgain = 3, case = "retractedskin" },
-	h_arterialcut = { xpgain = 3, case = "retractedskin" },
-	t_arterialcut = { xpgain = 6, case = "retractedskin" },
-	arteriesclamp = { xpgain = 0, case = "retractedskin" },
-	tamponade = { xpgain = 3, case = "retractedskin" },
-	internalbleeding = { xpgain = 3, case = "retractedskin" },
-	stroke = { xpgain = 6, case = "retractedskin" },
-	heartremoved = {
-		xpgain = 0,
-		case = "retractedskin",
-		func = function(item, usingCharacter, targetCharacter, limb)
-			local damage = HF.GetAfflictionStrength(targetCharacter, "heartdamage", 0)
-			if damage == 100 or not HF.HasAffliction(targetCharacter, "heartremoved") then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "heartdamage", 100, targetCharacter)
-				HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
-
-				HF.SetAffliction(targetCharacter, "tamponade", 0, targetCharacter)
-				HF.SetAffliction(targetCharacter, "heartattack", 0, targetCharacter)
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, targetCharacter)
-        local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Heart")
---				if NTC.HasTag(usingCharacter, "organssellforfull") then
---					transplantidentifier = "hearttransplant"
---				end
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end,
-	},
-	lungremoved = {
-		xpgain = 0,
-		case = "retractedskin",
-		func = function(item, usingCharacter, targetCharacter, limb)
-			local damage = HF.GetAfflictionStrength(targetCharacter, "lungdamage", 0)
-			if damage == 100 or not HF.HasAffliction(targetCharacter, "lungremoved") then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "lungdamage", 100, targetCharacter)
-				HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
-
-				HF.SetAffliction(targetCharacter, "pneumothorax", 0, targetCharacter)
-				HF.SetAffliction(targetCharacter, "needlec", 0, targetCharacter)
-
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, targetCharacter)
-        local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Lungs")
---				local transplantidentifier = "lungtransplant_q1"
---				if NTC.HasTag(usingCharacter, "organssellforfull") then
---					transplantidentifier = "lungtransplant"
---				end
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end,
-	},
-	kidneyremoved = {
-		xpgain = 0,
-		case = "retractedskin",
-		func = function(item, usingCharacter, targetCharacter, limb)
-			local damage = HF.GetAfflictionStrength(targetCharacter, "kidneydamage", 0)
-			if damage == 100 or not HF.HasAffliction(targetCharacter, "kidneyremoved") then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "kidneydamage", 100, usingCharacter)
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, usingCharacter)
-				local transplantidentifier = "kidneytransplant_q1"
-				if NTC.HasTag(usingCharacter, "organssellforfull") then
-					transplantidentifier = "kidneytransplant"
-				end
-				if damage < 50 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-					damage = damage + 50
-				end
-				if damage < 95 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - (damage - 50) * 2,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end,
-	},
-	liverremoved = {
-		xpgain = 0,
-		case = "retractedskin",
-		func = function(item, usingCharacter, targetCharacter, limb)
-			local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-			if damage == 100 or not HF.HasAffliction(targetCharacter, "liverremoved") then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "liverdamage", 100, usingCharacter)
-
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, usingCharacter)
-        local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
---				local transplantidentifier = "livertransplant_q1"
---				if NTC.HasTag(usingCharacter, "organssellforfull") then
---					transplantidentifier = "livertransplant"
---				end
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end,
-	},
-	brainremoved = {
-		xpgain = 0,
-		case = "retractedskin",
-		func = function(item, usingCharacter, targetCharacter, limb)
-			local damage = HF.GetAfflictionStrength(targetCharacter, "cerebralhypoxia", 0)
-			if damage == 100 or not HF.HasAffliction(targetCharacter, "brainremoved") then
-				return
-			else
-				HF.AddAffliction(targetCharacter, "cerebralhypoxia", 100, usingCharacter)
-
-				if NTSP ~= nil then
-					if HF.HasAffliction(targetCharacter, "artificialbrain") then
-						HF.SetAffliction(targetCharacter, "artificialbrain", 0, usingCharacter)
-						damage = 100
-					end
-				end
-
-				if damage < 90 then
-					local postSpawnFunction = function(item, donor, client)
-						item.Condition = 100 - damage
-						if client ~= nil then
-							item.Description = client.Name
-						end
-					end
-
-					if SERVER then
-						-- use server spawn method
-						local prefab = ItemPrefab.GetItemPrefab("braintransplant")
-						local client = HF.CharacterToClient(targetCharacter)
-						Entity.Spawner.AddItemToSpawnQueue(
-							prefab,
-							usingCharacter.WorldPosition,
-							nil,
-							nil,
-							function(item)
-								usingCharacter.Inventory.TryPutItem(item, nil, { InvSlotType.Any })
-								postSpawnFunction(item, targetCharacter, client)
-							end
-						)
-
-						if client ~= nil then
-							client.SetClientCharacter(nil)
-						end
-					else
-						-- use client spawn method
-						local item = Item(ItemPrefab.GetItemPrefab("braintransplant"), usingCharacter.WorldPosition)
-						usingCharacter.Inventory.TryPutItem(item, nil, { InvSlotType.Any })
-						postSpawnFunction(item, targetCharacter, nil)
-					end
-				end
-			end
-		end,
-	},
-
-	clampedbleeders = {},
-	surgeryincision = {},
-	retractedskin = {},
+-- Alien Scalpel
+-- Graft Affliction ID (to cut) + Item ID (that it gives back)
+local TorsoGraftRemovals = {
+  { "grafting_OrangeboyTail", "grafting_OrangeboyTail" },
+  { "grafting_CrawlerTail", "grafting_CrawlerTail" },
+  { "grafting_TigerThresherTail", "grafting_TigerThresherTail" },
+  { "grafting_HuskArm", "grafting_HuskArm" },
+  { "grafting_HammerheadLimbs", "grafting_HammerheadLimbs" },
 }
 
-
-NT.ItemStartsWithMethods.lungtransplant = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "lungdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "lungremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Lungs")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "lungdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "lungdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
-
-			HF.SetAffliction(targetCharacter, "pneumothorax", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "needlec", 0, targetCharacter)
-
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "lungtransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "lungtransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-		if HF.Chance(rejectionchance) and NTConfig.Get("NT_organRejection", false) then
-			HF.SetAffliction(targetCharacter, "lungdamage", 100)
-		end
-	end
-end
-
-
-
-NT.ItemStartsWithMethods.hearttransplant = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "heartdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "heartremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Heart")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "heartdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "heartdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
-
-			HF.SetAffliction(targetCharacter, "tamponade", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartattack", 0, targetCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "hearttransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "hearttransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-		if HF.Chance(rejectionchance) and NTConfig.Get("NT_organRejection", false) then
-			HF.SetAffliction(targetCharacter, "heartdamage", 100)
-		end
-	end
-end
-
-
-
-
-
-
-
-
-NT.ItemStartsWithMethods.livertransplant = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "liverremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "liverdamage", 100 - workcondition, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
---			local transplantidentifier = "livertransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "livertransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-		if HF.Chance(rejectionchance) and NTConfig.Get("NT_organRejection", false) then
-			HF.SetAffliction(targetCharacter, "liverdamage", 100)
-		end
-	end
-end
-
-
-
-
-
-NT.ItemMethods.organscalpel_lungs = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-
-	local removed = HF.GetAfflictionStrength(targetCharacter, "lungremoved", 0)
-	if limbtype == LimbType.Torso and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
-		if removed <= 0 then
-			if HF.GetSurgerySkillRequirementMet(usingCharacter, 50) then
-				HF.SetAffliction(targetCharacter, "lungremoved", 100, usingCharacter)
-			else
-				HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
-				HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
-				HF.AddAffliction(targetCharacter, "lungdamage", 20, usingCharacter)
-			end
-
-			HF.GiveItem(targetCharacter, "ntsfx_slash")
-		else -- organ extraction
-			local damage = HF.GetAfflictionStrength(targetCharacter, "lungdamage", 0)
-			if damage == 100 then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "lungdamage", 100, targetCharacter)
-				HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
-
-				HF.SetAffliction(targetCharacter, "pneumothorax", 0, targetCharacter)
-				HF.SetAffliction(targetCharacter, "needlec", 0, targetCharacter)
-
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, targetCharacter)
-				local transplantidentifier = "lungtransplant_q1"
-				if NTC.HasTag(usingCharacter, "organssellforfull") then
-					transplantidentifier = "lungtransplant"
-				end
-        transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Lungs")
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end
-	end
-end
-
-
-
-
-NT.ItemMethods.organscalpel_heart = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-
-	local removed = HF.GetAfflictionStrength(targetCharacter, "heartremoved", 0)
-	if limbtype == LimbType.Torso and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
-		if removed <= 0 then
-			if HF.GetSurgerySkillRequirementMet(usingCharacter, 60) then
-				HF.SetAffliction(targetCharacter, "heartremoved", 100, usingCharacter)
-			else
-				HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
-				HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
-				HF.AddAffliction(targetCharacter, "heartdamage", 20, usingCharacter)
-			end
-
-			HF.GiveItem(targetCharacter, "ntsfx_slash")
-		else -- organ extraction
-			local damage = HF.GetAfflictionStrength(targetCharacter, "heartdamage", 0)
-			if damage == 100 then
-				return
-			else
-				HF.SetAffliction(targetCharacter, "heartdamage", 100, targetCharacter)
-				HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
-
-				HF.SetAffliction(targetCharacter, "tamponade", 0, targetCharacter)
-				HF.SetAffliction(targetCharacter, "heartattack", 0, targetCharacter)
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, targetCharacter)
-				local transplantidentifier = "hearttransplant_q1"
-				if NTC.HasTag(usingCharacter, "organssellforfull") then
-					transplantidentifier = "hearttransplant"
-				end
-        transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Heart")
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end
-	end
-end
-
-
-NT.ItemMethods.organscalpel_liver = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-
-	local removed = HF.GetAfflictionStrength(targetCharacter, "liverremoved", 0)
-	if limbtype == LimbType.Torso and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
-		if removed <= 0 then
-			if HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-				HF.SetAffliction(targetCharacter, "liverremoved", 100, usingCharacter)
-			else
-				HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
-				HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
-				HF.AddAffliction(targetCharacter, "liverdamage", 20, usingCharacter)
-			end
-
-			HF.GiveItem(targetCharacter, "ntsfx_slash")
-		else -- organ extraction
-			local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-			if damage == 100 then
-				return
-			elseif HF.GetSurgerySkillRequirementMet(usingCharacter, 50) then
-				HF.SetAffliction(targetCharacter, "liverdamage", 100, usingCharacter)
-
-				HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, usingCharacter)
-				local transplantidentifier = "livertransplant_q1"
-				if NTC.HasTag(usingCharacter, "organssellforfull") then
-					transplantidentifier = "livertransplant"
-				end
-        transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
-				if damage < 90 then
-					-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-					local function postSpawnFunc(args)
-						local tags = {}
-
-						if args.acidosis > 0 then
-							table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-						elseif args.alkalosis > 0 then
-							table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-						end
-						if args.sepsis > 10 then
-							table.insert(tags, "sepsis")
-						end
-
-						local tagstring = ""
-						for index, value in ipairs(tags) do
-							tagstring = tagstring .. value
-							if index < #tags then
-								tagstring = tagstring .. ","
-							end
-						end
-
-						args.item.Tags = tagstring
-						args.item.Condition = args.condition
-					end
-					local params = {
-						acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-						alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-						sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-						condition = 100 - damage,
-					}
-
-					HF.GiveItemPlusFunction(transplantidentifier, postSpawnFunc, params, usingCharacter)
-				end
-			end
-		end
-	end
-end
-
-
-
-
-NT.ItemMethods.emptybloodpack = function(item, usingCharacter, targetCharacter, limb)
-	if item.Condition <= 0 then
-		return
-	end
-
-	if targetCharacter.Bloodloss <= 31 then
-		local success = HF.GetSkillRequirementMet(usingCharacter, "medical", 30)
-		local bloodlossinduced = 30
-		if not success then
-			bloodlossinduced = 40
-		end
-
-		local bloodtype = NT.GetBloodtype(targetCharacter)
-
-		-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-		local function postSpawnFunc(args)
-			local tags = {}
-
-			if args.acidosis > 0 then
-				table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-			elseif args.alkalosis > 0 then
-				table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-			end
-			if args.sepsis > 0 then
-				table.insert(tags, "sepsis")
-			end
-      if args.paralysis > 0 then
-        table.insert(tags, "paralysis")
-      elseif args.acidburn > 0 then
-        table.insert(tags, "acidburn")
-      end
-
-
-			local tagstring = ""
-			for index, value in ipairs(tags) do
-				tagstring = tagstring .. value
-				if index < #tags then
-					tagstring = tagstring .. ","
-				end
-			end
-
-			args.item.Tags = tagstring
-		end
-		local params = {
-			acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-			alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-			sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-      paralysis = HF.GetAfflictionStrength(targetCharacter, "grafting_MantisLiver"),
-      acidburn = HF.GetAfflictionStrength(targetCharacter, "grafting_BroodmotherLiver"),
-		}
-
-		-- move towards isotonic
-		HF.SetAffliction(targetCharacter, "acidosis", HF.GetAfflictionStrength(targetCharacter, "acidosis", 0) * 0.9)
-		HF.SetAffliction(targetCharacter, "alkalosis", HF.GetAfflictionStrength(targetCharacter, "alkalosis", 0) * 0.9)
-
-		HF.AddAffliction(targetCharacter, "bloodloss", bloodlossinduced, usingCharacter)
-
-		local bloodpackIdentifier = "bloodpack" .. bloodtype
-		if bloodtype == "ominus" then
-			bloodpackIdentifier = "antibloodloss2"
-		end
-
-		HF.GiveItemPlusFunction(bloodpackIdentifier, postSpawnFunc, params, usingCharacter)
-		item.Condition = 0
-		--HF.RemoveItem(item)
-		HF.GiveItem(targetCharacter, "ntsfx_syringe")
-	end
-end
-
-
-
-
-local function InfuseBloodpack(item, packtype, usingCharacter, targetCharacter, limb)
-	-- determine compatibility
-	local packhasantibodyA = string.find(packtype, "a")
-	local packhasantibodyB = string.find(packtype, "b")
-	local packhasantibodyC = string.find(packtype, "c") -- NT Cybernetics cyberblood
-	local packhasantibodyRh = string.find(packtype, "plus")
-
-	local targettype = NT.GetBloodtype(targetCharacter)
-
-	local targethasantibodyA = string.find(targettype, "a")
-	local targethasantibodyB = string.find(targettype, "b")
-	local targethasantibodyC = string.find(targettype, "c")
-	local targethasantibodyRh = string.find(targettype, "plus")
-
-	local compatible = (targethasantibodyRh or not packhasantibodyRh)
-		and (targethasantibodyA or not packhasantibodyA)
-		and (targethasantibodyB or not packhasantibodyB)
-		and (targethasantibodyC or not packhasantibodyC)
-	-- TODO: give always true to team of bots on enemy submarines for future medic AI logic
-
-	local bloodloss = HF.GetAfflictionStrength(targetCharacter, "bloodloss", 0)
-	local usefulFraction = HF.Clamp(bloodloss / 30, 0, 1)
-
-	if compatible then
-		HF.AddAffliction(targetCharacter, "bloodloss", -30, usingCharacter)
-		HF.AddAffliction(targetCharacter, "bloodpressure", 30, usingCharacter)
-		HF.GiveSkillScaled(usingCharacter, "medical", 4000 * HF.BoolToNum(bloodloss > 100))
-	else
-		HF.AddAffliction(targetCharacter, "bloodloss", -20, usingCharacter)
-		HF.AddAffliction(targetCharacter, "bloodpressure", 30, usingCharacter)
-		HF.GiveSkillScaled(usingCharacter, "medical", 4000 * HF.BoolToNum(bloodloss > 100))
-		local immunity = HF.GetAfflictionStrength(targetCharacter, "immunity", 100)
-		HF.AddAffliction(targetCharacter, "hemotransfusionshock", math.max(immunity - 6, 0), usingCharacter)
-	end
-
-	-- move towards isotonic
-	HF.SetAffliction(
-		targetCharacter,
-		"acidosis",
-		HF.GetAfflictionStrength(targetCharacter, "acidosis", 0) * HF.Lerp(1, 0.9, usefulFraction)
-	)
-	HF.SetAffliction(
-		targetCharacter,
-		"alkalosis",
-		HF.GetAfflictionStrength(targetCharacter, "alkalosis", 0) * HF.Lerp(1, 0.9, usefulFraction)
-	)
-
-	-- check if acidosis, alkalosis or sepsis
-	local tags = HF.SplitString(item.Tags, ",")
-	for tag in tags do
-		if tag == "sepsis" then
-			HF.AddAffliction(targetCharacter, "sepsis", 1, usingCharacter)
-    elseif tag == "paralysis" then
-      HF.AddAffliction(targetCharacter, "paralysis", 50, usingCharacter)
-    elseif tag == "acidburn" then
-      HF.AddAffliction(targetCharacter, "acidburn", 50, usingCharacter)
-    end
-
-		if HF.StartsWith(tag, "acid") then
-			local split = HF.SplitString(tag, ":")
-			if split[2] ~= nil then
-				HF.AddAffliction(targetCharacter, "acidosis", tonumber(split[2]) / 5 * usefulFraction, usingCharacter)
-			end
-		elseif HF.StartsWith(tag, "alkal") then
-			local split = HF.SplitString(tag, ":")
-			if split[2] ~= nil then
-				HF.AddAffliction(targetCharacter, "alkalosis", tonumber(split[2]) / 5 * usefulFraction, usingCharacter)
-			end
-		end
-	end
-
-	item.Condition = 0
-	--HF.RemoveItem(item)
-	HF.GiveItem(usingCharacter, "emptybloodpack")
-	HF.GiveItem(targetCharacter, "ntsfx_syringe")
-end
-
-
-
-
-
-
-
-
-NT.ItemStartsWithMethods.bloodpack = function(item, usingCharacter, targetCharacter, limb)
-	if item.Condition <= 0 then
-		return
-	end
-
-	local identifier = item.Prefab.Identifier.Value
-	local packtype = string.sub(identifier, string.len("bloodpack") + 1)
-	InfuseBloodpack(item, packtype, usingCharacter, targetCharacter, limb)
-end
-
-
-
-
-
-
-
--- CRAWLER TRANSPLANTS
-
-NTGraft.ItemMethods.grafting_CrawlerTail = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
-    return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
-    return
-  end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",45,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
+local HeadGraftRemovals = {
+  { "grafting_LatcherTongue", "grafting_LatcherTongue" },
+}
+
+local AlienScalpel = function (d)
+
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+  local limbtype = NTCS.HF.NormalizeLimbType(d.targetLimb.type)
+
+  -- Determine which grafts to check for depending on the selected limb + the damage we take on removing a graft.
+  local GraftsToRemove, BleedAmount
+  if limbtype == LimbType.Torso then
+    GraftsToRemove, BleedAmount = TorsoGraftRemovals, 15
+  elseif limbtype == LimbType.Head then
+    GraftsToRemove, BleedAmount = HeadGraftRemovals, 5
   else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_CrawlerTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
-
-NTGraft.ItemStartsWithMethods.crawlerLungsAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "lungdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "lungremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Lungs")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "lungdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 45)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 70)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "lungdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
-      
-      HF.SetAffliction(targetCharacter, "grafting_CrawlerLungs", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 45)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 70)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-
-			HF.SetAffliction(targetCharacter, "pneumothorax", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "needlec", 0, targetCharacter)
-
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "lungtransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "lungtransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
-
--- FRACTAL GUARDIAN ITEMS
-
-
-
-NTGraft.ItemMethods.fractalGuardianEyeAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if NTEYE ~= nil then return end
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,1)then
-    return end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
--- HUSK ITEMS
-
-
-NTGraft.ItemMethods.huskArmAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_HuskArm",limbtype,1)) then
-    return end
-  if(medicalLevel >= 90) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 90)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HuskArm",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
-
-
-
-NTGraft.ItemStartsWithMethods.huskHeartAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "heartdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "heartremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Heart")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "heartdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 90)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "heartdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
-
-      HF.SetAffliction(targetCharacter, "grafting_HuskHeart", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 90)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-
-			HF.SetAffliction(targetCharacter, "tamponade", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartattack", 0, targetCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "hearttransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "hearttransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
--- MANTIS ITEMS
-
-
-
-NTGraft.ItemStartsWithMethods.mantisLiverAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "liverremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "liverdamage", 100 - workcondition, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
-
-      HF.SetAffliction(targetCharacter, "grafting_MantisLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-
---			local transplantidentifier = "livertransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "livertransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
--- MUDRAPTOR ITEMS
-
-
-
-
-
-
-NTGraft.ItemStartsWithMethods.mudraptorLungsAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "lungdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "lungremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Lungs")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "lungdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "lungdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "lungremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "respiratoryarrest", 100, targetCharacter)
-      
-      HF.SetAffliction(targetCharacter, "grafting_MudraptorLungs", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-
-			HF.SetAffliction(targetCharacter, "pneumothorax", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "needlec", 0, targetCharacter)
-
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "lungtransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "lungtransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
-
-NTGraft.ItemMethods.mudraptorCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,1)) or HF.HasAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,1) then
-    return end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
--- BROODMOTHER ITEMS
-
-
-
-
-NTGraft.ItemStartsWithMethods.broodmotherLiverAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "liverremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "liverdamage", 100 - workcondition, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
-
-      HF.SetAffliction(targetCharacter, "grafting_BroodmotherLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-
---			local transplantidentifier = "livertransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "livertransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
--- TIGER THRESHER ITEMS
-
-
-
-
-
-NTGraft.ItemMethods.tigerThresherCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1) 
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
-    return end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-NTGraft.ItemMethods.tigerThresherTailAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
-    return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
-    return
-  end
-  if(medicalLevel >= 75) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 75)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_TigerThresherTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
-
---BONE THRESHER ITEMS
-
-
-
-
-
-NTGraft.ItemMethods.boneThresherCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1)
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
-    return end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
-
---HAMMERHEAD ITEMS
-
-
-
-
-
-NTGraft.ItemMethods.hammerheadCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"hammerTorsoAffliction",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,1) then
-    return end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-NTGraft.ItemMethods.hammerheadLimbsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",50,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",75,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_HammerheadLimbs",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
---MOLOCH ITEMS
-
-
-NTGraft.ItemMethods.molochCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_MudraptorHead",limbtype,1) then
     return
   end
 
-  if(HF.HasAffliction(targetCharacter,"grafting_MolochHeadCracked",95)) then
-    if (medicalLevel >= 70) then
-      if(HF.HasAffliction(targetCharacter,"retractedskin", 1)) then
-        HF.SetAffliction(targetCharacter, "grafting_MolochHeadCracked", 20, usingCharacter)
-        HF.SetAffliction(targetCharacter, "grafting_MolochHeadCrackedSprite", 0, usingCharacter)
-        HF.AddAfflictionLimb(targetCharacter, "grafting_MolochHead",limbtype, 10, usingCharacter)
-        HF.RemoveItem(item)
-      end
+  -- Skill check
+  local medicalLevel = NTCS.HF.GetSurgerySkill(usingCharacter)
+  if medicalLevel < 30 and medicalLevel < math.random(0, 30) then
+    NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, BleedAmount, usingCharacter)
+    return
+  end
+
+  if not NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99) then return end
+
+  -- If we have a graft present, remove it and return the respective item
+  for _, Graft in ipairs(GraftsToRemove) do
+    if NTCS.HF.HasAffliction(targetCharacter, Graft[1], 1) then
+      NTCS.HF.SetAffliction(targetCharacter, Graft[1], 0, usingCharacter, 0)
+      NTCS.HF.GiveItem(usingCharacter, Graft[2])
+      return
+    end
+  end
+end
+
+itemLoader:Register("alienscalpel", AlienScalpel)
+
+-- ========================================================= ACTUAL GRAFTS =========================================================
+
+-- Moloch cells can also repair a cracked Moloch head.
+local function MolochRepair(item, usingCharacter, targetCharacter, limbtype, medicalLevel)
+  if not NTCS.HF.HasAffliction(targetCharacter, "grafting_MolochHeadCracked", 95) then return false end
+
+  if medicalLevel >= 70 or medicalLevel >= math.random(0, 70) then
+    if NTCS.HF.HasAffliction(targetCharacter, "retractedskin", 1) then
+      NTCS.HF.SetAffliction(targetCharacter, "grafting_MolochHeadCracked", 20, usingCharacter)
+      NTCS.HF.SetAffliction(targetCharacter, "grafting_MolochHeadCrackedSprite", 0, usingCharacter)
+      NTCS.HF.AddAfflictionLimb(targetCharacter, "grafting_MolochHead", limbtype, 10, usingCharacter)
+      NTCS.HF.RemoveItem(item)
+    end
+  else
+    NTCS.HF.AddAffliction(targetCharacter, "bleeding", 3, usingCharacter)
+  end
+
+  return true
+end
+
+-- Every tissue graft item, keyed by item identifier.
+--  LimbForGraft; limb the graft goes on
+--  SkillRequired; surgery / medical skill needed to never fail
+--  GraftAfflictionID; the affliction that gets applied
+--  LimbSpecific; if true, apply above affliction to limb(s)
+--  ConflictingGraftOnLimb; grafts that stop this one from getting applied, checked on the same limb
+--  ConflictingGraftOnBody; " but checked anywhere on the body
+--  ConflictWithEyes; these grafts dont work if NTCS Eyes is loaded
+--  FuncBeforeGraft; optional function to run before graft logic (in this case for moloch repair)
+
+--  RejectionAmount; amount of cross-species RejectionAmount added based on skillcheck math:
+--  skilled + graftingcure, skilled, lucky + graftingcure, lucky }
+--  'skilled' means passing the check via medskill, lucky means passing via random chance.
+--  having graftingcureoverdose on a character makes it 'easier' to apply a graft and thus gives less sepsis
+
+local TissueGrafts = {
+
+  -- Crawler
+  grafting_CrawlerTail = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_CrawlerTail",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = { "grafting_CrawlerTail", "grafting_TigerThresherTail" },
+    RejectionAmount = { 45, 70, 60, 85 },
+  },
+
+  -- Fractal Guardian
+  Eye_FractalGuardian = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_FractalGuardianEyes",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_FractalGuardianEyes", "grafting_WatcherEyes" },
+    ConflictWithEyes = true,
+    RejectionAmount = { 40, 65, 55, 80 },
+  },
+
+  -- Husk
+  grafting_HuskArm = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 90,
+    GraftAfflictionID = "grafting_HuskArm",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = { "grafting_HuskArm" },
+    RejectionAmount = { 70, 85, 80, 100 },
+  },
+
+  -- Mudraptor
+  Cells_Mudraptor = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_MudraptorHead",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_MudraptorHead", "grafting_MolochHead" },
+    RejectionAmount = { 40, 65, 55, 80 },
+  },
+
+  -- Tiger Thresher
+  Cells_TigerThresher = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_TigerThresherJaw",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_TigerThresherJaw", "grafting_BoneThresherJaw", "grafting_CharybdisJaw" },
+    ConflictingGraftOnBody = { "grafting_LatcherTongue" },
+    RejectionAmount = { 40, 65, 55, 80 },
+  },
+  grafting_TigerThresherTail = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 75,
+    GraftAfflictionID = "grafting_TigerThresherTail",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = { "grafting_CrawlerTail", "grafting_TigerThresherTail" },
+    RejectionAmount = { 50, 75, 65, 90 },
+  },
+
+  -- Bone Thresher
+  Cells_BoneThresher = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_BoneThresherJaw",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_TigerThresherJaw", "grafting_BoneThresherJaw", "grafting_CharybdisJaw" },
+    ConflictingGraftOnBody = { "grafting_LatcherTongue" },
+    RejectionAmount = { 40, 65, 55, 80 },
+  },
+
+  -- Hammerhead
+  Cells_Hammerhead = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_HammerheadTorso",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_HammerheadTorso", "grafting_EndwormTorso" },
+    RejectionAmount = { 50, 75, 65, 90 },
+  },
+  grafting_HammerheadLimbs = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_HammerheadLimbs",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = {},
+    RejectionAmount = { 50, 75, 65, 90 },
+  },
+
+  -- Moloch
+  Cells_Moloch = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 70,
+    GraftAfflictionID = "grafting_MolochHead",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_MolochHead", "grafting_MudraptorHead" },
+    FuncBeforeGraft = MolochRepair,
+    RejectionAmount = { 60, 85, 80, 95 },
+  },
+
+  -- Watcher
+  Eye_Watcher = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 80,
+    GraftAfflictionID = "grafting_WatcherEyes",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_FractalGuardianEyes", "grafting_WatcherEyes" },
+    ConflictWithEyes = true,
+    RejectionAmount = { 70, 95, 80, 95 },
+  },
+
+  -- Charybdis
+  Cells_Charybdis = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 90,
+    GraftAfflictionID = "grafting_CharybdisJaw",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_CharybdisJaw", "grafting_TigerThresherJaw", "grafting_BoneThresherJaw" },
+    ConflictingGraftOnBody = { "grafting_LatcherTongue" },
+    RejectionAmount = { 80, 95, 85, 100 },
+  },
+
+  -- Latcher
+  grafting_LatcherTongue = {
+    LimbForGraft = LimbType.Head,
+    SkillRequired = 90,
+    GraftAfflictionID = "grafting_LatcherTongue",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = { "grafting_TigerThresherJaw", "grafting_BoneThresherJaw", "grafting_CharybdisJaw" },
+    ConflictingGraftOnBody = { "grafting_LatcherTongue" },
+    RejectionAmount = { 80, 95, 85, 100 },
+  },
+
+  -- Endworm
+  Cells_Endworm = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 90,
+    GraftAfflictionID = "grafting_EndwormTorso",
+    LimbSpecific = true,
+    ConflictingGraftOnLimb = { "grafting_EndwormTorso", "grafting_HammerheadTorso" },
+    RejectionAmount = { 60, 85, 65, 90 },
+  },
+
+  -- Orangeboy
+  grafting_OrangeboyTail = {
+    LimbForGraft = LimbType.Torso,
+    SkillRequired = 30,
+    GraftAfflictionID = "grafting_OrangeboyTail",
+    LimbSpecific = false,
+    ConflictingGraftOnLimb = { "grafting_CrawlerTail", "grafting_TigerThresherTail", "grafting_OrangeboyTail" },
+    RejectionAmount = { 30, 45, 40, 55 },
+  },
+}
+
+-- We are NOT adding 15 indiviual grafts like before. Dump info in a table then iterate it.
+local function GraftTissue(d, GraftInfo)
+
+  local item = d.item
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+  local limbtype = NTCS.HF.NormalizeLimbType(d.targetLimb.type)
+
+  if limbtype ~= GraftInfo.LimbForGraft then return end
+  if GraftInfo.ConflictWithEyes and NTEYE ~= nil then return end
+
+  -- Already grafted, or a conflicting graft is present.
+  for _, id in ipairs(GraftInfo.ConflictingGraftOnLimb) do
+    if NTCS.HF.HasAfflictionLimb(targetCharacter, id, limbtype, 1) then return end
+  end
+
+  if GraftInfo.ConflictingGraftOnBody ~= nil then
+    for _, id in ipairs(GraftInfo.ConflictingGraftOnBody) do
+      if NTCS.HF.HasAffliction(targetCharacter, id, 1) then return end
+    end
+  end
+
+  local medicalLevel = NTCS.HF.GetSurgerySkill(usingCharacter)
+
+  if GraftInfo.FuncBeforeGraft ~= nil and GraftInfo.FuncBeforeGraft(item, usingCharacter, targetCharacter, limbtype, medicalLevel) then return end
+
+  local overdosed = NTCS.HF.HasAffliction(targetCharacter, "graftingcureoverdose", 50)
+  local RejectionAmount, sepsis
+
+  -- NEVER FAIL!
+  if medicalLevel >= GraftInfo.SkillRequired then
+    if not NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99) then return end
+
+    if overdosed then
+      RejectionAmount = GraftInfo.RejectionAmount[1]
     else
-      math.randomseed(os.time())
-      local skillcheck = math.random(0, 70)
-      if (medicalLevel >= skillcheck) then
-        if(HF.HasAffliction(targetCharacter,"retractedskin", 1)) then
-          HF.SetAffliction(targetCharacter, "grafting_MolochHeadCracked", 20, usingCharacter)
-          HF.SetAffliction(targetCharacter, "grafting_MolochHeadCrackedSprite", 0, usingCharacter)
-          HF.AddAfflictionLimb(targetCharacter, "grafting_MolochHead",limbtype, 10, usingCharacter)
-          HF.RemoveItem(item)
+      RejectionAmount, sepsis = GraftInfo.RejectionAmount[2], 3
+    end
+  else
+    -- Gambling
+    if medicalLevel < math.random(0, GraftInfo.SkillRequired) then
+      NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
+      return
+    end
+
+    if overdosed and NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1) then
+      RejectionAmount = GraftInfo.RejectionAmount[3]
+    elseif NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99) then
+      RejectionAmount, sepsis = GraftInfo.RejectionAmount[4], 5
+    else
+      return
+    end
+  end
+
+  if GraftInfo.LimbSpecific then
+    NTCS.HF.AddAfflictionLimb(targetCharacter, GraftInfo.GraftAfflictionID, limbtype, 10, usingCharacter, 0)
+  else
+    NTCS.HF.SetAffliction(targetCharacter, GraftInfo.GraftAfflictionID, 100, usingCharacter, 0)
+  end
+
+  NTCS.HF.AddAffliction(targetCharacter, "crossspeciesrejection", RejectionAmount, usingCharacter, 0)
+  if sepsis ~= nil then
+    NTCS.HF.SetAffliction(targetCharacter, "sepsis", sepsis, usingCharacter, 0)
+  end
+
+  NTCS.HF.RemoveItem(item)
+end
+
+for ItemID, GraftInfo in pairs(TissueGrafts) do
+  itemLoader:Register(ItemID, function (d) GraftTissue(d, GraftInfo) end)
+end
+
+-- ========================================================= ORGAN GRAFTS =========================================================
+
+-- Shoot me
+-- Which Graft Organs can replace a HUMAN organ
+local OrganConfigs = {
+  lung = {
+    DamageAff = "lungdamage",
+    RemovedAff = "lungremoved",
+    SwapAff = "lungswap",
+    SkillRequired = 50,
+    AfflictionsToCure = { "pneumothorax", "needlec", "respiratoryarrest", "hyperventilation", "hypoventilation" },
+    TransplantItem = "lungtransplant",
+    ScalpelItem = "organscalpel_lungs",
+    PossibleGrafts = {
+      { affliction = "grafting_CrawlerLungs", item = "Lungs_Crawler", RejectionAmount = { 45, 70 } },
+      { affliction = "grafting_MudraptorLungs", item = "Lungs_Mudraptor", RejectionAmount = { 50, 75 } },
+    },
+  },
+ 
+  heart = {
+    DamageAff = "heartdamage",
+    RemovedAff = "heartremoved",
+    SwapAff = "heartswap",
+    SkillRequired = 60,
+    AfflictionsToCure = { "tamponade", "heartattack", "cardiacarrest", "fibrillation", "tachycardia", "t_arterialcut" },
+    TransplantItem = "hearttransplant",
+    ScalpelItem = "organscalpel_heart",
+    PossibleGrafts = {
+      { affliction = "grafting_HuskHeart", item = "Heart_Husk", RejectionAmount = { 75, 90 } },
+      { affliction = "grafting_LatcherHeart", item = "Heart_Latcher", RejectionAmount = { 75, 90 } },
+    },
+  },
+ 
+  liver = {
+    DamageAff = "liverdamage",
+    RemovedAff = "liverremoved",
+    SwapAff = "liverswap",
+    SkillRequired = 40,
+    AfflictionsToCure = {},
+    TransplantItem = "livertransplant",
+    ScalpelItem = "organscalpel_liver",
+    PossibleGrafts = {
+      { affliction = "grafting_MantisLiver", item = "Liver_Mantis", RejectionAmount = { 50, 75 } },
+      { affliction = "grafting_BroodmotherLiver", item = "Liver_Broodmother", RejectionAmount = { 50, 75 } },
+      { affliction = "grafting_ViperlingLiver", item = "Liver_Viperling", RejectionAmount = { 50, 75 } },
+    },
+  },
+}
+ 
+-- ORGAN SWAPPING FOR THE TORSO BABY
+-- Is graft not nil? We're swapping a normal organ for a graft. Otherwise, it's the inverse.
+local function ImplantOrgan(d, organ, graft)
+ 
+  local item = d.item
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+  local limbtype = d.targetLimb.type
+ 
+  -- Are we swapping / removing on the torso with skin retracted?
+  if limbtype ~= LimbType.Torso
+    or not NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
+    or not (NTCS.HF.HasAffliction(targetCharacter, organ.RemovedAff, 1)
+      or NTCS.HF.HasAffliction(targetCharacter, organ.SwapAff, 1))
+  then
+    return
+  end
+ 
+  -- Skill check
+  local conditionmodifier = 0
+  if not NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
+    conditionmodifier = -40
+  end
+ 
+  local workcondition = NTCS.HF.Clamp(item.Condition + conditionmodifier, 0, 100)
+  local damage = NTCS.HF.GetAfflictionStrength(targetCharacter, organ.DamageAff, 0)
+ 
+  -- Return the organ we're swapping in for; either normal (+ surgery talent check) or a graft.
+  local OrganToExtract
+ 
+  -- Is it a graft?
+  for _, existingGraft in ipairs(organ.PossibleGrafts) do
+    if NTCS.HF.HasAffliction(targetCharacter, existingGraft.affliction, 1) then
+      NTCS.HF.SetAffliction(targetCharacter, existingGraft.affliction, 0, usingCharacter)
+      OrganToExtract = existingGraft.item
+      break
+    end
+  end
+ 
+  -- If not a graft at this point, it's a normal human ahh organ.
+  if OrganToExtract == nil then
+    -- HasTag requires a NTHuman instance. Convert the current Character to NTHuman beforehand.
+    local NTHuman = NTCS.Human.getNTHumanFromCharacter(usingCharacter)
+    -- HATE. I HATE SURGERY PLUS. HATE. HATE.
+    if NTHuman ~= nil and NTHuman.Tags:HasTag("NTC", "organssellforfull") then
+      OrganToExtract = organ.TransplantItem
+    else
+      OrganToExtract = organ.TransplantItem .. "_q1"
+    end
+  end
+ 
+  NTCS.HF.RemoveItem(item)
+ 
+  if damage == 100 then
+    -- The old organ was already gone, so just heal.
+    NTCS.HF.AddAffliction(targetCharacter, organ.DamageAff, -workcondition, usingCharacter)
+    NTCS.HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
+  else
+    -- Swap the organs and their generic and specific organ damage and heal a lil bit.
+    local newdamage = NTCS.HF.Clamp((100 - damage) - workcondition, -100, 100)
+    NTCS.HF.SetAffliction(targetCharacter, organ.DamageAff, 100 - workcondition, usingCharacter)
+    NTCS.HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
+ 
+    -- Organs that are too damaged aren't returned. Too bad!
+    if damage < 90 then
+ 
+      -- I know we DONT use this but otherwise ThousandFields will accuse me of tech debt.
+      local function postSpawnFunc(args, spawnedItem)
+        local tags = {}
+ 
+        if args.acidosis > 0 then
+          table.insert(tags, "acid:" .. tostring(NTCS.HF.Round(args.acidosis)))
+        elseif args.alkalosis > 0 then
+          table.insert(tags, "alkal:" .. tostring(NTCS.HF.Round(args.alkalosis)))
         end
+        if args.sepsis > 10 then table.insert(tags, "sepsis") end
+ 
+        spawnedItem.Tags = table.concat(tags, ",")
+        spawnedItem.Condition = args.condition
+      end
+ 
+      local params = {
+        acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
+        alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
+        sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
+        condition = 100 - damage,
+      }
+ 
+      local pos = usingCharacter.WorldPosition
+ 
+      -- Swapped organs go back into the inventory where the organ we just implanted was.
+      local parentInventory = item.ParentInventory
+      if parentInventory ~= nil then
+        NTCS.HF.SpawnItemPlusFunction(OrganToExtract, parentInventory, InvSlotType.Any, pos, postSpawnFunc, params)
       else
-        HF.AddAffliction(targetCharacter, "bleeding", 3, usingCharacter)
+        -- Otherwise, default to a handheld container.
+        local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
+        if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
+          container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
+        end
+ 
+        -- Just fucking throw it on the ground fuck you.
+        if container ~= nil and container.OwnInventory ~= nil and not container.OwnInventory.IsFull() then
+          NTCS.HF.SpawnItemPlusFunction(OrganToExtract, container.OwnInventory, InvSlotType.Any, pos, postSpawnFunc, params)
+        else
+          NTCS.HF.GiveItemPlusFunction(OrganToExtract, usingCharacter, postSpawnFunc, params)
+        end
       end
     end
+  end
+ 
+  if graft ~= nil then
+    NTCS.HF.SetAffliction(targetCharacter, graft.affliction, 100, usingCharacter)
+ 
+    if NTCS.HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49) then
+      NTCS.HF.AddAffliction(targetCharacter, "crossspeciesrejection", graft.RejectionAmount[1], usingCharacter)
+    else
+      NTCS.HF.AddAffliction(targetCharacter, "crossspeciesrejection", graft.RejectionAmount[2], usingCharacter)
+      NTCS.HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
+    end
+ 
+    -- Remove the afflictions that should be cured on swapped (cant have pneumothorax with a new set of lungs)
+    for _, affliction in ipairs(organ.AfflictionsToCure) do
+      NTCS.HF.SetAffliction(targetCharacter, affliction, 0, usingCharacter)
+    end
+  end
+ 
+  -- Remove the Swap/Removed afflictions cause we're done baby.
+  NTCS.HF.SetAffliction(targetCharacter, organ.RemovedAff, 0, usingCharacter)
+  NTCS.HF.SetAffliction(targetCharacter, organ.SwapAff, 0, usingCharacter)
+end
+ 
+-- REMOVE THE DAMN ORGAN (no swapping!)
+local function RemoveGraftedOrgan(d, organ)
+ 
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+  local limbtype = d.targetLimb.type
+ 
+  -- Is it a graft?
+  local existingGraft
+  for _, graft in ipairs(organ.PossibleGrafts) do
+    if NTCS.HF.HasAffliction(targetCharacter, graft.affliction, 1) then
+      existingGraft = graft
+      break
+    end
+  end
+ 
+  -- Are we removing on the torso with skin retracted, so the swap started but organ not yet removed?
+  local procureready = existingGraft ~= nil
+    and limbtype == LimbType.Torso
+    and NTCS.HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 1)
+    and NTCS.HF.GetAfflictionStrength(targetCharacter, organ.RemovedAff, 0) <= 0
+    and NTCS.HF.GetAfflictionStrength(targetCharacter, organ.SwapAff, 0) >= 0.1
+ 
+  -- Not grafted or not ready yet: refer to original code.
+  if not procureready then
+    itemLoader:CallPrevious(organ.ScalpelItem, d)
     return
   end
-  if(medicalLevel >= 70) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 70)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_MolochHead",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
---VIPERLING ITEMS
-
-
-
-
-NTGraft.ItemStartsWithMethods.viperlingLiverAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "liverdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "liverremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Liver")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "liverdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "liverdamage", 100 - workcondition, usingCharacter)
-			HF.SetAffliction(targetCharacter, "liverremoved", 0, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, usingCharacter)
-
-      HF.SetAffliction(targetCharacter, "grafting_ViperlingLiver", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 50, usingCharacter)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75, usingCharacter)
-        HF.AddAffliction(targetCharacter, "sepsis", 3, usingCharacter)
-      end
-
---			local transplantidentifier = "livertransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "livertransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
-
---WATCHER ITEMS
-
-
-NTGraft.ItemMethods.watcherEyeAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if NTEYE ~= nil then return end
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_FractalGuardianEyes",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,1) then
-    return end
-  if(medicalLevel >= 80) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",70,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 80)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_WatcherEyes",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
---CHARYBDIS ITEMS
-
-
-
-
-NTGraft.ItemMethods.charybdisCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1)
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
-    return end
-  if(medicalLevel >= 90) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 90)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
-
-
---LATCHER RELATED ITEMS
-
-
-
-NTGraft.ItemStartsWithMethods.latcherHeartAegis = function(item, usingCharacter, targetCharacter, limb)
-	local limbtype = limb.type
-	local conditionmodifier = 0
-	if not HF.GetSurgerySkillRequirementMet(usingCharacter, 40) then
-		conditionmodifier = -40
-	end
-	local damage = HF.GetAfflictionStrength(targetCharacter, "heartdamage", 0)
-	local workcondition = HF.Clamp(item.Condition + conditionmodifier, 0, 100)
-	if
-		HF.HasAffliction(targetCharacter, "heartremoved", 1)
-		and limbtype == LimbType.Torso
-		and HF.HasAfflictionLimb(targetCharacter, "retractedskin", limbtype, 99)
-	then
-    local transplantidentifier = organIdentifier(targetCharacter, usingCharacter, "Heart")
-		if damage == 100 then
-			HF.AddAffliction(targetCharacter, "heartdamage", -workcondition, usingCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", -workcondition / 5, usingCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 90)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-			HF.RemoveItem(item)
-		else -- swap the organs and its generic and specific organ damage, avoiding unintentionally reducing the patients health
-			local newdamage = HF.Clamp((100 - damage) - workcondition, -100, 100)
-			HF.SetAffliction(targetCharacter, "heartdamage", 100 - workcondition, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartremoved", 0, usingCharacter)
-			HF.SetAffliction(targetCharacter, "cardiacarrest", 100, targetCharacter)
-
-      HF.SetAffliction(targetCharacter, "grafting_LatcherHeart", 100, usingCharacter)
-      if (HF.HasAffliction(targetCharacter, "graftingcureoverdose", 49)) then
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 75)
-      else
-        HF.AddAffliction(targetCharacter, "crossspeciesrejection", 90)
-        HF.AddAffliction(targetCharacter, "sepsis", 3)
-      end
-
-			HF.SetAffliction(targetCharacter, "tamponade", 0, targetCharacter)
-			HF.SetAffliction(targetCharacter, "heartattack", 0, targetCharacter)
-			HF.AddAffliction(targetCharacter, "organdamage", newdamage / 5, targetCharacter)
---			local transplantidentifier = "hearttransplant_q1"
---			if NTC.HasTag(usingCharacter, "organssellforfull") then
---				transplantidentifier = "hearttransplant"
---			end
-			if damage < 90 then
-				-- add acidosis, alkalosis and sepsis to the bloodpack if the donor has them
-				local function postSpawnFunc(args)
-					local tags = {}
-
-					if args.acidosis > 0 then
-						table.insert(tags, "acid:" .. tostring(HF.Round(args.acidosis)))
-					elseif args.alkalosis > 0 then
-						table.insert(tags, "alkal:" .. tostring(HF.Round(args.alkalosis)))
-					end
-					if args.sepsis > 10 then
-						table.insert(tags, "sepsis")
-					end
-
-					local tagstring = ""
-					for index, value in ipairs(tags) do
-						tagstring = tagstring .. value
-						if index < #tags then
-							tagstring = tagstring .. ","
-						end
-					end
-
-					args.item.Tags = tagstring
-					args.item.Condition = args.condition
-				end
-				local params = {
-					acidosis = HF.GetAfflictionStrength(targetCharacter, "acidosis"),
-					alkalosis = HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
-					sepsis = HF.GetAfflictionStrength(targetCharacter, "sepsis"),
-					condition = 100 - damage,
-				}
-				local inventorySpot = nil
-				local parentInventory = item.ParentInventory
-				if parentInventory then
-					inventorySpot = parentInventory.FindIndex(item)
-				end
-
-				HF.SpawnItemPlusFunction(transplantidentifier, postSpawnFunc, params, parentInventory, inventorySpot)
-				HF.RemoveItem(item)
-			end
-		end
-		local rejectionchance = HF.Clamp(
-			(HF.GetAfflictionStrength(targetCharacter, "immunity", 0) - 10)
-				/ 150
-				* NTC.GetMultiplier(usingCharacter, "organrejectionchance"),
-			0,
-			1
-		)
-	end
-end
-
-
-NTGraft.ItemMethods.latcherTongueAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Head then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherJaw",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_BoneThresherJaw",limbtype,1) 
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_CharybdisJaw",limbtype,1)
-  or HF.HasAffliction(targetCharacter,"grafting_LatcherTongue",1) then
-    return end
-  if(medicalLevel >= 90) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",80,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",95,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 90)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_LatcherTongue",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",100,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
-
--- ENDWORM RELATED ITEMS
-
-
-
-
-NTGraft.ItemMethods.endwormCellsAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,1))
-  or HF.HasAfflictionLimb(targetCharacter,"grafting_HammerheadTorso",limbtype,1) then
-    return end
-  if(medicalLevel >= 90) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",60,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",85,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 90)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",65,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.AddAfflictionLimb(targetCharacter,"grafting_EndwormTorso",limbtype,10,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",90,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
-      end
-    else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
-    end
-  end
-end
-
-
--- ORANGE BOY RELATED ITEMS
-
-NTGraft.ItemMethods.orangeboyTailAegis = function(item, usingCharacter, targetCharacter, limb)
-  local limbtype = HF.NormalizeLimbType(limb.type)
-
-  if limbtype ~= LimbType.Torso then return end
-
-  local medicalLevel = HF.GetSurgerySkill(usingCharacter)
-
-  if(HF.HasAfflictionLimb(targetCharacter,"grafting_CrawlerTail",limbtype,1)) then
-    return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_TigerThresherTail",limbtype,1)) then
-    return
-  elseif(HF.HasAfflictionLimb(targetCharacter,"grafting_OrangeboyTail",limbtype,1)) then
+ 
+  -- Skill check, do damage on failure.
+  if not NTCS.HF.GetSurgerySkillRequirementMet(usingCharacter, organ.SkillRequired) then
+    NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 15, usingCharacter)
+    NTCS.HF.AddAfflictionLimb(targetCharacter, "organdamage", limbtype, 5, usingCharacter)
+    NTCS.HF.AddAffliction(targetCharacter, organ.DamageAff, 20, usingCharacter)
     return
   end
-  if(medicalLevel >= 30) then
-    if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99))) then
-      HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",30,usingCharacter,0)
-      HF.RemoveItem(item)
-    elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-      HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
-      HF.AddAffliction(targetCharacter,"crossspeciesrejection",45,usingCharacter,0)
-      HF.SetAffliction(targetCharacter,"sepsis",3,usingCharacter,0)
-      HF.RemoveItem(item)
-    end
-  else
-    math.randomseed(os.time())
-    local skillcheck = math.random(0, 30)
-    if (medicalLevel >= skillcheck) then
-      if(HF.HasAffliction(targetCharacter,"graftingcureoverdose",50) and (HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,1))) then
-        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",40,usingCharacter,0)
-        HF.RemoveItem(item)
-      elseif(HF.HasAfflictionLimb(targetCharacter,"retractedskin",limbtype,99)) then
-        HF.SetAffliction(targetCharacter,"grafting_OrangeboyTail",100,usingCharacter,0)
-        HF.AddAffliction(targetCharacter,"crossspeciesrejection",55,usingCharacter,0)
-        HF.SetAffliction(targetCharacter,"sepsis",5,usingCharacter,0)
-        HF.RemoveItem(item)
+ 
+  local damage = NTCS.HF.GetAfflictionStrength(targetCharacter, organ.DamageAff, 0)
+ 
+  -- Return the graft we're taking out and clear it.
+  local OrganToExtract = existingGraft.item
+  NTCS.HF.SetAffliction(targetCharacter, existingGraft.affliction, 0, usingCharacter)
+ 
+  -- The organ is now removed, with nothing swapped in. Its slot is fully damaged.
+  NTCS.HF.SetAffliction(targetCharacter, organ.RemovedAff, 100, usingCharacter)
+  NTCS.HF.SetAffliction(targetCharacter, organ.SwapAff, 0, usingCharacter)
+  NTCS.HF.SetAffliction(targetCharacter, organ.DamageAff, 100, usingCharacter)
+ 
+  -- Remove the afflictions that should be cured on removal.
+  for _, affliction in ipairs(organ.AfflictionsToCure) do
+    NTCS.HF.SetAffliction(targetCharacter, affliction, 0, usingCharacter)
+  end
+ 
+  NTCS.HF.AddAffliction(targetCharacter, "organdamage", (100 - damage) / 5, usingCharacter)
+ 
+  -- Organs that are too damaged aren't returned. Too bad!
+  if damage < 90 then
+ 
+    local function postSpawnFunc(args, spawnedItem)
+      local tags = {}
+ 
+      if args.acidosis > 0 then
+        table.insert(tags, "acid:" .. tostring(NTCS.HF.Round(args.acidosis)))
+      elseif args.alkalosis > 0 then
+        table.insert(tags, "alkal:" .. tostring(NTCS.HF.Round(args.alkalosis)))
       end
+      if args.sepsis > 10 then table.insert(tags, "sepsis") end
+ 
+      spawnedItem.Tags = table.concat(tags, ",")
+      spawnedItem.Condition = args.condition
+    end
+ 
+    local params = {
+      acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
+      alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
+      sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
+      condition = 100 - damage,
+    }
+ 
+    local pos = usingCharacter.WorldPosition
+ 
+    local container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
+    if container == nil or container.OwnInventory == nil or container.OwnInventory.IsFull() then
+      container = usingCharacter.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
+    end
+ 
+    if container ~= nil and container.OwnInventory ~= nil and not container.OwnInventory.IsFull() then
+      NTCS.HF.SpawnItemPlusFunction(OrganToExtract, container.OwnInventory, InvSlotType.Any, pos, postSpawnFunc, params)
     else
-      HF.AddAfflictionLimb(targetCharacter, "bleeding", limbtype, 3, usingCharacter)
+      NTCS.HF.GiveItemPlusFunction(OrganToExtract, usingCharacter, postSpawnFunc, params)
     end
   end
+ 
+  NTCS.HF.GiveItem(targetCharacter, "ntsfx_slash")
 end
 
+-- REGISTERING TIME!
+for _, organ in pairs(OrganConfigs) do
+
+  -- Register organ grafts (we already did cells + limb grafts earlier)
+  for _, graft in ipairs(organ.PossibleGrafts) do
+    itemLoader:Register(graft.item, function (d) ImplantOrgan(d, organ, graft) end)
+  end
+ 
+  -- Add a check over the original swap code (i.e. lungtransplant) to deal with grafted organs.
+  local NormalTransplant = function (d)
+    local hasGraft = false
+
+    for _, graft in ipairs(organ.PossibleGrafts) do
+      if NTCS.HF.HasAffliction(d.target.Human, graft.affliction, 1) then
+        hasGraft = true
+        break
+      end
+    end
+ 
+    if hasGraft then
+      ImplantOrgan(d, organ, nil)
+    else
+      -- Cant call a specific ID since we're using a table. Grab the relative ID instead.
+      itemLoader:CallPrevious(d.item.Prefab.Identifier.Value, d)
+    end
+  end
+ 
+  -- Add the additional functionality to the respective organs.
+  itemLoader:Override(organ.TransplantItem, NormalTransplant)
+  itemLoader:Override(organ.TransplantItem .. "_q1", NormalTransplant)
+ 
+  -- Also the specific organ scalpels.
+  itemLoader:Override(organ.ScalpelItem, function (d) RemoveGraftedOrgan(d, organ) end)
+end
+ 
+-- ========================================================= BLOODPACKS =========================================================
+ 
+-- Gotta add Mantis / Broodmother effects to blood packs too on draining of blood.
+local EmptyBloodpack = function (d)
+ 
+  local item = d.item
+  local usingCharacter = d.user.Human
+  local targetCharacter = d.target.Human
+ 
+  if item.Condition <= 0 or targetCharacter.Bloodloss > 31 then return end
+ 
+  local bloodlossinduced = 30
+  if not NTCS.HF.GetSkillRequirementMet(usingCharacter, "medical", 30) then
+    bloodlossinduced = 40
+  end
+ 
+  local bloodtype = NTCS.NTBloodTypes.GetBloodtype(targetCharacter)
+ 
+  -- Add Acidosis / Alkalosis / Sepsis / Mantis / Broodmother effects into the tags of the pack.
+  local function postSpawnFunc(args, spawnedItem)
+    local tags = {}
+ 
+    if args.acidosis > 0 then
+      table.insert(tags, "acid:" .. tostring(NTCS.HF.Round(args.acidosis)))
+    elseif args.alkalosis > 0 then
+      table.insert(tags, "alkal:" .. tostring(NTCS.HF.Round(args.alkalosis)))
+    end
+    if args.sepsis > 0 then table.insert(tags, "sepsis") end
+ 
+    if args.paralysis > 0 then
+      table.insert(tags, "paralysis")
+    elseif args.acidburn > 0 then
+      table.insert(tags, "acidburn")
+    end
+ 
+    spawnedItem.Tags = table.concat(tags, ",")
+  end
+ 
+  local params = {
+    acidosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis"),
+    alkalosis = NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis"),
+    sepsis = NTCS.HF.GetAfflictionStrength(targetCharacter, "sepsis"),
+    paralysis = NTCS.HF.GetAfflictionStrength(targetCharacter, "grafting_MantisLiver"),
+    acidburn = NTCS.HF.GetAfflictionStrength(targetCharacter, "grafting_BroodmotherLiver"),
+  }
+ 
+  -- Move towards isotonic.
+  NTCS.HF.SetAffliction(targetCharacter, "acidosis", NTCS.HF.GetAfflictionStrength(targetCharacter, "acidosis", 0) * 0.9)
+  NTCS.HF.SetAffliction(targetCharacter, "alkalosis", NTCS.HF.GetAfflictionStrength(targetCharacter, "alkalosis", 0) * 0.9)
+ 
+  NTCS.HF.AddAffliction(targetCharacter, "bloodloss", bloodlossinduced, usingCharacter)
+ 
+  local bloodpackIdentifier = "bloodpack" .. bloodtype
+  if bloodtype == "o_negative" then
+    bloodpackIdentifier = "antibloodloss2"
+  end
+ 
+  NTCS.HF.GiveItemPlusFunction(bloodpackIdentifier, usingCharacter, postSpawnFunc, params)
+  item.Condition = 0
+  NTCS.HF.GiveItem(targetCharacter, "ntsfx_syringe")
+end
+ 
+itemLoader:Override("emptybloodpack", EmptyBloodpack)
+ 
+-- Add the mantis / broodmother effects then let the original function do the rest.
+local function InfuseGraftBloodpack(d)
+ 
+  local item = d.item
+ 
+  if item.Condition > 0 then
+    if item.HasTag("paralysis") then
+      NTCS.HF.AddAffliction(d.target.Human, "paralysis", 50, d.user.Human)
+    end
+    if item.HasTag("acidburn") then
+      NTCS.HF.AddAffliction(d.target.Human, "acidburn", 50, d.user.Human)
+    end
+  end
+ 
+  itemLoader:CallPrevious(item.Prefab.Identifier.Value, d)
+end
+ 
+local BloodpackIds = {
+  "bloodpacka_positive", "bloodpacka_negative",
+  "bloodpackb_positive", "bloodpackb_negative",
+  "bloodpackab_positive", "bloodpackab_negative",
+  "bloodpacko_positive", "antibloodloss2",
+  "bloodpackabc_positive", -- NT Cybernetics cyberblood
+}
+ 
+for _, id in ipairs(BloodpackIds) do
+  itemLoader:Override(id, InfuseGraftBloodpack)
+end
+
+-- im so cooked vros
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢋⡔⢊⣥⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⣿⠘⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢛⣩⣭⣶⣶⣶⣶⣶⣶⣶⣬⣴⣦⣭⣭⣍⡛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢛⣡⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣍⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢋⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡙⠻⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⠃⡷⢉⣿⣿⣿⣿⣿⣿⡿⢋⣴⣿⣿⣿⣿⣿⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⡅⢻⣿⣿⣿⣿⣿⣿⣿⣿⣧⡈⢿⣿⣿⣿⣿⣿⡁⠦⣹⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣴⣿⣿⣿⣿⠿⠿⠏⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢡⡘⣿⣿⣿⣿⣿⣿⣿⣿⣗⢀⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⣬⣭⣭⣭⣉⣘⣛⠛⠿⠿⢿⣿
+-- ⣿⡿⢛⠛⣩⣭⣭⣤⣶⣶⣶⣾⢃⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢡⣭⡇⢿⣿⣿⣿⣿⣿⣿⣿⡏⣼⣦⡈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣷⡘⡛⠻⠿⠿⠿⠿⠿⠇⢘⡄⢹
+-- ⣿⢰⣾⣤⣉⣛⣛⣛⣛⣋⣭⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣰⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⡟⣰⣿⣿⣿⣄⠹⣿⣿⣿⣿⣿⣿⣿⣿⣷⡘⢿⣿⣿⣷⣶⣿⣿⣿⣿⡈
+-- ⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⠇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⢋⣼⠿⠿⠿⢿⡆⣿⣿⣿⣿⣿⠟⣰⣟⣛⠿⠙⠛⠓⠌⠻⣿⣿⣿⣿⣿⣿⣿⣷⡘⣿⣿⣿⣿⣿⣿⣿⣿⢡
+-- ⣿⢸⣿⣿⣿⣿⣿⣿⣿⡿⢰⡟⢹⣿⣿⣿⣿⣿⣿⠟⠁⢈⡁⠀⠈⣉⡑⢳⢸⣿⣿⣿⠏⣴⣿⣏⡄⣒⣭⣍⠒⢦⣄⡀⠙⠿⣿⣿⣿⣿⡃⡇⢻⣿⣿⣿⣿⣿⣿⣿⢸
+-- ⣿⡀⣿⣿⣿⣿⣿⣿⣿⠃⣿⠇⣾⣿⣿⣿⣿⡟⠉⣠⡶⢋⣴⢞⡳⣄⠙⣿⢨⣿⡿⢋⣼⣿⣿⡏⣴⠏⣵⡌⣷⡄⢻⣿⣆⠐⢈⠻⢿⣿⣇⠸⠸⣿⣿⣿⣿⡿⠟⢁⣾
+-- ⣿⣷⣌⡛⠿⠿⠿⠿⠟⡁⡟⢠⣿⣿⣿⠿⠋⠀⣴⣿⠃⣻⣇⢞⢫⢸⠇⣿⢸⠋⣠⣾⣿⣿⣿⣧⠉⢻⣆⣒⣸⠏⣸⣿⣿⡆⣼⣿⣦⡍⠻⢧⡀⢶⣶⣤⡄⢀⢺⣿⣿
+-- ⡿⢙⢿⢡⡀⠶⠿⠟⢛⠂⢠⣿⡿⠟⣡⣶⡆⢼⣿⣿⣦⡙⠟⣛⣀⣭⣬⣍⣠⣾⣿⡛⣿⣿⣿⣿⣿⣶⣶⣮⣥⡤⢟⡛⢽⠃⣿⣿⣿⣿⠁⢰⢀⡀⠲⣶⣶⣾⢸⣿⣿
+-- ⣷⣦⣿⢸⣿⣿⣿⣿⡟⠠⢛⠉⢰⣿⣿⣿⣇⢸⣷⠭⠕⢘⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣔⣂⡜⣨⣿⣿⣿⡏⠀⡌⣼⣿⣿⣿⣿⣿⢸⣿⣿
+-- ⣿⣿⣿⠸⣿⣿⣿⣿⣷⡦⢹⡆⠀⣿⣿⣿⣿⡈⣿⣧⣦⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⣿⣿⣿⣿⣿⢟⣿⣿⣿⣿⣿⢁⣿⣿⣿⣿⠁⠀⡀⠭⣉⣛⡛⠛⣉⣼⣿⣿
+-- ⣿⣿⣿⣶⡆⠉⠭⠥⠖⣂⡄⡑⠀⠸⣿⣿⣿⣇⠸⣿⣿⣿⣿⣿⣿⣝⣛⣻⣭⣵⣶⣿⣿⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⢃⣼⣿⣿⣿⠇⣴⡇⢿⣶⣶⣬⣥⠆⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣧⢹⣿⣿⣿⡿⠃⣿⣦⠀⢻⣿⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣾⣿⣿⣿⠏⣼⣿⣷⡬⢉⣉⣉⠉⣴⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣶⢠⣶⣦⡐⢺⣿⣿⣧⡄⢝⣛⠿⠿⠆⠻⣿⣿⣿⣿⣿⡿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⣿⣿⣿⡏⣰⣿⣿⣿⣆⠻⠟⢋⣴⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⠶⢈⡙⢁⣾⣿⣿⣿⣿⡄⢿⣿⣿⣿⠀⠰⣶⣶⣶⣶⣦⣭⣥⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡿⢨⣿⣿⠏⣴⣿⣿⣿⣿⣿⣦⣙⣠⣽⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣶⣶⣶⣿⣿⣿⣿⣿⣿⣷⡌⢿⣿⣿⡀⠀⠬⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠇⣾⣿⠋⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠻⣿⡇⢸⣷⣬⣙⡛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⢩⡔⣸⠛⡡⣸⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠙⣿⡌⣿⣿⣿⡇⠰⣤⡀⢤⣉⣉⣉⣉⡩⢀⣴⡿⠀⠸⠐⣡⣾⢣⣿⠀⣮⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢋⣶⣌⠳⠘⣿⣿⡇⡀⢻⣿⡷⢂⡉⠋⣄⣚⡻⢿⠃⡄⣡⣾⣿⡏⠾⢁⣼⣿⣿⠊⠍⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⡣⢿⣿⣿⣷⡄⠹⣿⣿⠰⡄⢋⣾⣿⡇⠷⢻⣿⣿⠦⠐⠸⢿⣿⣿⢣⣶⣿⣿⣿⣿⣦⣀⡀⡙⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⣰⣿⣿⣿⣿⡔⢿⡇⣂⣡⡶⢸⣿⣇⣄⢸⣿⣇⠚⣋⣙⢃⡿⠁⣿⣿⣿⣿⣿⣿⣿⣿⠣⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿
+-- ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡑⠱⣾⣿⣿⣿⣿⣿⣿⡆⠙⢬⣭⣵⣿⣿⡆⠀⢸⣿⣿⣷⣶⣶⠞⣱⡇⠹⣿⣿⣿⣿⣿⡿⠃⣱⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
