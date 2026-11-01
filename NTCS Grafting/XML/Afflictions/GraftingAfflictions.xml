@@ -235,7 +235,7 @@
     maxstrength="10"
 
     iconcolors="255,255,255;0,0,0;0,0,0">
-    <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
+    <AfflictionOverlay texture="%ModDir%/Images/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-1" />
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
@@ -257,7 +257,7 @@
     maxstrength="10"
 
     iconcolors="255,255,255;0,0,0;0,0,0">
-    <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
+    <AfflictionOverlay texture="%ModDir%/Images/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-0.9" />
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
@@ -279,7 +279,7 @@
     maxstrength="10"
 
     iconcolors="255,255,255;0,0,0;0,0,0">
-    <AfflictionOverlay texture="%ModDir%/transplants/organs/fractalguardian/blind.png" />
+    <AfflictionOverlay texture="%ModDir%/Images/blind.png" />
     <Effect minstrength="0" maxstrength="10" strengthchange="-0.8" />
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="9,1" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
   </Afflicton>
@@ -1003,7 +1003,7 @@
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="grafting_MolochHeadCrackedSprite" amount="10000" />
         <ReduceAffliction identifier="grafting_MolochHead" amount="100" />
-        <Affliction identifier="cerebralhypoxia" amount="0.1" />
+        <Affliction identifier="neurotrauma" amount="0.1" />
       </StatusEffect>
     </Effect>
     <icon texture="%ModDir%/Images/GraftingAfflictionIcons.png" sheetindex="0,2" sheetelementsize="128,128" color="0,0,0,0" origin="0,0" />
