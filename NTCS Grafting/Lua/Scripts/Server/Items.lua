@@ -302,7 +302,7 @@ local function GraftTissue(d, GraftInfo)
   local limbtype = NTCS.HF.NormalizeLimbType(d.targetLimb.type)
 
   if limbtype ~= GraftInfo.LimbForGraft then return end
-  if GraftInfo.ConflictWithEyes and NTEYE ~= nil then return end
+  if GraftInfo.ConflictWithEyes and NTCS_Eyes ~= nil then return end
 
   -- Already grafted, or a conflicting graft is present.
   for _, id in ipairs(GraftInfo.ConflictingGraftOnLimb) do
