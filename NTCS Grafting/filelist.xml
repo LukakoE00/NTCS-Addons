@@ -19,7 +19,6 @@
     <!-- Items -->
     <Item file="%ModDir%/XML/Items/CellTypes.xml" />
     <Item file="%ModDir%/XML/Items/LimbTypes.xml" />
-    <Item file="%ModDir%/XML/Items/Miscellaneous.xml" />
     <Item file="%ModDir%/XML/Items/OrganTypes.xml" />
     <Item file="%ModDir%/XML/Items/Overrides.xml" />
     <Item file="%ModDir%/XML/Items/Tools.xml" />

@@ -7,20 +7,24 @@
     <huskappendage affliction="husksymbiosis" path="Content/Characters/Humanhusk/Huskappendagesymbiosis.xml" onlyfromafflictions="true" />
     <huskappendage affliction="naturalmeleeweapon" path="Content/Characters/Humanhusk/Mudraptorbeak.xml" onlyfromafflictions="true" />
     <huskappendage affliction="naturalrangedweapon" path="Content/Characters/Humanhusk/Spinelingspine.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_CrawlerTail" path="%ModDir%/transplants/limbs/crawler/crawlerTailAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_HammerheadLimbs" path="%ModDir%/transplants/limbs/hammerhead/hammerheadLimbsAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_FractalGuardianEyes" path="%ModDir%/transplants/organs/fractalguardian/fractalGuardianEyeAppendage.xml" onlyfromafflictions="True" />
-    <huskappendage affliction="grafting_HuskArm" path="%ModDir%/transplants/limbs/husk/huskArmAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_BroodmotherLiver" path="%ModDir%/transplants/organs/broodmother/broodmotherLiverAttack.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_TigerThresherJaw" path="%ModDir%/transplants/limbs/tigerThresher/tigerThresherJaw.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_TigerThresherTail" path="%ModDir%/transplants/limbs/tigerThresher/tigerThresherTailAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_BoneThresherJaw" path="%ModDir%/transplants/limbs/boneThresher/boneThresherJaw.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_MolochHead" path="%ModDir%/transplants/limbs/moloch/molochHead.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_MolochHeadCrackedSprite" path="%ModDir%/transplants/limbs/moloch/molochHeadCracked.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_WatcherEyes" path="%ModDir%/transplants/organs/watcher/watcherEyeAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_LatcherTongue" path="%ModDir%/transplants/limbs/latcher/latcherTongueAppendage.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_CharybdisJaw" path="%ModDir%/transplants/limbs/charybdis/charybdisJaw.xml" onlyfromafflictions="true" />
-    <huskappendage affliction="grafting_OrangeboyTail" path="%ModDir%/transplants/limbs/orangeboy/orangeboyTailAppendage.xml" onlyfromafflictions="true" />
+
+    <!-- Grafting -->
+    <huskappendage affliction="grafting_CrawlerTail" path="%ModDir%/XML/CreatureAppendages/Crawler_Tail.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_HammerheadLimbs" path="%ModDir%/XML/CreatureAppendages/HammerHead_Limbs.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_FractalGuardianEyes" path="%ModDir%/XML/CreatureAppendages/FractalGuardian_Eye.xml" onlyfromafflictions="True" />
+    <huskappendage affliction="grafting_HuskArm" path="%ModDir%/XML/CreatureAppendages/Husk_Arm.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_BroodmotherLiver" path="%ModDir%/XML/CreatureAppendages/BroodMother_LiverAttack.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_TigerThresherJaw" path="%ModDir%/XML/CreatureAppendages/TigerThresher_Jaw.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_TigerThresherTail" path="%ModDir%/XML/CreatureAppendages/TigerThresher_Tail.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_BoneThresherJaw" path="%ModDir%/XML/CreatureAppendages/BoneThresher_Jaw.xml" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_MolochHead" path="%ModDir%/XML/CreatureAppendages/Moloch_Head" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_MolochHeadCrackedSprite" path="%ModDir%/XML/CreatureAppendages/Moloch_HeadCracked" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_WatcherEyes" path="%ModDir%/XML/CreatureAppendages/Watcher_Eye" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_LatcherTongue" path="%ModDir%/XML/CreatureAppendages/Latcher_Tongue" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_CharybdisJaw" path="%ModDir%/XML/CreatureAppendages/Charybdis_Jaw" onlyfromafflictions="true" />
+    <huskappendage affliction="grafting_OrangeboyTail" path="%ModDir%/XML/CreatureAppendages/Orangeboy_Tail" onlyfromafflictions="true" />
+    <!-- Grafting -->
+
     <bloodemitter particle="blood" particleamount="5" anglemin="0" anglemax="0" scalemin="1" scalemax="1" velocitymin="0" velocitymax="0" emitinterval="0" particlespersecond="0" highqualitycollisiondetection="False" copyentityangle="False" />
     <bloodemitter particle="waterblood" particleamount="1" anglemin="0" anglemax="0" scalemin="1" scalemax="1" velocitymin="0" velocitymax="0" emitinterval="0" particlespersecond="0" highqualitycollisiondetection="False" copyentityangle="False" />
     <health usehealthwindow="True" vitality="100" crushdepth="6000" doesbleed="True" bleedingreduction="10" burnreduction="0.1" constanthealthregeneration="1" healthregenerationwheneating="0" applyafflictioncolors="true" poisonvulnerability="0.5">

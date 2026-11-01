@@ -24,7 +24,7 @@ NTCS_Grafting.CreatureDrops = {
 
     hammerhead = {
         { item = "Cells_Hammerhead", chance = 0.222222 },
-        { item = "hammerheadLimbsAegis", chance = 0.222222 },
+        { item = "grafting_HammerheadLimbs", chance = 0.222222 },
     },
 
     moloch = {
@@ -45,7 +45,7 @@ NTCS_Grafting.CreatureDrops = {
 
     latcher = {
         { item = "latcherCellsAegis", chance = 0.333333 },
-        { item = "latcherTongueAegis", chance = 0.333333 },
+        { item = "grafting_LatcherTongue", chance = 0.333333 },
     },
 
     watcher = {
@@ -57,7 +57,7 @@ NTCS_Grafting.CreatureDrops = {
     },
 
     tigerthresher = {
-        { item = "tigerThresherTailAegis", chance = 0.151515 },
+        { item = "grafting_TigerThresherTail", chance = 0.151515 },
         { item = "Cells_TigerThresher", chance = 0.242424 },
     },
 
@@ -67,7 +67,7 @@ NTCS_Grafting.CreatureDrops = {
     },
 
     orangeboy = {
-        { item = "orangeboyTailAegis", chance = 0.18 },
+        { item = "grafting_OrangeboyTail", chance = 0.18 },
     },
 
     spineling_morbusine = {
@@ -79,7 +79,7 @@ NTCS_Grafting.CreatureDrops = {
         { item = "Cells_Husk", chance = 0.181818 },
     },
     husk_chimera = {
-        { item = "huskArmAegis", chance = 0.25 },
+        { item = "grafting_HuskArm", chance = 0.25 },
         { item = "Cells_Husk", chance = 0.375 },
         { item = "huskHeartAegis", chance = 0.125 },
     },
