@@ -380,7 +380,7 @@ local Mismatch = AfflictionBuilder:New("mc_mismatch"):SetUpdateAction(function(C
 
 	C:SetSymptomTrue("headache", 10)
 	if NTCS.HF.Chance(0.1) then
-		C:SetSymptomTrue("nausea", 10)
+		C:SetSymptomTrue("nausea_nt", 10)
 	end
 
 	SetEyeAfflictionStrength(C, Identifier, 2)
