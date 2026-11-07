@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
  <Items>
     <!-- Bone Thresher Cells -->
-    <Item name="" description="" identifier="Cells_BoneThresher" scale="0.13" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical">
+    <Item name="" description="" identifier="Cells_BoneThresher" scale="0.13" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" useinhealthinterface="True" applyTreatment="True" cargocontaineridentifier="organcrate" Tags="smallitem, medical, graftingcelltype">
         <Price baseprice="150" soldbydefault="false" />
 
         <Deconstruct time="10">

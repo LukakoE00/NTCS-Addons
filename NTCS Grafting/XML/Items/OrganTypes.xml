@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
   <!-- Broodmother Liver-->
-  <Item name="" description="" identifier="Liver_Broodmother" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Liver_Broodmother" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="300" soldbydefault="false" />
     
     <Deconstruct time="10">
@@ -16,7 +16,7 @@
   </Item>
 
   <!-- Crawler Lungs -->
-  <Item name="" description="" identifier="Lungs_Crawler" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Lungs_Crawler" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="500" soldbydefault="false" />
 
     <Deconstruct time="10">
@@ -31,7 +31,7 @@
   </Item>
 
   <!-- Fractal Guardian Eye -->
-  <Item name="" description="" identifier="Eye_FractalGuardian" scale="0.5" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Eye_FractalGuardian" scale="0.5" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="350" soldbydefault="false" />
 
     <Deconstruct time="120">
@@ -46,7 +46,7 @@
   </Item>
 
   <!-- Husk Heart -->
-  <Item name="" description="" identifier="Heart_Husk" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Heart_Husk" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="1000" soldbydefault="false" />
 
     <Deconstruct time="10">
@@ -61,7 +61,7 @@
   </Item>
 
   <!-- Latcher Heart -->
-  <Item name="" description="" identifier="Heart_Latcher" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Heart_Latcher" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="1000" soldbydefault="false" />
     
     <Deconstruct time="10">
@@ -76,7 +76,7 @@
   </Item>
 
   <!-- Mantis Liver -->
-  <Item name="" description="" identifier="Liver_Mantis" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Liver_Mantis" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="300" soldbydefault="false" />
 
     <Deconstruct time="10">
@@ -91,7 +91,7 @@
   </Item>
 
   <!-- Mudraptor Lungs -->
-  <Item name="" description="" identifier="Lungs_Mudraptor" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Lungs_Mudraptor" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="600" soldbydefault="false" />
 
     <Deconstruct time="10">
@@ -106,7 +106,7 @@
   </Item>
 
   <!-- Viperling Liver -->
-  <Item name="" description="" identifier="Liver_Viperling" scale="0.3" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Liver_Viperling" scale="0.3" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="300" soldbydefault="false" />
 
     <Deconstruct time="10">
@@ -121,7 +121,7 @@
   </Item>
 
   <!-- Watcher Eye -->
-  <Item name="" description="" identifier="Eye_Watcher" scale="0.04" variantof="Cells_BoneThresher">
+  <Item name="" description="" identifier="Eye_Watcher" scale="0.04" Tags="smallitem, medical, graftingorgantype" variantof="Cells_BoneThresher">
     <Price baseprice="700" soldbydefault="false" />
 
     <Deconstruct time="120">
