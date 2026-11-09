@@ -21,7 +21,7 @@ local GraftingCure = function (d)
   NTCS.HF.RemoveItem(d.item)
 end
 
-itemLoader:Register("graftingcure", GraftingCure)
+itemLoader:Register("GraftingCure", GraftingCure)
 
 -- DNA Splicer
 local DNASplicer = function (d)
@@ -49,7 +49,7 @@ local DNASplicer = function (d)
   NTCS.HF.RemoveItem(d.item)
 end
 
-itemLoader:Register("dnasplicer", DNASplicer)
+itemLoader:Register("DNASplicer", DNASplicer)
 
 -- Alien Scalpel
 -- Graft Affliction ID (to cut) + Item ID (that it gives back)
@@ -100,7 +100,7 @@ local AlienScalpel = function (d)
   end
 end
 
-itemLoader:Register("alienscalpel", AlienScalpel)
+itemLoader:Register("AlienScalpel", AlienScalpel)
 
 -- ========================================================= ACTUAL GRAFTS =========================================================
 

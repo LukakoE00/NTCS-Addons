@@ -175,7 +175,7 @@
 
     <Fabricate suitablefabricators="medicalfabricator" requiredtime="20">
       <RequiredSkill identifier="medical" level="60" />
-      <RequiredItem tags="bloodbag" />
+      <RequiredItem tag="bloodbag" />
       <RequiredItem identifier="pomegrenadeextract" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
