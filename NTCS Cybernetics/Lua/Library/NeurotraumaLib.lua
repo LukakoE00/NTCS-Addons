@@ -1,3 +1,4 @@
+---@diagnostic disable: redundant-parameter
 NTCS = {}
 
 NTCS.HF = LuaUserData.CreateStatic("Neurotrauma.HF", false)
@@ -10,7 +11,7 @@ NTCS.ConfigExpansion = LuaUserData.CreateStatic("Neurotrauma.ConfigExpansion", t
 NTCS.ConfigEntry = LuaUserData.CreateStatic("Neurotrauma.ConfigEntry", true)
 NTCS.ConfigEntryType = LuaUserData.CreateEnumTable("Neurotrauma.ConfigEntryType")
 
-NTCS.NeurotraumaInit = LuaUserData.CreateStatic("Neurotrauma.NeurotraumaInit", false)
+NTCS.NeurotraumaInit = LuaUserData.CreateStatic("Neurotrauma.Initialization", false)
 
 NTCS.Afflictions = LuaUserData.CreateStatic("Neurotrauma.NTAfflictions", false)
 NTCS.AfflictionsPriority = LuaUserData.CreateEnumTable("Neurotrauma.NTAfflictions+AfflictionPriority")
@@ -29,7 +30,6 @@ NTCS.StatFloat = LuaUserData.CreateStatic("Neurotrauma.NTStats+NTStatFloat", tru
 NTCS.StatLoader = LuaUserData.CreateStatic("Neurotrauma.NTStats+NTStatLoader", true)
 
 NTCS.Items = LuaUserData.CreateStatic("Neurotrauma.NTItems", false)
-NTCS.ItemsData = LuaUserData.CreateStatic("Neurotrauma.NTItemsData", false)
 NTCS.ItemsAfflictionInfos = LuaUserData.CreateStatic("Neurotrauma.NTItems+ItemsAfflictionInfos", true)
 NTCS.ItemUpdateFunctionInfos = LuaUserData.CreateStatic("Neurotrauma.NTItems+ItemUpdateFunctionInfos", true)
 NTCS.ItemFunctionLoader = LuaUserData.CreateStatic("Neurotrauma.NTItems+NTItemFunctionLoader", true)

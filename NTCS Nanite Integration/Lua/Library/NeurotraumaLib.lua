@@ -11,7 +11,7 @@ NTCS.ConfigExpansion = LuaUserData.CreateStatic("Neurotrauma.ConfigExpansion", t
 NTCS.ConfigEntry = LuaUserData.CreateStatic("Neurotrauma.ConfigEntry", true)
 NTCS.ConfigEntryType = LuaUserData.CreateEnumTable("Neurotrauma.ConfigEntryType")
 
-NTCS.NeurotraumaInit = LuaUserData.CreateStatic("Neurotrauma.NeurotraumaInit", false)
+NTCS.NeurotraumaInit = LuaUserData.CreateStatic("Neurotrauma.Initialization", false)
 
 NTCS.Afflictions = LuaUserData.CreateStatic("Neurotrauma.NTAfflictions", false)
 NTCS.AfflictionsPriority = LuaUserData.CreateEnumTable("Neurotrauma.NTAfflictions+AfflictionPriority")
