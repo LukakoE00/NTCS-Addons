@@ -431,11 +431,11 @@ local ViralLevel = AfflictionBuilder:New("virallevel"):SetUpdateAction(function(
                     * (1 - (NTCS.HF.GetAfflictionStrength(C.Human, virus.vaccine, 0) / 200) * (C:GetAfflictionStrength("immunity") / 100))
         local defense = (gain + 0.1) * (NTCS.HF.GetAfflictionStrength(C.Human, "viralantibodies", 0) / 100)
 
-        C:AddAffliction(Identifier, (gain * NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_infectionDifficulty", true))) - defense)
+        C:AddAffliction(Identifier, (gain * NTCS.Config.Get("NTI_infectionDifficulty", 1)) - defense)
 
         C:SetFloatStat("speedmultiplier", C:GetFloatStat("speedmultiplier") * (1 - virus.slowdown * (C:GetAfflictionStrength(Identifier) / (100 + meds))))
 
-        NTCS_Infections.SpreadViralInfection(C.Human, NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_viralSpreadChance", true)), virus, meds, C:GetAfflictionStrength(Identifier), name, NTCS.HF.GetAfflictionStrength(C.Human, name, 0))
+        NTCS_Infections.SpreadViralInfection(C.Human, NTCS.Config.Get("NTI_viralSpreadChance", 0.1), virus, meds, C:GetAfflictionStrength(Identifier), name, NTCS.HF.GetAfflictionStrength(C.Human, name, 0))
 end
 
 end):Build()
@@ -472,7 +472,7 @@ local InfectionLevel = AfflictionBuilder:New("infectionlevel"):IsLimbSpecific(tr
 
     local defense = C:GetAfflictionStrengthLimb("immuneresponse", Limb) / 100
 
-    local delta = (gain * NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_infectionDifficulty", true))) - defense
+    local delta = (gain * NTCS.Config.Get("NTI_infectionDifficulty", 1)) - defense
     local newstrength = NTCS.HF.Clamp(strength + delta, 0, 100)
 
     C:SetAfflictionLimb(Identifier, Limb, newstrength)
@@ -506,7 +506,7 @@ local BloodInfectionLevel = AfflictionBuilder:New("bloodinfectionlevel"):SetUpda
             local gain = NTCS_Infections.BloodInfUpdate(C)
             local defense = (C:GetAfflictionStrength("systemicresponse", 0) / 100)
 
-            C:AddAffliction(Identifier, (gain * NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_infectionDifficulty", true))) - defense)
+            C:AddAffliction(Identifier, (gain * NTCS.Config.Get("NTI_infectionDifficulty", 1)) - defense)
 
             if NTCS.HF.Chance((C:GetAfflictionStrength(Identifier) / 150) ^ 3) and not NTCS_Infections.HasSepsis(C.Human) then 
                 C:SetAffliction("sepsis", 1)
@@ -624,7 +624,7 @@ local NecFasc = AfflictionBuilder:New("necfasc"):IsLimbSpecific(true):SetUpdateA
             local antibiotic = NTCS_Infections.GetAntibioticValue(C.Human, info.antibiotics)
 
             increase = NTCS.HF.Clamp(info.basespeed + C:GetAfflictionStrengthLimb(name, Limb, 1) * info.severityspeed, 0.05, 1)
-                * NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_necFascSpeed", true))
+                * NTCS.Config.Get("NTI_necFascSpeed", 1)
                 * (1 - (NTCS.HF.GetAfflictionStrength(C.Human, info.vaccine, 0) / 200) * (C:GetAfflictionStrength("immunity") / 100))
                 * antibiotic
         end
@@ -722,7 +722,7 @@ local Pneumonia = AfflictionBuilder:New("pneumonia"):SetUpdateAction(function(C,
 
         local antibiotic = NTCS_Infections.GetAntibioticValue(C.Human, info.antibiotics)
         local increase = (math.min(info.basespeed + 10 * info.severityspeed, 0.99)
-                    * NTCS.HF.BoolToNum(NTCS.Config.Get("NTI_pneumoniaSpeed", true))
+                    * NTCS.Config.Get("NTI_pneumoniaSpeed", 1)
                     * (1 - (NTCS.HF.GetAfflictionStrength(C.Human, info.vaccine, 0) / 200) * (immunity / 100))
                     * antibiotic)
                 - defense
