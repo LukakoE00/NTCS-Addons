@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentpackage name="NTCS Eyes" modversion="1.0.1" corepackage="False" steamworkshopid="3820738363" gameversion="1.13.4.0">
+
+  <Dependency identifier="neurotrauma" name="Neurotrauma CS" ids="3744761298" order="Above" />
+
   <!-- Afflictions -->
   <Afflictions file="%ModDir%/XML/Afflictions/EyeTypeDamage.xml" />
   <Afflictions file="%ModDir%/XML/Afflictions/EyeTypeIcons.xml" />

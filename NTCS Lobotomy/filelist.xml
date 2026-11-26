@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentpackage name="NTCS Lobotomy" modversion="1.0.2" corepackage="False" steamworkshopid="3816471654">
+
+  <Dependency identifier="neurotrauma" name="Neurotrauma CS" ids="3744761298" order="Below" />
+
   <Afflictions file="%ModDir%/Xml/afflictions.xml" />
   <Item file="%ModDir%/Xml/items.xml" />
   <Text file="%ModDir%/Localization/English.xml" />
