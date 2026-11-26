@@ -1,0 +1,27 @@
+Radiation now causes immediate damage and long term.
+
+immediate :
+ - Causes burn, bleeding and possibly skin peeling.
+ - Causes organ damage
+
+
+
+Adds a new "radiation exposure" affliction that goes up when exposed to radiation.
+It very slowly goes down by itself, nothing can make it go down (tbd).
+The higher rad exposure is, the higher the chance of cancer.
+It can also slow down blood production.
+It has a chance to kill the husk (certain at a certain exposure).
+
+Two types of cancer:
+
+Benign cancers do not spread and do not lower vitality. They do cause debuffs depending on the organ/limb.
+
+Malignant cancers can spread and lower vitality. They do cause debuffs depending on the organ/limb.
+
+
+Treatment :
+
+Husk infection (80+%) slows down the progress of cancer.
+Removal of limb/organ
+Cyber organs and limbs cannot get cancer.
+"Concentrated radiotoxin" slowly cures cancer but causes immediate damage.
