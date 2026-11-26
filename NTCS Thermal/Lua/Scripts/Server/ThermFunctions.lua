@@ -126,7 +126,9 @@ THERM.CalculateIsLimbInWater = function (target, LimbTypeToCheck, offset, index)
         if not target then return 0 end
         -- Calculate if limb is in water. The IsInWater action type for XML doesn't properly detect limbs, I can be knee deep in water and it won't count. At least I couldn't find it, if you do let me know.
         local limb = target.AnimController.GetLimb(LimbTypeToCheck, true, false, false)
-        local LimbPosY = target.AnimController.GetLimb(LimbTypeToCheck, true, false, false).WorldPosition.Y
+        if not limb then return 0 end
+
+        local LimbPosY = limb.WorldPosition.Y
         local LimbHull = limb.Hull
         local WaterExposure = 0
         if LimbHull ~= nil then
@@ -163,8 +165,20 @@ THERM.CalculateLimbWaterExposure = function (animcontrol, limb, WaterY)
         if not NewLimbData then
                 return 0
         end
-        local LimbStartPoint = animcontrol.GetLimb(NewLimbData.StartPoint,true,false,false).WorldPosition
-        local LimbEndPoint = animcontrol.GetLimb(NewLimbData.EndPoint,true,false,false).WorldPosition
+
+        if animcontrol == nil then
+                return 0
+        end
+
+        local limb1 = animcontrol.GetLimb(NewLimbData.StartPoint,true,false,false)
+        local limb2 = animcontrol.GetLimb(NewLimbData.EndPoint,true,false,false)
+
+        if not limb1 or not limb2 then
+                return 0
+        end
+
+        local LimbStartPoint = limb1.WorldPosition
+        local LimbEndPoint = limb2.WorldPosition
         -- Two blocks incase the limbs are oriented in a manner where the endpoint is higher than the start, which will cause the water exposure to falsely go up.
         if LimbEndPoint.Y < LimbStartPoint.Y then
                 local LimbLengthY = math.abs(LimbStartPoint.Y + NewLimbData.Offset) - math.abs(LimbEndPoint.Y)
@@ -367,7 +381,9 @@ end
 ---@param character Character
 THERM.RemoveWet = function (character)
         for index, limb in pairs(LimbsToCheck) do
-                NTCS.HF.AddAfflictionLimb(character, "wet", limb, -.05, character) 
+            if not NTCS.HF.LimbIsAmputated(character, limb) then 
+                NTCS.HF.AddAfflictionLimb(character, "wet", limb, -.05, character)
+            end
         end
 end
 
@@ -378,6 +394,11 @@ end
 ---@return boolean
 THERM.IsLimbCyber = function (character,limb)
         local newlimb = NTCS.HF.NormalizeLimbType(limb)
+
+        if NTCS.HF.LimbIsAmputated(charactern, newlimb) then
+            return false
+        end
+
         if      NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberleg", 0) > .1
                 or NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberarm", 0) > .1
                 or NTCS.HF.GetAfflictionStrengthLimb(character, newlimb, "ntc_cyberlimb", 0) > .1
@@ -634,7 +655,9 @@ end
 ---@param Amount number
 THERM.RaiseTemperature = function (Character, Amount)
         for limb in LimbsToCheck do
+            if not NTCS.HF.LimbIsAmputated(Character, limb) then
                 NTCS.HF.AddAfflictionLimb(Character, "ntt_temperature", limb, Amount, Character) 
+            end
         end
 end
 
@@ -674,6 +697,8 @@ end
 ---@param limb LimbType
 ---@param usingCharacter Character
 THERM.ReduceBurns = function (targetCharacter, limb, usingCharacter)
+
+        if limb == nil then return end
         for Identifier in {"thirddegreeburn","seconddegreeburn","firstdegreeburn","burn"} do
                 NTCS.HF.AddAfflictionLimb(targetCharacter, Identifier, limb.type, -100, usingCharacter)
         end
