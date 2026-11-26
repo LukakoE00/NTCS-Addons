@@ -40,7 +40,7 @@
     <!-- Grafting Sprites -->
     <conditionalsprite exclusive="False" comparison="and">
       <conditional grafting_MudraptorHead="gt 90" />
-      <sprite texture="%ModDir%/transplants/limbs/mudraptor/mudraptorHead.png" sourcerect="0,0,198,141" depth="0.05" origin="0.38,0.45" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
+      <sprite texture="%ModDir%/Images/mudraptorHead.png" sourcerect="0,0,198,141" depth="0.05" origin="0.38,0.45" color="255,255,255,255" deadcolor="255,255,255,255" deadcolortime="0" ignoretint="False" />
     </conditionalsprite>
   </limb>
 
