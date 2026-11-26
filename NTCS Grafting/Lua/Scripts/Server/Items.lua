@@ -693,7 +693,7 @@ local EmptyBloodpack = function (d)
     bloodlossinduced = 40
   end
  
-  local bloodtype = NTCS.NTBloodTypes.GetBloodtype(targetCharacter)
+  local bloodtype = NTCS.NTBloodTypes.GetBloodType(targetCharacter)
  
   -- Add Acidosis / Alkalosis / Sepsis / Mantis / Broodmother effects into the tags of the pack.
   local function postSpawnFunc(args, spawnedItem)
