@@ -58,7 +58,7 @@ function NTCS_Cybernetics.CyberifyLimb(character, limbtype, iswaterproof)
 	NTCS.HF.ArteryCutLimb(character, limbtype, -1000)
 	NTCS.HF.BreakLimb(character, limbtype, -1000)
 	NTCS.HF.DislocateLimb(character, limbtype, -1000)
-	NTCS.HF.SurgicallyAmputateLimb(character, limbtype, 0, 0)
+	NTCS.HF.AmputateLimb(character, limbtype)
 
 	NTCS.HF.SetAfflictionLimb(character, "tourniqueted", limbtype, 0)
 	NTCS.HF.SetAfflictionLimb(character, "surgeryincision", limbtype, 0)
@@ -82,6 +82,8 @@ function NTCS_Cybernetics.CyberifyLimb(character, limbtype, iswaterproof)
 	-- do the thing
 
 	NTCS.HF.SetAfflictionLimb(character, "ntc_cyberlimb", limbtype, 100)
+
+    NTCS.HF.RegenerateLimb(character, limbtype, character)
 end
 
 NTCS_Cybernetics.HF.GetAllCyberDamages = function(targetCharacter, limbtype)
@@ -217,21 +219,23 @@ function NTCS_Cybernetics.ConvertDamageTypes(character, limbtype, IncomingDamage
 		NTCS.HF.SetAfflictionLimb(character, "suturedi", limbtype, 0)
 		NTCS.HF.SetAfflictionLimb(character, "suturedw", limbtype, 0)
 
-		if limbtype == LimbType.LeftLeg then
-			NTCS.HF.SetAffliction(character, "tll_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sll_amputation", 0)
-		end
-		if limbtype == LimbType.RightLeg then
-			NTCS.HF.SetAffliction(character, "trl_amputation", 0)
-			NTCS.HF.SetAffliction(character, "srl_amputation", 0)
-		end
-		if limbtype == LimbType.LeftArm then
-			NTCS.HF.SetAffliction(character, "tla_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sla_amputation", 0)
-		end
-		if limbtype == LimbType.RightArm then
-			NTCS.HF.SetAffliction(character, "tra_amputation", 0)
-			NTCS.HF.SetAffliction(character, "sra_amputation", 0)
-		end
+        -- TODO: Check if this works
+        NTCS.HF.SetAfflictionLimb(character, "amputation_nt", limbtype, 0)
+		-- if limbtype == LimbType.LeftLeg then
+		-- 	NTCS.HF.SetAffliction(character, "tll_amputation", 0)
+		-- 	NTCS.HF.SetAffliction(character, "sll_amputation", 0)
+		-- end
+		-- if limbtype == LimbType.RightLeg then
+		-- 	NTCS.HF.SetAffliction(character, "trl_amputation", 0)
+		-- 	NTCS.HF.SetAffliction(character, "srl_amputation", 0)
+		-- end
+		-- if limbtype == LimbType.LeftArm then
+		-- 	NTCS.HF.SetAffliction(character, "tla_amputation", 0)
+		-- 	NTCS.HF.SetAffliction(character, "sla_amputation", 0)
+		-- end
+		-- if limbtype == LimbType.RightArm then
+		-- 	NTCS.HF.SetAffliction(character, "tra_amputation", 0)
+		-- 	NTCS.HF.SetAffliction(character, "sra_amputation", 0)
+		-- end
 	end
 end

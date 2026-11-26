@@ -221,7 +221,7 @@ local Crowbar = function (d)
 			NTCS.HF.AddAfflictionLimb(targetCharacter, "bleeding", LimbType.Torso, NTCS.HF.RandomRange(5, 10))
 		end
 
-		NTCS.HF.SurgicallyAmputateLimb(targetCharacter, limbtype)
+		NTCS.HF.AmputateLimb(targetCharacter, limbtype)
 		local limbItem
 		if limbtype == LimbType.LeftLeg or limbtype == LimbType.RightLeg then
 			if isWaterproof then
@@ -304,7 +304,12 @@ local Screwdriver = function (d)
 	NTCS.HF.GiveItem(targetCharacter, "ntcsfx_screwdriver")
 end
 
-itemLoader:Register("screwdriver", Screwdriver)
+--itemLoader:Register("screwdriver", Screwdriver)
+
+itemLoader:Override("screwdriver", function (d)
+	itemLoader:CallPrevious("screwdriver", d)
+	Screwdriver(d)
+end)
 
 -- TO DO
 -- ADD THE REPAIR PACKS SCREWDRIVER FUNCTIONALITY
@@ -321,7 +326,13 @@ local FPGACircuit = function (d)
     NTCS_Cybernetics.RepairDamagedElectronics(item, usingCharacter, targetCharacter, targetLimb, 50, 100)
 end
 
-itemLoader:Register("fpgacircuit", FPGACircuit)
+--itemLoader:Register("fpgacircuit", FPGACircuit)
+
+itemLoader:Override("fpgacircuit", function (d)
+	itemLoader:CallPrevious("fpgacircuit", d)
+    print("running fpgacircuit")
+	FPGACircuit(d)
+end)
 
 -- Steel Bars
 local SteelBar = function (d)
@@ -432,9 +443,12 @@ local CyberArm = function (d)
     -- Can't make a limb cybernetic if it already is!
 	if NTCS_Cybernetics.HF.LimbIsCyber(targetCharacter, limbtype) then return end
 	
+    print(not (NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
+		or NTCS.HF.HasAfflictionLimb(targetCharacter, "bleeding", limbtype, 0))
+
     -- Surgery check
     if
-		not (NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
+		not (NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
 		or NTCS.HF.HasAfflictionLimb(targetCharacter, "bleeding", limbtype, 0)
 	then
 		return
@@ -446,7 +460,7 @@ local CyberArm = function (d)
     -- Skill check
 	if NTCS.HF.GetSkillRequirementMet(usingCharacter, "mechanical", 70) then
 		if not NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) then
-			NTCS.HF.SurgicallyAmputateLimbAndGenerateItem(usingCharacter, targetCharacter, limbtype)
+			NTCS.HF.AmputateLimbAndGenerateItem(usingCharacter, limbtype, targetCharacter)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
@@ -474,7 +488,7 @@ local CyberArmWaterproof = function (d)
 	
     -- Surgery check
     if
-		not (NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
+		not (NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
 		or NTCS.HF.HasAfflictionLimb(targetCharacter, "bleeding", limbtype, 0)
 	then
 		return
@@ -486,7 +500,7 @@ local CyberArmWaterproof = function (d)
     -- Skill check
 	if NTCS.HF.GetSkillRequirementMet(usingCharacter, "mechanical", 70) then
 		if not NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) then
-			NTCS.HF.SurgicallyAmputateLimbAndGenerateItem(usingCharacter, targetCharacter, limbtype)
+			NTCS.HF.AmputateLimbAndGenerateItem(usingCharacter, limbtype, targetCharacter)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
@@ -514,7 +528,7 @@ local CyberLeg = function (d)
 	
     -- Surgery check
     if
-		not (NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
+		not (NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
 		or NTCS.HF.HasAfflictionLimb(targetCharacter, "bleeding", limbtype, 0)
 	then
 		return
@@ -526,7 +540,7 @@ local CyberLeg = function (d)
     -- Skill check
 	if NTCS.HF.GetSkillRequirementMet(usingCharacter, "mechanical", 70) then
 		if not NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) then
-			NTCS.HF.SurgicallyAmputateLimbAndGenerateItem(usingCharacter, targetCharacter, limbtype)
+			NTCS.HF.AmputateLimbAndGenerateItem(usingCharacter, limbtype, targetCharacter)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, false)
 		NTCS.HF.RemoveItem(item)
@@ -554,7 +568,7 @@ local CyberLegWaterproof = function (d)
 	
     -- Surgery check
     if
-		not (NTCS.HF.LimbIsSurgicallyAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
+		not (NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) or NTCS.HF.HasAfflictionLimb(targetCharacter, "sawedbones", limbtype, 99))
 		or NTCS.HF.HasAfflictionLimb(targetCharacter, "bleeding", limbtype, 0)
 	then
 		return
@@ -566,7 +580,7 @@ local CyberLegWaterproof = function (d)
     -- Skill check
 	if NTCS.HF.GetSkillRequirementMet(usingCharacter, "mechanical", 70) then
 		if not NTCS.HF.LimbIsAmputated(targetCharacter, limbtype) then
-			NTCS.HF.SurgicallyAmputateLimbAndGenerateItem(usingCharacter, targetCharacter, limbtype)
+			NTCS.HF.AmputateLimbAndGenerateItem(usingCharacter, limbtype, targetCharacter)
 		end
 		NTCS_Cybernetics.CyberifyLimb(targetCharacter, limbtype, true)
 		NTCS.HF.RemoveItem(item)
@@ -1250,7 +1264,12 @@ local InfuseBloodpackABC = function (d)
 	NTCS.ItemsData.InfuseBloodpack(d)
 end
 
-itemLoader:Register("bloodpackabc_positive", InfuseBloodpackABC)
+--itemLoader:Register("bloodpackabc_positive", InfuseBloodpackABC)
+
+itemLoader:Override("bloodpackabc_positive", function (d)
+	itemLoader:CallPrevious("bloodpackabc_positive", d)
+	InfuseBloodpackABC(d)
+end)
 
 -- ==================== Miscellaneous ====================
 Timer.Wait(function()
