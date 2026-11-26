@@ -25,7 +25,11 @@ Hook.Add("character.applyDamage", "NTCS_Thermal.ondamaged", function(characterHe
 
 	-- ntc
 	-- modifying ondamaged hooks
-	for key, val in pairs(NTCS.NTC.ModifyingOnDamagedHooks) do
+
+    ---@diagnostic disable-next-line: redundant-parameter
+    NTCS.OnDamaged = LuaUserData.CreateStatic("Neurotrauma.OnDamaged", false)
+
+	for key, val in pairs(NTCS.OnDamaged.ModifyingOnDamagedHooks) do
 		afflictions = val(characterHealth, afflictions, hitLimb)
 	end
 
@@ -46,7 +50,7 @@ Hook.Add("character.applyDamage", "NTCS_Thermal.ondamaged", function(characterHe
 
 	-- ntc
 	-- ondamaged hooks
-	for key, val in pairs(NTCS.NTC.OnDamagedHooks) do
+	for key, val in pairs(NTCS.OnDamaged.OnDamagedHooks) do
 		val(characterHealth, attackResult, hitLimb)
 	end
 end)
