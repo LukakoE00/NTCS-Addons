@@ -1,5 +1,4 @@
 if CLIENT or not Game.IsMultiplayer then
-	LuaUserData.RegisterType("Neurotrauma.ClientSource.ButtonData")
 	local ButtonData = LuaUserData.CreateStatic("Neurotrauma.ClientSource.ButtonData")
 
 	-- New sub-button under the organ scalpel

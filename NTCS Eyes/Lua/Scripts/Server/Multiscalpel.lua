@@ -15,7 +15,6 @@ end
 
 -- Hook to switch the multiscalpel to eye mode
 -- SetMultiscalpelFunction is public static in C#, so we try to call it directly.
-LuaUserData.RegisterType("Neurotrauma.NTMultiscalpel")
 local NTMultiscalpel = LuaUserData.CreateStatic("Neurotrauma.NTMultiscalpel")
 
 Hook.Add("NT.multiscalpel.eye", "NTCS.multiscalpel.eye", function(effect, deltaTime, item, targets, worldPosition)
