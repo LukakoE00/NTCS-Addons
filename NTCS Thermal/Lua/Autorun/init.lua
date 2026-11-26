@@ -2,8 +2,8 @@
 -- Set up dictonary
 NTCS_Thermal = {}
 NTCS_Thermal.Name = "Thermal"
-NTCS_Thermal.Version = "1.0.3"
-NTCS_Thermal.VersionNum = 01000003
+NTCS_Thermal.Version = "1.0.3h1"
+NTCS_Thermal.VersionNum = 01000031
 NTCS_Thermal.MinNTVersion = "2.0.0"
 NTCS_Thermal.MinNTVersionNum = 02000000
 NTCS_Thermal.Path = table.pack(...)[1]
