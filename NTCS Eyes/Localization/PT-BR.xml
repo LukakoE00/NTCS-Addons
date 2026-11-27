@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <!-- Items -->
+  <!-- Surgery Items -->
+  <entityname.it_spoon>Dispositivo Avançado de Extração de Globo Ocular</entityname.it_spoon>
+  <entitydescription.it_spoon>Uma ferramenta cirúrgica rudimentar porém eficiente, projetada para ser usada com pressa. Inflige muita dor.</entitydescription.it_spoon>
+  <entityname.it_eyedrop>Colírio</entityname.it_eyedrop>
+  <entitydescription.it_eyedrop>Um agente umidificante para os olhos. Especialistas acreditam que possa ter propriedades curativas.</entitydescription.it_eyedrop>
+  <entityname.it_lasersurgerytool>Ferramenta de Cirurgia a Laser</entityname.it_lasersurgerytool>
+  <entitydescription.it_lasersurgerytool>Uma ferramenta avançada de cirurgia ocular que exige um alto nível de habilidade para ser operada.</entitydescription.it_lasersurgerytool>
+  <entityname.it_eyeconnector>Conector Ocular</entityname.it_eyeconnector>
+  <entitydescription.it_eyeconnector>Um tecido neuromuscular viscoso que se replica rapidamente e se conecta às terminações nervosas.</entitydescription.it_eyeconnector>
+  <!-- Eye Items -->
+  <entityname.it_humaneye>Olho Humano</entityname.it_humaneye>
+  <entitydescription.it_humaneye>Um olho humano. De quem será que era?</entitydescription.it_humaneye>
+  <entityname.it_plasticeye>Olho de Plástico</entityname.it_plasticeye>
+  <entitydescription.it_plasticeye>Um "olho" improvisado de plástico, vendido em lojas de brinquedos por toda Europa.</entitydescription.it_plasticeye>
+  <entityname.it_enhancedeye>Olho Aprimorado</entityname.it_enhancedeye>
+  <entitydescription.it_enhancedeye>Um olho humano aprimorado por componentes eletrônicos e capaz de utilizar lentes de aprimoramento visual.</entitydescription.it_enhancedeye>
+  <entityname.it_cybereye>Ciberolho</entityname.it_cybereye>
+  <entitydescription.it_cybereye>Um ciberolho de última geração, durável, porém caro, capaz de utilizar lentes de aprimoramento visual.</entitydescription.it_cybereye>
+  <entityname.it_crawlereye>Olho de Reptante</entityname.it_crawlereye>
+  <entitydescription.it_crawlereye>Um olho pertencente a um Reptante muito azarado. Pode causar dores de cabeça se transplantado.</entitydescription.it_crawlereye>
+  <entityname.it_mudraptoreye>Olho de Raptor de Terra</entityname.it_mudraptoreye>
+  <entitydescription.it_mudraptoreye>O olho malformado de um Raptor de Terra. Seus efeitos em humanos são desconhecidos.</entitydescription.it_mudraptoreye>
+  <entityname.it_hammerheadeye>Olho de Predador-Martelo</entityname.it_hammerheadeye>
+  <entitydescription.it_hammerheadeye>Um olho resistente de um Predador-Martelo. Tem cheiro de bacalhau.</entitydescription.it_hammerheadeye>
+  <entityname.it_huskeye>Olho Parasitado</entityname.it_huskeye>
+  <entitydescription.it_huskeye>Uma abominação de olho, mutada além do reconhecimento pelo Parasita-Carcaça. Pode infectar o paciente.</entitydescription.it_huskeye>
+  <entityname.it_watchereye>Olho de Sentinela</entityname.it_watchereye>
+  <entitydescription.it_watchereye>Uma massa vermelha coletada de uma Sentinela. possui as terminações nervosas necessárias para fornecer visão. Mais alguém ouviu esse barulho?</entitydescription.it_watchereye>
+  <entityname.it_latchereye>Olho de Atracador</entityname.it_latchereye>
+  <entitydescription.it_latchereye>Um olho pertencente ao poderoso Atracador; especialistas alertam que pode ter efeitos sobrenaturais.</entitydescription.it_latchereye>
+  <entityname.it_terroreye>Olho do Terror</entityname.it_terroreye>
+  <entitydescription.it_terroreye>Uma amálgama de maldade e exílio, vinda diretamente do abismo. Que Jove nos ajude.</entitydescription.it_terroreye>
+  <!-- Lens Items -->
+  <entityname.it_organiclens>Lentes Orgânicas</entityname.it_organiclens>
+  <entitydescription.it_organiclens>Um par de lentes orgânicas usadas no tratamento de catarata.</entitydescription.it_organiclens>
+  <entityname.it_medicallens>Lentes Médicas</entityname.it_medicallens>
+  <entitydescription.it_medicallens>        
+        Lentes que atuam como um scanner e fornecem aprimoramentos visuais para médicos.
+        ‖color:120,200,120‖ Pressione F em um membro para escanear.‖color:end‖
+        ‖color:200,200,120‖ Pressione F para ligar/desligar.‖color:end‖
+    </entitydescription.it_medicallens>
+  <entityname.it_electricallens>Lentes Elétricas</entityname.it_electricallens>
+  <entitydescription.it_electricallens>        
+        Lentes que atuam como óculos de proteção elétrica e ajudam engenheiros a distinguir circuitos.
+        ‖color:200,200,120‖ Pressione F para ligar/desligar.‖color:end‖
+    </entitydescription.it_electricallens>
+  <entityname.it_nightlens>Lentes de Visão Noturna</entityname.it_nightlens>
+  <entitydescription.it_nightlens>Lentes que aprimoram a visão no escuro. Não podem ser desligadas. Que chato.</entitydescription.it_nightlens>
+  <entityname.it_thermallens>Lentes Térmicas</entityname.it_thermallens>
+  <entitydescription.it_thermallens>        
+        Lentes com visão infravermelha integrada.
+        ‖color:200,200,120‖ Pressione F para ligar/desligar.‖color:end‖
+    </entitydescription.it_thermallens>
+  <!-- Miscellaneous Items -->
+  <entityname.it_glasses>Óculos Corretivos</entityname.it_glasses>
+  <entitydescription.it_glasses>Um dispositivo ultrapassado usado para aliviar deficiências visuais.</entitydescription.it_glasses>
+  <entityname.it_aviators>Óculos Aviador</entityname.it_aviators>
+  <entitydescription.it_aviators>        
+        Um acessório antigo que dizem ser usado apenas por comandantes de aeronaves. Dá bastante confiança.
+    </entitydescription.it_aviators>
+  <entityname.it_nvg>Óculos de Visão Noturna</entityname.it_nvg>
+  <entitydescription.it_nvg>Óculos de visão noturna padrão da Coalizão. Requer baterias.</entitydescription.it_nvg>
+  <entityname.it_eyejar>Frasco de Regeneração Ocular</entityname.it_eyejar>
+  <entitydescription.it_eyejar>        
+        Um frasco que utiliza regeneração por células-tronco para reparar olhos lentamente. Pode ser colocado no chão.
+    </entitydescription.it_eyejar>
+  <!-- Afflictions -->
+  <!-- Surgery Afflictions -->
+  <afflictionname.sr_removedeyes>Olhos Removidos</afflictionname.sr_removedeyes>
+  <afflictiondescription.sr_removedeyes>Os olhos deste paciente foram removidos; ele não consegue enxergar nada.</afflictiondescription.sr_removedeyes>
+  <afflictionname.sr_removedeye>Olho Removido</afflictionname.sr_removedeye>
+  <afflictiondescription.sr_removedeye>Este paciente está sem um olho, prejudicando sua visão.</afflictiondescription.sr_removedeye>
+  <afflictionname.sr_heldlid>Pálpebras Abertas</afflictionname.sr_heldlid>
+  <afflictiondescription.sr_heldlid>As pálpebras deste paciente estão mantidas abertas. Muito desconfortável.</afflictiondescription.sr_heldlid>
+  <afflictionname.sr_poppedeye>Olho Saltado</afflictionname.sr_poppedeye>
+  <afflictiondescription.sr_poppedeye>Os olhos deste paciente saltaram para fora! Uma experiência verdadeiramente traumatizante.</afflictiondescription.sr_poppedeye>
+  <afflictionname.sr_eyeconnector>Conector Ocular</afflictionname.sr_eyeconnector>
+  <afflictiondescription.sr_eyeconnector>Uma substância viscosa parece ter sido aplicada nas órbitas oculares deste paciente.</afflictiondescription.sr_eyeconnector>
+  <afflictionname.sr_corneaincision>Incisão na Córnea</afflictionname.sr_corneaincision>
+  <afflictiondescription.sr_corneaincision>A córnea deste paciente está aberta por incisão.</afflictiondescription.sr_corneaincision>
+  <afflictionname.sr_emulsification>Emulsificação</afflictionname.sr_emulsification>
+  <afflictiondescription.sr_emulsification>O cristalino deste paciente foi removido, prejudicando gravemente sua visão.</afflictiondescription.sr_emulsification>
+  <afflictionname.sr_eyedrops>Colírio</afflictionname.sr_eyedrops>
+  <afflictiondescription.sr_eyedrops>Este paciente está com os olhos muito bem lubrificados; eles parecem estar cicatrizando mais rápido.</afflictiondescription.sr_eyedrops>
+  <afflictionname.sr_lasersurgery>Cirurgia a Laser</afflictionname.sr_lasersurgery>
+  <afflictiondescription.sr_lasersurgery>Este paciente passou por cirurgia a laser e seus olhos estão cicatrizando rapidamente.</afflictiondescription.sr_lasersurgery>
+  <!-- Mechanical Afflictions -->
+  <afflictionname.mc_deadeyes>Olhos Mortos</afflictionname.mc_deadeyes>
+  <afflictiondescription.mc_deadeyes>Os olhos deste paciente parecem opacos e sem resposta.</afflictiondescription.mc_deadeyes>
+  <afflictionname.mc_deadeye>Olho Morto</afflictionname.mc_deadeye>
+  <afflictiondescription.mc_deadeye>Um olho deste paciente está opaco e sem resposta; deve ser removido para prevenir retinopatia.</afflictiondescription.mc_deadeye>
+  <afflictionname.mc_retinopathy>Retinopatia</afflictionname.mc_retinopathy>
+  <afflictiondescription.mc_retinopathy>        
+        O sistema imunológico deste paciente detectou tecido ocular e está atacando-o!
+        Remoção ocular ou imunossupressores são necessários!
+    </afflictiondescription.mc_retinopathy>
+  <afflictionname.mc_cataract>Catarata</afflictionname.mc_cataract>
+  <afflictiondescription.mc_cataract>Este paciente apresenta visão turva e acinzentada.</afflictiondescription.mc_cataract>
+  <afflictionname.mc_visionsickness>Enjoo Visual</afflictionname.mc_visionsickness>
+  <afflictiondescription.mc_visionsickness>Este paciente está com enjoo visual após cirurgia ocular.</afflictiondescription.mc_visionsickness>
+  <afflictionname.mc_mismatch>Olhos Incompatíveis</afflictionname.mc_mismatch>
+  <afflictiondescription.mc_mismatch>Os diferentes tipos de olhos que este paciente possui estão causando confusão e dores de cabeça.</afflictiondescription.mc_mismatch>
+  <!-- Damage Afflictions -->
+  <afflictionname.dm_human>Dano em Olho Humano</afflictionname.dm_human>
+  <afflictionname.dm_cyber>Dano em Ciberolho</afflictionname.dm_cyber>
+  <afflictionname.dm_enhanced>Dano em Olho Aprimorado</afflictionname.dm_enhanced>
+  <afflictionname.dm_plastic>Dano em Olho de Plástico</afflictionname.dm_plastic>
+  <afflictionname.dm_crawler>Dano em Olho de Reptante</afflictionname.dm_crawler>
+  <afflictionname.dm_mudraptor>Dano em Olho de Raptor de Terra</afflictionname.dm_mudraptor>
+  <afflictionname.dm_hammerhead>Dano em Olho de Predador-Martelo</afflictionname.dm_hammerhead>
+  <afflictionname.dm_watcher>Dano em Olho de Sentinela</afflictionname.dm_watcher>
+  <afflictionname.dm_husk>Dano em Olho de Parasita-Carcaça</afflictionname.dm_husk>
+  <afflictionname.dm_charybdis>Dano em Olho de Caríbdis</afflictionname.dm_charybdis>
+  <afflictionname.dm_latcher>Dano em Olho de Atracador</afflictionname.dm_latcher>
+  <afflictionname.dm_terror>Dano em Olho do Terror</afflictionname.dm_terror>
+  <!-- Eye Indicator Afflictions -->
+  <afflictionname.vi_cyber>Ciberolho</afflictionname.vi_cyber>
+  <afflictiondescription.vi_cyber>Este paciente possui ciberolhos totalmente sintéticos.</afflictiondescription.vi_cyber>
+  <afflictionname.vi_enhanced>Olho Aprimorado</afflictionname.vi_enhanced>
+  <afflictiondescription.vi_enhanced>Este paciente possui olhos mecanicamente aprimorados.</afflictiondescription.vi_enhanced>
+  <afflictionname.vi_human>Olho Humano</afflictionname.vi_human>
+  <afflictiondescription.vi_human>Este paciente possui olhos normais pertencentes a um humano.</afflictiondescription.vi_human>
+  <afflictionname.vi_plastic>Olho de Plástico</afflictionname.vi_plastic>
+  <afflictiondescription.vi_plastic>Este paciente tem bolas de plástico onde deveriam estar seus olhos. Que pena.</afflictiondescription.vi_plastic>
+  <afflictionname.vi_crawler>Olho de Reptante</afflictionname.vi_crawler>
+  <afflictiondescription.vi_crawler>Este paciente possui olhos de Reptante.</afflictiondescription.vi_crawler>
+  <afflictionname.vi_mudraptor>Olho de Mudraptor</afflictionname.vi_mudraptor>
+  <afflictiondescription.vi_mudraptor>Este paciente possui olhos de Reptor de Terra.</afflictiondescription.vi_mudraptor>
+  <afflictionname.vi_hammerhead>Olho de Hammerhead</afflictionname.vi_hammerhead>
+  <afflictiondescription.vi_hammerhead>Este paciente possui olhos de Predador-Martelo.</afflictiondescription.vi_hammerhead>
+  <afflictionname.vi_watcher>Olho de Watcher</afflictionname.vi_watcher>
+  <afflictiondescription.vi_watcher>Este paciente possui olhos de Sentinela.</afflictiondescription.vi_watcher>
+  <afflictionname.vi_husk>Olho Huskeado</afflictionname.vi_husk>
+  <afflictiondescription.vi_husk>Este paciente possui olhos de Parasita-Carcaça.</afflictiondescription.vi_husk>
+  <afflictionname.vi_latcher>Olho de Latcher</afflictionname.vi_latcher>
+  <afflictiondescription.vi_latcher>Este paciente possui olhos de Atracador.</afflictiondescription.vi_latcher>
+  <afflictionname.vi_terror>Olho do Terror</afflictionname.vi_terror>
+  <afflictiondescription.vi_terror>O inferno está sobre nós.</afflictiondescription.vi_terror>
+  <!-- Lens Afflictions -->
+  <afflictionname.lt_medical>Lente Médica</afflictionname.lt_medical>
+  <afflictiondescription.lt_medical>Este paciente possui ciberlentes médicas.</afflictiondescription.lt_medical>
+  <afflictionname.lt_electrical>Lente Elétrica</afflictionname.lt_electrical>
+  <afflictiondescription.lt_electrical>Este paciente possui ciberlentes elétricas.</afflictiondescription.lt_electrical>
+  <afflictionname.lt_night>Lente de Visão Noturna</afflictionname.lt_night>
+  <afflictiondescription.lt_night>Este paciente possui ciberlentes de visão noturna.</afflictiondescription.lt_night>
+  <afflictionname.lt_thermal>Lente Térmica</afflictionname.lt_thermal>
+  <afflictiondescription.lt_thermal>Este paciente possui ciberlentes de visão térmica.</afflictiondescription.lt_thermal>
+  <!-- Hud Items (These do not appear in-game) -->
+  <entityname.misc_medicalhud>Medical Hud Item</entityname.misc_medicalhud>
+  <entityname.misc_electricalhud>Electrical Hud Item</entityname.misc_electricalhud>
+  <entityname.misc_thermalhud>Thermal Hud Item</entityname.misc_thermalhud>
+  <!-- Overwrites -->
+  <Override>
+    <!-- Multipurpouse scalpel, organ removal description -->
+    <multiscalpel.speedflex>Modo ativo: Extração adaptativa de órgãos. Use na cabeça para cérebro e olhos, braço esquerdo para rins, torso para fígado, braço direito para coração e perna esquerda para pulmões.</multiscalpel.speedflex>
+  </Override>
+</infotexts>

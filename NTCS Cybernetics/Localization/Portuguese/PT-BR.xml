@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- By ThousandFields -->
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+    <Override>
+        <!-- =================================================  Vanilla Overrides ================================================= -->
+        <!-- Screwdriver -->
+        <entitydescription.screwdriver>Permite realizar reparos elétricos e refazer a fiação. Também é usada para ‖color:gui.green‖apertar parafusos‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖ e para ‖color:gui.green‖reparar‖end‖ cirurgicamente ‖color:gui.blue‖órgãos cibernéticos‖end‖.</entitydescription.screwdriver>
+
+        <!-- Hardened Screwdriver -->
+        <entitydescription.screwdriverhardened>Uma chave de fenda que passou por um processo de têmpera utilizando combustível usado. O material reforçado permite reparos mais eficientes e golpes mais fortes. Também é usada para ‖color:gui.green‖apertar parafusos‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖ e para ‖color:gui.green‖reparar‖end‖ cirurgicamente ‖color:gui.blue‖órgãos cibernéticos‖end‖.</entitydescription.screwdriverhardened>
+
+        <!-- Dementonite Screwdriver -->
+        <entitydescription.screwdriverdementonite>Fabricada com dementonita, um material alienígena pouco compreendido. Segurá-la provoca uma estranha sensação de inquietação. Também é usada para ‖color:gui.green‖apertar parafusos‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖ e para ‖color:gui.green‖reparar‖end‖ cirurgicamente ‖color:gui.blue‖órgãos cibernéticos‖end‖.</entitydescription.screwdriverdementonite>
+
+        <!-- FPGA Circuit -->
+        <entitydescription.fpgacircuit>Arranjo de portas programável em campo (FPGA): um circuito multifuncional que pode ser reconfigurado para uso em uma grande variedade de dispositivos elétricos. Também é usado para substituir ‖color:gui.green‖circuitos danificados‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖.</entitydescription.fpgacircuit>
+
+        <!-- Welding Tool-->
+        <entitydescription.weldingtool>Uma das ferramentas mais cruciais a bordo do submarino. Também funciona debaixo d'água e é usada para reparar ‖color:gui.green‖metal entortado‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖.</entitydescription.weldingtool>
+
+        <!-- Steel Bar -->
+        <entitydescription.steel>Uma liga metálica resistente de ferro e carbono. Usada na fabricação de barras de combustível, bem como em diversas aplicações militares. Também é usada para repor ‖color:gui.green‖material perdido‖end‖ em um ‖color:gui.blue‖membro cibernético‖end‖.</entitydescription.steel>
+
+        <!-- ================================================= Cybernetics Items ================================================= -->
+        <!-- CyberArm -->
+        <entityname.cyberarm>Braço Cibernético</entityname.cyberarm>
+        <entitydescription.cyberarm>Um poderoso braço inorgânico que não pode ‖color:gui.green‖sangrar‖end‖ nem sofrer ‖color:gui.green‖fraturas‖end‖. Além disso, aumenta a ‖color:gui.green‖velocidade de nado‖end‖ e o ‖color:gui.green‖dano corpo a corpo‖end‖. Contudo, requer ‖color:gui.red‖manutenção‖end‖ e é suscetível a ‖color:gui.red‖danos por água‖end‖. Pode ser instalado após uma ‖color:gui.orange‖Amputação‖end‖.</entitydescription.cyberarm>
+
+        <!-- Waterproof CyberArm -->
+        <entityname.waterproofcyberarm>Braço Cibernético à Prova d'Água</entityname.waterproofcyberarm>
+        <entitydescription.waterproofcyberarm>Um poderoso braço inorgânico que não pode ‖color:gui.green‖sangrar‖end‖ nem sofrer ‖color:gui.green‖fraturas‖end‖. Além disso, aumenta a ‖color:gui.green‖velocidade de nado‖end‖ e o ‖color:gui.green‖dano corpo a corpo‖end‖. Requer ‖color:gui.red‖manutenção‖end‖, mas não é suscetível a ‖color:gui.green‖danos por água‖end‖. Pode ser instalado após uma ‖color:gui.orange‖Amputação‖end‖.</entitydescription.waterproofcyberarm>
+
+        <!-- CyberLeg -->
+        <entityname.cyberleg>Perna Cibernética</entityname.cyberleg>
+        <entitydescription.cyberleg>Uma poderosa perna inorgânica que não pode ‖color:gui.green‖sangrar‖end‖ nem sofrer ‖color:gui.green‖fraturas‖end‖. Além disso, aumenta a ‖color:gui.green‖velocidade de corrida‖end‖. Contudo, requer ‖color:gui.red‖manutenção‖end‖ e é suscetível a ‖color:gui.red‖danos por água‖end‖. Pode ser instalada após uma ‖color:gui.orange‖Amputação‖end‖.</entitydescription.cyberleg>
+        
+        <!-- Waterproof CyberLeg -->
+        <entityname.waterproofcyberleg>Perna Cibernética à Prova d'Água</entityname.waterproofcyberleg>
+        <entitydescription.waterproofcyberleg>Uma poderosa perna inorgânica que não pode ‖color:gui.green‖sangrar‖end‖ nem sofrer ‖color:gui.green‖fraturas‖end‖. Além disso, aumenta a ‖color:gui.green‖velocidade de corrida‖end‖. Requer ‖color:gui.red‖manutenção‖end‖, mas não é suscetível a ‖color:gui.green‖danos por água‖end‖. Pode ser instalada após uma ‖color:gui.orange‖Amputação‖end‖.</entitydescription.waterproofcyberleg>
+
+        <!-- Cyber Augmented Liver -->
+        <entityname.augmentedliver>Fígado Ciberaprimorado</entityname.augmentedliver>
+        <entitydescription.augmentedliver>Um fígado humano parcialmente sintético. O metabolismo ciberaprimorado melhora a resistência contra ‖color:gui.green‖venenos‖end‖ e ‖color:gui.green‖efeitos negativos de fármacos‖end‖, além de atenuar a ‖color:gui.green‖náusea‖end‖. Os efeitos negativos de fármacos incluem embriaguez, dependência química, abstinência e overdose. É mais resistente a ‖color:gui.green‖danos‖end‖ do que um fígado biológico e ocupa o lugar do fígado.</entitydescription.augmentedliver>
+        
+        <!-- Cyber Augmented Kidney -->
+        <entityname.augmentedkidney>Rins Ciberaprimorados</entityname.augmentedkidney>
+        <entitydescription.augmentedkidney>Um par de rins humanos parcialmente sintéticos. O metabolismo ciberaprimorado melhora a ‖color:gui.green‖coagulação sanguínea‖end‖ e a ‖color:gui.green‖síntese‖end‖. O tipo sanguíneo muda para C+, prevenindo a ‖color:gui.green‖rejeição‖end‖ de órgãos cibernéticos e permitindo a ‖color:gui.green‖aceitação‖end‖ de todos os outros tipos sanguíneos. São mais resistentes a ‖color:gui.green‖danos‖end‖ do que rins biológicos e ocupam o lugar de ambos os rins.</entitydescription.augmentedkidney>
+        
+        <!-- Cyber Augmented Heart -->
+        <entityname.augmentedheart>Coração Ciberaprimorado</entityname.augmentedheart>
+        <entitydescription.augmentedheart>Um coração humano parcialmente sintético. O metabolismo ciberaprimorado aumenta levemente a ‖color:gui.green‖saúde‖end‖ e melhora a taxa de ‖color:gui.green‖normalização da pressão arterial‖end‖. Causa ‖color:gui.green‖hiperatividade‖end‖, que é potencializada com o uso de ‖color:gui.blue‖pulmões ciberaprimorados‖end‖. É mais resistente a ‖color:gui.green‖danos‖end‖ do que um coração biológico e ocupa o lugar do coração.</entitydescription.augmentedheart>
+        
+        <!-- Cyber Augmented Lungs -->
+        <entityname.augmentedlung>Pulmões Ciberaprimorados</entityname.augmentedlung>
+        <entitydescription.augmentedlung>Um par de pulmões humanos parcialmente sintéticos. O metabolismo ciberaprimorado melhora a capacidade de oxigenação, aumentando a resistência contra ‖color:gui.green‖hipoxemia‖end‖. Fornece resistência temporária à pressão. Causa ‖color:gui.green‖hiperatividade‖end‖, que é potencializada com o uso de um ‖color:gui.blue‖coração ciberaprimorado‖end‖. São mais resistentes a ‖color:gui.green‖danos‖end‖ e ‖color:gui.green‖pneumotórax‖end‖ do que pulmões biológicos e ocupam o lugar dos pulmões.</entitydescription.augmentedlung>
+        
+        <!-- Cyber Augmented Brain -->
+        <entityname.augmentedbrain>Implante Cerebral Ciberaprimorado</entityname.augmentedbrain>
+        <entitydescription.augmentedbrain>Um chip de aprimoramento neural. O processamento neural ciberaprimorado melhora a ‖color:gui.green‖inteligência‖end‖, e os ‖color:gui.green‖receptores de dor‖end‖ são permanentemente inibidos. Aumenta a resistência ao ‖color:gui.green‖neurotrauma‖end‖ e é implantado no cérebro.</entitydescription.augmentedbrain>
+        
+        <!-- CyberLiver -->
+        <entityname.cyberliver>Ciberfígado</entityname.cyberliver>
+        <entitydescription.cyberliver>Um fígado humano sintético. O cibermetabolismo melhora drasticamente a resistência contra ‖color:gui.green‖venenos‖end‖ e ‖color:gui.green‖efeitos negativos de fármacos‖end‖, além de atenuar fortemente a ‖color:gui.green‖náusea‖end‖. Os efeitos negativos de fármacos incluem embriaguez, dependência química, abstinência e overdose. É significativamente mais resistente a ‖color:gui.green‖danos‖end‖ do que um fígado biológico e ocupa o lugar do fígado.</entitydescription.cyberliver>
+                
+        <!-- CyberKidney -->
+        <entityname.cyberkidney>Ciberrins</entityname.cyberkidney>
+        <entitydescription.cyberkidney>Um par de rins humanos sintéticos. O cibermetabolismo melhora drasticamente a ‖color:gui.green‖coagulação sanguínea‖end‖ e a ‖color:gui.green‖síntese‖end‖. O tipo sanguíneo muda para C+, prevenindo a ‖color:gui.green‖rejeição‖end‖ de órgãos cibernéticos e permitindo a ‖color:gui.green‖aceitação‖end‖ de todos os outros tipos sanguíneos. São significativamente mais resistentes a ‖color:gui.green‖danos‖end‖ do que rins biológicos e ocupam o lugar de ambos os rins.</entitydescription.cyberkidney>
+                
+        <!-- CyberHeart -->
+        <entityname.cyberheart>Cibercoração</entityname.cyberheart>
+        <entitydescription.cyberheart>Um coração humano sintético. O cibermetabolismo aumenta a ‖color:gui.green‖saúde‖end‖ e melhora drasticamente a taxa de ‖color:gui.green‖normalização da pressão arterial‖end‖. Aumenta drasticamente a ‖color:gui.green‖velocidade muscular de contração rápida‖end‖, que é potencializada com o uso de ‖color:gui.blue‖pulmões ciberaprimorados‖end‖. É significativamente mais resistente a ‖color:gui.green‖danos‖end‖ do que um coração biológico e ocupa o lugar do coração.</entitydescription.cyberheart>
+                
+        <!-- CyberLungs -->
+        <entityname.cyberlung>Ciberpulmões</entityname.cyberlung>
+        <entitydescription.cyberlung>Um par de pulmões humanos sintéticos. O cibermetabolismo melhora drasticamente a capacidade de oxigenação, aumentando fortemente a resistência contra ‖color:gui.green‖hipoxemia‖end‖. Fornece resistência temporária à pressão. Aumenta drasticamente a ‖color:gui.green‖velocidade muscular de contração rápida‖end‖, que é potencializada com o uso de um ‖color:gui.blue‖coração ciberaprimorado‖end‖. São significativamente mais resistentes a ‖color:gui.green‖danos‖end‖ e ‖color:gui.green‖pneumotórax‖end‖ do que pulmões biológicos e ocupam o lugar dos pulmões.</entitydescription.cyberlung>
+                
+        <!-- CyberBrain -->
+        <entityname.cyberbrain>Implante Cibercerebral Positrônico</entityname.cyberbrain>
+        <entitydescription.cyberbrain>Um chipset neural positrônico. Processadores computacionais cibernéticos melhoram drasticamente a ‖color:gui.green‖inteligência‖end‖, e os ‖color:gui.green‖receptores de dor‖end‖ são permanentemente inibidos. Aumenta drasticamente a resistência ao ‖color:gui.green‖neurotrauma‖end‖ e é implantado no cérebro.</entitydescription.cyberbrain>
+
+        <!-- C+ Blood Pack -->
+        <entityname.bloodpackabc_positive>Bolsa de Sangue C+</entityname.bloodpackabc_positive>
+        <entitydescription.bloodpackabc_positive>Compatível com: C+</entitydescription.bloodpackabc_positive>
+        
+        <!-- C+ Donor Card-->
+        <entityname.abc_positivecard>Cartão de Doador C+</entityname.abc_positivecard>
+        <entitydescription.abc_positivecard>Pode receber sangue de: todos \n Pode doar sangue para: C+</entitydescription.abc_positivecard>
+        
+        <!-- Immunoblocker Inhaler -->
+        <entityname.immunosuppressantinhaler>Inalador Imunobloqueador</entityname.immunosuppressantinhaler>
+        <entitydescription.immunosuppressantinhaler>Inibe parcialmente o ‖color:gui.red‖sistema imunológico‖end‖, o suficiente para prevenir a ‖color:gui.green‖ciberpsicose‖end‖. A ciberpsicose é causada pelo uso de ‖color:gui.blue‖órgãos cibernéticos‖end‖ totalmente sintéticos.</entitydescription.immunosuppressantinhaler>
+
+		<!-- ================================================= Cybernetics Afflictions ================================================= -->
+        <!-- CyberArm -->
+        <afflictionname.ntc_cyberarm>Braço Cibernético</afflictionname.ntc_cyberarm>
+        <afflictiondescription.ntc_cyberarm>Este braço inorgânico é imune a falhas biológicas, mas precisa de manutenção para manter sua eficácia. Pode ser removido brutalmente usando um pé de cabra.</afflictiondescription.ntc_cyberarm>
+
+        <!-- CyberLeg -->
+        <afflictionname.ntc_cyberleg>Perna Cibernética</afflictionname.ntc_cyberleg>
+        <afflictiondescription.ntc_cyberleg>Esta perna inorgânica é imune a falhas biológicas, mas precisa de manutenção para manter sua eficácia. Pode ser removida brutalmente usando um pé de cabra.</afflictiondescription.ntc_cyberleg>
+
+        <!-- Loose Screws -->
+        <afflictionname.ntc_loosescrews>Parafusos frouxos</afflictionname.ntc_loosescrews>
+        <afflictiondescription.ntc_loosescrews>Parafusos se soltaram como resultado de trauma físico ou de outros parafusos frouxos. Se os parafusos não forem apertados com uma chave de fenda, o movimento pode soltar mais parafusos.</afflictiondescription.ntc_loosescrews>
+
+        <!-- Damaged Electronics -->
+        <afflictionname.ntc_damagedelectronics>Eletrônicos danificados</afflictionname.ntc_damagedelectronics>
+        <afflictiondescription.ntc_damagedelectronics>Circuitos delicados foram danificados por água ou trauma físico. Se os circuitos não forem substituídos por FPGAs, o membro poderá apresentar falhas ocasionais.</afflictiondescription.ntc_damagedelectronics>
+
+        <!-- Bent Metal -->
+        <afflictionname.ntc_bentmetal>Metal entortado</afflictionname.ntc_bentmetal>
+        <afflictiondescription.ntc_bentmetal>O membro foi entortado por trauma físico, dificultando seu uso. Pode ser soldado de volta no lugar.</afflictiondescription.ntc_bentmetal>
+
+        <!-- Material Loss -->
+        <afflictionname.ntc_materialloss>Perda de material</afflictionname.ntc_materialloss>
+        <afflictiondescription.ntc_materialloss>O membro perdeu peças devido a trauma físico. Pode ser reparado usando aço. Se peças demais forem perdidas, o membro poderá ser destruído. Parafusos frouxos facilitam a perda de peças.</afflictiondescription.ntc_materialloss>
+
+        <!-- Waterproof -->
+        <afflictionname.ntc_waterproof>À Prova d'Água</afflictionname.ntc_waterproof>
+        <afflictiondescription.ntc_waterproof>Este membro cibernético não sofre danos por água.</afflictiondescription.ntc_waterproof>
+
+        <!-- CyberLung Pressure Recovery -->
+        <afflictionname.ntc_cyberlung_pressure_recovery>Ciberpulmões Pressurizados</afflictionname.ntc_cyberlung_pressure_recovery>
+        <afflictiondescription.ntc_cyberlung_pressure_recovery>Os Ciberpulmões se autopressurizaram, impedindo brevemente a implosão.</afflictiondescription.ntc_cyberlung_pressure_recovery>
+        <afflictiondescription.ntc_cyberlung_pressure_recovery.low>Os Ciberpulmões resistiram a uma pressão severa e estão executando rotinas de autorreparo.</afflictiondescription.ntc_cyberlung_pressure_recovery.low>
+
+        <!-- ================================================= Cybernetics Hidden Afflictions ================================================= -->
+        <!-- Cyberpsychosis -->
+        <afflictionname.ntc_cyberpsychosis>Ciberpsicose</afflictionname.ntc_cyberpsychosis>
+        <afflictiondescription.ntc_cyberpsychosis>O paciente está sofrendo de Ciberpsicose, um transtorno mental causado pelo excesso de implantes cibernéticos.</afflictiondescription.ntc_cyberpsychosis>
+        
+        <!-- Cyberpsychosis Resistance -->
+        <afflictionname.ntc_cyberpsychosis_resistance>Resistência à Ciberpsicose</afflictionname.ntc_cyberpsychosis_resistance>
+
+        <!-- Immunosuppressants -->
+        <afflictionname.immunosuppressantinhaler>Imunossupressores Inalados</afflictionname.immunosuppressantinhaler>
+
+        <!-- Cyberliver-->
+        <afflictionname.ntc_cyberliver>Ciberfígado</afflictionname.ntc_cyberliver>
+
+        <!-- Cyberkidney -->
+        <afflictionname.ntc_cyberkidney>Ciberrins</afflictionname.ntc_cyberkidney>
+
+        <!-- Cyberliver -->
+        <afflictionname.ntc_cyberlung>Ciberpulmões</afflictionname.ntc_cyberlung>
+        
+        <!-- Cyberheart -->
+        <afflictionname.ntc_cyberheart>Cibercoração</afflictionname.ntc_cyberheart>
+     
+        <!-- Cyberbrain -->
+        <afflictionname.ntc_cyberbrain>Implante Cibercerebral</afflictionname.ntc_cyberbrain>
+
+        <!-- ================================================= Cybernetics Config Entries ================================================= -->
+        <!-- Water Damage Multiplier -->
+        <ntconfigname.waterDamage>Multiplicador de Dano por Água</ntconfigname.waterDamage>
+        <ntconfigdescription.waterDamage>‖color:gui.green‖Desative o Dano por Água definindo este valor como 0.‖end‖\n\nAjuste a quantidade de dano por água sofrido por membros que não são à prova d'água. Um multiplicador de 0.5 reduzirá a quantidade de dano em 50%, enquanto aumentá-lo para 1.5 aumentará em 50%.</ntconfigdescription.waterDamage>
+
+        <!-- Cyberpsychosis Chance Multiplier -->
+        <ntconfigname.cyberpsychosisChance>Multiplicador de Chance de Ciberpsicose</ntconfigname.cyberpsychosisChance>
+        <ntconfigdescription.cyberpsychosisChance>‖color:gui.green‖Desative a Ciberpsicose definindo este valor como 0.‖end‖\n\nAjuste a probabilidade de desenvolver Ciberpsicose ao ter implantes cibernéticos instalados. Um multiplicador de 0.5 reduzirá a chance em 50% em comparação ao normal.</ntconfigdescription.cyberpsychosisChance>
+
+        <!-- CyberArm Speed Multiplier -->
+        <ntconfigname.cyberarmSpeed>Multiplicador de Velocidade de Braço Cibernético</ntconfigname.cyberarmSpeed>
+        <ntconfigdescription.cyberarmSpeed>‖color:gui.green‖Desative o bônus adicional de velocidade definindo este valor como 0.‖end‖\n\nAltere quanta velocidade extra os membros cibernéticos concedem. Um multiplicador de 0.5 reduzirá a velocidade em 50% do valor normal, enquanto aumentá-lo para 1.5 aumentará em 50%.</ntconfigdescription.cyberarmSpeed>
+
+        <!-- CyberLeg Speed Multiplier -->
+        <ntconfigname.cyberlegSpeed>Multiplicador de Velocidade de Perna Cibernética</ntconfigname.cyberlegSpeed>
+        <ntconfigdescription.cyberlegSpeed>‖color:gui.green‖Desative o bônus adicional de velocidade definindo este valor como 0.‖end‖\n\nAltere quanta velocidade extra os membros cibernéticos concedem. Um multiplicador de 0.5 reduzirá a velocidade em 50% do valor normal, enquanto aumentá-lo para 1.5 aumentará em 50%.</ntconfigdescription.cyberlegSpeed>
+    </Override>
+</infotexts>

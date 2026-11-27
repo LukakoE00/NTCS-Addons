@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <entityname.nanitebase>Base de nanites</entityname.nanitebase>
+  <entitydescription.nanitebase>Material-base usado para criar cepas específicas de nanites para injeção.</entitydescription.nanitebase>
+  <entityname.naniteremover>Desativador de nanites</entityname.naniteremover>
+  <entitydescription.naniteremover>Injeção de nanites desativadores que desabilitam todos os nanites funcionais no organismo, deixando apenas os nanites precursores no corpo.</entitydescription.naniteremover>
+  <entityname.naniteprecursor>Injeção de nanites precursores</entityname.naniteprecursor>
+  <entitydescription.naniteprecursor>Nanites-base que preparam o organismo para integrações futuras de nanites. Eles se autorreplicam até o limite de nível e mantêm outros nanites. Injete antes de integrar nanites funcionais.</entitydescription.naniteprecursor>
+  <afflictionname.precursor>Nanita Precursor</afflictionname.precursor>
+  <afflictiondescription.precursor>Nanites-base que se replicam ao longo do tempo e mantêm outros nanites. O precursor consegue sustentar 1 nanita por integração sem degradação.</afflictiondescription.precursor>
+  <entityname.reconstructornanite>Injeção 'Ichor'</entityname.reconstructornanite>
+  <entitydescription.reconstructornanite>Nanites médicos que mantêm ferimentos fechados e queimaduras tratadas, reparando principalmente a pele e os tecidos superficiais. Podem ser integradas até três doses.</entitydescription.reconstructornanite>
+  <afflictionname.reconstructornanite>Nanites 'Ichor'</afflictionname.reconstructornanite>
+  <afflictiondescription.reconstructornanite>Nanites desta cepa focam no tratamento das camadas superficiais dos tecidos. Integração 1: Queimaduras e lacerações. Integração 2: Mordidas e sangramento. Integração 3: Ferimentos por arma de fogo.</afflictiondescription.reconstructornanite>
+  <entityname.bonefixnanite>Injeção 'Osmium'</entityname.bonefixnanite>
+  <entitydescription.bonefixnanite>Nanites médicos que reparam ossos quebrados. Podem ser integradas até três doses.</entitydescription.bonefixnanite>
+  <afflictionname.bonefixnanite>Nanites 'Osmium'</afflictionname.bonefixnanite>
+  <afflictiondescription.bonefixnanite>Nanites desta cepa tratam os ossos. Integração 1: Reparo de trauma contuso e dano ósseo, incluindo luxações. Integração 2: Reparo de fraturas nos membros e no torso. Integração 3: Reparos no pescoço, cabeça e coluna.</afflictiondescription.bonefixnanite>
+  <entityname.deepfixnanite>Injeção 'Kaltsit'</entityname.deepfixnanite>
+  <entitydescription.deepfixnanite>Nanites médicos que curam lesões em órgãos internos, mantendo o organismo seguro em nível fundamental. Podem ser integradas até duas doses.</entitydescription.deepfixnanite>
+  <afflictionname.deepfixnanite>Nanites 'Kaltsit'</afflictionname.deepfixnanite>
+  <afflictiondescription.deepfixnanite>Nanites desta cepa tratam camadas profundas dos tecidos. Integração 1: Sangramento interno, corpos estranhos e danos por vibração (Requer Real Sonar). Integração 2: Danos em todos os órgãos.</afflictiondescription.deepfixnanite>
+  <entityname.antitoxnanite>Injeção 'Mithridates'</entityname.antitoxnanite>
+  <entitydescription.antitoxnanite>Nanites médicos que dissolvem venenos, toxinas e infecções bacterianas, funcionando como barreira contra médicos incompetentes ou traição. Podem ser integradas até duas doses.</entitydescription.antitoxnanite>
+  <afflictionname.antitoxnanite>Nanites 'Mithridates'</afflictionname.antitoxnanite>
+  <afflictiondescription.antitoxnanite>Nanites desta cepa dissolvem venenos e toxinas. Integração 1: Álcool, overdose de opioides, envenenamento por Deliriumina, Morbusina, Suforina, Cianeto e Paralisia. Integração 2: Sepse.</afflictiondescription.antitoxnanite>
+  <entityname.oxybloodnanite>Injeção 'Halesium'</entityname.oxybloodnanite>
+  <entitydescription.oxybloodnanite>Nanites médicos que auxiliam o organismo na produção e circulação sanguínea e reduzem os níveis de radiação, diminuindo o tempo necessário para recuperar a consciência e o oxigênio. Em níveis mais altos de integração, podem até reiniciar o coração. O CUSTO DE MANUTENÇÃO DOS NANITES É DOBRADO. Podem ser integradas até duas doses.</entitydescription.oxybloodnanite>
+  <afflictionname.oxybloodnanite>Nanites 'Halesium'</afflictionname.oxybloodnanite>
+  <afflictiondescription.oxybloodnanite>Nanites desta cepa produzem células sanguíneas adicionais. Integração 1: Perda de sangue, reduz a velocidade de progressão da privação de oxigênio e enjoo por radiação. Integração 2: Fibrilação, tamponamento cardíaco, hipóxia cerebral e reinicia o coração caso ele pare.</afflictiondescription.oxybloodnanite>
+  <entityname.neuralnanite>Injeção 'Cerebrate'</entityname.neuralnanite>
+  <entitydescription.neuralnanite>Nanites médicos que reconectam neurônios danificados e dissolvem elementos alucinógenos. Pode ser integrada até uma dose.</entitydescription.neuralnanite>
+  <afflictionname.neuralnanite>Nanites 'Cerebrate'</afflictionname.neuralnanite>
+  <afflictiondescription.neuralnanite>Nanites desta cepa reconectam neurônios e dissolvem alucinógenos. Integração 1: Psicose, alucinações, dependência de opioides, atordoamento e hemorragia cerebral (Requer Real Sonar).</afflictiondescription.neuralnanite>
+  <entityname.husknanite>Injeção 'Asclepius'</entityname.husknanite>
+  <entitydescription.husknanite>Nanites médicos que combatem parasitas invasores e tratam paralisia muscular. Podem ser integradas até duas doses.</entitydescription.husknanite>
+  <afflictionname.husknanite>Nanites 'Asclepius'</afflictionname.husknanite>
+  <afflictiondescription.husknanite>Nanites desta cepa resistem a parasitas. Integração 1: A infecção por Parasita-Carcaça estaciona em 80%. Integração 2: Imunidade à infecção por Parasita-Carcaça.</afflictiondescription.husknanite>
+  <entityname.vigorbuffnanite>Injeção 'Armstrong'</entityname.vigorbuffnanite>
+  <entitydescription.vigorbuffnanite>Nanites de amplificação que aumentam a massa muscular do organismo, elevando a força e a densidade corporal. Pode ser integrada até uma dose.</entitydescription.vigorbuffnanite>
+  <afflictionname.vigorbuffnanite>Nanites 'Armstrong'</afflictionname.vigorbuffnanite>
+  <afflictiondescription.vigorbuffnanite>Nanites desta cepa aumentam a massa muscular e protegem o hospedeiro. Integração 1: Pequeno aumento no dano corpo a corpo, endurecimento e resistência significativa a correntes.</afflictiondescription.vigorbuffnanite>
+  <entityname.hyperbuffnanite>Injeção 'Driver'</entityname.hyperbuffnanite>
+  <entitydescription.hyperbuffnanite>Nanites de amplificação que influenciam a velocidade de reação e as funções motoras do organismo. Pode ser integrada até uma dose.</entitydescription.hyperbuffnanite>
+  <afflictionname.hyperbuffnanite>Nanites 'Driver'</afflictionname.hyperbuffnanite>
+  <afflictiondescription.hyperbuffnanite>Nanites desta cepa aumentam a velocidade de reação e as funções motoras. Integração 1: Pequeno aumento na velocidade de ataque, reparo, movimentação e nado.</afflictiondescription.hyperbuffnanite>
+  <entityname.visionbuffnanite>Injeção 'Beholder'</entityname.visionbuffnanite>
+  <entitydescription.visionbuffnanite>Nanites de amplificação que aprimoram os tecidos oculares para proporcionar visão sobrenatural; em níveis mais altos, reparam lentamente tecidos danificados nos olhos. Como efeito colateral, a visão fica aguçada o suficiente para dispersar a luz como um prisma. Podem ser integradas até duas doses.</entitydescription.visionbuffnanite>
+  <afflictionname.visionbuffnanite>Nanites 'Beholder'</afflictionname.visionbuffnanite>
+  <afflictiondescription.visionbuffnanite>Nanites desta cepa aprimoram a visão. Integração 1: Precisão ampliada com armas e maior eficiência de reparo. Integração 2: Cura danos oculares (Requer NT Eyes) e olho de soldador (Requer Immersive Repairs).</afflictiondescription.visionbuffnanite>
+  <entityname.laniusxenonanite>Xenoinjeção 'Lanius'</entityname.laniusxenonanite>
+  <entitydescription.laniusxenonanite>Nanites xenotecnológicos pouco estudados, mas que parecem revestir o corpo com uma fina camada de composto metálico resistente à pressão, embora limitem a liberdade de movimento. Nota: Resistente, não imune. Podem ser integradas até duas doses.</entitydescription.laniusxenonanite>
+  <afflictionname.laniusxenonanite>Xeno-nanites 'Lanius'</afflictionname.laniusxenonanite>
+  <afflictiondescription.laniusxenonanite>Nanites alienígenas que parecem aumentar a resistência ao calor e à pressão, além de reduzir o consumo de oxigênio. Integração 1: Leve resistência a queimaduras e privação de oxigênio. Integração 2: Resistência parcial à pressão e reduz a necessidade de oxigênio.</afflictiondescription.laniusxenonanite>
+  <entityname.mechfixnanite>Injeção 'Makinis'</entityname.mechfixnanite>
+  <entitydescription.mechfixnanite>Nanites mecânicos que reparam lentamente cibermembros. Podem ser integradas até duas doses.</entitydescription.mechfixnanite>
+  <afflictionname.mechfixnanite>Nanites 'Makinis'</afflictionname.mechfixnanite>
+  <afflictiondescription.mechfixnanite>Nanites reparam membros mecânicos. Integração 1: Conserta parafusos soltos e metal entortado. Integração 2: Repara peças metálicas faltantes e componentes eletrônicos danificados.</afflictiondescription.mechfixnanite>
+  <afflictionname.nanitedecay>Nanites em Degradação</afflictionname.nanitedecay>
+  <afflictiondescription.nanitedecay>Não há precursores suficientes para sustentar todos os nanites; eles estão se desintegrando lentamente! Tente encontrar uma injeção de precursores o mais rápido possível!</afflictiondescription.nanitedecay>
+
+    <afflictionname.nanitebattery>Bateria de Nanites</afflictionname.nanitebattery>
+    <afflictiondescription.nanitebattery>Armazena energia para todos os nanites usarem. Precisa ser substituída por uma célula de bateria de fulgúrio.</afflictiondescription.nanitebattery>
+
+    <afflictionname.nanitebatterylow>Bateria de Nanites Baixa!</afflictionname.nanitebatterylow>
+    <afflictiondescription.nanitebatterylow>As reservas de energia dos seus nanites estão baixas; você deve substituir a bateria em breve.</afflictiondescription.nanitebatterylow>
+
+    <afflictionname.nanitenobattery>Sem Bateria de Nanites!</afflictionname.nanitenobattery>
+    <afflictiondescription.nanitenobattery>Nenhuma Bateria de Nanites foi inserida ou a bateria está descarregada!</afflictiondescription.nanitenobattery>
+
+    <entityname.nanitebatteryimplant>Implante de Bateria de Nanites</entityname.nanitebatteryimplant>
+    <entitydescription.nanitebatteryimplant>Um implante inserido próximo ao coração para alimentar os nanites.</entitydescription.nanitebatteryimplant>
+
+    <entityname.emergencyenergyinjection>Injeção de Energia de Emergência</entityname.emergencyenergyinjection>
+    <entitydescription.emergencyenergyinjection>Um recarregador de emergência para a Bateria de Nanites caso o nível da bateria fique muito baixo. Causa efeitos colaterais graves!</entitydescription.emergencyenergyinjection>
+
+    <ntconfigname.emergencyEnergyAmount>Quantidade da Injeção de Energia de Emergência</ntconfigname.emergencyEnergyAmount>
+    <ntconfigdescription.emergencyEnergyAmount>Define quanta carga da Bateria de Nanites é fornecida ao usar a Injeção de Energia de Emergência.</ntconfigdescription.emergencyEnergyAmount>
+
+    <ntconfigname.batteryDecayMultiplier>Multiplicador de Descarga da Bateria de Nanites</ntconfigname.batteryDecayMultiplier>
+    <ntconfigdescription.batteryDecayMultiplier>‖color:gui.green‖Desative a descarga da Bateria de Nanites definindo este valor como 0.‖end‖\nAjusta a quantidade de carga consumida pelos nanites. Um multiplicador de 0.5 significa que os nanites consomem apenas metade da carga padrão.</ntconfigdescription.batteryDecayMultiplier>
+</infotexts>

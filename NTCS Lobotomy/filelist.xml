@@ -3,10 +3,13 @@
 
   <Dependency identifier="neurotrauma" name="Neurotrauma CS" ids="3744761298" order="Below" />
 
+  <!-- Afflictions -->
   <Afflictions file="%ModDir%/Xml/afflictions.xml" />
+  
+  <!-- Items -->
   <Item file="%ModDir%/Xml/items.xml" />
-  <Text file="%ModDir%/Localization/English.xml" />
-  <Text file="%ModDir%/Localization/Russian.xml" />
+  
+  <!-- Sounds -->
   <Other file="%ModDir%/Sounds/scream_female_1.ogg" />
   <Other file="%ModDir%/Sounds/scream_female_2.ogg" />
   <Other file="%ModDir%/Sounds/scream_male_1.ogg" />
@@ -28,9 +31,16 @@
   <Other file="%ModDir%/Sounds/sticky2.ogg" />
   <Other file="%ModDir%/Sounds/explode.ogg" />
   <Other file="%ModDir%/Sounds/heartbeatloop.ogg" />
+  
+  <!-- Textures -->
   <Other file="%ModDir%/Textures/SpriteSheet.png" />
   <Other file="%ModDir%/Textures/Overlays/durden1.png" />
   <Other file="%ModDir%/Textures/Overlays/durden2.png" />
   <Other file="%ModDir%/Textures/Overlays/durden3.png" />
   <Other file="%ModDir%/Textures/Overlays/durden4.png" />
+
+  <!-- Localization -->
+  <Text file="%ModDir%/Localization/English.xml" />
+  <Text file="%ModDir%/Localization/PT-BR.xml" />
+  <Text file="%ModDir%/Localization/Russian.xml" />
 </contentpackage>

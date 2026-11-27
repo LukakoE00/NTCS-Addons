@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <!-- ================================================= AFFLICTIONS ================================================= -->
+  <!-- ======================== Antibiotics  ======================== -->
+  <!-- Unasyn -->
+  <afflictionname.afampicillin>Ampicilina + Sulbactam</afflictionname.afampicillin>
+
+  <!-- Augmentin -->
+  <afflictionname.afaugmentin>	Amoxicilina + Ácido Clavulânico</afflictionname.afaugmentin>
+
+  <!-- Vancomycin -->
+  <afflictionname.afvancomycin>Vancomicina</afflictionname.afvancomycin>
+
+  <!-- Gentamicin -->
+  <afflictionname.afgentamicin>Gentamicina</afflictionname.afgentamicin>
+
+  <!-- Co-trimoxazole -->
+  <afflictionname.afcotrim>Sulfametoxazol + Trimetoprima</afflictionname.afcotrim>
+
+  <!-- Primaxin -->
+  <afflictionname.afimipenem>Imipeném + Cilastatina</afflictionname.afimipenem>
+
+  <!-- Ceftazidime -->
+  <afflictionname.afceftazidime>Ceftazidima</afflictionname.afceftazidime>
+
+  <!-- ======================== Diseases   ======================== -->
+  <!-- Pneumonia -->
+  <afflictionname.pneumonia>Pneumonia</afflictionname.pneumonia>
+
+  <!-- Pneumonia (Bacterial) -->
+  <afflictionname.pneumoniabacteria>Pneumonia bacteriana</afflictionname.pneumoniabacteria>
+
+  <!-- Pneumonia (Viral) -->
+  <afflictionname.pneumoniavirus>Pneumonia viral</afflictionname.pneumoniavirus>
+
+  <!-- Necrotizing Fasciitis -->
+  <afflictionname.necfasc>Fasciíte necrosante</afflictionname.necfasc>
+  <afflictiondescription.necfasc>A pele apresenta alterações intensas de coloração, e os tecidos moles estão necrosando.</afflictiondescription.necfasc>
+  
+  <!-- ======================== Functionality ======================== -->
+  <!-- Immunodeficiency -->
+  <afflictionname.immunodeficiency>Imunodeficiência</afflictionname.immunodeficiency>
+
+  <!-- Immune Response -->
+  <afflictionname.immuneresponse>Resposta Imune</afflictionname.immuneresponse>
+
+  <!-- Infection Level -->
+  <afflictionname.infectionlevel>Nível de Infecção</afflictionname.infectionlevel>
+
+  <!-- Systemic Response -->
+  <afflictionname.systemicresponse>Resposta Sistêmica</afflictionname.systemicresponse>
+
+  <!-- Bacteremia -->
+  <afflictionname.bloodinfectionlevel>Bacteremia</afflictionname.bloodinfectionlevel>
+
+  <!-- Methicillin Resistance Risk -->
+  <afflictionname.mrrisk>Risco de Resistência à Meticilina</afflictionname.mrrisk>
+
+  <!-- Viral Antibodies -->
+  <afflictionname.viralantibodies>Anticorpos Virais</afflictionname.viralantibodies>
+
+  <!-- Viral Level -->
+  <afflictionname.virallevel>Nível Viral</afflictionname.virallevel>
+
+  <!-- ======================== Infections ======================== -->
+  <!-- Streptococcal Infection -->
+  <afflictionname.limbstrep>Infecção Estreptocócica</afflictionname.limbstrep>
+  <afflictionname.bloodstrep>Streptococcus</afflictionname.bloodstrep>
+
+  <!-- Staphylococcal Infection -->
+  <afflictionname.limbstaph>Infecção Estafilocócica</afflictionname.limbstaph>
+  <afflictionname.bloodstaph>Staphylococcus</afflictionname.bloodstaph>
+
+  <!-- Pseudomonas Infection -->
+  <afflictionname.limbpseudo>Infecção por Pseudomonas</afflictionname.limbpseudo>
+  <afflictionname.bloodpseudo>Pseudomonas</afflictionname.bloodpseudo>
+
+  <!-- Provobacter Infection -->
+  <afflictionname.limbprovo>Infecção por Provobacter</afflictionname.limbprovo>
+  <afflictionname.bloodprovo>Provobacter</afflictionname.bloodprovo>
+
+  <!-- Aeroganella Infection -->
+  <afflictionname.limbaero>Infecção por Aeroganella</afflictionname.limbaero>
+  <afflictionname.bloodaero>Aeroganella</afflictionname.bloodaero>
+
+  <!-- MRSA Infection -->
+  <afflictionname.limbmrsa>Infecção por MRSA</afflictionname.limbmrsa>
+  <afflictionname.bloodmrsa>MRSA</afflictionname.bloodmrsa>
+
+  <!-- ======================== Medications ======================== -->
+  <!-- Dextromethorphan -->
+  <afflictionname.afdextromethorphan>Dextrometorfano</afflictionname.afdextromethorphan>
+
+  <!-- Remdesivir -->
+  <afflictionname.afremdesivir>Remdesivir</afflictionname.afremdesivir>
+  
+  <!-- Zinc Supplement-->
+  <afflictionname.afzincsupplement>Suplemento de Zinco</afflictionname.afzincsupplement>
+  
+  <!-- Corticosteroids -->
+  <afflictionname.afcorticosteroids>Corticosteroides</afflictionname.afcorticosteroids>
+  
+  <!-- Ascorbic Acid -->
+  <afflictionname.afascorbicacid>Vitamina C</afflictionname.afascorbicacid>
+
+  <!-- ======================== Symptoms ======================== -->
+  <!-- Purulent Drainage (Yellow) -->
+  <afflictionname.pusyellow>Drenagem purulenta</afflictionname.pusyellow>
+  <afflictiondescription.pusyellow>Um pus branco-amarelado escorre da ferida.</afflictiondescription.pusyellow>
+
+  <!-- Purulent Drainage (Green) -->
+  <afflictionname.pusgreen>Drenagem purulenta</afflictionname.pusgreen>
+  <afflictiondescription.pusgreen>Um pus esverdeado e fétido escorre da ferida.</afflictiondescription.pusgreen>
+
+  <!-- Abscess -->
+  <afflictionname.abscess>Abscesso</afflictionname.abscess>
+  <afflictiondescription.abscess>Uma grande bolsa de pus se acumula sob a pele.</afflictiondescription.abscess>
+
+  <!-- ======================== Vaccines ======================== -->
+  <!-- Streptococcus Vaccine -->
+  <afflictionname.afstrepvac>Vacina contra Streptococcus</afflictionname.afstrepvac>
+  <afflictiondescription.afstrepvac>O sistema imunológico do paciente está preparado e pronto para combater infecções estreptocócicas.</afflictiondescription.afstrepvac>
+
+  <!-- Staphylococcus Vaccine -->
+  <afflictionname.afstaphvac>Vacina contra Staphylococcus</afflictionname.afstaphvac>
+  <afflictiondescription.afstaphvac>O sistema imunológico do paciente está preparado e pronto para combater infecções estafilocócicas.</afflictiondescription.afstaphvac>
+
+  <!-- Pseudomonas Vaccine -->
+  <afflictionname.afpseudovac>Vacina contra Pseudomonas</afflictionname.afpseudovac>
+  <afflictiondescription.afpseudovac>O sistema imunológico do paciente está preparado e pronto para combater infecções por pseudomonas.</afflictiondescription.afpseudovac>
+  
+  <!-- Provobacter Vaccine -->
+  <afflictionname.afprovovac>Vacina contra Provobacter</afflictionname.afprovovac>
+  <afflictiondescription.afprovovac>O sistema imunológico do paciente está preparado e pronto para combater infecções por provobacter.</afflictiondescription.afprovovac>
+ 
+  <!-- Aeroganella Vaccine -->
+  <afflictionname.afaerovac>Vacina contra Aeroganella</afflictionname.afaerovac>
+  <afflictiondescription.afaerovac>O sistema imunológico do paciente está preparado e pronto para combater infecções por aeroganella.</afflictiondescription.afaerovac>
+
+  <!-- ======================== Virus Related ======================== -->
+  <!-- Influenza Vaccine -->
+  <afflictionname.affluvac>Vacina contra Influenza</afflictionname.affluvac>
+  <afflictiondescription.affluvac>O sistema imunológico do paciente está preparado e pronto para combater infecções por influenza.</afflictiondescription.affluvac>
+  
+  <!-- Europan Cough Vaccine -->
+  <afflictionname.afeuropanvac>Vacina contra Iovipneumoviridae</afflictionname.afeuropanvac>
+  <afflictiondescription.afeuropanvac>O sistema imunológico do paciente está preparado e pronto para combater a tosse europana.</afflictiondescription.afeuropanvac>
+
+  <!-- Europan Cough -->
+  <afflictionname.europancough>Tosse Europana</afflictionname.europancough>
+
+  <!-- Common Cold -->
+  <afflictionname.commoncold>Resfriado Comum</afflictionname.commoncold>
+
+  <!-- Influenza -->
+  <afflictionname.influenza>Influenza</afflictionname.influenza>
+
+  <!-- ================================================= ITEMS ================================================= -->
+  <!-- ======================== Antibiotics  ======================== -->
+  <!-- Unasyn -->
+  <entityname.ampicillin>Ampicilina + Sulbactam</entityname.ampicillin>
+  <entitydescription.ampicillin>Um antibiótico de combinação em dose fixa de ampicilina e sulbactam, usado para tratar diversas infecções bacterianas.</entitydescription.ampicillin>
+  
+  <!-- Augmentin -->
+  <entityname.augmentin>Amoxicilina + Clavulanato</entityname.augmentin>
+  <entitydescription.augmentin>Um antibiótico combinado de amoxicilina e ácido clavulânico, usado para tratar diversas infecções bacterianas.</entitydescription.augmentin>
+  
+  <!-- Vancomycin -->
+  <entityname.vancomycin>Vancomicina</entityname.vancomycin>
+  <entitydescription.vancomycin>Um antibiótico glicopeptídeo usado principalmente para tratar diversas infecções por bactérias gram-positivas.</entitydescription.vancomycin>
+  
+  <!-- Gentamicin -->
+  <entityname.gentamicin>Gentamicina</entityname.gentamicin>
+  <entitydescription.gentamicin>Um antibiótico aminoglicosídeo usado principalmente para tratar diversas infecções por bactérias gram-negativas.</entitydescription.gentamicin>
+  
+  <!-- Co-trimoxazole -->
+  <entityname.cotrim>Sulfametoxazol + Trimetoprima</entityname.cotrim>
+  <entitydescription.cotrim>Um antibiótico de combinação em dose fixa de trimetoprima e sulfametoxazol, usado para tratar uma variedade de infecções bacterianas.</entitydescription.cotrim>
+  
+  <!-- Primaxin -->
+  <entityname.imipenem>Imipenem + Cilastatina</entityname.imipenem>
+  <entitydescription.imipenem>Um antibiótico combinado de imipeném e cilastatina, usado contra uma ampla variedade de infecções bacterianas.</entitydescription.imipenem>
+  
+  <!-- Ceftazidime -->
+  <entityname.ceftazidime>Ceftazidima</entityname.ceftazidime>
+  <entitydescription.ceftazidime>Um antibiótico cefalosporina de terceira geração usado contra a maioria das bactérias gram-negativas.</entitydescription.ceftazidime>
+
+  <!-- ======================== Medication  ======================== -->
+  <!-- Dextromethorphan -->
+  <entityname.dextromethorphan>Dextrometorfano</entityname.dextromethorphan>
+  <entitydescription.dextromethorphan>Uma solução antitussígena usada para aliviar a tosse.</entitydescription.dextromethorphan>
+  
+  <!-- Remdesivir -->
+  <entityname.remdesivir>Remdesivir</entityname.remdesivir>
+  <entitydescription.remdesivir>Um medicamento antiviral de amplo espectro, comumente usado para tratar casos de tosse europana.</entitydescription.remdesivir>
+  
+  <!-- Zinc Supplement -->
+  <entityname.zincsupplement>Suplemento de Zinco</entityname.zincsupplement>
+  <entitydescription.zincsupplement>Um suplemento de zinco. Pode ser útil para resfriado ou gripe.</entitydescription.zincsupplement>
+  
+  <!-- Hydrocortisone -->
+  <entityname.hydrocortisone>Hidrocortisona</entityname.hydrocortisone>
+  <entitydescription.hydrocortisone>Um corticosteroide usado para reduzir a inflamação ao suprimir o sistema imunológico.</entitydescription.hydrocortisone>
+  
+  <!-- Ascorbic Acid -->
+  <entityname.ascorbicacid>Vitamina C</entityname.ascorbicacid>
+  <entitydescription.ascorbicacid>Um suplemento de vitamina C, um nutriente essencial para a saúde do corpo e a imunidade.</entitydescription.ascorbicacid>
+
+  <!-- ======================== Test Tubes  ======================== -->
+  <!-- Culture Tube -->
+  <entityname.culturetube>Tubo de cultura</entityname.culturetube>
+  <entitydescription.culturetube>Um tubo com meio de cultura rico no qual colônias bacterianas crescerão.</entitydescription.culturetube>
+  
+  <!-- Streptococcus Tube Unknown -->
+  <entityname.streptubeunk>Amostra de cultura (Desconhecida)</entityname.streptubeunk>
+  <entitydescription.streptubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.streptubeunk>
+
+  <!-- Streptococcus Tube -->
+  <entityname.streptube>Amostra de cultura (Streptococcus)</entityname.streptube>
+  <entitydescription.streptube>Um tubo de cultura com uma cepa de Streptococcus.</entitydescription.streptube>
+
+  <!-- Staphylococcus Tube Unknown -->
+  <entityname.staphtubeunk>Amostra de cultura (Desconhecida)</entityname.staphtubeunk>
+  <entitydescription.staphtubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.staphtubeunk>
+
+  <!-- Staphylococcus Tube -->
+  <entityname.staphtube>Amostra de cultura (Staphylococcus)</entityname.staphtube>
+  <entitydescription.staphtube>Um tubo de cultura com uma cepa de Staphylococcus.</entitydescription.staphtube>
+
+  <!-- Pseudomonas Tube Unknown -->
+  <entityname.pseudotubeunk>Amostra de cultura (Desconhecida)</entityname.pseudotubeunk>
+  <entitydescription.pseudotubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.pseudotubeunk>
+
+  <!-- Pseudomonas Tube -->
+  <entityname.pseudotube>Amostra de cultura (Pseudomonas)</entityname.pseudotube>
+  <entitydescription.pseudotube>Um tubo de cultura com uma amostra de pseudomonas.</entitydescription.pseudotube>
+
+  <!-- Provobacter Tube Unknown -->
+  <entityname.provotubeunk>Amostra de cultura (Desconhecida)</entityname.provotubeunk>
+  <entitydescription.provotubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.provotubeunk>
+
+  <!-- Provobacter Tube -->
+  <entityname.provotube>Amostra de cultura (Provobacter)</entityname.provotube>
+  <entitydescription.provotube>Um tubo de cultura com uma amostra de Provobacter.</entitydescription.provotube>
+
+  <!-- Aeroganella Tube Unknown -->
+  <entityname.aerotubeunk>Amostra de cultura (Desconhecida)</entityname.aerotubeunk>
+  <entitydescription.aerotubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.aerotubeunk>
+
+  <!-- Aeroganella Tube -->
+  <entityname.aerotube>Amostra de cultura (Aeroganella)</entityname.aerotube>
+  <entitydescription.aerotube>Um tubo de cultura com uma amostra de Aeroganella.</entitydescription.aerotube>
+
+  <!-- MRSA Tube Unknown -->
+  <entityname.mrsatubeunk>Amostra de cultura (Desconhecida)</entityname.mrsatubeunk>
+  <entitydescription.mrsatubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.mrsatubeunk>
+
+  <!-- MRSA Tube -->
+  <entityname.mrsatube>Amostra de cultura (MRSA)</entityname.mrsatube>
+  <entitydescription.mrsatube>Um tubo de cultura com uma amostra de MRSA.</entitydescription.mrsatube>
+  
+  <!-- Empty Tube Unknown -->
+  <entityname.emptytubeunk>Amostra de cultura (Desconhecida)</entityname.emptytubeunk>
+  <entitydescription.emptytubeunk>Um tubo de cultura com uma amostra desconhecida.</entitydescription.emptytubeunk>
+
+  <!-- ======================== Tools  ======================== -->
+  <!-- Sample Analyzer -->
+  <entityname.cultureanalyzingterminal>Analisador de Amostras</entityname.cultureanalyzingterminal>
+  <entitydescription.cultureanalyzingterminal>Uma máquina que examina a assinatura bioquímica de amostras para identificar patógenos.</entitydescription.cultureanalyzingterminal>
+  
+  <!-- Sampling Tool -->
+  <entityname.cultureanalyzer>Ferramenta de coleta de amostras</entityname.cultureanalyzer>
+  <entitydescription.cultureanalyzer>Coleta amostras corporais para permitir análise.</entitydescription.cultureanalyzer>
+  <cultureanalyzer.analyze>Analisar</cultureanalyzer.analyze>
+  <cultureanalyzer.info>Insira uma amostra de cultura ou uma amostra viral para identificar o tipo.</cultureanalyzer.info>
+  
+  <!-- ======================== Vaccines  ======================== -->
+  <!-- Streptococcus Vaccine -->
+  <entityname.strepvac>Vacina contra Streptococcus</entityname.strepvac>
+  <entitydescription.strepvac>Uma vacina que prepara o sistema imunológico para combater cepas de streptococcus.</entitydescription.strepvac>
+  
+  <!-- Staphylococcus Vaccine -->
+  <entityname.staphvac>Vacina contra Staphylococcus</entityname.staphvac>
+  <entitydescription.staphvac>Uma vacina que prepara o sistema imunológico para combater cepas estafilocócicas.</entitydescription.staphvac>
+
+  <!-- Pseudomonas Vaccine -->
+  <entityname.pseudovac>Vacina contra Pseudomonas</entityname.pseudovac>
+  <entitydescription.pseudovac>Uma vacina que prepara o sistema imunológico para combater cepas de pseudomonas.</entitydescription.pseudovac>
+  
+  <!-- Provobacter Vaccine -->
+  <entityname.provovac>Vacina contra Provobacter</entityname.provovac>
+  <entitydescription.provovac>Uma vacina que prepara o sistema imunológico para combater cepas de provobacter.</entitydescription.provovac>
+
+  <!-- Aeroganella Vaccine -->
+  <entityname.aerovac>Vacina contra Aeroganella</entityname.aerovac>
+  <entitydescription.aerovac>Uma vacina que prepara o sistema imunológico para combater cepas de aeroganella.</entitydescription.aerovac>
+
+  <!-- ======================== Virus Related  ======================== -->
+  <!-- Viral Transport Medium -->
+  <entityname.viralmedium>Meio de transporte para amostras virais</entityname.viralmedium>
+  <entitydescription.viralmedium>Um meio para coletar uma amostra viral a ser analisada via PCR.</entitydescription.viralmedium>
+
+  <!-- Viral Sample Empty -->
+  <entityname.emptyviralunk>Amostra viral (Desconhecida)</entityname.emptyviralunk>
+  <entitydescription.emptyviralunk>Uma amostra viral com uma cepa desconhecida.</entitydescription.emptyviralunk>
+
+  <!-- Common Cold Sample Unknown -->
+  <entityname.coldviralunk>Amostra viral (Desconhecida)</entityname.coldviralunk>
+  <entitydescription.coldviralunk>Uma amostra viral com uma cepa desconhecida.</entitydescription.coldviralunk>
+
+  <!-- Common Cold Sample -->
+  <entityname.coldviralmedium>Amostra viral (Resfriado comum)</entityname.coldviralmedium>
+  <entitydescription.coldviralmedium>Uma amostra viral com uma cepa de resfriado.</entitydescription.coldviralmedium>
+
+  <!-- Influenza Sample Unknown -->
+  <entityname.fluviralunk>Amostra viral (Desconhecida)</entityname.fluviralunk>
+  <entitydescription.fluviralunk>Uma amostra viral com uma cepa desconhecida.</entitydescription.fluviralunk>
+
+  <!-- Influenza Sample -->
+  <entityname.fluviralmedium>Amostra viral (Influenza)</entityname.fluviralmedium>
+  <entitydescription.fluviralmedium>Uma amostra viral com uma cepa de influenza.</entitydescription.fluviralmedium>
+
+  <!-- Europan Cough Sample Unknown -->
+  <entityname.europanviralunk>Amostra viral (Desconhecida)</entityname.europanviralunk>
+  <entitydescription.europanviralunk>Uma amostra viral com uma cepa desconhecida.</entitydescription.europanviralunk>
+
+  <!-- Europan Cough Sample -->
+  <entityname.europanviralmedium>Amostra viral (Tosse europana)</entityname.europanviralmedium>
+  <entitydescription.europanviralmedium>Uma amostra viral com uma cepa de Iovipneumoviridae.</entitydescription.europanviralmedium>
+
+  <!-- Influenza Vaccine -->
+  <entityname.fluvac>Vacina contra Influenza</entityname.fluvac>
+  <entitydescription.fluvac>Uma vacina que prepara o sistema imunológico para combater cepas de influenza.</entitydescription.fluvac>
+  
+  <!-- Europan Cough Vaccine -->
+  <entityname.europanvac>Vacina contra Iovipneumoviridae</entityname.europanvac>
+  <entitydescription.europanvac>Uma vacina que prepara o sistema imunológico para combater a tosse europana.</entitydescription.europanvac>
+
+  <!-- ======================== Weaponized Pathogens  ======================== -->
+  <!-- Weaponized Streptococcus -->
+  <entityname.weaponstrep>Streptococcus militarizado</entityname.weaponstrep>
+  <entitydescription.weaponstrep>Uma seringa preenchida com uma cepa de streptococcus com o propósito de infectar um alvo.</entitydescription.weaponstrep>
+  
+  <!-- Weaponized Staphylococcus -->
+  <entityname.weaponstaph>Staphylococcus militarizado</entityname.weaponstaph>
+  <entitydescription.weaponstaph>Uma seringa preenchida com uma cepa de staphylococcus com o propósito de infectar um alvo.</entitydescription.weaponstaph>
+  
+  <!-- Weaponized Pseudomonas -->
+  <entityname.weaponpseudo>Pseudomonas militarizada</entityname.weaponpseudo>
+  <entitydescription.weaponpseudo>Uma seringa preenchida com uma cepa de pseudomonas com o propósito de infectar um alvo.</entitydescription.weaponpseudo>
+  
+  <!-- Weaponized Provobacter -->
+  <entityname.weaponprovo>Provobacter militarizado</entityname.weaponprovo>
+  <entitydescription.weaponprovo>Uma seringa preenchida com uma cepa de provobacter com o propósito de infectar um alvo.</entitydescription.weaponprovo>
+  
+  <!-- Weaponized Aeroganella -->
+  <entityname.weaponaero>Aeroganella militarizada</entityname.weaponaero>
+  <entitydescription.weaponaero>Uma seringa preenchida com uma cepa de aeroganella com o propósito de infectar um alvo.</entitydescription.weaponaero>
+  
+  <!-- Weaponized MRSA -->
+  <entityname.weaponmrsa>MRSA militarizado</entityname.weaponmrsa>
+  <entitydescription.weaponmrsa>Uma seringa preenchida com uma cepa de MRSA com o propósito de infectar um alvo.</entitydescription.weaponmrsa>
+</infotexts>

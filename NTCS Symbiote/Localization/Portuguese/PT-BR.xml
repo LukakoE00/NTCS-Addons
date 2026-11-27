@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <!-- ================================================= AFFLICTIONS ================================================= -->
+  <!-- Calyxanide -->
+  <afflictionname.af_calyxanide>Calixanida</afflictionname.af_calyxanide>
+
+  <!-- Husk Health bar -->
+  <afflictionname.surgery_huskhealth>Parasita-Carcaça</afflictionname.surgery_huskhealth>
+  <afflictiondescription.surgery_huskhealth.low>O parasita não está mais se movendo, mas ainda está lá. Agora é a hora de puxá-lo para fora.</afflictiondescription.surgery_huskhealth.low>
+  <afflictiondescription.surgery_huskhealth.medium>Você enfraqueceu o parasita, mas será o suficiente...?</afflictiondescription.surgery_huskhealth.medium>
+  <afflictiondescription.surgery_huskhealth.high>Você consegue ver uma massa ondulante de tentáculos. Cuidado, ela pode atacar você.</afflictiondescription.surgery_huskhealth.high>
+  
+  <!-- Sawed Ribs -->
+  <afflictionname.bonecuttorso>Costelas serradas</afflictionname.bonecuttorso>
+  <afflictiondescription.bonecuttorso>As costelas foram serradas, permitindo uma visão mais clara do interior do torso do paciente.</afflictiondescription.bonecuttorso>
+  
+  <!-- Ritual Lantern -->
+  <afflictionname.husklamp>Vapores da lanterna de ritual</afflictionname.husklamp>
+  <afflictiondescription.husklamp>Os vapores revigorantes permanecem nas suas narinas.</afflictiondescription.husklamp>
+  
+  <!-- Symbiote Stasis -->
+  <afflictionname.huskstasis>Estase simbiótica</afflictionname.huskstasis>
+  <afflictiondescription.huskstasis>O simbionte parece estar fazendo de tudo para se manter vivo.</afflictiondescription.huskstasis>
+</infotexts>

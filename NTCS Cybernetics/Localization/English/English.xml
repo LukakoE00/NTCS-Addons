@@ -25,19 +25,19 @@
         <!-- ================================================= Cybernetics Items ================================================= -->
         <!-- CyberArm -->
         <entityname.cyberarm>Cyberarm</entityname.cyberarm>
-        <entitydescription.cyberarm>A powerful inorganic arm which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖swimming speed‖end‖ and ‖color:gui.green‖melee damage‖end‖. However, it requires ‖color:gui.red‖maintenance‖end‖ and is susceptible to ‖color:gui.red‖water damage‖end‖. It can be installed after amputation.</entitydescription.cyberarm>
+        <entitydescription.cyberarm>A powerful inorganic arm which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖swimming speed‖end‖ and ‖color:gui.green‖melee damage‖end‖. However, it requires ‖color:gui.red‖maintenance‖end‖ and is susceptible to ‖color:gui.red‖water damage‖end‖. It can be installed after ‖color:gui.orange‖Amputation‖end‖.</entitydescription.cyberarm>
 
         <!-- Waterproof CyberArm -->
         <entityname.waterproofcyberarm>Waterproof Cyberarm</entityname.waterproofcyberarm>
-        <entitydescription.waterproofcyberarm>A powerful inorganic arm which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖swimming speed‖end‖ and ‖color:gui.green‖melee damage‖end‖. It requires ‖color:gui.red‖maintenance‖end‖, but is not susceptible to ‖color:gui.green‖water damage‖end‖. It can be installed after amputation.</entitydescription.waterproofcyberarm>
+        <entitydescription.waterproofcyberarm>A powerful inorganic arm which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖swimming speed‖end‖ and ‖color:gui.green‖melee damage‖end‖. It requires ‖color:gui.red‖maintenance‖end‖, but is not susceptible to ‖color:gui.green‖water damage‖end‖. It can be installed after ‖color:gui.orange‖Amputation‖end‖.</entitydescription.waterproofcyberarm>
 
         <!-- CyberLeg -->
         <entityname.cyberleg>Cyberleg</entityname.cyberleg>
-        <entitydescription.cyberleg>A powerful inorganic leg which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖running speed‖end‖. However, it requires ‖color:gui.red‖maintenance‖end‖ and is susceptible to ‖color:gui.red‖water damage‖end‖. It can be installed after amputation.</entitydescription.cyberleg>
+        <entitydescription.cyberleg>A powerful inorganic leg which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖running speed‖end‖. However, it requires ‖color:gui.red‖maintenance‖end‖ and is susceptible to ‖color:gui.red‖water damage‖end‖. It can be installed after ‖color:gui.orange‖Amputation‖end‖.</entitydescription.cyberleg>
         
         <!-- Waterproof CyberLeg -->
         <entityname.waterproofcyberleg>Waterproof Cyberleg</entityname.waterproofcyberleg>
-        <entitydescription.waterproofcyberleg>A powerful inorganic leg which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖running speed‖end‖. It requires ‖color:gui.red‖maintenance‖end‖, but is not susceptible to ‖color:gui.green‖water damage‖end‖. It can be installed after amputation.</entitydescription.waterproofcyberleg>
+        <entitydescription.waterproofcyberleg>A powerful inorganic leg which cannot ‖color:gui.green‖bleed‖end‖ or ‖color:gui.green‖fracture‖end‖. Additionally, it will increase ‖color:gui.green‖running speed‖end‖. It requires ‖color:gui.red‖maintenance‖end‖, but is not susceptible to ‖color:gui.green‖water damage‖end‖. It can be installed after ‖color:gui.orange‖Amputation‖end‖.</entitydescription.waterproofcyberleg>
 
         <!-- Cyber Augmented Liver -->
         <entityname.augmentedliver>Cyber-Augmented Liver</entityname.augmentedliver>

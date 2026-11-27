@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <!-- ================================================= ITEMS ================================================= -->
+  <!-- =================================== Cells =================================== -->
+  <!-- Bone Thresher -->
+  <entityname.Cells_BoneThresher>Células de Debulhador de Osso</entityname.Cells_BoneThresher>
+  <entitydescription.Cells_BoneThresher>Uma amostra de tecido de um Debulhador de Osso; poderia ser usada para replicar suas mandíbulas extraordinárias.</entitydescription.Cells_BoneThresher>
+
+  <!-- Charybdis -->
+  <entityname.Cells_Charybdis>Células de Caríbdis</entityname.Cells_Charybdis>
+  <entitydescription.Cells_Charybdis>Uma amostra de tecido de um formidável Caríbdis. A chave para replicar suas mandíbulas intensamente poderosas... mas a que custo?</entitydescription.Cells_Charybdis>
+  
+  <!-- Endworm -->
+  <entityname.Cells_Endworm>Células de Verme Mortífero</entityname.Cells_Endworm>
+  <entitydescription.Cells_Endworm>Uma amostra de tecido de um Verme Mortífero. A carapaça parece quase impenetrável.</entitydescription.Cells_Endworm>
+
+  <!-- Hammerhead -->
+  <entityname.Cells_Hammerhead>Células de Predador-Martelo</entityname.Cells_Hammerhead>
+  <entitydescription.Cells_Hammerhead>Uma amostra de tecido de um Predador-Martelo. Incomumente resistente para proteger Predadores-Martelo contra traumas.</entitydescription.Cells_Hammerhead>
+
+  <!-- Moloch -->
+  <entityname.Cells_Moloch>Células de Moloque</entityname.Cells_Moloch>
+  <entitydescription.Cells_Moloch>Uma amostra de tecido da carapaça resistente de um Moloque usada para proteger sua cabeça. Necessária para desenvolver e remendar suas carapaças.</entitydescription.Cells_Moloch>
+
+  <!-- Mudraptor -->
+  <entityname.Cells_Mudraptor>Células de Raptor de Terra</entityname.Cells_Mudraptor>
+  <entitydescription.Cells_Mudraptor>Uma amostra de tecido da carapaça resistente de um Raptor de Terra usada para se proteger.</entitydescription.Cells_Mudraptor>
+  
+  <!-- Tiger Thresher -->
+  <entityname.Cells_TigerThresher>Células de Debulhador-Tigre</entityname.Cells_TigerThresher>
+  <entitydescription.Cells_TigerThresher>Uma amostra de tecido de um Debulhador-Tigre. Pode ser usado para replicar suas mandíbulas poderosas.</entitydescription.Cells_TigerThresher>
+  
+  <!-- Crawler Broodmother -->
+  <entityname.Cells_Broodmother>Células de Reptante-Rainha</entityname.Cells_Broodmother>
+  <entitydescription.Cells_Broodmother>Uma amostra de tecido de uma Reptante-Rainha. Pode ser cultivado em órgãos.</entitydescription.Cells_Broodmother>
+  
+  <!-- Husk -->
+  <entityname.Cells_Husk>Células de Parasita-Carcaça</entityname.Cells_Husk>
+  <entitydescription.Cells_Husk>Uma amostra de tecido de um Parasita-Carcaça. Pode ser cultivado em órgãos.</entitydescription.Cells_Husk>
+  
+  <!-- Latcher -->
+  <entityname.Cells_Latcher>Células de Atracador</entityname.Cells_Latcher>
+  <entitydescription.Cells_Latcher>Uma amostra de tecido de um Atracador. Pode ser cultivado em órgãos.</entitydescription.Cells_Latcher>
+  
+  <!-- Mantis -->
+  <entityname.Cells_Mantis>Células de Mantis</entityname.Cells_Mantis>
+  <entitydescription.Cells_Mantis>Uma amostra de tecido de um Mantis. Pode ser cultivado em órgãos.</entitydescription.Cells_Mantis>
+  
+  <!-- Viperling -->
+  <entityname.Cells_Viperling>Células de Viperling</entityname.Cells_Viperling>
+  <entitydescription.Cells_Viperling>Uma amostra de tecido de um Viperling. Pode ser cultivado em órgãos.</entitydescription.Cells_Viperling>
+
+  <!-- =================================== Limbs =================================== -->
+  <!-- Crawler Tail -->
+  <entityname.grafting_CrawlerTail>Cauda de Reptante</entityname.grafting_CrawlerTail>
+  <entitydescription.grafting_CrawlerTail>A cauda arrancada de um Reptante.</entitydescription.grafting_CrawlerTail>
+  
+  <!-- Hammerhead Limbs -->
+  <entityname.grafting_HammerheadLimbs>Membros de Predador-Martelo</entityname.grafting_HammerheadLimbs>
+  <entitydescription.grafting_HammerheadLimbs>Um par de membros de um Predador-Martelo. Fornece estabilidade, semelhante à de um Predador-Martelo resistente.</entitydescription.grafting_HammerheadLimbs>
+  
+  <!-- Husk Arm -->
+  <entityname.grafting_HuskArm>Braço de Parasita-Carcaça</entityname.grafting_HuskArm>
+  <entitydescription.grafting_HuskArm>A foice afiada de uma quimera de parasita-carcaça.</entitydescription.grafting_HuskArm>
+  
+  <!-- Latcher Tongue -->
+  <entityname.grafting_LatcherTongue>Língua de Atracador</entityname.grafting_LatcherTongue>
+  <entitydescription.grafting_LatcherTongue>Um segmento da língua longa e restritiva de um Atracador.</entitydescription.grafting_LatcherTongue>
+  
+  <!-- Mudraptor Leg (Left) -->
+  <entityname.grafting_MudraptorLeftLeg>Perna de Raptor de Terra (Esquerda)</entityname.grafting_MudraptorLeftLeg>
+  <entitydescription.grafting_MudraptorLeftLeg>A perna arrancada de um Raptor de Terra.</entitydescription.grafting_MudraptorLeftLeg>
+  
+  <!-- Mudraptor Leg (Right) -->
+  <entityname.grafting_MudraptorRightLeg>Perna de Raptor de Terra (Direita)</entityname.grafting_MudraptorRightLeg>
+  <entitydescription.grafting_MudraptorRightLeg>A perna arrancada de um Raptor de Terra.</entitydescription.grafting_MudraptorRightLeg>
+  
+  <!-- Orangeboy Tail -->
+  <entityname.grafting_OrangeboyTail>Cauda de Garoto Laranja</entityname.grafting_OrangeboyTail>
+  <entitydescription.grafting_OrangeboyTail>A cauda arrancada de um Garoto Laranja. O tamanho a torna inútil, e ela se desprende com frequência.</entitydescription.grafting_OrangeboyTail>
+  
+  <!-- Tiger Thresher Tail -->
+  <entityname.grafting_TigerThresherTail>Cauda de Debulhador-Tigre</entityname.grafting_TigerThresherTail>
+  <entitydescription.grafting_TigerThresherTail>A cauda arrancada de um Debulhador-Tigre.</entitydescription.grafting_TigerThresherTail>
+
+  <!-- =================================== Organs =================================== -->
+  <!-- Broodmother Liver -->
+  <entityname.Liver_Broodmother>Fígado de Reptante-Rainha</entityname.Liver_Broodmother>
+  <entitydescription.Liver_Broodmother>O fígado removido de uma Reptante-Rainha, escorrendo ácidos.</entitydescription.Liver_Broodmother>
+
+  <!-- Crawler Lungs -->
+  <entityname.Lungs_Crawler>Pulmões de Reptante</entityname.Lungs_Crawler>
+  <entitydescription.Lungs_Crawler>Os pulmões de um Reptante. Parecem um pouco maiores que os de um humano.</entitydescription.Lungs_Crawler>
+
+  <!-- Fractal Guardian Eye -->
+  <entityname.Eye_FractalGuardian>Olho de Guardião Fractal</entityname.Eye_FractalGuardian>
+  <entitydescription.Eye_FractalGuardian>Um olho de um Guardião Fractal. Pode alterar a visão de uma pessoa.</entitydescription.Eye_FractalGuardian>
+
+  <!-- Husk Heart -->
+  <entityname.Heart_Husk>Coração de Parasita-Carcaça</entityname.Heart_Husk>
+  <entitydescription.Heart_Husk>O "coração" de um Parasita-Carcaça, embora pareça mais um aglomerado de membros de parasita-carcaça.</entitydescription.Heart_Husk>
+
+  <!-- Latcher Heart -->
+  <entityname.Heart_Latcher>Coração de Atracador</entityname.Heart_Latcher>
+  <entitydescription.Heart_Latcher>Um coração humano dominado por DNA de Atracador.</entitydescription.Heart_Latcher>
+
+  <!-- Mantis Liver -->
+  <entityname.Liver_Mantis>Fígado de Mantis</entityname.Liver_Mantis>
+  <entitydescription.Liver_Mantis>O fígado removido de um Mantis. Produz uma grande quantidade de paralisantes.</entitydescription.Liver_Mantis>
+
+  <!-- Mudraptor Lungs -->
+  <entityname.Lungs_Mudraptor>Pulmões de Raptor de Terra</entityname.Lungs_Mudraptor>
+  <entitydescription.Lungs_Mudraptor>Os pulmões de um Raptor de Terra. Parecem bem maiores que os de um humano.</entitydescription.Lungs_Mudraptor>
+
+  <!-- Viperling Liver -->
+  <entityname.Liver_Viperling>Fígado de Viperling</entityname.Liver_Viperling>
+  <entitydescription.Liver_Viperling>O fígado removido de um Viperling. Filtra venenos do sangue mais rápido do que um fígado humano conseguiria.</entitydescription.Liver_Viperling>
+
+  <!-- Watcher Eye -->
+  <entityname.Eye_Watcher>Olho de Sentinela</entityname.Eye_Watcher>
+  <entitydescription.Eye_Watcher>Um segmento do olho de um Sentinela, usado para enlouquecer seus inimigos e aguçar a presa de seu inimigo.</entitydescription.Eye_Watcher>
+ 
+  <!-- =================================== Tools =================================== -->
+  <!-- Alien Cell Incubator -->
+  <entityname.AlienIncubator>Incubadora de Células Alienígenas</entityname.AlienIncubator>
+  <entitydescription.AlienIncubator>Uma máquina energizada que cria um ambiente favorável para células alienígenas dominarem órgãos humanos, criando híbridos humano/alienígena.</entitydescription.AlienIncubator>
+
+  <!-- Alien Scalpel -->
+  <entityname.AlienScalpel>Bisturi Alienígena</entityname.AlienScalpel>
+  <entitydescription.AlienScalpel>Um bisturi especializado na remoção de membros enxertados, causando apenas danos leves.</entitydescription.AlienScalpel>
+
+  <!-- DNA Ligation Enhancer -->
+  <entityname.GraftingCure>Potencializador de Ligação de DNA</entityname.GraftingCure>
+  <entitydescription.GraftingCure>Um composto médico que torna o corpo mais receptivo a enxertos, embora o uso excessivo seja letal.</entitydescription.GraftingCure>
+
+  <!-- DNA Splicer -->
+  <entityname.DNASplicer>Separador de DNA</entityname.DNASplicer>
+  <entitydescription.DNASplicer>Um composto médico que separa o DNA humano do não humano, permitindo a remoção de enxertos oculares, mandibulares e de torso.</entitydescription.DNASplicer>
+
+  <!-- Stem Cells -->
+  <entityname.grafting_StemCells>Células-Tronco</entityname.grafting_StemCells>
+  <entitydescription.grafting_StemCells>Uma placa lacrada de células-tronco. Poderia ser usada para replicar amostras de células vivas.</entitydescription.grafting_StemCells>
+
+  <!-- ================================================= AFFLICTIONS ================================================= -->
+  <!-- Cross Species Rejection -->
+  <afflictionname.crossspeciesrejection>Rejeição Entre Espécies</afflictionname.crossspeciesrejection>
+  <afflictiondescription.crossspeciesrejection>O corpo do paciente está rejeitando o enxerto!</afflictiondescription.crossspeciesrejection>
+  <afflictioncauseofdeath.crossspeciesrejection>Enxerto Rejeitado</afflictioncauseofdeath.crossspeciesrejection>
+  <afflictioncauseofdeathself.crossspeciesrejection>Seu corpo rejeitou o procedimento de enxerto.</afflictioncauseofdeathself.crossspeciesrejection>
+
+  <!-- DNA Ligation Enhancer -->
+  <afflictionname.graftingcureoverdose>Potencializador de Ligação de DNA</afflictionname.graftingcureoverdose>
+  <afflictiondescription.graftingcureoverdose>O paciente está mais receptivo a enxertos alienígenas.</afflictiondescription.graftingcureoverdose>
+
+  <!-- DNA Ligation Enhancer Overdose -->
+  <afflictionname.graftingcureoverdosekiller>Overdose de Potencializador de Ligação de DNA</afflictionname.graftingcureoverdosekiller>
+  <afflictiondescription.graftingcureoverdosekiller>Há uma quantidade letal de Potencializador de Ligação de DNA no paciente.</afflictiondescription.graftingcureoverdosekiller>
+
+  <!-- Hybrid DNA -->
+  <afflictionname.hybriddna>DNA Híbrido</afflictionname.hybriddna>
+  <afflictiondescription.hybriddna>O paciente possui DNA não humano presente no corpo.</afflictiondescription.hybriddna>
+
+  <!-- DNA Deterioration -->
+  <afflictionname.alienDNARemoval>Deterioração de DNA</afflictionname.alienDNARemoval>
+  <afflictiondescription.alienDNARemoval>O DNA alienígena está se deteriorando rapidamente, fazendo certos enxertos desaparecerem.</afflictiondescription.alienDNARemoval>
+
+  <!-- Physical Therapy -->
+  <afflictionname.physicaltherapistAffliction>Fisioterapia</afflictionname.physicaltherapistAffliction>
+  <afflictiondescription.physicaltherapistAffliction>O paciente passou por fisioterapia, ajudando-o a lidar com seu novo enxerto.</afflictiondescription.physicaltherapistAffliction>
+
+  <!-- Crawler Tail -->
+  <afflictionname.grafting_CrawlerTail>Cauda de Reptante</afflictionname.grafting_CrawlerTail>
+  <afflictiondescription.grafting_CrawlerTail>A cauda de um Reptante foi acoplada ao paciente.</afflictiondescription.grafting_CrawlerTail>
+
+  <!-- Crawler Lungs -->
+  <afflictionname.grafting_CrawlerLungs>Pulmões de Reptante</afflictionname.grafting_CrawlerLungs>
+  <afflictiondescription.grafting_CrawlerLungs>Um par de pulmões de Reptante foi implantado no paciente.</afflictiondescription.grafting_CrawlerLungs>
+
+  <!-- Fractal Guardian Eyes -->
+  <afflictionname.grafting_FractalGuardianEyes>Olhos de Guardião Fractal</afflictionname.grafting_FractalGuardianEyes>
+  <afflictiondescription.grafting_FractalGuardianEyes>Um par de olhos de Guardião Fractal foi implantado no paciente.</afflictiondescription.grafting_FractalGuardianEyes>
+
+  <!-- Chimera Infection -->
+  <afflictionname.grafting_HuskChimeraInfection>Infecção por Quimera</afflictionname.grafting_HuskChimeraInfection>
+  <!-- <afflictiondescription.grafting_HuskChimeraInfection>PLACEHOLDER</afflictiondescription.grafting_HuskChimeraInfection> -->
+
+  <!-- Husk Arm -->
+  <afflictionname.grafting_HuskArm>Braço de Parasita-Carcaça</afflictionname.grafting_HuskArm>
+  <afflictiondescription.grafting_HuskArm>O braço de uma Quimera de Parasita-Carcaça foi acoplado ao paciente.</afflictiondescription.grafting_HuskArm>
+
+  <!-- Husk Heart -->
+  <afflictionname.grafting_HuskHeart>Coração de Parasita-Carcaça</afflictionname.grafting_HuskHeart>
+  <afflictiondescription.grafting_HuskHeart>Um coração de Parasita-Carcaça foi implantado no paciente.</afflictiondescription.grafting_HuskHeart>
+
+  <!-- Mantis Liver -->
+  <afflictionname.grafting_MantisLiver>Fígado de Mantis</afflictionname.grafting_MantisLiver>
+  <afflictiondescription.grafting_MantisLiver>Um fígado de Mantis foi implantado no paciente.</afflictiondescription.grafting_MantisLiver>
+
+  <!-- Mudraptor Lungs -->
+  <afflictionname.grafting_MudraptorLungs>Pulmões de Raptor de Terra</afflictionname.grafting_MudraptorLungs>
+  <afflictiondescription.grafting_MudraptorLungs>Um par de pulmões de Raptor de Terra foi implantado no paciente.</afflictiondescription.grafting_MudraptorLungs>
+
+  <!-- Mudraptor Head -->
+  <afflictionname.grafting_MudraptorHead>Cabeça de Raptor de Terra</afflictionname.grafting_MudraptorHead>
+  <afflictiondescription.grafting_MudraptorHead>O paciente passou por implante celular e agora apresenta traços de Raptor de Terra na cabeça.</afflictiondescription.grafting_MudraptorHead>
+
+  <!-- Mudraptor Right Leg -->
+  <afflictionname.grafting_MudraptorRightLeg>Perna Direita de Raptor de Terra</afflictionname.grafting_MudraptorRightLeg>
+  <!-- <afflictiondescription.grafting_MudraptorRightLeg>PLACEHOLDER</afflictiondescription.grafting_MudraptorRightLeg> -->
+
+  <!-- Broodmother Liver -->
+  <afflictionname.grafting_BroodmotherLiver>Fígado de Reptante-Rainha</afflictionname.grafting_BroodmotherLiver>
+  <afflictiondescription.grafting_BroodmotherLiver>Um fígado de Reptante-Rainha foi implantado no paciente.</afflictiondescription.grafting_BroodmotherLiver>
+
+  <!-- Tiger Thresher Jaw -->
+  <afflictionname.grafting_TigerThresherJaw>Mandíbula de Debulhador-Tigre</afflictionname.grafting_TigerThresherJaw>
+  <afflictiondescription.grafting_TigerThresherJaw>O paciente passou por implante celular e agora apresenta traços de Debulhador-Tigre na cabeça.</afflictiondescription.grafting_TigerThresherJaw>
+
+  <!-- Tiger Thresher Tail -->
+  <afflictionname.grafting_TigerThresherTail>Cauda de Debulhador-Tigre</afflictionname.grafting_TigerThresherTail>
+  <afflictiondescription.grafting_TigerThresherTail>A cauda de um Debulhador-Tigre foi acoplada ao paciente.</afflictiondescription.grafting_TigerThresherTail>
+
+  <!-- Bone Thresher Jaw -->
+  <afflictionname.grafting_BoneThresherJaw>Mandíbula de Debulhador de Osso</afflictionname.grafting_BoneThresherJaw>
+  <afflictiondescription.grafting_BoneThresherJaw>O paciente passou por implante celular e agora apresenta traços de Debulhador de Osso na cabeça.</afflictiondescription.grafting_BoneThresherJaw>
+
+  <!-- Hammerhead Skin -->
+  <afflictionname.grafting_HammerheadTorso>Pele de Predador-Martelo</afflictionname.grafting_HammerheadTorso>
+  <afflictiondescription.grafting_HammerheadTorso>O paciente passou por implante celular e agora apresenta pele de Predador-Martelo no corpo.</afflictiondescription.grafting_HammerheadTorso>
+
+  <!-- Hammerhead Limbs -->
+  <afflictionname.grafting_HammerheadLimbs>Membros de Predador-Martelo</afflictionname.grafting_HammerheadLimbs>
+  <afflictiondescription.grafting_HammerheadLimbs>Os membros de um Predador-Martelo foram acoplados ao paciente.</afflictiondescription.grafting_HammerheadLimbs>
+
+  <!-- Moloch Shell -->
+  <afflictionname.grafting_MolochHead>Carapaça de Moloque</afflictionname.grafting_MolochHead>
+  <afflictiondescription.grafting_MolochHead>O paciente passou por implante celular e agora apresenta uma carapaça de Moloque na cabeça.</afflictiondescription.grafting_MolochHead>
+
+  <!-- Cracked Shell -->
+  <afflictionname.grafting_MolochHeadCracked>Carapaça Rachada</afflictionname.grafting_MolochHeadCracked>
+  <afflictiondescription.grafting_MolochHeadCracked>A carapaça de Moloque enxertada no paciente sofreu dano excessivo e quebrou!</afflictiondescription.grafting_MolochHeadCracked>
+
+  <!-- Viperling Liver -->
+  <afflictionname.grafting_ViperlingLiver>Fígado de Viperling</afflictionname.grafting_ViperlingLiver>
+  <afflictiondescription.grafting_ViperlingLiver>Um fígado de Viperling foi implantado no paciente.</afflictiondescription.grafting_ViperlingLiver>
+
+  <!-- Watcher Eyes -->
+  <afflictionname.grafting_WatcherEyes>Olhos de Sentinela</afflictionname.grafting_WatcherEyes>
+  <afflictiondescription.grafting_WatcherEyes>Um par de olhos de Sentinela foi implantado no paciente.</afflictiondescription.grafting_WatcherEyes>
+
+  <!-- Hybrid's Gaze -->
+  <afflictionname.grafting_WatcherGaze>Olhar do Híbrido</afflictionname.grafting_WatcherGaze>
+  <afflictiondescription.grafting_WatcherGaze>Você foi afetado pelos olhos de um híbrido de Sentinela/Humano!</afflictiondescription.grafting_WatcherGaze>
+
+  <!-- Charybdis Jaw -->
+  <afflictionname.grafting_CharybdisJaw>Mandíbula de Caríbdis</afflictionname.grafting_CharybdisJaw>
+  <!-- <afflictiondescription.grafting_CharybdisJaw>PLACEHOLDER</afflictiondescription.grafting_CharybdisJaw> -->
+
+  <!-- Insatiable Hunger -->
+  <afflictionname.grafting_CharybdisJawDebuff>Fome Insaciável</afflictionname.grafting_CharybdisJawDebuff>
+  <!-- <afflictiondescription.grafting_CharybdisJawDebuff>PLACEHOLDER</afflictiondescription.grafting_CharybdisJawDebuff> -->
+
+  <!-- Latcher Heart -->
+  <afflictionname.grafting_LatcherHeart>Coração de Atracador</afflictionname.grafting_LatcherHeart>
+  <!-- <afflictiondescription.grafting_LatcherHeart>PLACEHOLDER</afflictiondescription.grafting_LatcherHeart> -->
+
+  <!-- Latcher Tongue -->
+  <afflictionname.grafting_LatcherTongue>Língua de Atracador</afflictionname.grafting_LatcherTongue>
+  <!-- <afflictiondescription.grafting_LatcherTongue>PLACEHOLDER</afflictiondescription.grafting_LatcherTongue> -->
+
+  <!-- Endworm Skin -->
+  <!-- TODO: Fold these -->
+  <afflictionname.grafting_EndwormTorso>Pele de Verme Mortífero</afflictionname.grafting_EndwormTorso>
+  <afflictiondescription.grafting_EndwormTorso>O paciente passou por implante celular e agora apresenta pele de Verme Mortífero no corpo.</afflictiondescription.grafting_EndwormTorso>
+
+  <afflictionname.grafting_EndwormLeftArm>Pele de Verme Mortífero</afflictionname.grafting_EndwormLeftArm>
+  <afflictiondescription.grafting_EndwormLeftArm>O paciente passou por implante celular e agora apresenta pele de Verme Mortífero no corpo.</afflictiondescription.grafting_EndwormLeftArm>
+
+  <afflictionname.grafting_EndwormRightArm>Pele de Verme Mortífero</afflictionname.grafting_EndwormRightArm>
+  <afflictiondescription.grafting_EndwormRightArm>O paciente passou por implante celular e agora apresenta pele de Verme Mortífero no corpo.</afflictiondescription.grafting_EndwormRightArm>
+
+  <afflictionname.grafting_EndwormLeftLeg>Pele de Verme Mortífero</afflictionname.grafting_EndwormLeftLeg>
+  <afflictiondescription.grafting_EndwormLeftLeg>O paciente passou por implante celular e agora apresenta pele de Verme Mortífero no corpo.</afflictiondescription.grafting_EndwormLeftLeg>
+
+  <afflictionname.grafting_EndwormRightLeg>Pele de Verme Mortífero</afflictionname.grafting_EndwormRightLeg>
+  <afflictiondescription.grafting_EndwormRightLeg>O paciente passou por implante celular e agora apresenta pele de Verme Mortífero no corpo.</afflictiondescription.grafting_EndwormRightLeg>
+
+  <!-- Orangeboy Tail -->
+  <afflictionname.grafting_OrangeboyTail>Cauda de Garoto Laranja</afflictionname.grafting_OrangeboyTail>
+  <afflictiondescription.grafting_OrangeboyTail>A cauda de um Garoto Laranja foi acoplada ao paciente.</afflictiondescription.grafting_OrangeboyTail>
+
+  <!-- ================================================= TALENTS ================================================= -->
+  <!-- Grafting Science -->
+  <talentname.graftingscience>Ciência de Enxertos</talentname.graftingscience>
+
+  <!-- Physical Therapist -->
+  <talentname.physicaltherapist>Fisioterapeuta</talentname.physicaltherapist>
+
+  <!-- Cell Fusing -->
+  <talentname.cellfusing>Fusão Celular</talentname.cellfusing>
+
+  <!-- Tolerant DNA -->
+  <talentname.tolerantdna>DNA Tolerante</talentname.tolerantdna>
+</infotexts>

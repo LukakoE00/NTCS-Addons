@@ -9,7 +9,10 @@
   <Other file="%ModDir%/Images/itemAtlas.png" />
   <Other file="%ModDir%/Images/naniteBatteryImplant.png" />
   <Other file="%ModDir%/Images/emergencyEnergyInjection.png" />
+  
+  <!-- Localization -->
   <Text file="%ModDir%/Localization/English.xml" />
   <Text file="%ModDir%/Localization/French.xml" />
+  <Text file="%ModDir%/Localization/PT-BR.xml" />
   <Text file="%ModDir%/Localization/Russian.xml" />
 </contentpackage>
