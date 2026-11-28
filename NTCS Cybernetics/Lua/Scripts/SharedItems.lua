@@ -254,9 +254,23 @@ local function evaluateExtraTreatmentSuitability()
 end
 
 local function addCyberOrgansToSuperSoldiersTalent()
-	if not TalentPrefab.TalentPrefabs.ContainsKey("supersoldiers") then return end
-	local supersoldiersTalent = TalentPrefab.TalentPrefabs["supersoldiers"]
-	local xmlDefinition = [[
+    if not TalentPrefab.TalentPrefabs.ContainsKey("supersoldiers") then return end
+    local supersoldiersTalent = TalentPrefab.TalentPrefabs["supersoldiers"]
+    local config = supersoldiersTalent.ConfigElement
+
+	-- For some reason, this has started tweaking out since moving to NTCS. Perhaps Lua shenanigans.
+	-- Don't add the cyberstuff if it already exists to prevent it stacking a million times.
+    for descNode in config.GetChildElements("Description") do
+        if descNode.GetAttributeString("tag") == "talentdescription.unlockrecipe" then
+            for replaceTag in descNode.Elements() do
+                local value = replaceTag.GetAttributeString("value") or ""
+                if string.find(value, "entityname.cyber", 1, true) then return end
+                break
+            end
+        end
+    end
+
+    local xmlDefinition = [[
         <overwrite>
             <AddedRecipe itemidentifier="cyberliver" />
             <AddedRecipe itemidentifier="cyberkidney" />
@@ -265,31 +279,30 @@ local function addCyberOrgansToSuperSoldiersTalent()
             <AddedRecipe itemidentifier="cyberbrain" />
         </overwrite>
     ]]
-	local xml = XDocument.Parse(xmlDefinition)
-	for element in xml.Root.Elements() do
-		supersoldiersTalent.ConfigElement.Element.Add(element)
-	end
+    local xml = XDocument.Parse(xmlDefinition)
+    for element in xml.Root.Elements() do
+        config.Element.Add(element)
+    end
 
-	for descNode in supersoldiersTalent.ConfigElement.GetChildElements("Description") do
-		if descNode.GetAttributeString("tag") == "talentdescription.unlockrecipe" then
-			for replaceTag in descNode.Elements() do
-				replaceTag.SetAttributeValue(
-					"value",
-					replaceTag.GetAttributeString("value")
-						.. ",entityname.cyberliver,entityname.cyberkidney,entityname.cyberlung,entityname.cyberheart,entityname.cyberbrain"
-				)
-				break
-			end
-		end
-	end
-	while TalentPrefab.TalentPrefabs.ContainsKey("supersoldiers") do
-		-- remove all existing versions of this talent (including overrides), as we're going to add a new combined one on top
-		TalentPrefab.TalentPrefabs.Remove(TalentPrefab.TalentPrefabs["supersoldiers"])
-	end
-	TalentPrefab.TalentPrefabs.Add(
-		TalentPrefab.__new(supersoldiersTalent.ConfigElement, supersoldiersTalent.ContentFile),
-		false
-	)
+    for descNode in config.GetChildElements("Description") do
+        if descNode.GetAttributeString("tag") == "talentdescription.unlockrecipe" then
+            for replaceTag in descNode.Elements() do
+                replaceTag.SetAttributeValue(
+                    "value",
+                    replaceTag.GetAttributeString("value")
+                        .. ",entityname.cyberliver,entityname.cyberkidney,entityname.cyberlung,entityname.cyberheart,entityname.cyberbrain"
+                )
+                break
+            end
+        end
+    end
+
+    while TalentPrefab.TalentPrefabs.ContainsKey("supersoldiers") do
+        -- remove all existing versions of this talent (including overrides), as we're going to add a new combined one on top
+        TalentPrefab.TalentPrefabs.Remove(TalentPrefab.TalentPrefabs["supersoldiers"])
+    end
+
+    TalentPrefab.TalentPrefabs.Add(TalentPrefab.__new(config, supersoldiersTalent.ContentFile), false)
 end
 
 local function patchDamageWeldingTool(itemId)
