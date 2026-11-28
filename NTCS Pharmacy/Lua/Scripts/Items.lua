@@ -168,8 +168,6 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
 end
 
 Hook.Add("NTCS_Pharmacy.ChemMaster.makeone", "NTCS_Pharmacy.ChemMaster.makeone", function (effect, deltaTime, item, targets, worldPosition)
-    
-    NTCS.HF.Print("MAKEONE")
 
     -- check if in craftall queue, if so, abort
     for craftall in NTCS_Pharmacy.ActiveChemCraftalls do
