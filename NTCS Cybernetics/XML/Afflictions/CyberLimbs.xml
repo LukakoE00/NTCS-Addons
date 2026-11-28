@@ -22,7 +22,7 @@
       
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="5,0" sheetelementsize="128,128" origin="0,0" />
       
-      <Effect minstrength="0" maxstrength="100">
+      <Effect minstrength="0" maxstrength="100" strengthchange="-999">
         <StatValue stattype="RangedSpreadReduction" value="0.3" />
       </Effect>
     </Affliction>
@@ -47,7 +47,7 @@
 
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="7,0" sheetelementsize="128,128" origin="0,0" />
       
-      <Effect minstrength="0" maxstrength="200" strengthchange="0">
+      <Effect minstrength="0" maxstrength="200"  strengthchange="-999" >
         <StatValue stattype="SwimmingSpeed" minvalue="0" maxvalue="0.5" />
         <StatValue stattype="MeleeAttackMultiplier" minvalue="0" maxvalue="1" />
       </Effect>
@@ -73,6 +73,8 @@
       iconcolors="76,102,145,255;76,102,145,255">
       
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="6,0" sheetelementsize="128,128" origin="0,0" />
+
+      <Effect minstrength="0" maxstrength="100"  strengthchange="-999" />
     </Affliction>
 
     <!-- Leg Speed: Invisible. Applies bonuses from having one or both CyberLegs. -->
@@ -95,7 +97,7 @@
       
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="7,0" sheetelementsize="128,128" origin="0,0" />
       
-      <Effect minstrength="0" maxstrength="200">
+      <Effect minstrength="0" maxstrength="200" strengthchange="-999">
         <Statvalue stattype="WalkingSpeed" minvalue="0" maxvalue="0.5" />
       </Effect>
     </Affliction>
@@ -116,6 +118,8 @@
       maxstrength="100"
 
       iconcolors="76,102,145,255;76,102,145,255">
+
+      <Effect minstrength="0" maxstrength="100"  strengthchange="-999" />
 
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="0,0" sheetelementsize="128,128" origin="0,0" />
     </Affliction>
@@ -139,6 +143,8 @@
 
       iconcolors="76,102,145,255;76,102,145,255">
 
+      <Effect minstrength="0" maxstrength="100"  strengthchange="-999" />
+      
       <icon texture="%ModDir%/Images/AfflictionIcons.png" sheetindex="2,4" sheetelementsize="128,128" origin="0,0" />
     </Affliction>
   </Override>
