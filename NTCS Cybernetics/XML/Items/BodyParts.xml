@@ -2,7 +2,7 @@
 <Override>
     <Items>
         <!-- Cybernetic Arm (Normal) -->
-        <Item name="" description="" identifier="cyberarm" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
+        <!-- <Item name="" description="" identifier="cyberarm" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
             <Price baseprice="1500" soldbydefault="false">
                 <Price storeidentifier="merchantresearch" sold="true" minavailable="1" />
             </Price>
@@ -39,10 +39,10 @@
             </MeleeWeapon>
 
             <SkillRequirementHint identifier="mechanical" level="70" />
-        </Item>
+        </Item> -->
 
         <!-- Cybernetic Arm (Waterproof) -->
-        <Item name="" description="" identifier="waterproofcyberarm" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
+        <!-- <Item name="" description="" identifier="waterproofcyberarm" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
             <Price baseprice="2500" soldbydefault="false" minleveldifficulty="15">
                 <Price storeidentifier="merchantresearch" sold="true" minavailable="1" />
             </Price>
@@ -81,10 +81,10 @@
             </MeleeWeapon>
 
             <SkillRequirementHint identifier="mechanical" level="70" />
-        </Item>
+        </Item> -->
 
         <!-- Cybernetic Leg (Normal) -->
-        <Item name="" description="" identifier="cyberleg" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
+        <!-- <Item name="" description="" identifier="cyberleg" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
             <Price baseprice="1500" soldbydefault="false">
                 <Price storeidentifier="merchantresearch" sold="true" minavailable="1" />
             </Price>
@@ -121,10 +121,10 @@
             </MeleeWeapon>
 
             <SkillRequirementHint identifier="mechanical" level="70" />
-        </Item>
+        </Item> -->
 
         <!-- Cybernetic Leg (Waterproof) -->
-        <Item name="" description="" identifier="waterproofcyberleg" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
+        <!-- <Item name="" description="" identifier="waterproofcyberleg" category="Equipment" cargocontaineridentifier="mediccrate" Tags="smallitem,medical,surgery" useinhealthinterface="True" scale="0.4">
             <Price baseprice="2500" soldbydefault="false" minleveldifficulty="15">
                 <Price storeidentifier="merchantresearch" sold="true" minavailable="1" />
             </Price>
@@ -163,7 +163,7 @@
             </MeleeWeapon>
 
             <SkillRequirementHint identifier="mechanical" level="70" />
-        </Item>
+        </Item> -->
 
         <!-- Augmented Liver (T1) -->
         <Item name=""  description="" identifier="augmentedliver" category="Medical" scale="0.4" useinhealthinterface="True" impactsoundtag="impact_soft" cargocontaineridentifier="organcrate" impacttolerance="5.5" Tags="smallitem,organ" spritecolor="160,255,255,255" inventoryiconcolor="160,255,255,255">
