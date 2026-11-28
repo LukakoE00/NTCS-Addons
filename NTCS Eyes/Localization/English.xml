@@ -10,6 +10,7 @@
   <entitydescription.it_lasersurgerytool>An advanced eye surgery tool that requires a high amount of skill to operate.</entitydescription.it_lasersurgerytool>
   <entityname.it_eyeconnector>Eye Connector</entityname.it_eyeconnector>
   <entitydescription.it_eyeconnector>A gooey muscle-nerve tissue that rapidly replicates and attaches to nerve endings.</entitydescription.it_eyeconnector>
+
   <!-- Eye Items -->
   <entityname.it_humaneye>Human Eye</entityname.it_humaneye>
   <entitydescription.it_humaneye>A human eye, who did it come from?</entitydescription.it_humaneye>
@@ -33,6 +34,7 @@
   <entitydescription.it_latchereye>An eye belonging to the mighty Latcher, experts warn it may have otherworldly effects.</entitydescription.it_latchereye>
   <entityname.it_terroreye>Eye of Terror</entityname.it_terroreye>
   <entitydescription.it_terroreye>An amalgamation of evil and banished, straight from the abyss, Jove help us.</entitydescription.it_terroreye>
+
   <!-- Lens Items -->
   <entityname.it_organiclens>Organic Lenses</entityname.it_organiclens>
   <entitydescription.it_organiclens>A pair of organic lenses used in treating cataracts.</entitydescription.it_organiclens>
@@ -67,6 +69,7 @@
   <entitydescription.it_eyejar>        
         A jar that utilizes stem cell regeneration to mend eyes slowly. Can be placed on the ground.
     </entitydescription.it_eyejar>
+
   <!-- Afflictions -->
   <!-- Surgery Afflictions -->
   <afflictionname.sr_removedeyes>Eyes Removed</afflictionname.sr_removedeyes>
@@ -87,6 +90,7 @@
   <afflictiondescription.sr_eyedrops>This patient has very well moisturized eyes, they seem to be healing faster.</afflictiondescription.sr_eyedrops>
   <afflictionname.sr_lasersurgery>Laser Surgery</afflictionname.sr_lasersurgery>
   <afflictiondescription.sr_lasersurgery>This patient has undergone laser surgery and their eyes are rapidly healing.</afflictiondescription.sr_lasersurgery>
+
   <!-- Mechanical Afflictions -->
   <afflictionname.mc_deadeyes>Dead Eyes</afflictionname.mc_deadeyes>
   <afflictiondescription.mc_deadeyes>Eyes of this patient look flat and unresponsive.</afflictiondescription.mc_deadeyes>
@@ -103,6 +107,7 @@
   <afflictiondescription.mc_visionsickness>This patient is vision-sick after eye surgery.</afflictiondescription.mc_visionsickness>
   <afflictionname.mc_mismatch>Mismatching Eyes</afflictionname.mc_mismatch>
   <afflictiondescription.mc_mismatch>Different types of eyes this patient has are causing confusion and headaches.</afflictiondescription.mc_mismatch>
+
   <!-- Damage Afflictions -->
   <afflictionname.dm_human>Human Eye Damage</afflictionname.dm_human>
   <afflictionname.dm_cyber>Cyber Eye Damage</afflictionname.dm_cyber>
@@ -116,6 +121,7 @@
   <afflictionname.dm_charybdis>Charybdis Eye Damage</afflictionname.dm_charybdis>
   <afflictionname.dm_latcher>Latcher Eye Damage</afflictionname.dm_latcher>
   <afflictionname.dm_terror>Terror Eye Damage</afflictionname.dm_terror>
+
   <!-- Eye Indicator Afflictions -->
   <afflictionname.vi_cyber>Cyber Eye</afflictionname.vi_cyber>
   <afflictiondescription.vi_cyber>This patient has fully-synthetic cyber eyes.</afflictiondescription.vi_cyber>
@@ -139,6 +145,7 @@
   <afflictiondescription.vi_latcher>This patient has latcher eyes.</afflictiondescription.vi_latcher>
   <afflictionname.vi_terror>Terror Eye</afflictionname.vi_terror>
   <afflictiondescription.vi_terror>Hell is upon us.</afflictiondescription.vi_terror>
+
   <!-- Lens Afflictions -->
   <afflictionname.lt_medical>Medical Lens</afflictionname.lt_medical>
   <afflictiondescription.lt_medical>This patient has medical cyber lenses.</afflictiondescription.lt_medical>
@@ -148,13 +155,18 @@
   <afflictiondescription.lt_night>This patient has night vision cyber lenses.</afflictiondescription.lt_night>
   <afflictionname.lt_thermal>Thermal Lens</afflictionname.lt_thermal>
   <afflictiondescription.lt_thermal>This patient has thermal vision cyber lenses.</afflictiondescription.lt_thermal>
+
   <!-- Hud Items (These do not appear in-game) -->
   <entityname.misc_medicalhud>Medical Hud Item</entityname.misc_medicalhud>
   <entityname.misc_electricalhud>Electrical Hud Item</entityname.misc_electricalhud>
   <entityname.misc_thermalhud>Thermal Hud Item</entityname.misc_thermalhud>
+
   <!-- Overwrites -->
   <Override>
     <!-- Multipurpouse scalpel, organ removal description -->
     <multiscalpel.speedflex>Mode active: Adaptive organ extraction. Use on head for brain and eyes, left arm for kidneys, torso for liver, right arm for heart, left leg for lungs.</multiscalpel.speedflex>
   </Override>
+
+  <!-- HUI Buttons -->
+  <nt_huibutton_enabled_eyescalpel>Swap or remove the eyes from the patient's head.</nt_huibutton_enabled_eyescalpel>
 </infotexts>

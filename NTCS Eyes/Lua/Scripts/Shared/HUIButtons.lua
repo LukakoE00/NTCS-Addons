@@ -7,8 +7,8 @@ if CLIENT or not Game.IsMultiplayer then
 		"GUIButtonEye", -- Icon Style
 		"it_scalpel_eye", -- Item ID
 		"surgerykit", -- Required Item ID
-		"nt_huibutton_enabled_organscalpel", -- ToolTip
-		"nt_huibutton_disabled_surgerykit", -- Disabled ToolTip
+		"nt_huibutton_enabled_eyescalpel", -- ToolTip
+		"", -- Disabled ToolTip
 		"Head", -- RequiredLimb
 		"organscalpel" -- ParentIdentifier
 	)
