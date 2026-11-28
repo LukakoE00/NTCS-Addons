@@ -1,6 +1,12 @@
 local itemLoader = NTCS.ItemFunctionLoader("NTCS_Pharmacy")
 NTCS_Pharmacy.ActiveChemCraftalls = {}
 
+local function GetPillDescription(item)
+    local prop = item.SerializableProperties[Identifier("OriginalOutpost")]
+    if prop == nil then return "" end
+    return prop.GetValue(item) or ""
+end
+
 Timer.Wait(function() 
 
     -- Custom Pill
@@ -73,9 +79,11 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
 
     -- determine config
     local descriptionOverride = nil
-    if chemmaster.OriginalOutpost ~= "" then
-        descriptionOverride=chemmaster.OriginalOutpost
+    local label = GetPillDescription(chemmaster)
+    if label ~= "" then
+        descriptionOverride = label
     end
+
     local config = NTCS_Pharmacy.PillConfigFromItems(ingredientArray,NTCS.HF.GetSkillLevel(user,"medical"),descriptionOverride,user)
     local productidentifier = "custompill"
     if config.sprite~=nil then productidentifier="custompill_"..config.sprite end
@@ -117,7 +125,7 @@ function NTCS_Pharmacy.TryCraftPills(chemmaster,user,dontreporterrors)
     -- we had errors, report them and abort
     if #errors > 0 then
         if not dontreporterrors then
-            NTCS.HF.GiveItem(user,"NTCS_Pharmacysfx_chemerror")
+            NTCS.HF.GiveItem(user,"ntpsfx_chemerror")
 
             local client = NTCS.HF.CharacterToClient(user)
 
@@ -230,7 +238,7 @@ Hook.Add("NTCS_Pharmacy.ChemMaster.makeall", "NTCS_Pharmacy.ChemMaster.makeall",
             if NTCS_Pharmacy.TryCraftPills(item,user,dontReportErrors) then
                 recursiveUse(true)
             else
-                NTCS.HF.GiveItem(user,"NTCS_Pharmacysfx_chemfinish")
+                NTCS.HF.GiveItem(user,"ntpsfx_chemfinish")
                 -- craftall finished, remove from craftalls
                 for index, value in ipairs(NTCS_Pharmacy.ActiveChemCraftalls) do
                     if value == item then
@@ -326,15 +334,15 @@ Hook.Add("NTCS_Pharmacy.Chemalyzer.rename", "NTCS_Pharmacy.Chemalyzer.rename", f
     containedItem.Condition = 1
 
     Timer.Wait(function()
-        local newdescription = nil
-
-        if item.OriginalOutpost ~= "" then
-            newdescription=item.OriginalOutpost
+        local NewDescription = nil
+        local label = GetPillDescription(item)
+        if label ~= "" then
+            NewDescription = label
         end
 
         local config = NTCS_Pharmacy.PillConfigFromPill(containedItem)
 
-        config.description = NTCS.HF.ReplaceString(newdescription,",","")
+        config.description = NewDescription and NTCS.HF.ReplaceString(NewDescription, ",", "") or ""
         
         NTCS_Pharmacy.SetPillFromConfig(containedItem,config)
         NTCS_Pharmacy.RefreshPillDescription(containedItem)

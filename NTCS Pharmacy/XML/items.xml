@@ -610,9 +610,9 @@
 
         <StatusEffect type="OnImpact" target="This" AllowWhenBroken="True">
           <RequiredItem Items="custompill" type="Contained" />
-          <Sound file="%ModDir%/Sound/pillbottledrop1.ogg" range="200" volume="5" selectionmode="random" />
-          <Sound file="%ModDir%/Sound/pillbottledrop2.ogg" range="200" volume="5" selectionmode="random" />
-          <Sound file="%ModDir%/Sound/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop1.ogg" range="200" volume="5" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop2.ogg" range="200" volume="5" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
         </StatusEffect>
       </ItemContainer>
 
@@ -658,9 +658,9 @@
 
         <StatusEffect type="OnImpact" target="This" AllowWhenBroken="True">
           <RequiredItem items="custompill" type="Contained" />
-          <Sound file="%ModDir%/Sound/pillbottledrop1.ogg" range="200" volume="5" loop="false" selectionmode="random" />
-          <Sound file="%ModDir%/Sound/pillbottledrop2.ogg" range="200" volume="5" loop="false" selectionmode="random" />
-          <Sound file="%ModDir%/Sound/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop1.ogg" range="200" volume="5" loop="false" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop2.ogg" range="200" volume="5" loop="false" selectionmode="random" />
+          <Sound file="%ModDir%/Sounds/pillbottledrop3.ogg" range="200" volume="5" selectionmode="random" />
         </StatusEffect>
       </ItemContainer>
 
@@ -672,13 +672,13 @@
           <StatusEffect type="OnUse" target="This,Character" condition="100" setvalue="true" disabledeltatime="true" AllowWhenBroken="true" comparison="and">
             <Conditional timeframe="gt 0" />
             <Conditional SkillRequirement="true" Medical="gt 49" />
-            <Sound file="%ModDir%/Sound/screwbottleclose.ogg" range="200" volume="5" />
+            <Sound file="%ModDir%/Sounds/screwbottleclose.ogg" range="200" volume="5" />
           </StatusEffect>
 
           <StatusEffect type="OnUse" target="This,Character" condition="0" setvalue="true" disabledeltatime="true" AllowWhenBroken="true" comparison="and">
             <Conditional timeframe="lt 1" />
             <Conditional SkillRequirement="true" Medical="gt 49" />
-            <Sound file="%ModDir%/Sound/screwbottleopen.ogg" range="200" volume="5" />
+            <Sound file="%ModDir%/Sounds/screwbottleopen.ogg" range="200" volume="5" />
           </StatusEffect>
 
           <StatusEffect type="OnUse" target="This,Character" timeframe="1" disabledeltatime="true" AllowWhenBroken="true">
@@ -692,7 +692,7 @@
 
           <StatusEffect type="OnUse" target="This,Limb" targetlimbs="LeftHand,RightHand" disabledeltatime="true" AllowWhenBroken="true">
             <Conditional SkillRequirement="true" Medical="lt 50" />
-            <Sound file="%ModDir%/Sound/openfail.ogg" range="200" volume="5" />
+            <Sound file="%ModDir%/Sounds/openfail.ogg" range="200" volume="5" />
           </StatusEffect>
         </Button>
       </CustomInterface>
