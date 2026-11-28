@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <!-- CONFIG ENTRIES -->
+  <ntconfigname.enableSurgicalInfection>Ativar Infecção Cirúrgica</ntconfigname.enableSurgicalInfection>
+  <ntconfigdescription.enableSurgicalInfection>Os personagens devem contrair infecções / sepse devido a cirurgias sem assepsia?</ntconfigdescription.enableSurgicalInfection>
+
+  <ntconfigname.enableSurgerySkill>Ativar Uso da Habilidade de Cirurgia</ntconfigname.enableSurgerySkill>
+  <ntconfigdescription.enableSurgerySkill>As ações cirúrgicas devem exigir a habilidade de Cirurgia em vez da habilidade Médica?</ntconfigdescription.enableSurgerySkill>
+
+  <!-- ITEMS -->
+  <entityname.mannitolplus>Manitol Plus</entityname.mannitolplus>
+  <entitydescription.mannitolplus>Uma versão aprimorada do manitol. É usado para tratar neurotraumas rapidamente.</entitydescription.mannitolplus>
+  <entityname.artificialbrain>Cérebro artificial</entityname.artificialbrain>
+  <entitydescription.artificialbrain>Um transplante de cérebro artificial que mantém um corpo vivo quando o cérebro original é removido.</entitydescription.artificialbrain>
+  <entityname.surgeonclothes>Uniforme cirúrgico</entityname.surgeonclothes>
+  <entitydescription.surgeonclothes>Um uniforme cirúrgico estéril para a prevenção de infecções durante a cirurgia.</entitydescription.surgeonclothes>
+  <entityname.surgicalmask>Máscara cirúrgica</entityname.surgicalmask>
+  <entitydescription.surgicalmask>Uma máscara que mantém patógenos transportados pelo ar longe do seu paciente durante a cirurgia.</entitydescription.surgicalmask>
+  <entityname.brainjar>Pote para cérebro</entityname.brainjar>
+  <entitydescription.brainjar>Um recipiente para conservar transplantes de cérebro indefinidamente.</entitydescription.brainjar>
+  <entityname.surgicaldrapes>Campos cirúrgicos</entityname.surgicaldrapes>
+  <entitydescription.surgicaldrapes>Lençóis estéreis para prevenir infecções durante a cirurgia.</entitydescription.surgicaldrapes>
+  <entityname.skillbooksurgery>'Má Conduta Médica'</entityname.skillbooksurgery>
+  <entitydescription.skillbooksurgery>Um manual contendo diversos procedimentos cirúrgicos e passos para reproduzi-los.</entitydescription.skillbooksurgery>
+  <entityname.triagetag>Etiqueta de triagem (automático)</entityname.triagetag>
+  <entitydescription.triagetag>Uma etiqueta usada para determinar com eficiência o tipo e a urgência de atendimento necessários para um paciente em caso de incidentes com múltiplas vítimas.</entitydescription.triagetag>
+  <entityname.manualtriagetag>Etiqueta de triagem (manual)</entityname.manualtriagetag>
+  <entitydescription.manualtriagetag>Uma etiqueta de triagem manual. Aplique nas pernas para verde, nos braços para amarelo, no torso para vermelho e na cabeça para preto.</entitydescription.manualtriagetag>
+  <entityname.experimentaltreatment>Tratamento experimental</entityname.experimentaltreatment>
+  <entitydescription.experimentaltreatment>Um medicamento altamente experimental que pode fazer um pouco (ou muito) bem (ou mal).</entitydescription.experimentaltreatment>
+  
+  <!-- AFFLICTIONS -->
+  <afflictionname.preventativepermit>Autorização Preventiva</afflictionname.preventativepermit>
+  <afflictiondescription.preventativepermit>Lesões graves são menos prováveis.</afflictiondescription.preventativepermit>
+  <afflictionname.artificialbrain>Cérebro artificial</afflictionname.artificialbrain>
+  <afflictiondescription.artificialbrain>O paciente está permanentemente inconsciente, mas o corpo permanece vivo.</afflictiondescription.artificialbrain>
+  <afflictionname.triagetag_green>Triagem: Pouco Urgente</afflictionname.triagetag_green>
+  <afflictiondescription.triagetag_green>O paciente recebeu a etiqueta de triagem "pouco urgente". Não requer tratamento imediato.</afflictiondescription.triagetag_green>
+  <afflictionname.triagetag_yellow>Triagem: Urgente</afflictionname.triagetag_yellow>
+  <afflictiondescription.triagetag_yellow>O paciente recebeu a etiqueta de triagem "urgente". Seus ferimentos não oferecem risco imediato à vida.</afflictiondescription.triagetag_yellow>
+  <afflictionname.triagetag_red>Triagem: Emergência</afflictionname.triagetag_red>
+  <afflictiondescription.triagetag_red>O paciente recebeu a etiqueta de triagem "emergência". Requer tratamento imediato.</afflictiondescription.triagetag_red>
+  <afflictionname.triagetag_black>Triagem: Óbito</afflictionname.triagetag_black>
+  <afflictiondescription.triagetag_black>O paciente recebeu a etiqueta de triagem "óbito". A atenção médica é melhor empregada em outro lugar. Não há mais o que fazer.</afflictiondescription.triagetag_black>
+  
+  <!-- JOBS -->
+  <jobname.surgeon>Cirurgião</jobname.surgeon>
+  <jobdescription.surgeon>Enquanto o médico é mais indicado para primeiros socorros e resposta rápida, o cirurgião é especializado na otimização de procedimentos cirúrgicos. Menor risco de infecção, execução mais rápida; se envolve cirurgia, o cirurgião resolve.</jobdescription.surgeon>
+  <skillname.surgery>Cirurgia</skillname.surgery>
+  
+  <!-- TALENTS -->
+  <talenttree.ethicalmedicine>Medicina Ética</talenttree.ethicalmedicine>
+  <talenttree.dabblingpharmacist>Farmacêutico Amador</talenttree.dabblingpharmacist>
+  <talenttree.fieldsurgeon>Cirurgião de Campo</talenttree.fieldsurgeon>
+  <!-- Tier 1 -->
+  <talentname.ntsp_adrenalinepump>Bomba de Adrenalina</talentname.ntsp_adrenalinepump>
+  <talentdescription.ntsp_rapiddeoploymentdrag>Arraste corpos em velocidade máxima.</talentdescription.ntsp_rapiddeoploymentdrag>
+  <talentdescription.ntsp_rapiddeoployment>Ganhe velocidade de movimento adicional igual a [skillpercentage]% da sua habilidade de cirurgia.</talentdescription.ntsp_rapiddeoployment>
+  <talentname.ntsp_autodidact>Autodidata</talentname.ntsp_autodidact>
+  <talentdescription.ntsp_autodidact>Ganhe [amount]% de XP bônus ao concluir uma missão na qual você prestou serviços médicos a um tripulante.</talentdescription.ntsp_autodidact>
+  <talentname.ntsp_surgeonsintuition>Intuição de Cirurgião</talentname.ntsp_surgeonsintuition>
+  <talentdescription.ntsp_surgeonsintuition>Sempre que abrir um contêiner médico (ou alienígena) pela primeira vez, você tem [probability]% de chance de encontrar itens adicionais.</talentdescription.ntsp_surgeonsintuition>
+  <!-- Tier 2 -->
+  <talentname.ntsp_fellowtoaster>E aí, colegas engenheiros?</talentname.ntsp_fellowtoaster>
+  <talentname.ntsp_homecarepackage>Pacote de Preparação</talentname.ntsp_homecarepackage>
+  <talentdescription.ntsp_homecarepackage>No início de cada rodada, receba:</talentdescription.ntsp_homecarepackage>
+  <talentname.ntsp_injectorgeneral>Injetor-Geral</talentname.ntsp_injectorgeneral>
+  <talentdescription.ntsp_injectorgeneral>Itens médicos aplicados por você ganham [amount]% de eficácia.</talentdescription.ntsp_injectorgeneral>
+  <!-- Ethical Medicine Tree -->
+  <talentname.ntsp_underpressure>Sob Pressão</talentname.ntsp_underpressure>
+  <talentdescription.ntsp_underpressure>Pacientes inconscientes próximos a você ganham [amount]% de resistência a perda de sangue, dano em órgãos e neurotrauma.</talentdescription.ntsp_underpressure>
+  <talentname.ntsp_fisharespecimens>Peixes são espécimes, não comida!</talentname.ntsp_fisharespecimens>
+  <talentdescription.ntsp_fisharespecimens>Quando você ou outro tripulante matar um monstro fora do submarino, você tem [amount]% de chance de encontrar um material genético aleatório nele.</talentdescription.ntsp_fisharespecimens>
+  <talentname.ntsp_bedsidemanner>Boas Maneiras à Beira do Leito</talentname.ntsp_bedsidemanner>
+  <talentdescription.ntsp_bedsidemanner>Pacientes próximos a você se curam passivamente a uma taxa acelerada. O efeito é dobrado se estiverem deitados em uma cama.</talentdescription.ntsp_bedsidemanner>
+  <talentname.ntsp_brucereitzperk>Meu nome é Bruce... Reitz</talentname.ntsp_brucereitzperk>
+  <talentdescription.ntsp_brucereitzperk>Órgãos extraídos por você são vendidos pelo preço integral e órgãos transplantados por você nunca sofrem rejeição.</talentdescription.ntsp_brucereitzperk>
+  <!-- Dabbling Pharmacist Tree -->
+  <talentname.ntsp_ultrasoniccleaner>Limpador Ultrassônico</talentname.ntsp_ultrasoniccleaner>
+  <talentdescription.ntsp_rnr>Drenos, balões endovasculares e agulhas não são mais consumidos quando você os utiliza.</talentdescription.ntsp_rnr>
+  <talentdescription.ntsp_sterlise>Ganhe [amount] de bônus em verificações de esterilidade — menos sepse, viva!</talentdescription.ntsp_sterlise>
+  <talentname.ntsp_therapisttintraining>Terapeuta em Formação</talentname.ntsp_therapisttintraining>
+  <talentdescription.ntsp_therapisttintraining>Ganhe [amount]% de vida extra.</talentdescription.ntsp_therapisttintraining>
+  <talentname.ntsp_experimental>Obtenção Antiética</talentname.ntsp_experimental>
+  <talentname.ntsp_mannitol>Maníaco por Manitol</talentname.ntsp_mannitol>
+  <talentname.ntsp_selfcare>Autocuidado</talentname.ntsp_selfcare>
+  <talentdescription.ntsp_selfcarepsychosis>Ganhe [amount]% de resistência a [affliction].</talentdescription.ntsp_selfcarepsychosis>
+  <!-- Field Surgeon Tree -->
+  <talentname.ntsp_rapiddeoployment>Deslocamento Rápido</talentname.ntsp_rapiddeoployment>
+  <talentname.ntsp_captainresist>Por favor, pare de atirar em mim por diversão, capitão</talentname.ntsp_captainresist>
+  <talentname.ntsp_fallenandcantgetup>Caí e não consigo levantar!</talentname.ntsp_fallenandcantgetup>
+  <talentname.ntsp_preventativepermit>Autorização Preventiva</talentname.ntsp_preventativepermit>
+  <talentdescription.ntsp_preventativepermit>A última pessoa a quem você deu uma ordem ganha [physicalresistance]% de resistência a dano e tem menos chance de sofrer lesões graves.</talentdescription.ntsp_preventativepermit>
+  <talentname.ntsp_imasurgeonnota>Eu sou um cirurgião, não um...</talentname.ntsp_imasurgeonnota>
+  <talentdescription.ntsp_imasurgeonnota1>Usando seu "Intelecto de Cirurgião™" superior, você pode ganhar [amount] pontos bônus de habilidade, simples assim!</talentdescription.ntsp_imasurgeonnota1>
+  <talentdescription.ntsp_imasurgeonnota2>Ou você pode selecionar [jobname], o que lhe dará [amount] pontos bônus em todas as habilidades.</talentdescription.ntsp_imasurgeonnota2>
+  <talentname.ntsp_properfol>Não morra em minhas mãos, Soldado!</talentname.ntsp_properfol>
+  <talentdescription.ntsp_properfol>[itemname] administrado por você faz efeito instantaneamente.</talentdescription.ntsp_properfol>
+  <!-- un-used/depricated talents, these are only kept for historical purposes.
+    
+  <talentname.ntsp_unspecialisedspecialist>Especialista Não Especializado</talentname.ntsp_unspecialisedspecialist>
+  <talentdescription.ntsp_unspecialisedspecialist>Ganhe um bônus de [amount] em [skillname].</talentdescription.ntsp_unspecialisedspecialist>
+  <talentname.ntsp_soothingsurgeon>Cirurgião Reconfortante</talentname.ntsp_soothingsurgeon>
+  <talentdescription.ntsp_soothingsurgeon>Pessoas operadas por você sofrem menos choque traumático</talentdescription.ntsp_soothingsurgeon>
+  <talentname.ntsp_firstaidtraining>Avanços em Primeiros Socorros</talentname.ntsp_firstaidtraining>
+  <talentdescription.ntsp_selfcareunlocktree>Desbloqueie os talentos que você ainda não liberou nesta árvore.</talentdescription.ntsp_selfcareunlocktree>
+  <talentdescription.ntsp_selfcarepsychosis>Ganhe 50% de resistência a psicose</talentdescription.ntsp_selfcarepsychosis> this will be for the self use medical items 
+
+  -->
+</infotexts>

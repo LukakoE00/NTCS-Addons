@@ -12,6 +12,7 @@
 
   <!-- Localization -->
   <Text file="%ModDir%/Localization/English/English.xml" />
+  <Text file="%ModDir%/Localization/Portuguese/PT-BR.xml" />
   <Text file="%ModDir%/Localization/SimplifiedChinese/SimplifiedChinese.xml" />
   <Text file="%ModDir%/Localization/Russian/Russian.xml" />
   <Text file="%ModDir%/Localization/German/German.xml" />

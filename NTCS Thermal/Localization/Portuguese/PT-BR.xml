@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<infotexts language="Brazilian Portuguese" nowhitespace="false" translatedname="Português (Brasil)">
+  <Override>
+    <!-- /// Gear /// -->
+    <entityname.heatpads>Adesivo de gel quente</entityname.heatpads>
+    <entitydescription.heatpads>Um adesivo fácil de armazenar usado para aquecer tecidos frios.</entitydescription.heatpads>
+    <entityname.handheld_thermometer>Termômetro portátil</entityname.handheld_thermometer>
+    <entitydescription.handheld_thermometer>Um método portátil de medir a temperatura corporal de um paciente. Requer baterias para funcionar.</entitydescription.handheld_thermometer>
+    <entityname.alteplase>Alteplase</entityname.alteplase>
+    <entitydescription.alteplase>Um agente trombolítico usado para dissolver coágulos sanguíneos formados no corpo. Auxilia na embolia pulmonar.</entitydescription.alteplase>
+    <entityname.furosemide>Furosemida</entityname.furosemide>
+    <entitydescription.furosemide>Usada para tratar edema pulmonar e reduzir a pressão arterial.</entitydescription.furosemide>
+    <entityname.aafn>A.A.F.N</entityname.aafn>
+    <entitydescription.aafn>Uma solução altamente experimental à base de nanites para descongelar vasos sanguíneos. Altamente explosiva quando combinada com álcool.</entitydescription.aafn>
+    <entityname.towel>Toalha</entityname.towel>
+    <entitydescription.towel>Uma toalha usada para secar um paciente.</entitydescription.towel>
+    <entityname.warm_rag>Pano morno</entityname.warm_rag>
+    <entitydescription.warm_rag>Um pano morno e úmido, pode ser usado para aquecer tecidos frios. Deve ser armazenado em um recipiente de aquecimento.</entitydescription.warm_rag>
+    <entityname.warm_iv_bag>Bolsa de soro morna</entityname.warm_iv_bag>
+    <entitydescription.warm_iv_bag>Uma bolsa aquecível de fluidos intravenosos, ideal para elevar a temperatura central de um paciente. Deve ser armazenada em um recipiente de aquecimento.</entitydescription.warm_iv_bag>
+    <entityname.heatcontainer>Recipiente de aquecimento</entityname.heatcontainer>
+    <entitydescription.heatcontainer>Um recipiente de aquecimento usado para manter os itens bem quentes.</entitydescription.heatcontainer>
+    <entityname.heatcrate>Caixote de aquecimento</entityname.heatcrate>
+    <entitydescription.heatcrate>Um caixote de aquecimento usado para manter os itens bem quentes.</entitydescription.heatcrate>
+    <entityname.esh>E.S.H</entityname.esh>
+    <entitydescription.esh>Um aquecedor externo para trajes de mergulho, usado quando uma opção interna não está disponível. Feito com um cinto de ferramentas reaproveitado de um mecânico azarado, requer uma bateria.</entitydescription.esh>
+    <entityname.csh>C.S.H</entityname.csh>
+    <entitydescription.csh>Um aquecedor externo para trajes de mergulho, usado quando uma opção interna não está disponível. Vai no inventário, requer uma bateria.</entitydescription.csh>
+    <entityname.cryotank>Tanque criogênico</entityname.cryotank>
+    <entitydescription.cryotank>Um tanque de oxigênio especializado, projetado para fornecer quantidades pressurizadas de ar congelante. Use com cuidado. AVISO: Entra em erupção violenta quando em chamas.</entitydescription.cryotank>
+    <entityname.stasis_starter>Iniciador de estase</entityname.stasis_starter>
+    <entitydescription.stasis_starter>Quando usado, injeta um iniciador de estase que faz o paciente entrar em estase a 1°C ou menos. Funciona como uma alternativa bem mais barata à estase, porém não evita as consequências da temperatura ao descongelar.</entitydescription.stasis_starter>
+    <entityname.skin_grafter>Enxertador de pele</entityname.skin_grafter>
+    <entitydescription.skin_grafter>Um dispositivo usado para retirar pele de um paciente. Deve ser usado após a retração da pele.</entitydescription.skin_grafter>
+    <entityname.ntt_skin>Pele Humana</entityname.ntt_skin>
+    <entitydescription.ntt_skin>Pele retirada de um paciente, de preferência de boa vontade. Pode ser usada para enxertar pele em um paciente queimado.</entitydescription.ntt_skin>
+    <entityname.hsh>H.S.H</entityname.hsh>
+    <entitydescription.hsh>Um aquecedor externo (e fone de ouvido) para trajes de mergulho; usa uma bateria para alimentá-lo.</entitydescription.hsh>
+    <!-- /// Afflictions /// -->
+    <afflictionname.frostnip>Geladura superficial</afflictionname.frostnip>
+    <afflictiondescription.frostnip>A pele está levemente avermelhada e fria.</afflictiondescription.frostnip>
+    <afflictionname.d1_frostbite>Ulceração pelo frio de 1º Grau</afflictionname.d1_frostbite>
+    <afflictiondescription.d1_frostbite>A pele apresenta dormência branca e cerosa.</afflictiondescription.d1_frostbite>
+    <afflictionname.d2_frostbite>Ulceração pelo frio de 2º Grau</afflictionname.d2_frostbite>
+    <afflictiondescription.d2_frostbite>A pele apresenta dormência branca e cerosa. Bolhas dolorosas surgem na pele.</afflictiondescription.d2_frostbite>
+    <afflictionname.d3_frostbite>Ulceração pelo frio de 3º Grau</afflictionname.d3_frostbite>
+    <afflictiondescription.d3_frostbite>A pele tornou-se roxa e pútrida; a amputação é necessária para salvar o que restou.</afflictiondescription.d3_frostbite>
+    <afflictionname.chilblains>Frieira</afflictionname.chilblains>
+    <afflictiondescription.chilblains>Bolhas se formaram pelo frio extremo, suscetíveis a infecção. Faça um curativo e mantenha longe da água.</afflictiondescription.chilblains>
+    <afflictionname.hypothermia>Hipotermia</afflictionname.hypothermia>
+    <afflictiondescription.hypothermia>O corpo está frio demais.</afflictiondescription.hypothermia>
+    <afflictionname.hyperthermia>Hipertermia</afflictionname.hyperthermia>
+    <afflictiondescription.hyperthermia>O corpo está quente demais.</afflictiondescription.hyperthermia>
+    <afflictionname.aafn_overdose>Overdose de A.A.F.N</afflictionname.aafn_overdose>
+    <afflictiondescription.aafn_overdose>O corpo está se decompondo rapidamente devido ao excesso de nanites.</afflictiondescription.aafn_overdose>
+    <afflictionname.reperfusion_injury>Lesão de reperfusão</afflictionname.reperfusion_injury>
+    <afflictiondescription.reperfusion_injury>O tecido foi danificado por ter sido aquecido rápido demais.</afflictiondescription.reperfusion_injury>
+    <afflictionname.cell_death>Morte celular</afflictionname.cell_death>
+    <afflictiondescription.cell_death>As células morreram por terem sido descongeladas.</afflictiondescription.cell_death>
+    <afflictionname.pulmonary_edema>Edema pulmonar</afflictionname.pulmonary_edema>
+    <afflictiondescription.pulmonary_edema>Há fluido retido nos pulmões, dificultando a respiração.</afflictiondescription.pulmonary_edema>
+    <afflictionname.pulmonary_embolism>Embolia pulmonar</afflictionname.pulmonary_embolism>
+    <afflictiondescription.pulmonary_embolism>Coágulos sanguíneos vindos dos membros interromperam o fluxo de sangue para os pulmões.</afflictiondescription.pulmonary_embolism>
+    <afflictionname.frozen_vessels>Vasos sanguíneos congelados</afflictionname.frozen_vessels>
+    <afflictiondescription.frozen_vessels>Os vasos cristalizaram, uma condição fatal se não for tratada adequadamente.</afflictiondescription.frozen_vessels>
+    <afflictionname.bloodclot>Coágulo sanguíneo</afflictionname.bloodclot>
+    <afflictiondescription.bloodclot>O sangue coagulou em aglomerados.</afflictiondescription.bloodclot>
+    <afflictionname.elevated_core_temperature>Temperatura central elevada</afflictionname.elevated_core_temperature>
+    <afflictiondescription.elevated_core_temperature>A temperatura do corpo foi elevada.</afflictiondescription.elevated_core_temperature>
+    <afflictionname.thrombolytics>Trombolíticos</afflictionname.thrombolytics>
+    <afflictiondescription.thrombolytics>Trombolíticos foram administrados; ajudam a tratar coágulos sanguíneos.</afflictiondescription.thrombolytics>
+    <afflictionname.diuretics>Diuréticos</afflictionname.diuretics>
+    <afflictiondescription.diuretics>Diuréticos foram administrados. Ajudam a tratar edema pulmonar.</afflictiondescription.diuretics>
+    <afflictionname.heated_diving_suit>Traje de mergulho aquecido</afflictionname.heated_diving_suit>
+    <afflictiondescription.heated_diving_suit>O traje foi aquecido; a temperatura congelante é negligenciável.</afflictiondescription.heated_diving_suit>
+    <afflictionname.heat_cramp>Cãibra por calor</afflictionname.heat_cramp>
+    <afflictiondescription.heat_cramp>O calor está fazendo os músculos entrarem em espasmo de cãibra.</afflictiondescription.heat_cramp>
+    <afflictionname.thermal_shock>Choque térmico</afflictionname.thermal_shock>
+    <afflictiondescription.thermal_shock>A mudança repentina de temperatura fez o paciente entrar em choque térmico.</afflictiondescription.thermal_shock>
+    <afflictionname.wet>Molhado</afflictionname.wet>
+    <afflictiondescription.wet>Água escorre da pele.</afflictiondescription.wet>
+    <afflictionname.heat_stroke>Insolação</afflictionname.heat_stroke>
+    <afflictiondescription.heat_stroke>O paciente desmaiou devido ao calor.</afflictiondescription.heat_stroke>
+    <afflictionname.sym_cold>Frio</afflictionname.sym_cold>
+    <afflictiondescription.sym_cold>A pele do paciente está fria ao toque.</afflictiondescription.sym_cold>
+    <afflictionname.sym_shivers>Calafrios</afflictionname.sym_shivers>
+    <afflictiondescription.sym_shivers>O corpo do paciente treme para gerar calor.</afflictiondescription.sym_shivers>
+    <afflictionname.sym_numb>Dormente</afflictionname.sym_numb>
+    <afflictiondescription.sym_numb>O paciente está insensível a estímulos.</afflictiondescription.sym_numb>
+    <afflictionname.sym_runny_nose>Coriza</afflictionname.sym_runny_nose>
+    <afflictiondescription.sym_runny_nose>Secreção nasal escorre do nariz.</afflictiondescription.sym_runny_nose>
+    <afflictionname.sym_pins_needles>Formigamento</afflictionname.sym_pins_needles>
+    <afflictiondescription.sym_pins_needles>O paciente está sentindo formigamento.</afflictiondescription.sym_pins_needles>
+    <afflictionname.sym_hot>Quente</afflictionname.sym_hot>
+    <afflictiondescription.sym_hot>A pele do paciente está quente ao toque.</afflictiondescription.sym_hot>
+    <afflictionname.sym_armswelling>Inchaço no braço</afflictionname.sym_armswelling>
+    <afflictiondescription.sym_armswelling>O braço está anormalmente inchado.</afflictiondescription.sym_armswelling>
+    <afflictionname.warmth>Calor</afflictionname.warmth>
+    <afflictiondescription.warmth>Calor foi aplicado.</afflictiondescription.warmth>
+    <afflictionname.aafn>A.A.F.N</afflictionname.aafn>
+    <afflictiondescription.aafn>Nanites especializados em remover cristais de gelo foram inseridos.</afflictiondescription.aafn>
+    <afflictionname.panicking>Em pânico</afflictionname.panicking>
+    <afflictiondescription.panicking>Você está em pânico e não consegue atirar direito por causa da dor.</afflictiondescription.panicking>
+    <afflictionname.removed_skin>Pele removida</afflictionname.removed_skin>
+    <afflictiondescription.removed_skin>A pele foi removida.</afflictiondescription.removed_skin>
+    <afflictionname.grafted_skin>Pele enxertada</afflictionname.grafted_skin>
+    <afflictiondescription.grafted_skin>A pele foi enxertada.</afflictiondescription.grafted_skin>
+    <!-- /// Tips /// -->
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ A temperatura só é fatal em níveis extremos.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Choque Térmico é uma condição rara causada pela mudança rápida da temperatura do paciente.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Embora a hipertermia não seja segura por longos períodos, ela pode matar a infecção por Parasita-Carcaça acima de 43,8°C.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Alteplase e Furosemida podem ser reaproveitados como alternativa ao Nitroprussiato de Sódio.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ O calor de incêndios se transfere de sala para sala. Portanto, certifique-se de manter as portas fechadas.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ Cibermembros são suscetíveis a variações de temperatura.</loadingscreentip>
+    <loadingscreentip>‖color:gui.blue‖NT Thermal:‖end‖ A hipotermia pode ser usada como alternativa à Analgesia; no entanto, a saúde do seu paciente pode ficar comprometida.</loadingscreentip>
+    <!-- /// Dialog /// -->
+    <npcdialogsym.sym_cold>Estou ficando com um pouco de frio por aqui.</npcdialogsym.sym_cold>
+    <npcdialogsym.sym_shivers>Tremendo um pouco.</npcdialogsym.sym_shivers>
+    <npcdialogsym.sym_numb>Não consigo... sentir muita coisa.</npcdialogsym.sym_numb>
+    <npcdialogsym.sym_hot>Estou começando a suar.</npcdialogsym.sym_hot>
+    <npcdialogsym.heat_cramp>Estou- tendo cãibra!.</npcdialogsym.heat_cramp>
+
+    <!-- /// Thermometer /// -->
+    
+    <thermometer.readout>Leitura de temperatura de </thermometer.readout>
+    <thermometer.hypothermic>Hipotérmico</thermometer.hypothermic>
+    <thermometer.hyperthermic>Hipertérmico</thermometer.hyperthermic>
+    <thermometer.normal_temperature_range>Faixa de temperatura normal</thermometer.normal_temperature_range>
+    <thermometer.body>Corpo</thermometer.body>
+    <thermometer.limbs_to_check.torso>Torso</thermometer.limbs_to_check.torso>
+    <thermometer.limbs_to_check.head>Cabeça</thermometer.limbs_to_check.head>
+    <thermometer.limbs_to_check.leftarm>Braço Esquerdo</thermometer.limbs_to_check.leftarm>
+    <thermometer.limbs_to_check.rightarm>Braço Direito</thermometer.limbs_to_check.rightarm>
+    <thermometer.limbs_to_check.leftleg>Perna Esquerda</thermometer.limbs_to_check.leftleg>
+    <thermometer.limbs_to_check.rightleg>Perna Direita</thermometer.limbs_to_check.rightleg>
+
+  </Override>
+</infotexts>
