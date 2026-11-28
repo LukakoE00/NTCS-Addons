@@ -735,7 +735,7 @@ local EmptyBloodpack = function (d)
   end
  
   NTCS.HF.GiveItemPlusFunction(bloodpackIdentifier, usingCharacter, postSpawnFunc, params)
-  item.Condition = 0
+  NTCS.HF.RemoveItem(item)
   NTCS.HF.GiveItem(targetCharacter, "ntsfx_syringe")
 end
  
