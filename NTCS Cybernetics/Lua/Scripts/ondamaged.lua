@@ -20,18 +20,16 @@ damageTypeSFXDict["explosiondamage"] = "ntcsfx_cyberblunt"
 damageTypeSFXDict["internaldamage"] = "ntcsfx_cyberblunt"
 damageTypeSFXDict["foreignbody"] = "ntcsfx_cyberblunt"
 
-NTCS.NTC.AddOnDamagedHook(function(characterHealth, attackResult, hitLimb)
+NTCS.NTC.AddModifyingOnDamagedHook(function(characterHealth, afflictions, hitLimb)
     local targetChar = characterHealth.Character
-    if not NTCS_Cybernetics.HF.LimbIsCyber(targetChar, hitLimb.type) then return end
+    if targetChar == nil or hitLimb == nil then return afflictions end
+    if not NTCS_Cybernetics.HF.LimbIsCyber(targetChar, hitLimb.type) then return afflictions end
 
     local sfxidentifier = nil
     local IncomingDamage = {}
     local ShouldConvertToCyberAffliction = false
 
-    -- Originally, you'd wait a tick before running ConvertDamageTypes. That meant for roughly 0.16 seconds you'd see the health bar of a character pop up;
-    -- Since most Damage types afflicted have direct Vitality damage while Cybernetic damage types don't. After conversion, the health bar would flicker.
-    -- This sucks! Instead, catch the damage and convert immediately instead of waiting.
-    for _, value in pairs(attackResult.Afflictions) do
+    for _, value in pairs(afflictions) do
         local identifier = value.Prefab.Identifier.Value
 
         if value.Strength > 1 and convertedDamageTypes[identifier] then
@@ -46,36 +44,6 @@ NTCS.NTC.AddOnDamagedHook(function(characterHealth, attackResult, hitLimb)
         if sfxidentifier ~= nil then NTCS.HF.GiveItem(targetChar, sfxidentifier) end
         NTCS_Cybernetics.ConvertDamageTypes(targetChar, hitLimb.type, IncomingDamage)
     end
+
+    return afflictions
 end)
-
--- C# Method in the HF class;
--- We want to add a check for Cybernetics before running the original Dislocate function.
-Hook.Patch("Neurotrauma.HF", "DislocateLimb", function(instance, ptable)
-    local Character = ptable["Character"]
-    local GivenLimbType  = ptable["GivenLimbType"]
-    local Strength  = ptable["Strength"]
-
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
-        ptable.PreventExecution = true
-    end
-end, Hook.HookMethodType.Before)
-
-Hook.Patch("Neurotrauma.HF", "BreakLimb", function(instance, ptable)
-    local Character = ptable["Character"]
-    local GivenLimbType  = ptable["GivenLimbType"]
-    local Strength  = ptable["Strength"]
-
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
-        ptable.PreventExecution = true
-    end
-end, Hook.HookMethodType.Before)
-
-Hook.Patch("Neurotrauma.HF", "ArteryCutLimb", function(instance, ptable)
-    local Character = ptable["Character"]
-    local GivenLimbType  = ptable["GivenLimbType"]
-    local Strength  = ptable["Strength"]
-
-    if Strength > 0 and NTCS_Cybernetics.HF.LimbIsCyber(Character, GivenLimbType) then
-        ptable.PreventExecution = true
-    end
-end, Hook.HookMethodType.Before)
