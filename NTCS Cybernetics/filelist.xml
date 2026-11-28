@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="NTCS Cybernetics" corepackage="false" modversion="1.0.0" gameversion="1.13.4.0" steamworkshopid="3816467889">
+<contentpackage name="NTCS Cybernetics" corepackage="false" modversion="1.0.2" gameversion="1.13.4.0" steamworkshopid="3816467889">
 
 <Dependency identifier="neurotrauma" name="Neurotrauma CS" ids="3744761298" order="Above" />
 <Dependency identifier="immersiverepairs" name="Immersive Repairs" ids="3114087512" order="Below" isoptional="true" />
